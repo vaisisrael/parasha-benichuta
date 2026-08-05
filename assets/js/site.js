@@ -170,3 +170,52 @@
   });
 })();
 
+(() => {
+  "use strict";
+
+  const oldSiteHosts = new Set([
+    "www.parasha-week.co.il",
+    "parasha-week.co.il",
+    "theweekparasha.blogspot.com"
+  ]);
+
+  async function repairInternalLinks() {
+    const scriptSource = document.currentScript?.src || "";
+    const siteRoot = new URL("../../", scriptSource || window.location.href);
+    const mapUrl = new URL("assets/data/redirect-map.json", siteRoot);
+
+    let redirectMap;
+
+    try {
+      const response = await fetch(mapUrl);
+      if (!response.ok) return;
+      redirectMap = await response.json();
+    } catch {
+      return;
+    }
+
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const rawHref = link.getAttribute("href");
+      if (!rawHref) return;
+
+      let oldUrl;
+      try {
+        oldUrl = new URL(rawHref, window.location.href);
+      } catch {
+        return;
+      }
+
+      if (!oldSiteHosts.has(oldUrl.hostname)) return;
+
+      const newPath = redirectMap[oldUrl.pathname];
+      if (!newPath) return;
+
+      const target = new URL(newPath.replace(/^\/+/, ""), siteRoot);
+      target.search = oldUrl.search;
+      target.hash = oldUrl.hash;
+      link.href = target.href;
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", repairInternalLinks);
+})();
