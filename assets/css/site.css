@@ -1,14 +1,613 @@
-/* תמונה ראשית גדולה ואחידה בתוך כל פוסט */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface-soft: #f1f4f1;
+  --surface-warm: #f5f0ea;
+  --surface-blue: #eef3f5;
+
+  --ink: #252825;
+  --muted: #6f746f;
+  --accent: #4f6d5a;
+  --accent-dark: #3f5b49;
+  --line: #dfe4df;
+
+  --shadow: 0 12px 30px rgba(43, 49, 44, 0.07);
+  --radius-large: 24px;
+  --radius-card: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+}
+
+/* =========================
+   כותרת האתר והתפריט
+   ========================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.header-inner {
+  width: min(1160px, calc(100% - 32px));
+  min-height: 68px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand {
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.main-nav {
+  margin-inline-start: auto;
+}
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-nav > ul > li {
+  position: relative;
+}
+
+.main-nav a,
+.main-nav button {
+  display: block;
+  padding: 21px 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.94rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.main-nav li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.main-nav li:hover > ul,
+.main-nav li:focus-within > ul,
+.main-nav li.open > ul {
+  display: flex;
+}
+
+.main-nav li ul a,
+.main-nav li ul button {
+  width: 100%;
+  padding: 11px 15px;
+  text-align: right;
+}
+
+.main-nav li ul a:hover,
+.main-nav li ul button:hover {
+  background: var(--surface-soft);
+}
+
+.main-nav li ul .has-sub > ul {
+  top: -1px;
+  right: 100%;
+}
+
+.menu-toggle {
+  display: none;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 1.4rem;
+}
+
+/* =========================
+   מבנה הדף
+   ========================= */
+
+.site-main {
+  width: min(1080px, calc(100% - 32px));
+  margin: auto;
+  padding: 20px 0 70px;
+}
+
+/* =========================
+   כותרת הפרשה
+   ========================= */
+
+.hero {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 2px;
+  padding: 8px 2px 18px;
+  background: none;
+  border: 0;
+}
+
+.hero.hero-compact {
+  padding-block: 8px 18px;
+}
+
+.hero .eyebrow {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* =========================
+   כותרות דפי ארכיון
+   ========================= */
+
+.archive-header {
+  margin-bottom: 24px;
+  padding: 30px 32px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+}
+
+.archive-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+/* =========================
+   רשת רגילה
+   ========================= */
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cards-grid.organized-regions {
+  display: block;
+}
+
+/* =========================
+   אזורי דף הפרשה
+   ========================= */
+
+.content-region {
+  margin-bottom: 28px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+}
+
+.content-region-knowing {
+  background: var(--surface-soft);
+}
+
+.content-region-stories {
+  background: var(--surface-warm);
+}
+
+.content-region-family {
+  background: var(--surface-blue);
+}
+
+.content-region-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.content-region-title {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--accent);
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* =========================
+   טאבים
+   ========================= */
+
+.region-tabs {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  padding: 2px 0 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79, 109, 90, 0.35) transparent;
+}
+
+.region-tabs::-webkit-scrollbar {
+  height: 5px;
+}
+
+.region-tabs::-webkit-scrollbar-thumb {
+  background: rgba(79, 109, 90, 0.35);
+  border-radius: 999px;
+}
+
+.region-tab {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.64);
+  color: #59615b;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.region-tab:hover {
+  background: #fff;
+  border-color: var(--line);
+}
+
+.region-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(79, 109, 90, 0.18);
+}
+
+/* =========================
+   כרטיס יחיד בכל אזור
+   ========================= */
+
+.region-panel {
+  min-width: 0;
+}
+
+.region-panel .card {
+  display: none;
+}
+
+.region-panel .card.is-active {
+  display: grid;
+}
+
+.region-panel .card {
+  grid-template-columns:
+    minmax(280px, 0.95fr)
+    minmax(0, 1.05fr);
+
+  align-items: start;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid rgba(79, 109, 90, 0.12);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+/* =========================
+   תמונת הכרטיס
+   ========================= */
+
+/*
+  אין גובה קבוע.
+  כל תמונה מוצגת בשלמותה וביחס הטבעי שלה.
+*/
+
+.region-panel .card-media {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+}
+
+.region-panel .card-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  background: transparent;
+}
+
+.region-panel .fixed-cover-card .card-media img {
+  width: 100%;
+  height: auto;
+}
+
+.region-panel .card-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff,
+      #e8ece8
+    );
+  font-size: 5rem;
+}
+
+/* =========================
+   גוף הכרטיס
+   ========================= */
+
+.region-panel .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+  padding: 24px 30px 26px;
+  background: var(--surface);
+}
+
+.eyebrow {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.region-panel .card h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.region-panel .card h2 a {
+  text-decoration: none;
+}
+
+.region-panel .card h2 a:hover {
+  color: var(--accent-dark);
+}
+
+.region-panel .card p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+/* =========================
+   הקישור לקריאת הפוסט
+   ========================= */
+
+.read-link {
+  align-self: flex-start;
+  margin-top: 17px;
+  padding-bottom: 2px;
+  color: var(--accent);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  transition:
+    color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.read-link:hover {
+  color: var(--accent-dark);
+  opacity: 0.76;
+}
+
+/* =========================
+   כרטיסים רגילים בדפי ארכיון
+   ========================= */
+
+.cards-grid:not(.organized-regions) .card {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.cards-grid:not(.organized-regions) .card-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #e8ece8;
+}
+
+.cards-grid:not(.organized-regions) .card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cards-grid:not(.organized-regions) .card-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+}
+
+.cards-grid:not(.organized-regions) .card-body {
+  padding: 18px;
+}
+
+.cards-grid:not(.organized-regions) .card h2 {
+  margin: 0.3em 0;
+  font-size: 1.18rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.cards-grid:not(.organized-regions) .card h2 a {
+  text-decoration: none;
+}
+
+.cards-grid:not(.organized-regions) .card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+.cards-grid:not(.organized-regions) .read-link {
+  margin-top: 14px;
+}
+
+/* =========================
+   עמוד פוסט
+   ========================= */
+
+.post-page {
+  max-width: 880px;
+  margin: auto;
+  padding: clamp(24px, 5vw, 58px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.post-header {
+  margin-bottom: 30px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-header h1 {
+  margin: 0.2em 0;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.post-meta a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.post-date {
+  display: none;
+}
+
+.post-content {
+  overflow-wrap: anywhere;
+  font-size: 1.08rem;
+}
+
+.post-content h2,
+.post-content h3 {
+  font-weight: 500;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-content iframe {
+  max-width: 100%;
+}
+
+.post-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+/* =========================
+   תמונה ראשית גדולה בפוסטים
+   ========================= */
+
+/*
+  התמונה הראשונה בכל פוסט מוצגת ברוחב גדול.
+  יחס התמונה נשמר ואין חיתוך.
+*/
+
 .post-content > figure:first-of-type,
 .post-content > p:first-of-type:has(img),
 .post-content > div:first-of-type:has(img) {
-  width: min(100%, 860px);
+  width: 100%;
+  max-width: 860px;
   margin: 0 auto 30px;
 }
 
 .post-content > figure:first-of-type img,
-.post-content > p:first-of-type img,
-.post-content > div:first-of-type img {
+.post-content > p:first-of-type:has(img) img,
+.post-content > div:first-of-type:has(img) img {
   display: block;
   width: 100%;
   height: auto;
@@ -16,9 +615,13 @@
   border-radius: 16px;
 }
 
-/* גם התמונות הקבועות של אסיף, ילדים ומשחקייה */
+/*
+  תמונות קבועות של אסיף, ילדים והמשחקייה.
+*/
+
 .fixed-post-cover {
-  width: min(100%, 860px);
+  width: 100%;
+  max-width: 860px;
   margin: 0 auto 30px;
 }
 
@@ -28,4 +631,258 @@
   height: auto;
   margin: 0 auto;
   border-radius: 16px;
+}
+
+/*
+  תמונה שמופיעה ישירות בתוך התוכן,
+  ללא figure או מעטפת מיוחדת.
+*/
+
+.post-content > img:first-of-type {
+  display: block;
+  width: 100%;
+  max-width: 860px;
+  height: auto;
+  margin: 0 auto 30px;
+  border-radius: 16px;
+}
+
+/* =========================
+   תחתית האתר
+   ========================= */
+
+.site-footer {
+  margin-top: 40px;
+  padding: 28px 20px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+/* =========================
+   טאבלט
+   ========================= */
+
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: block;
+    margin-inline-start: auto;
+  }
+
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 68px;
+    right: 0;
+    left: 0;
+    max-height: calc(100vh - 68px);
+    overflow: auto;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .main-nav.open {
+    display: block;
+  }
+
+  .main-nav ul {
+    display: block;
+  }
+
+  .main-nav a,
+  .main-nav button {
+    width: 100%;
+    padding: 13px 20px;
+    text-align: right;
+  }
+
+  .main-nav li ul,
+  .main-nav li ul .has-sub > ul {
+    position: static;
+    padding-right: 18px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .main-nav li:hover > ul {
+    display: none;
+  }
+
+  .main-nav li.open > ul {
+    display: block;
+  }
+
+  .content-region-header {
+    display: block;
+  }
+
+  .content-region-title {
+    margin-bottom: 12px;
+  }
+
+  .region-panel .card {
+    grid-template-columns:
+      minmax(250px, 0.9fr)
+      minmax(0, 1.1fr);
+  }
+
+  .region-panel .card-body {
+    padding: 21px 24px 23px;
+  }
+
+  .cards-grid:not(.organized-regions) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================
+   טלפון
+   ========================= */
+
+@media (max-width: 700px) {
+  body {
+    font-size: 17px;
+  }
+
+  .header-inner,
+  .site-main {
+    width: min(100% - 20px, 1080px);
+  }
+
+  .site-main {
+    padding-top: 12px;
+    padding-bottom: 48px;
+  }
+
+  .hero {
+    display: block;
+    padding: 6px 2px 14px;
+  }
+
+  .hero .eyebrow {
+    margin-bottom: 2px;
+  }
+
+  .hero h1 {
+    font-size: 2.35rem;
+  }
+
+  .content-region {
+    margin-bottom: 20px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .content-region-title {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+  }
+
+  .region-tabs {
+    margin-inline: -2px;
+    padding-bottom: 9px;
+  }
+
+  .region-tab {
+    min-height: 39px;
+    padding: 8px 13px;
+    font-size: 0.9rem;
+  }
+
+  .region-panel .card.is-active {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .region-panel .card-media {
+    width: 100%;
+    height: auto;
+  }
+
+  .region-panel .card-media img {
+    width: 100%;
+    height: auto;
+  }
+
+  .region-panel .card-placeholder {
+    aspect-ratio: 16 / 10;
+  }
+
+  .region-panel .card-body {
+    padding: 21px 20px 24px;
+  }
+
+  .region-panel .card h2 {
+    font-size: 1.65rem;
+  }
+
+  .region-panel .card p {
+    font-size: 1rem;
+    -webkit-line-clamp: 5;
+  }
+
+  .read-link {
+    margin-top: 16px;
+  }
+
+  .cards-grid:not(.organized-regions) {
+    grid-template-columns: 1fr;
+  }
+
+  .archive-header {
+    padding: 24px 18px;
+  }
+
+  .post-page {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .post-content > figure:first-of-type,
+  .post-content > p:first-of-type:has(img),
+  .post-content > div:first-of-type:has(img),
+  .fixed-post-cover,
+  .post-content > img:first-of-type {
+    width: 100%;
+    max-width: none;
+    margin-bottom: 22px;
+  }
+
+  .post-content > figure:first-of-type img,
+  .post-content > p:first-of-type:has(img) img,
+  .post-content > div:first-of-type:has(img) img,
+  .fixed-post-cover img,
+  .post-content > img:first-of-type {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+}
+
+/* =========================
+   הדפסה
+   ========================= */
+
+@media print {
+  .site-header,
+  .menu-toggle,
+  .region-tabs {
+    display: none !important;
+  }
+
+  .region-panel .card {
+    display: none !important;
+  }
+
+  .region-panel .card.is-active {
+    display: grid !important;
+  }
+
+  .content-region {
+    break-inside: avoid;
+  }
 }
