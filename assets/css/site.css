@@ -559,3 +559,59 @@ a {
   object-fit: contain;
   object-position: center;
 }
+
+
+/* ===== כרטיסים טבעיים ופחות קופסתיים ===== */
+
+.card {
+  background: #f8f6f0;
+  border: 1px solid rgba(69, 98, 70, .16);
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+/* אין מסגרת קבועה לתמונה */
+.card-media {
+  display: block;
+  width: 100%;
+  aspect-ratio: auto;
+  height: auto;
+  background: transparent;
+  overflow: hidden;
+}
+
+/* התמונה מוצגת בשלמותה וברוחב מלא */
+.card-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: initial;
+  background: transparent;
+}
+
+/* החלק התחתון ממשיך את אותו רקע של הכרטיס */
+.card-body {
+  background: #f8f6f0;
+  padding: 15px 17px 18px;
+}
+
+/* גם כרטיס המשחקים מקבל רקע אחיד */
+.games-system-card .card-media,
+.games-system-card .card-placeholder {
+  background: #f8f6f0;
+}
+
+/* אזורי התוכן עצמם מעט פחות כבדים */
+.content-region {
+  background: #f3f5f0;
+  border: 1px solid rgba(69, 98, 70, .15);
+}
+
+.content-region-stories {
+  background: #f5f1ea;
+}
+
+.content-region-family {
+  background: #f1f3f4;
+}
