@@ -76,11 +76,15 @@
     siteRoot
   );
 
+  /*
+    סדר המדורים כאן קובע גם את סדר הטאבים.
+    המדור הראשון שקיים באזור יוצג כברירת מחדל.
+  */
   const regionDefinitions = [
     {
       id: "knowing",
       title: "מכירים את הפרשה",
-      labels: new Set([
+      order: [
         "תקציר",
         "מושג",
         "וורט",
@@ -92,12 +96,12 @@
         "פרשה",
         "תנ״ך",
         "תנ\"ך"
-      ])
+      ]
     },
     {
       id: "stories",
       title: "סיפורים ורעיונות",
-      labels: new Set([
+      order: [
         "סיפור",
         "יצירה",
         "משל",
@@ -106,14 +110,13 @@
         "הגות",
         "מחשבה",
         "שיר"
-      ])
+      ]
     },
     {
       id: "family",
       title: "לכל המשפחה",
-      labels: new Set([
+      order: [
         "משחקים",
-        "המשחקיה",
         "פיצוחים",
         "המחשה",
         "ילדים",
@@ -121,7 +124,7 @@
         "חידה",
         "חידות",
         "פעילות"
-      ])
+      ]
     }
   ];
 
@@ -166,7 +169,11 @@
     if (toggle && nav) {
       toggle.addEventListener("click", () => {
         const open = nav.classList.toggle("open");
-        toggle.setAttribute("aria-expanded", String(open));
+
+        toggle.setAttribute(
+          "aria-expanded",
+          String(open)
+        );
       });
     }
 
@@ -175,6 +182,7 @@
       .forEach((button) => {
         button.addEventListener("click", (event) => {
           event.preventDefault();
+
           button.parentElement.classList.toggle("open");
         });
       });
@@ -195,48 +203,57 @@
         "כל התכנים של הפרשה הנוכחית במקום אחד — בלי גלישה לפרשה הבאה."
       ) {
         paragraph.remove();
-        hero.classList.add("hero-compact");
       }
     });
+
+    hero.classList.add("hero-compact");
+  }
+
+  function isBinaText(text) {
+    return (
+      text === "בינה" ||
+      text === "בינה מלאכותית"
+    );
   }
 
   function removeBinaNavigation() {
     document
       .querySelectorAll(".main-nav li")
       .forEach((item) => {
-        const ownLink = item.querySelector(
+        const ownControl = item.querySelector(
           ":scope > a, :scope > button"
         );
 
-        if (!ownLink) {
+        if (!ownControl) {
           return;
         }
 
-        const text = normalizeText(ownLink.textContent);
+        const text = normalizeText(
+          ownControl.textContent
+        );
 
-        if (
-          text === "בינה" ||
-          text === "בינה מלאכותית"
-        ) {
+        if (isBinaText(text)) {
           item.remove();
         }
       });
   }
 
-  function isBinaCard(card) {
-    const eyebrow = normalizeText(
+  function getCardLabel(card) {
+    return normalizeText(
       card.querySelector(".eyebrow")?.textContent
     );
+  }
+
+  function isBinaCard(card) {
+    const label = getCardLabel(card);
 
     const heading = normalizeText(
       card.querySelector("h2, h3")?.textContent
     );
 
     return (
-      eyebrow === "בינה" ||
-      eyebrow === "בינה מלאכותית" ||
-      heading === "בינה" ||
-      heading === "בינה מלאכותית"
+      isBinaText(label) ||
+      isBinaText(heading)
     );
   }
 
@@ -250,17 +267,17 @@
 
   function removeOldGamesContent() {
     document.querySelectorAll(".card").forEach((card) => {
-      const section = normalizeText(
-        card.querySelector(".eyebrow")?.textContent
-      );
+      const label = getCardLabel(card);
 
-      if (section === "המשחקיה") {
+      if (label === "המשחקיה") {
         card.remove();
       }
     });
 
     document.querySelectorAll(".main-nav a").forEach((link) => {
-      if (normalizeText(link.textContent) === "המשחקיה") {
+      const text = normalizeText(link.textContent);
+
+      if (text === "המשחקיה") {
         link.closest("li")?.remove();
       }
     });
@@ -274,32 +291,44 @@
     }
 
     document.querySelectorAll(".main-nav a").forEach((link) => {
-      if (normalizeText(link.textContent) === "משחקים") {
+      const text = normalizeText(link.textContent);
+
+      if (text === "משחקים") {
         link.href = gamesUrl;
-        link.textContent = `משחקי פרשת ${parashaName}`;
+        link.textContent =
+          `משחקי פרשת ${parashaName}`;
       }
     });
   }
 
   function addGamesCard(parashaName) {
     const gamesUrl = getGamesUrl(parashaName);
-
-    if (!gamesUrl) {
-      return;
-    }
-
     const grid = document.querySelector(".cards-grid");
 
-    if (!grid || grid.querySelector(".games-system-card")) {
+    if (
+      !gamesUrl ||
+      !grid ||
+      grid.querySelector(".games-system-card")
+    ) {
       return;
     }
 
     const card = document.createElement("article");
+
     card.className = "card games-system-card";
 
     card.innerHTML = `
-      <a class="card-media" href="${gamesUrl}">
-        <div class="card-placeholder" aria-hidden="true">🎲</div>
+      <a
+        class="card-media"
+        href="${gamesUrl}"
+        aria-label="משחקי פרשת ${parashaName}"
+      >
+        <div
+          class="card-placeholder"
+          aria-hidden="true"
+        >
+          🎲
+        </div>
       </a>
 
       <div class="card-body">
@@ -321,61 +350,220 @@
     grid.prepend(card);
   }
 
-  function getCardLabel(card) {
-    return normalizeText(
-      card.querySelector(".eyebrow")?.textContent
-    );
-  }
-
-  function markSpecialCards() {
-    document.querySelectorAll(".card").forEach((card) => {
-      const label = getCardLabel(card);
-
-      if (label === "ראיון") {
-        card.classList.add("interview-card");
-      }
-    });
-  }
-
   function findRegionForCard(card) {
     const label = getCardLabel(card);
 
-    const matchingRegion = regionDefinitions.find((region) =>
-      region.labels.has(label)
-    );
-
-    /*
-      מדור שאינו מוגדר במפורש נשאר גלוי
-      ונכנס לאזור "מכירים את הפרשה".
-    */
-    return matchingRegion || regionDefinitions[0];
+    return regionDefinitions.find((region) =>
+      region.order.includes(label)
+    ) || regionDefinitions[0];
   }
 
-  function createRegionElement(region) {
+  function getCardOrder(card, region) {
+    const label = getCardLabel(card);
+    const position = region.order.indexOf(label);
+
+    return position === -1
+      ? region.order.length
+      : position;
+  }
+
+  function sortRegionCards(cards, region) {
+    return [...cards].sort((cardA, cardB) => {
+      return (
+        getCardOrder(cardA, region) -
+        getCardOrder(cardB, region)
+      );
+    });
+  }
+
+  function activateRegionCard(
+    section,
+    selectedIndex,
+    moveFocus = false
+  ) {
+    const tabs = Array.from(
+      section.querySelectorAll(".region-tab")
+    );
+
+    const cards = Array.from(
+      section.querySelectorAll(
+        ".region-panel > .card"
+      )
+    );
+
+    tabs.forEach((tab, index) => {
+      const active = index === selectedIndex;
+
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute(
+        "aria-selected",
+        String(active)
+      );
+      tab.tabIndex = active ? 0 : -1;
+    });
+
+    cards.forEach((card, index) => {
+      const active = index === selectedIndex;
+
+      card.classList.toggle("is-active", active);
+      card.hidden = !active;
+    });
+
+    if (moveFocus) {
+      tabs[selectedIndex]?.focus();
+    }
+  }
+
+  function setupRegionTabs(section) {
+    const tabs = Array.from(
+      section.querySelectorAll(".region-tab")
+    );
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        activateRegionCard(section, index);
+      });
+
+      tab.addEventListener("keydown", (event) => {
+        let nextIndex = null;
+
+        if (
+          event.key === "ArrowLeft" ||
+          event.key === "ArrowDown"
+        ) {
+          nextIndex = (index + 1) % tabs.length;
+        }
+
+        if (
+          event.key === "ArrowRight" ||
+          event.key === "ArrowUp"
+        ) {
+          nextIndex =
+            (index - 1 + tabs.length) % tabs.length;
+        }
+
+        if (event.key === "Home") {
+          nextIndex = 0;
+        }
+
+        if (event.key === "End") {
+          nextIndex = tabs.length - 1;
+        }
+
+        if (nextIndex === null) {
+          return;
+        }
+
+        event.preventDefault();
+
+        activateRegionCard(
+          section,
+          nextIndex,
+          true
+        );
+
+        tabs[nextIndex].scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "nearest"
+        });
+      });
+    });
+
+    /*
+      בכל אזור רק הטאב הראשון פעיל.
+    */
+    activateRegionCard(section, 0);
+  }
+
+  function createRegionElement(region, cards) {
     const section = document.createElement("section");
 
     section.className =
       `content-region content-region-${region.id}`;
 
+    const header = document.createElement("div");
+    header.className = "content-region-header";
+
     const heading = document.createElement("h2");
     heading.className = "content-region-title";
     heading.textContent = region.title;
 
-    const innerGrid = document.createElement("div");
-    innerGrid.className = "region-grid";
+    const headingId =
+      `region-title-${region.id}`;
 
-    section.append(heading, innerGrid);
+    heading.id = headingId;
+    section.setAttribute(
+      "aria-labelledby",
+      headingId
+    );
 
-    return {
-      section,
-      innerGrid
-    };
+    const tabs = document.createElement("div");
+
+    tabs.className = "region-tabs";
+    tabs.setAttribute("role", "tablist");
+    tabs.setAttribute(
+      "aria-label",
+      region.title
+    );
+
+    const panel = document.createElement("div");
+    panel.className = "region-panel";
+
+    cards.forEach((card, index) => {
+      const label =
+        getCardLabel(card) || `תוכן ${index + 1}`;
+
+      const tab = document.createElement("button");
+
+      const tabId =
+        `region-${region.id}-tab-${index}`;
+
+      const panelId =
+        `region-${region.id}-card-${index}`;
+
+      tab.type = "button";
+      tab.className = "region-tab";
+      tab.textContent = label;
+      tab.id = tabId;
+      tab.setAttribute("role", "tab");
+      tab.setAttribute(
+        "aria-controls",
+        panelId
+      );
+      tab.setAttribute(
+        "aria-selected",
+        "false"
+      );
+      tab.tabIndex = -1;
+
+      card.id = panelId;
+      card.setAttribute("role", "tabpanel");
+      card.setAttribute(
+        "aria-labelledby",
+        tabId
+      );
+      card.hidden = true;
+
+      tabs.append(tab);
+      panel.append(card);
+    });
+
+    header.append(heading, tabs);
+    section.append(header, panel);
+
+    setupRegionTabs(section);
+
+    return section;
   }
 
   function organizeParashaCards() {
     const grid = document.querySelector(".cards-grid");
 
-    if (!grid || grid.classList.contains("organized-regions")) {
+    if (
+      !grid ||
+      grid.classList.contains("organized-regions")
+    ) {
       return;
     }
 
@@ -387,31 +575,35 @@
       return;
     }
 
-    const regionElements = new Map();
-
-    regionDefinitions.forEach((region) => {
-      regionElements.set(
+    const cardsByRegion = new Map(
+      regionDefinitions.map((region) => [
         region.id,
-        createRegionElement(region)
-      );
-    });
+        []
+      ])
+    );
 
     cards.forEach((card) => {
       const region = findRegionForCard(card);
-      const elements = regionElements.get(region.id);
 
-      elements.innerGrid.append(card);
+      cardsByRegion.get(region.id).push(card);
     });
 
     grid.replaceChildren();
     grid.classList.add("organized-regions");
 
     regionDefinitions.forEach((region) => {
-      const elements = regionElements.get(region.id);
+      const regionCards = sortRegionCards(
+        cardsByRegion.get(region.id),
+        region
+      );
 
-      if (elements.innerGrid.children.length > 0) {
-        grid.append(elements.section);
+      if (!regionCards.length) {
+        return;
       }
+
+      grid.append(
+        createRegionElement(region, regionCards)
+      );
     });
   }
 
@@ -436,63 +628,75 @@
 
       redirectMap = await response.json();
     } catch (error) {
-      console.error("Redirect map error:", error);
+      console.error(
+        "Redirect map error:",
+        error
+      );
+
       return;
     }
 
-    document.querySelectorAll("a[href]").forEach((link) => {
-      const rawHref = link.getAttribute("href");
+    document
+      .querySelectorAll("a[href]")
+      .forEach((link) => {
+        const rawHref = link.getAttribute("href");
 
-      if (!rawHref) {
-        return;
-      }
+        if (!rawHref) {
+          return;
+        }
 
-      let oldUrl;
+        let oldUrl;
 
-      try {
-        oldUrl = new URL(rawHref, window.location.href);
-      } catch {
-        return;
-      }
+        try {
+          oldUrl = new URL(
+            rawHref,
+            window.location.href
+          );
+        } catch {
+          return;
+        }
 
-      if (!oldSiteHosts.has(oldUrl.hostname)) {
-        return;
-      }
+        if (!oldSiteHosts.has(oldUrl.hostname)) {
+          return;
+        }
 
-      const newPath = redirectMap[oldUrl.pathname];
+        const newPath =
+          redirectMap[oldUrl.pathname];
 
-      if (!newPath) {
-        return;
-      }
+        if (!newPath) {
+          return;
+        }
 
-      const target = new URL(
-        newPath.replace(/^\/+/, ""),
-        siteRoot
-      );
+        const target = new URL(
+          newPath.replace(/^\/+/, ""),
+          siteRoot
+        );
 
-      target.search = oldUrl.search;
-      target.hash = oldUrl.hash;
+        target.search = oldUrl.search;
+        target.hash = oldUrl.hash;
 
-      link.href = target.href;
-    });
+        link.href = target.href;
+      });
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    removeHeroDescription();
-    removeBinaNavigation();
-    removeBinaCards();
-    removeOldGamesContent();
-    setupNavigation();
+  document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+      removeHeroDescription();
+      removeBinaNavigation();
+      removeBinaCards();
+      removeOldGamesContent();
+      setupNavigation();
 
-    const parashaName = getCurrentParasha();
+      const parashaName = getCurrentParasha();
 
-    if (parashaName) {
-      updateGamesNavigation(parashaName);
-      addGamesCard(parashaName);
-      markSpecialCards();
-      organizeParashaCards();
+      if (parashaName) {
+        updateGamesNavigation(parashaName);
+        addGamesCard(parashaName);
+        organizeParashaCards();
+      }
+
+      repairInternalLinks();
     }
-
-    repairInternalLinks();
-  });
+  );
 })();
