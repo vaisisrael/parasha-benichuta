@@ -76,6 +76,61 @@
     siteRoot
   );
 
+  const regionDefinitions = [
+    {
+      id: "knowing",
+      title: "מכירים את הפרשה",
+      labels: new Set([
+        "תקציר",
+        "מושג",
+        "וורט",
+        "מדרש",
+        "עברית",
+        "עיון",
+        "הלכה",
+        "לימוד",
+        "פרשה",
+        "תנ״ך",
+        "תנ\"ך"
+      ])
+    },
+    {
+      id: "stories",
+      title: "סיפורים ורעיונות",
+      labels: new Set([
+        "סיפור",
+        "יצירה",
+        "משל",
+        "ראיון",
+        "אסיף",
+        "הגות",
+        "מחשבה",
+        "שיר"
+      ])
+    },
+    {
+      id: "family",
+      title: "לכל המשפחה",
+      labels: new Set([
+        "משחקים",
+        "המשחקיה",
+        "פיצוחים",
+        "המחשה",
+        "ילדים",
+        "משפחה",
+        "חידה",
+        "חידות",
+        "פעילות"
+      ])
+    }
+  ];
+
+  function normalizeText(value) {
+    return String(value || "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
   function getCurrentParasha() {
     const heading =
       document.querySelector(".hero h1") ||
@@ -85,9 +140,10 @@
       return null;
     }
 
-    return heading.textContent
-      .trim()
+    const name = normalizeText(heading.textContent)
       .replace(/^פרשת\s+/, "");
+
+    return parashaLabels[name] ? name : null;
   }
 
   function getGamesUrl(parashaName) {
@@ -124,10 +180,76 @@
       });
   }
 
+  function removeHeroDescription() {
+    const hero = document.querySelector(".hero");
+
+    if (!hero) {
+      return;
+    }
+
+    hero.querySelectorAll("p").forEach((paragraph) => {
+      const text = normalizeText(paragraph.textContent);
+
+      if (
+        text ===
+        "כל התכנים של הפרשה הנוכחית במקום אחד — בלי גלישה לפרשה הבאה."
+      ) {
+        paragraph.remove();
+        hero.classList.add("hero-compact");
+      }
+    });
+  }
+
+  function removeBinaNavigation() {
+    document
+      .querySelectorAll(".main-nav li")
+      .forEach((item) => {
+        const ownLink = item.querySelector(
+          ":scope > a, :scope > button"
+        );
+
+        if (!ownLink) {
+          return;
+        }
+
+        const text = normalizeText(ownLink.textContent);
+
+        if (text === "בינה" || text === "בינה מלאכותית") {
+          item.remove();
+        }
+      });
+  }
+
+  function isBinaCard(card) {
+    const eyebrow = normalizeText(
+      card.querySelector(".eyebrow")?.textContent
+    );
+
+    const heading = normalizeText(
+      card.querySelector("h2, h3")?.textContent
+    );
+
+    return (
+      eyebrow === "בינה" ||
+      eyebrow === "בינה מלאכותית" ||
+      heading === "בינה" ||
+      heading === "בינה מלאכותית"
+    );
+  }
+
+  function removeBinaCards() {
+    document.querySelectorAll(".card").forEach((card) => {
+      if (isBinaCard(card)) {
+        card.remove();
+      }
+    });
+  }
+
   function removeOldGamesContent() {
     document.querySelectorAll(".card").forEach((card) => {
-      const section =
-        card.querySelector(".eyebrow")?.textContent.trim();
+      const section = normalizeText(
+        card.querySelector(".eyebrow")?.textContent
+      );
 
       if (section === "המשחקיה") {
         card.remove();
@@ -135,7 +257,7 @@
     });
 
     document.querySelectorAll(".main-nav a").forEach((link) => {
-      if (link.textContent.trim() === "המשחקיה") {
+      if (normalizeText(link.textContent) === "המשחקיה") {
         link.closest("li")?.remove();
       }
     });
@@ -149,7 +271,7 @@
     }
 
     document.querySelectorAll(".main-nav a").forEach((link) => {
-      if (link.textContent.trim() === "משחקים") {
+      if (normalizeText(link.textContent) === "משחקים") {
         link.href = gamesUrl;
         link.textContent = `משחקי פרשת ${parashaName}`;
       }
@@ -194,6 +316,90 @@
     `;
 
     grid.prepend(card);
+  }
+
+  function getCardLabel(card) {
+    return normalizeText(
+      card.querySelector(".eyebrow")?.textContent
+    );
+  }
+
+  function findRegionForCard(card) {
+    const label = getCardLabel(card);
+
+    const matchingRegion = regionDefinitions.find((region) =>
+      region.labels.has(label)
+    );
+
+    /*
+      מדור שלא הוגדר במפורש יוצג באזור
+      "מכירים את הפרשה", כדי ששום תוכן לא ייעלם.
+    */
+    return matchingRegion || regionDefinitions[0];
+  }
+
+  function createRegionElement(region) {
+    const section = document.createElement("section");
+
+    section.className =
+      `content-region content-region-${region.id}`;
+
+    const heading = document.createElement("h2");
+    heading.className = "content-region-title";
+    heading.textContent = region.title;
+
+    const innerGrid = document.createElement("div");
+    innerGrid.className = "region-grid";
+
+    section.append(heading, innerGrid);
+
+    return {
+      section,
+      innerGrid
+    };
+  }
+
+  function organizeParashaCards() {
+    const grid = document.querySelector(".cards-grid");
+
+    if (!grid || grid.classList.contains("organized-regions")) {
+      return;
+    }
+
+    const cards = Array.from(
+      grid.querySelectorAll(":scope > .card")
+    );
+
+    if (!cards.length) {
+      return;
+    }
+
+    const regionElements = new Map();
+
+    regionDefinitions.forEach((region) => {
+      regionElements.set(
+        region.id,
+        createRegionElement(region)
+      );
+    });
+
+    cards.forEach((card) => {
+      const region = findRegionForCard(card);
+      const elements = regionElements.get(region.id);
+
+      elements.innerGrid.append(card);
+    });
+
+    grid.replaceChildren();
+    grid.classList.add("organized-regions");
+
+    regionDefinitions.forEach((region) => {
+      const elements = regionElements.get(region.id);
+
+      if (elements.innerGrid.children.length > 0) {
+        grid.append(elements.section);
+      }
+    });
   }
 
   async function repairInternalLinks() {
@@ -259,14 +465,18 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    setupNavigation();
+    removeHeroDescription();
+    removeBinaNavigation();
+    removeBinaCards();
     removeOldGamesContent();
+    setupNavigation();
 
     const parashaName = getCurrentParasha();
 
     if (parashaName) {
       updateGamesNavigation(parashaName);
       addGamesCard(parashaName);
+      organizeParashaCards();
     }
 
     repairInternalLinks();
