@@ -156,7 +156,9 @@ a {
   padding: 20px 0 70px;
 }
 
-/* כותרת הפרשה */
+/* =========================
+   כותרת הפרשה
+   ========================= */
 
 .hero {
   display: flex;
@@ -189,7 +191,9 @@ a {
   letter-spacing: -0.02em;
 }
 
-/* כותרות דפי ארכיון */
+/* =========================
+   כותרות דפי ארכיון
+   ========================= */
 
 .archive-header {
   margin-bottom: 24px;
@@ -207,7 +211,7 @@ a {
 }
 
 /* =========================
-   רשת רגילה בדפי ארכיון
+   רשת רגילה
    ========================= */
 
 .cards-grid {
@@ -332,16 +336,12 @@ a {
   display: grid;
 }
 
-/*
-  גובה אחיד ומהודק יותר:
-  אזור המלל ואזור התמונה מותאמים זה לזה.
-*/
 .region-panel .card {
   grid-template-columns:
-    minmax(300px, 1fr)
-    minmax(0, 1fr);
+    minmax(280px, 0.95fr)
+    minmax(0, 1.05fr);
 
-  min-height: 290px;
+  align-items: start;
   overflow: hidden;
   background: var(--surface);
   border: 1px solid rgba(79, 109, 90, 0.12);
@@ -349,36 +349,50 @@ a {
   box-shadow: var(--shadow);
 }
 
-/* אזור התמונה */
+/* =========================
+   תמונת הכרטיס
+   ========================= */
+
+/*
+  אין גובה קבוע.
+  כל תמונה מוצגת בשלמותה וביחס הטבעי שלה.
+*/
 
 .region-panel .card-media {
   display: block;
+  width: 100%;
   min-width: 0;
-  height: 290px;
+  height: auto;
   overflow: hidden;
-  background: #e8ece8;
+  background: transparent;
 }
 
 .region-panel .card-media img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  height: auto;
+  max-width: 100%;
+  background: transparent;
 }
 
 /*
   התמונות הקבועות של ילדים, אסיף ומשחקים
-  נוצרו מראש ביחס המתאים לכרטיס.
+  נוצרו ביחס 16:10, ולכן הן יוצגו היטב
+  ללא צורך בחיתוך.
 */
+
 .region-panel .fixed-cover-card .card-media img {
-  object-fit: cover;
-  object-position: center;
+  width: 100%;
+  height: auto;
 }
+
+/*
+  למקרה שהתמונה חסרה:
+*/
 
 .region-panel .card-placeholder {
   width: 100%;
-  height: 290px;
+  aspect-ratio: 16 / 10;
   display: grid;
   place-items: center;
   background:
@@ -390,28 +404,29 @@ a {
   font-size: 5rem;
 }
 
-/* אזור המלל */
+/* =========================
+   גוף הכרטיס
+   ========================= */
 
 .region-panel .card-body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
-  min-height: 290px;
-  padding: 26px 34px;
+  padding: 24px 30px 26px;
   background: var(--surface);
 }
 
 .eyebrow {
-  margin-bottom: 7px;
+  margin-bottom: 6px;
   color: var(--accent);
   font-size: 0.92rem;
   font-weight: 500;
 }
 
 .region-panel .card h2 {
-  margin: 0 0 12px;
-  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: -0.02em;
@@ -426,19 +441,23 @@ a {
 }
 
 .region-panel .card p {
+  display: -webkit-box;
   margin: 0;
+  overflow: hidden;
   color: var(--muted);
-  font-size: 1.03rem;
-  line-height: 1.68;
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
 }
 
 /* =========================
-   הקישור החינני
+   הקישור לקריאת הפוסט
    ========================= */
 
 .read-link {
   align-self: flex-start;
-  margin-top: 18px;
+  margin-top: 17px;
   padding-bottom: 2px;
   color: var(--accent);
   font-size: 0.98rem;
@@ -480,6 +499,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 .cards-grid:not(.organized-regions) .card-placeholder {
@@ -655,6 +675,16 @@ a {
     margin-bottom: 12px;
   }
 
+  .region-panel .card {
+    grid-template-columns:
+      minmax(250px, 0.9fr)
+      minmax(0, 1.1fr);
+  }
+
+  .region-panel .card-body {
+    padding: 21px 24px 23px;
+  }
+
   .cards-grid:not(.organized-regions) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -717,24 +747,24 @@ a {
   .region-panel .card.is-active {
     display: grid;
     grid-template-columns: 1fr;
-    min-height: 0;
   }
 
   .region-panel .card-media {
+    width: 100%;
     height: auto;
-    min-height: 0;
-    aspect-ratio: 16 / 10;
+  }
+
+  .region-panel .card-media img {
+    width: 100%;
+    height: auto;
   }
 
   .region-panel .card-placeholder {
-    height: auto;
-    min-height: 0;
     aspect-ratio: 16 / 10;
   }
 
   .region-panel .card-body {
-    min-height: 0;
-    padding: 22px 20px 24px;
+    padding: 21px 20px 24px;
   }
 
   .region-panel .card h2 {
@@ -743,6 +773,7 @@ a {
 
   .region-panel .card p {
     font-size: 1rem;
+    -webkit-line-clamp: 5;
   }
 
   .read-link {
