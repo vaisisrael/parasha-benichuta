@@ -65,12 +65,25 @@
     "וזאת הברכה": "5-11 פרשת וזאת הברכה"
   };
 
+  const oldSiteHosts = new Set([
+    "www.parasha-week.co.il",
+    "parasha-week.co.il",
+    "theweekparasha.blogspot.com"
+  ]);
+
+  const redirectMapUrl = new URL(
+    "assets/data/redirect-map.json",
+    siteRoot
+  );
+
   function getCurrentParasha() {
     const heading =
       document.querySelector(".hero h1") ||
       document.querySelector(".archive-header h1");
 
-    if (!heading) return null;
+    if (!heading) {
+      return null;
+    }
 
     return heading.textContent
       .trim()
@@ -79,10 +92,14 @@
 
   function getGamesUrl(parashaName) {
     const label = parashaLabels[parashaName];
-    if (!label) return null;
+
+    if (!label) {
+      return null;
+    }
 
     const url = new URL("games/", siteRoot);
     url.searchParams.set("label", label);
+
     return url.href;
   }
 
@@ -97,17 +114,21 @@
       });
     }
 
-    document.querySelectorAll(".has-sub > button").forEach((button) => {
-      button.addEventListener("click", (event) => {
-        event.preventDefault();
-        button.parentElement.classList.toggle("open");
+    document
+      .querySelectorAll(".has-sub > button")
+      .forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          button.parentElement.classList.toggle("open");
+        });
       });
-    });
   }
 
   function removeOldGamesContent() {
     document.querySelectorAll(".card").forEach((card) => {
-      const section = card.querySelector(".eyebrow")?.textContent.trim();
+      const section =
+        card.querySelector(".eyebrow")?.textContent.trim();
+
       if (section === "המשחקיה") {
         card.remove();
       }
@@ -122,7 +143,10 @@
 
   function updateGamesNavigation(parashaName) {
     const gamesUrl = getGamesUrl(parashaName);
-    if (!gamesUrl) return;
+
+    if (!gamesUrl) {
+      return;
+    }
 
     document.querySelectorAll(".main-nav a").forEach((link) => {
       if (link.textContent.trim() === "משחקים") {
@@ -134,10 +158,16 @@
 
   function addGamesCard(parashaName) {
     const gamesUrl = getGamesUrl(parashaName);
-    if (!gamesUrl) return;
+
+    if (!gamesUrl) {
+      return;
+    }
 
     const grid = document.querySelector(".cards-grid");
-    if (!grid || grid.querySelector(".games-system-card")) return;
+
+    if (!grid || grid.querySelector(".games-system-card")) {
+      return;
+    }
 
     const card = document.createElement("article");
     card.className = "card games-system-card";
@@ -146,16 +176,86 @@
       <a class="card-media" href="${gamesUrl}">
         <div class="card-placeholder" aria-hidden="true">🎲</div>
       </a>
+
       <div class="card-body">
         <div class="eyebrow">משחקים</div>
+
         <h2>
-          <a href="${gamesUrl}">משחקי פרשת ${parashaName}</a>
+          <a href="${gamesUrl}">
+            משחקי פרשת ${parashaName}
+          </a>
         </h2>
-        <p>משחקים, חידות ואתגרים אינטראקטיביים סביב פרשת ${parashaName}.</p>
+
+        <p>
+          משחקים, חידות ואתגרים אינטראקטיביים
+          סביב פרשת ${parashaName}.
+        </p>
       </div>
     `;
 
     grid.prepend(card);
+  }
+
+  async function repairInternalLinks() {
+    let redirectMap;
+
+    try {
+      const response = await fetch(
+        redirectMapUrl,
+        { cache: "no-store" }
+      );
+
+      if (!response.ok) {
+        console.error(
+          "Redirect map could not be loaded:",
+          response.status,
+          redirectMapUrl.href
+        );
+
+        return;
+      }
+
+      redirectMap = await response.json();
+    } catch (error) {
+      console.error("Redirect map error:", error);
+      return;
+    }
+
+    document.querySelectorAll("a[href]").forEach((link) => {
+      const rawHref = link.getAttribute("href");
+
+      if (!rawHref) {
+        return;
+      }
+
+      let oldUrl;
+
+      try {
+        oldUrl = new URL(rawHref, window.location.href);
+      } catch {
+        return;
+      }
+
+      if (!oldSiteHosts.has(oldUrl.hostname)) {
+        return;
+      }
+
+      const newPath = redirectMap[oldUrl.pathname];
+
+      if (!newPath) {
+        return;
+      }
+
+      const target = new URL(
+        newPath.replace(/^\/+/, ""),
+        siteRoot
+      );
+
+      target.search = oldUrl.search;
+      target.hash = oldUrl.hash;
+
+      link.href = target.href;
+    });
   }
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -163,59 +263,12 @@
     removeOldGamesContent();
 
     const parashaName = getCurrentParasha();
-    if (!parashaName) return;
 
-    updateGamesNavigation(parashaName);
-    addGamesCard(parashaName);
-  });
-})();
-
-(() => {
-  "use strict";
-
-  const oldSiteHosts = new Set([
-    "www.parasha-week.co.il",
-    "parasha-week.co.il",
-    "theweekparasha.blogspot.com"
-  ]);
-
-  async function repairInternalLinks() {
-    const scriptSource = document.currentScript?.src || "";
-    const siteRoot = new URL("../../", scriptSource || window.location.href);
-    const mapUrl = new URL("assets/data/redirect-map.json", siteRoot);
-
-    let redirectMap;
-
-    try {
-      const response = await fetch(mapUrl);
-      if (!response.ok) return;
-      redirectMap = await response.json();
-    } catch {
-      return;
+    if (parashaName) {
+      updateGamesNavigation(parashaName);
+      addGamesCard(parashaName);
     }
 
-    document.querySelectorAll("a[href]").forEach((link) => {
-      const rawHref = link.getAttribute("href");
-      if (!rawHref) return;
-
-      let oldUrl;
-      try {
-        oldUrl = new URL(rawHref, window.location.href);
-      } catch {
-        return;
-      }
-
-      if (!oldSiteHosts.has(oldUrl.hostname)) return;
-
-      const newPath = redirectMap[oldUrl.pathname];
-      if (!newPath) return;
-
-      const target = new URL(newPath.replace(/^\/+/, ""), siteRoot);
-      target.search = oldUrl.search;
-      target.hash = oldUrl.hash;
-      link.href = target.href;
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", repairInternalLinks);
+    repairInternalLinks();
+  });
 })();
