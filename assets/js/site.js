@@ -214,7 +214,10 @@
 
         const text = normalizeText(ownLink.textContent);
 
-        if (text === "בינה" || text === "בינה מלאכותית") {
+        if (
+          text === "בינה" ||
+          text === "בינה מלאכותית"
+        ) {
           item.remove();
         }
       });
@@ -324,6 +327,16 @@
     );
   }
 
+  function markSpecialCards() {
+    document.querySelectorAll(".card").forEach((card) => {
+      const label = getCardLabel(card);
+
+      if (label === "ראיון") {
+        card.classList.add("interview-card");
+      }
+    });
+  }
+
   function findRegionForCard(card) {
     const label = getCardLabel(card);
 
@@ -332,8 +345,8 @@
     );
 
     /*
-      מדור שלא הוגדר במפורש יוצג באזור
-      "מכירים את הפרשה", כדי ששום תוכן לא ייעלם.
+      מדור שאינו מוגדר במפורש נשאר גלוי
+      ונכנס לאזור "מכירים את הפרשה".
     */
     return matchingRegion || regionDefinitions[0];
   }
@@ -476,6 +489,7 @@
     if (parashaName) {
       updateGamesNavigation(parashaName);
       addGamesCard(parashaName);
+      markSpecialCards();
       organizeParashaCards();
     }
 
