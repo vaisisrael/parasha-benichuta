@@ -2,7 +2,10 @@
   "use strict";
 
   const scriptUrl = document.currentScript?.src || "";
-  const siteRoot = new URL("../../", scriptUrl || window.location.href);
+  const siteRoot = new URL(
+    "../../",
+    scriptUrl || window.location.href
+  );
 
   const parashaLabels = {
     "בראשית": "1-01 פרשת בראשית",
@@ -77,8 +80,34 @@
   );
 
   /*
-    סדר המדורים כאן קובע גם את סדר הטאבים.
-    המדור הראשון שקיים באזור יוצג כברירת מחדל.
+    תמונות מדור קבועות.
+    כל פוסט השייך למדורים האלה יקבל
+    את אותה תמונה, ללא תלות בתמונת הפוסט המקורית.
+  */
+  const fixedSectionImages = {
+    "ילדים": {
+      path: "assets/images/section-covers/children.png",
+      alt: "מדור הילדים של פרשת השבוע"
+    },
+
+    "אסיף": {
+      path: "assets/images/section-covers/asif.png",
+      alt: "מדור אסיף — רעיונות ומחשבות מן הפרשה"
+    },
+
+    "משחקים": {
+      path: "assets/images/section-covers/games.png",
+      alt: "משחקי פרשת השבוע"
+    },
+
+    "המשחקיה": {
+      path: "assets/images/section-covers/games.png",
+      alt: "משחקי פרשת השבוע"
+    }
+  };
+
+  /*
+    סדר המדורים קובע את סדר הטאבים.
   */
   const regionDefinitions = [
     {
@@ -117,6 +146,7 @@
       title: "לכל המשפחה",
       order: [
         "משחקים",
+        "המשחקיה",
         "פיצוחים",
         "המחשה",
         "ילדים",
@@ -182,7 +212,6 @@
       .forEach((button) => {
         button.addEventListener("click", (event) => {
           event.preventDefault();
-
           button.parentElement.classList.toggle("open");
         });
       });
@@ -315,7 +344,13 @@
 
     const card = document.createElement("article");
 
-    card.className = "card games-system-card";
+    card.className =
+      "card games-system-card fixed-cover-card";
+
+    const imageUrl = new URL(
+      fixedSectionImages["משחקים"].path,
+      siteRoot
+    ).href;
 
     card.innerHTML = `
       <a
@@ -323,12 +358,10 @@
         href="${gamesUrl}"
         aria-label="משחקי פרשת ${parashaName}"
       >
-        <div
-          class="card-placeholder"
-          aria-hidden="true"
+        <img
+          src="${imageUrl}"
+          alt="משחקי פרשת ${parashaName}"
         >
-          🎲
-        </div>
       </a>
 
       <div class="card-body">
@@ -348,6 +381,81 @@
     `;
 
     grid.prepend(card);
+  }
+
+  /*
+    מחליף את תמונת הפוסט המקורית
+    בתמונה הקבועה של המדור.
+  */
+  function applyFixedSectionImages() {
+    document.querySelectorAll(".card").forEach((card) => {
+      const label = getCardLabel(card);
+      const imageDefinition =
+        fixedSectionImages[label];
+
+      if (!imageDefinition) {
+        return;
+      }
+
+      const media = card.querySelector(".card-media");
+
+      if (!media) {
+        return;
+      }
+
+      const imageUrl = new URL(
+        imageDefinition.path,
+        siteRoot
+      ).href;
+
+      let image = media.querySelector("img");
+
+      if (!image) {
+        image = document.createElement("img");
+        media.replaceChildren(image);
+      }
+
+      image.src = imageUrl;
+      image.alt = imageDefinition.alt;
+
+      card.classList.add("fixed-cover-card");
+    });
+  }
+
+  /*
+    מוסיף את הקישור הדק והמעוצב
+    בתחתית כל כרטיס.
+  */
+  function addReadLinks() {
+    document.querySelectorAll(".card").forEach((card) => {
+      if (card.querySelector(".read-link")) {
+        return;
+      }
+
+      const sourceLink =
+        card.querySelector("h2 a[href]") ||
+        card.querySelector(".card-media[href]");
+
+      const body = card.querySelector(".card-body");
+
+      if (!sourceLink || !body) {
+        return;
+      }
+
+      const label = getCardLabel(card);
+      const readLink = document.createElement("a");
+
+      readLink.className = "read-link";
+      readLink.href = sourceLink.href;
+
+      readLink.textContent =
+        label === "משחקים" ||
+        label === "המשחקיה"
+          ? "לפתיחת המשחקים"
+          : "לקריאת הפוסט";
+
+      body.append(readLink);
+    });
   }
 
   function findRegionForCard(card) {
@@ -395,10 +503,12 @@
       const active = index === selectedIndex;
 
       tab.classList.toggle("is-active", active);
+
       tab.setAttribute(
         "aria-selected",
         String(active)
       );
+
       tab.tabIndex = active ? 0 : -1;
     });
 
@@ -471,7 +581,7 @@
     });
 
     /*
-      בכל אזור רק הטאב הראשון פעיל.
+      רק הטאב הראשון בכל אזור פעיל.
     */
     activateRegionCard(section, 0);
   }
@@ -493,6 +603,7 @@
       `region-title-${region.id}`;
 
     heading.id = headingId;
+
     section.setAttribute(
       "aria-labelledby",
       headingId
@@ -526,23 +637,29 @@
       tab.className = "region-tab";
       tab.textContent = label;
       tab.id = tabId;
+
       tab.setAttribute("role", "tab");
+
       tab.setAttribute(
         "aria-controls",
         panelId
       );
+
       tab.setAttribute(
         "aria-selected",
         "false"
       );
+
       tab.tabIndex = -1;
 
       card.id = panelId;
       card.setAttribute("role", "tabpanel");
+
       card.setAttribute(
         "aria-labelledby",
         tabId
       );
+
       card.hidden = true;
 
       tabs.append(tab);
@@ -584,7 +701,6 @@
 
     cards.forEach((card) => {
       const region = findRegionForCard(card);
-
       cardsByRegion.get(region.id).push(card);
     });
 
@@ -693,6 +809,14 @@
       if (parashaName) {
         updateGamesNavigation(parashaName);
         addGamesCard(parashaName);
+
+        /*
+          סדר הפעולות חשוב:
+          קודם מחליפים תמונות ומוסיפים קישורים,
+          ורק לאחר מכן מארגנים את הכרטיסים בטאבים.
+        */
+        applyFixedSectionImages();
+        addReadLinks();
         organizeParashaCards();
       }
 
