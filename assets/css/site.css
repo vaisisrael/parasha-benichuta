@@ -1,15 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Heebo:wght@500;600;700;800&display=swap");
+
 :root {
   --bg: #f7f4ed;
-  --paper: #fff;
+  --paper: #f8f6f0;
   --ink: #26231f;
   --muted: #6c665d;
   --accent: #456246;
   --line: #ded8cc;
-  --shadow: 0 8px 26px rgba(50, 42, 30, .08);
+  --shadow: 0 8px 26px rgba(50, 42, 30, 0.08);
 
-  --region-knowing: #eef3ed;
-  --region-stories: #f4eee5;
-  --region-family: #edf1f4;
+  --region-knowing: #f3f5f0;
+  --region-stories: #f5f1ea;
+  --region-family: #f1f3f4;
 }
 
 * {
@@ -24,7 +26,8 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: Arial, "Noto Sans Hebrew", sans-serif;
+  font-family: "Assistant", Arial, sans-serif;
+  font-size: 17px;
   line-height: 1.65;
 }
 
@@ -32,30 +35,43 @@ a {
   color: inherit;
 }
 
+h1,
+h2,
+h3,
+.brand,
+.eyebrow,
+.content-region-title {
+  font-family: "Heebo", Arial, sans-serif;
+}
+
+/* =========================
+   כותרת ותפריט
+   ========================= */
+
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, .96);
+  background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(8px);
 }
 
 .header-inner {
   max-width: 1240px;
+  min-height: 70px;
   margin: auto;
   padding: 0 20px;
   display: flex;
   align-items: center;
   gap: 28px;
-  min-height: 70px;
 }
 
 .brand {
-  text-decoration: none;
+  color: var(--accent);
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--accent);
+  text-decoration: none;
   white-space: nowrap;
 }
 
@@ -64,33 +80,34 @@ a {
 }
 
 .main-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   align-items: center;
-}
-
-.main-nav a,
-.main-nav button {
-  display: block;
-  border: 0;
-  background: none;
-  text-decoration: none;
-  font: inherit;
-  padding: 22px 12px;
-  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .main-nav > ul > li {
   position: relative;
 }
 
+.main-nav a,
+.main-nav button {
+  display: block;
+  padding: 22px 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .main-nav li ul {
   display: none;
   position: absolute;
-  right: 0;
   top: 100%;
+  right: 0;
   min-width: 190px;
   background: #fff;
   border: 1px solid var(--line);
@@ -107,79 +124,104 @@ a {
 
 .main-nav li ul a,
 .main-nav li ul button {
-  padding: 10px 14px;
   width: 100%;
+  padding: 10px 14px;
   text-align: right;
 }
 
 .main-nav li ul .has-sub > ul {
-  right: 100%;
   top: -1px;
+  right: 100%;
 }
 
 .menu-toggle {
   display: none;
-  border: 1px solid var(--line);
-  background: #fff;
-  border-radius: 8px;
   padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
   font-size: 1.4rem;
 }
 
+/* =========================
+   מבנה הדף
+   ========================= */
+
 .site-main {
-  max-width: 1240px;
+  max-width: 1120px;
   margin: auto;
-  padding: 36px 20px 70px;
+  padding: 24px 20px 70px;
 }
 
-.hero,
-.archive-header {
+/* כותרת פרשת השבוע */
+
+.hero {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 14px;
+  padding: 14px 24px;
   background: linear-gradient(135deg, #fff, #f0eadc);
   border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: 42px;
-  margin-bottom: 28px;
+  border-radius: 12px;
 }
 
 .hero.hero-compact {
-  padding-block: 32px;
+  padding-block: 14px;
 }
 
-.hero h1,
+.hero .eyebrow {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 3.2vw, 2.7rem);
+  line-height: 1.15;
+}
+
+/* כותרות של דפי ארכיון */
+
+.archive-header {
+  margin-bottom: 24px;
+  padding: 32px;
+  background: linear-gradient(135deg, #fff, #f0eadc);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
 .archive-header h1 {
-  font-size: clamp(2rem, 5vw, 4rem);
-  margin: .1em 0;
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.15;
 }
 
 .eyebrow {
   color: var(--accent);
+  font-size: 0.82rem;
   font-weight: 800;
-  font-size: .9rem;
 }
 
-/*
-  רשת הכרטיסים הרגילה משמשת בדפי ארכיון
-  ובדפים שעדיין אינם מחולקים לאזורים.
-*/
+/* =========================
+   אזורי התוכן
+   ========================= */
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  gap: 16px;
 }
 
-/*
-  בדף הפרשה, JavaScript מחליף את הרשת
-  ברצף של שלושה אזורי תוכן.
-*/
 .cards-grid.organized-regions {
   display: block;
 }
 
 .content-region {
-  padding: 26px;
-  margin-bottom: 28px;
-  border: 1px solid var(--line);
-  border-radius: 22px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid rgba(69, 98, 70, 0.15);
+  border-radius: 14px;
 }
 
 .content-region-knowing {
@@ -195,102 +237,147 @@ a {
 }
 
 .content-region-title {
-  margin: 0 0 20px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(69, 98, 70, .2);
+  margin: 0 2px 10px;
+  padding: 0 4px 7px;
+  border-bottom: 1px solid rgba(69, 98, 70, 0.2);
   color: var(--accent);
-  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+  font-weight: 700;
   line-height: 1.25;
 }
 
 .region-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  align-items: start;
+  gap: 10px;
 }
+
+/* =========================
+   כרטיסי תוכן
+   ========================= */
 
 .card {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 18px;
   overflow: hidden;
-  box-shadow: var(--shadow);
+  background: var(--paper);
+  border: 1px solid rgba(69, 98, 70, 0.16);
+  border-radius: 10px;
+  box-shadow: none;
 }
 
+/*
+  התמונות הרגילות מוצגות ברוחב מלא
+  ובגובה הטבעי שלהן.
+*/
 .card-media {
   display: block;
-  aspect-ratio: 16 / 9;
-  background: #ece7dc;
+  width: 100%;
+  height: auto;
   overflow: hidden;
+  background: transparent;
 }
 
 .card-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  background: transparent;
+}
+
+/*
+  כרטיס הראיון מקבל מסגרת קבועה,
+  כדי שתמונה רחבה לא תשבור את מבנה הרשת.
+*/
+.interview-card .card-media {
+  aspect-ratio: 1 / 1;
+  background: #e9e6df;
+}
+
+.interview-card .card-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+}
+
+/* כרטיס המשחקים */
+
+.games-system-card .card-media {
+  aspect-ratio: 1 / 1;
+  background: var(--paper);
 }
 
 .card-placeholder {
+  width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
+  background: var(--paper);
   font-size: 3rem;
 }
 
-.games-system-card .card-placeholder {
-  background:
-    radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, .9),
-      rgba(236, 231, 220, .9)
-    );
-}
+/* גוף הכרטיס */
 
 .card-body {
-  padding: 18px;
+  padding: 10px 12px 13px;
+  background: var(--paper);
 }
 
 .card h2 {
-  font-size: 1.28rem;
+  margin: 0.25em 0 0.35em;
+  font-size: 1rem;
+  font-weight: 700;
   line-height: 1.35;
-  margin: .35em 0;
 }
 
 .card h2 a {
   text-decoration: none;
 }
 
-.card p {
-  color: var(--muted);
-  margin-bottom: 0;
+.card h2 a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
+
+.card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.48;
+}
+
+/* =========================
+   עמוד פוסט
+   ========================= */
 
 .post-page {
   max-width: 880px;
   margin: auto;
+  padding: clamp(22px, 5vw, 58px);
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 20px;
-  padding: clamp(22px, 5vw, 58px);
   box-shadow: var(--shadow);
 }
 
 .post-header {
-  border-bottom: 1px solid var(--line);
   margin-bottom: 30px;
   padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
 }
 
 .post-header h1 {
+  margin: 0.2em 0;
   font-size: clamp(2rem, 4.5vw, 3.5rem);
   line-height: 1.2;
-  margin: .2em 0;
 }
 
 .post-meta a {
-  text-decoration: none;
   color: var(--accent);
   font-weight: 700;
+  text-decoration: none;
 }
 
 .post-date {
@@ -298,8 +385,8 @@ a {
 }
 
 .post-content {
-  font-size: 1.08rem;
   overflow-wrap: anywhere;
+  font-size: 1.08rem;
 }
 
 .post-content img {
@@ -312,19 +399,27 @@ a {
 }
 
 .post-content table {
-  max-width: 100%;
-  border-collapse: collapse;
   display: block;
+  max-width: 100%;
   overflow-x: auto;
+  border-collapse: collapse;
 }
 
+/* =========================
+   תחתית האתר
+   ========================= */
+
 .site-footer {
-  text-align: center;
   padding: 30px;
+  background: #fff;
   border-top: 1px solid var(--line);
   color: var(--muted);
-  background: #fff;
+  text-align: center;
 }
+
+/* =========================
+   טאבלט
+   ========================= */
 
 @media (max-width: 900px) {
   .cards-grid,
@@ -343,10 +438,10 @@ a {
     top: 70px;
     right: 0;
     left: 0;
-    background: #fff;
-    border-bottom: 1px solid var(--line);
     max-height: calc(100vh - 70px);
     overflow: auto;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
   }
 
   .main-nav.open {
@@ -359,18 +454,18 @@ a {
 
   .main-nav a,
   .main-nav button {
-    padding: 13px 20px;
     width: 100%;
+    padding: 13px 20px;
     text-align: right;
   }
 
   .main-nav li ul,
   .main-nav li ul .has-sub > ul {
     position: static;
-    box-shadow: none;
+    padding-right: 18px;
     border: 0;
     border-top: 1px solid var(--line);
-    padding-right: 18px;
+    box-shadow: none;
   }
 
   .main-nav li:hover > ul {
@@ -382,41 +477,76 @@ a {
   }
 }
 
+/* =========================
+   טלפון
+   ========================= */
+
 @media (max-width: 620px) {
+  body {
+    font-size: 16px;
+  }
+
+  .site-main {
+    padding: 14px 10px 48px;
+  }
+
   .cards-grid,
   .region-grid {
     grid-template-columns: 1fr;
   }
 
-  .hero,
+  .hero {
+    display: block;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+  }
+
+  .hero .eyebrow {
+    margin-bottom: 1px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
   .archive-header {
-    padding: 28px 22px;
-  }
-
-  .hero.hero-compact {
-    padding-block: 24px;
-  }
-
-  .site-main {
-    padding-inline: 14px;
+    padding: 24px 18px;
   }
 
   .content-region {
-    padding: 18px 14px;
-    margin-bottom: 22px;
-    border-radius: 18px;
+    margin-bottom: 16px;
+    padding: 8px;
   }
 
   .content-region-title {
-    margin-inline: 4px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
+  }
+
+  .region-grid {
+    gap: 10px;
+  }
+
+  .card-body {
+    padding: 12px 14px 15px;
+  }
+
+  .card h2 {
+    font-size: 1.12rem;
+  }
+
+  .card p {
+    font-size: 0.96rem;
   }
 
   .post-page {
-    border-radius: 14px;
     padding: 22px 18px;
+    border-radius: 14px;
   }
 }
+
+/* =========================
+   הדפסה
+   ========================= */
 
 @media print {
   .site-header,
@@ -427,191 +557,4 @@ a {
   .content-region {
     break-inside: avoid;
   }
-}
-
-
-/* ===== הידוק דף הפרשה ===== */
-
-/* אזור הכותרת העליונה: שורה קומפקטית במקום מלבן גדול */
-.hero {
-  display: flex;
-  align-items: baseline;
-  gap: 18px;
-  padding: 18px 26px;
-  margin-bottom: 22px;
-  border-radius: 16px;
-}
-
-.hero.hero-compact {
-  padding-block: 18px;
-}
-
-.hero .eyebrow {
-  margin: 0;
-  white-space: nowrap;
-}
-
-.hero h1 {
-  margin: 0;
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  line-height: 1.15;
-}
-
-/* רוחב מעט מצומצם יותר לדף כולו */
-.site-main {
-  max-width: 1120px;
-}
-
-/* אזורי התוכן קומפקטיים יותר */
-.content-region {
-  padding: 20px;
-  margin-bottom: 22px;
-  border-radius: 18px;
-}
-
-.content-region-title {
-  margin-bottom: 16px;
-  padding-bottom: 9px;
-  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
-}
-
-/* מרווחים קטנים יותר בין הכרטיסים */
-.region-grid {
-  gap: 16px;
-}
-
-/* הכרטיסים עצמם מעט קטנים ומהודקים יותר */
-.card {
-  border-radius: 15px;
-}
-
-.card-body {
-  padding: 14px 16px 17px;
-}
-
-.card h2 {
-  font-size: 1.13rem;
-  margin: .3em 0;
-}
-
-.card p {
-  font-size: .96rem;
-  line-height: 1.55;
-}
-
-/*
-  מציגים את כל התמונה במקום לחתוך אותה.
-  ייתכנו שוליים עדינים בצדי תמונות שאינן ביחס אחיד.
-*/
-.card-media {
-  aspect-ratio: 3 / 2;
-  background: #f1eee7;
-}
-
-.card-media img {
-  object-fit: contain;
-  object-position: center;
-  background: #f1eee7;
-}
-
-/* כרטיס המשחקים עדיין ממלא את שטח התמונה */
-.games-system-card .card-placeholder {
-  width: 100%;
-  height: 100%;
-}
-
-/* התאמות לנייד */
-@media (max-width: 620px) {
-  .hero {
-    display: block;
-    padding: 18px 20px;
-  }
-
-  .hero .eyebrow {
-    margin-bottom: 2px;
-  }
-
-  .hero h1 {
-    font-size: 2.1rem;
-  }
-
-  .content-region {
-    padding: 14px 10px;
-  }
-
-  .region-grid {
-    gap: 14px;
-  }
-}
-
-
-/* צמצום השוליים בצדי תמונות אנכיות */
-.card-media {
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.card-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-}
-
-
-/* ===== כרטיסים טבעיים ופחות קופסתיים ===== */
-
-.card {
-  background: #f8f6f0;
-  border: 1px solid rgba(69, 98, 70, .16);
-  border-radius: 14px;
-  box-shadow: none;
-}
-
-/* אין מסגרת קבועה לתמונה */
-.card-media {
-  display: block;
-  width: 100%;
-  aspect-ratio: auto;
-  height: auto;
-  background: transparent;
-  overflow: hidden;
-}
-
-/* התמונה מוצגת בשלמותה וברוחב מלא */
-.card-media img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: none;
-  object-fit: initial;
-  background: transparent;
-}
-
-/* החלק התחתון ממשיך את אותו רקע של הכרטיס */
-.card-body {
-  background: #f8f6f0;
-  padding: 15px 17px 18px;
-}
-
-/* גם כרטיס המשחקים מקבל רקע אחיד */
-.games-system-card .card-media,
-.games-system-card .card-placeholder {
-  background: #f8f6f0;
-}
-
-/* אזורי התוכן עצמם מעט פחות כבדים */
-.content-region {
-  background: #f3f5f0;
-  border: 1px solid rgba(69, 98, 70, .15);
-}
-
-.content-region-stories {
-  background: #f5f1ea;
-}
-
-.content-region-family {
-  background: #f1f3f4;
 }
