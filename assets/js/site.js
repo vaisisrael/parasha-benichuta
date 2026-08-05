@@ -2,6 +2,7 @@
   "use strict";
 
   const scriptUrl = document.currentScript?.src || "";
+
   const siteRoot = new URL(
     "../../",
     scriptUrl || window.location.href
@@ -80,9 +81,11 @@
   );
 
   /*
-    תמונות מדור קבועות.
-    כל פוסט השייך למדורים האלה יקבל
-    את אותה תמונה, ללא תלות בתמונת הפוסט המקורית.
+    תמונות קבועות למדורים.
+
+    התמונות מוחלפות:
+    1. בכרטיסים בדף הפרשה.
+    2. בתוך עמודי הפוסטים עצמם.
   */
   const fixedSectionImages = {
     "ילדים": {
@@ -106,9 +109,6 @@
     }
   };
 
-  /*
-    סדר המדורים קובע את סדר הטאבים.
-  */
   const regionDefinitions = [
     {
       id: "knowing",
@@ -127,6 +127,7 @@
         "תנ\"ך"
       ]
     },
+
     {
       id: "stories",
       title: "סיפורים ורעיונות",
@@ -141,6 +142,7 @@
         "שיר"
       ]
     },
+
     {
       id: "family",
       title: "לכל המשפחה",
@@ -160,6 +162,7 @@
 
   function normalizeText(value) {
     return String(value || "")
+      .replace(/🔖/g, "")
       .replace(/\s+/g, " ")
       .trim();
   }
@@ -187,6 +190,7 @@
     }
 
     const url = new URL("games/", siteRoot);
+
     url.searchParams.set("label", label);
 
     return url.href;
@@ -212,6 +216,7 @@
       .forEach((button) => {
         button.addEventListener("click", (event) => {
           event.preventDefault();
+
           button.parentElement.classList.toggle("open");
         });
       });
@@ -324,6 +329,7 @@
 
       if (text === "משחקים") {
         link.href = gamesUrl;
+
         link.textContent =
           `משחקי פרשת ${parashaName}`;
       }
@@ -342,15 +348,15 @@
       return;
     }
 
-    const card = document.createElement("article");
-
-    card.className =
-      "card games-system-card fixed-cover-card";
-
     const imageUrl = new URL(
       fixedSectionImages["משחקים"].path,
       siteRoot
     ).href;
+
+    const card = document.createElement("article");
+
+    card.className =
+      "card games-system-card fixed-cover-card";
 
     card.innerHTML = `
       <a
@@ -384,10 +390,9 @@
   }
 
   /*
-    מחליף את תמונת הפוסט המקורית
-    בתמונה הקבועה של המדור.
+    החלפת התמונות בכרטיסים שבדף הפרשה.
   */
-  function applyFixedSectionImages() {
+  function applyFixedSectionImagesToCards() {
     document.querySelectorAll(".card").forEach((card) => {
       const label = getCardLabel(card);
       const imageDefinition =
@@ -418,14 +423,167 @@
       image.src = imageUrl;
       image.alt = imageDefinition.alt;
 
+      image.removeAttribute("srcset");
+      image.removeAttribute("sizes");
+
       card.classList.add("fixed-cover-card");
     });
   }
 
   /*
-    מוסיף את הקישור הדק והמעוצב
-    בתחתית כל כרטיס.
+    זיהוי המדור בעמוד פוסט.
+
+    הקוד מחפש את שם המדור באזור המטא־דאטה
+    או בכותרת המשנית שמעל כותרת הפוסט.
   */
+  function getPostSectionLabel() {
+    const possibleContainers = [
+      document.querySelector(".post-meta"),
+      document.querySelector(".post-header"),
+      document.querySelector(".post-page")
+    ].filter(Boolean);
+
+    for (const container of possibleContainers) {
+      const elements = container.querySelectorAll(
+        "a, span, div, p"
+      );
+
+      for (const element of elements) {
+        const text = normalizeText(element.textContent);
+
+        for (const label of Object.keys(fixedSectionImages)) {
+          if (
+            text === label ||
+            text.endsWith(`· ${label}`) ||
+            text.includes(` · ${label}`) ||
+            text.includes(`־ ${label}`)
+          ) {
+            return label;
+          }
+        }
+      }
+    }
+
+    const headerText = normalizeText(
+      document.querySelector(".post-header")?.textContent
+    );
+
+    for (const label of Object.keys(fixedSectionImages)) {
+      if (headerText.includes(label)) {
+        return label;
+      }
+    }
+
+    return null;
+  }
+
+  /*
+    החלפת התמונה הגנרית בתוך עמוד הפוסט עצמו.
+
+    מוחל רק על:
+    אסיף, ילדים, משחקים והמשחקיה.
+  */
+  function applyFixedSectionImageToPost() {
+    const postPage = document.querySelector(".post-page");
+
+    if (!postPage) {
+      return;
+    }
+
+    const sectionLabel = getPostSectionLabel();
+    const imageDefinition =
+      fixedSectionImages[sectionLabel];
+
+    if (!imageDefinition) {
+      return;
+    }
+
+    const postContent =
+      postPage.querySelector(".post-content");
+
+    if (!postContent) {
+      return;
+    }
+
+    const image = postContent.querySelector("img");
+
+    if (!image) {
+      return;
+    }
+
+    const imageUrl = new URL(
+      imageDefinition.path,
+      siteRoot
+    ).href;
+
+    image.src = imageUrl;
+    image.alt = imageDefinition.alt;
+
+    /*
+      מונע מהדפדפן לבחור שוב
+      גרסה ישנה מתוך srcset.
+    */
+    image.removeAttribute("srcset");
+    image.removeAttribute("sizes");
+
+    /*
+      אם התמונה נמצאת בתוך picture,
+      מסירים גם מקורות חלופיים ישנים.
+    */
+    const picture = image.closest("picture");
+
+    if (picture) {
+      picture
+        .querySelectorAll("source")
+        .forEach((source) => source.remove());
+    }
+
+    image.closest("figure")?.classList.add(
+      "fixed-post-cover"
+    );
+  }
+
+  /*
+    הסרת תאריך מעמודי פוסטים.
+
+    הקוד מסיר הן רכיב עם המחלקה post-date
+    והן תגית time באזור כותרת הפוסט.
+  */
+  function removePostDate() {
+    const postHeader = document.querySelector(".post-header");
+
+    if (!postHeader) {
+      return;
+    }
+
+    postHeader
+      .querySelectorAll(".post-date, time")
+      .forEach((element) => {
+        element.remove();
+      });
+
+    /*
+      גיבוי למקרה שהתאריך נכתב בתוך רכיב רגיל,
+      ללא מחלקה ייעודית.
+    */
+    const datePattern =
+      /^\s*\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\s*$/;
+
+    postHeader
+      .querySelectorAll("span, div, p")
+      .forEach((element) => {
+        if (element.children.length > 0) {
+          return;
+        }
+
+        const text = normalizeText(element.textContent);
+
+        if (datePattern.test(text)) {
+          element.remove();
+        }
+      });
+  }
+
   function addReadLinks() {
     document.querySelectorAll(".card").forEach((card) => {
       if (card.querySelector(".read-link")) {
@@ -461,9 +619,12 @@
   function findRegionForCard(card) {
     const label = getCardLabel(card);
 
-    return regionDefinitions.find((region) =>
-      region.order.includes(label)
-    ) || regionDefinitions[0];
+    return (
+      regionDefinitions.find((region) =>
+        region.order.includes(label)
+      ) ||
+      regionDefinitions[0]
+    );
   }
 
   function getCardOrder(card, region) {
@@ -581,7 +742,7 @@
     });
 
     /*
-      רק הטאב הראשון בכל אזור פעיל.
+      רק טאב אחד פעיל בכל אזור.
     */
     activateRegionCard(section, 0);
   }
@@ -596,6 +757,7 @@
     header.className = "content-region-header";
 
     const heading = document.createElement("h2");
+
     heading.className = "content-region-title";
     heading.textContent = region.title;
 
@@ -613,17 +775,20 @@
 
     tabs.className = "region-tabs";
     tabs.setAttribute("role", "tablist");
+
     tabs.setAttribute(
       "aria-label",
       region.title
     );
 
     const panel = document.createElement("div");
+
     panel.className = "region-panel";
 
     cards.forEach((card, index) => {
       const label =
-        getCardLabel(card) || `תוכן ${index + 1}`;
+        getCardLabel(card) ||
+        `תוכן ${index + 1}`;
 
       const tab = document.createElement("button");
 
@@ -701,7 +866,10 @@
 
     cards.forEach((card) => {
       const region = findRegionForCard(card);
-      cardsByRegion.get(region.id).push(card);
+
+      cardsByRegion
+        .get(region.id)
+        .push(card);
     });
 
     grid.replaceChildren();
@@ -802,6 +970,8 @@
       removeBinaNavigation();
       removeBinaCards();
       removeOldGamesContent();
+      removePostDate();
+      applyFixedSectionImageToPost();
       setupNavigation();
 
       const parashaName = getCurrentParasha();
@@ -809,13 +979,7 @@
       if (parashaName) {
         updateGamesNavigation(parashaName);
         addGamesCard(parashaName);
-
-        /*
-          סדר הפעולות חשוב:
-          קודם מחליפים תמונות ומוסיפים קישורים,
-          ורק לאחר מכן מארגנים את הכרטיסים בטאבים.
-        */
-        applyFixedSectionImages();
+        applyFixedSectionImagesToCards();
         addReadLinks();
         organizeParashaCards();
       }
