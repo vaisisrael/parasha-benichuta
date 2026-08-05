@@ -209,7 +209,6 @@
       .forEach((button) => {
         button.addEventListener("click", (event) => {
           event.preventDefault();
-
           button.parentElement.classList.toggle("open");
         });
       });
@@ -451,6 +450,7 @@
     }
 
     const sectionLabel = getPostSectionLabel();
+
     const imageDefinition =
       fixedSectionImages[sectionLabel];
 
@@ -514,10 +514,6 @@
       });
   }
 
-  /*
-    מאחד את גודל התמונה הראשית בכל הפוסטים,
-    גם כאשר Blogger שמר רוחב, גובה או style ישנים.
-  */
   function normalizePostMainImage() {
     const postContent =
       document.querySelector(".post-content");
@@ -553,7 +549,11 @@
       image.closest("div") ||
       image.closest("a");
 
-    if (wrapper && postContent.contains(wrapper)) {
+    if (
+      wrapper &&
+      wrapper !== postContent &&
+      postContent.contains(wrapper)
+    ) {
       wrapper.classList.add("post-main-image-wrap");
 
       wrapper.removeAttribute("width");
@@ -578,6 +578,31 @@
     return link?.href || null;
   }
 
+  function getClickableCardLinks(card) {
+    return Array.from(
+      card.querySelectorAll(
+        ".card-media[href], h2 a[href]"
+      )
+    );
+  }
+
+  function bindCardLinksToAction(card, action) {
+    getClickableCardLinks(card).forEach((link) => {
+      const replacement = link.cloneNode(true);
+
+      link.replaceWith(replacement);
+
+      replacement.addEventListener(
+        "click",
+        (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          action();
+        }
+      );
+    });
+  }
+
   function convertYouTubeUrl(url) {
     try {
       const parsed = new URL(url);
@@ -596,7 +621,8 @@
           return parsed.href;
         }
 
-        const videoId = parsed.searchParams.get("v");
+        const videoId =
+          parsed.searchParams.get("v");
 
         return videoId
           ? `https://www.youtube.com/embed/${videoId}`
@@ -617,7 +643,9 @@
         return null;
       }
 
-      if (parsed.hostname.includes("player.vimeo.com")) {
+      if (
+        parsed.hostname.includes("player.vimeo.com")
+      ) {
         return parsed.href;
       }
 
@@ -636,6 +664,7 @@
 
   function createIframeMedia(src, title) {
     const wrapper = document.createElement("div");
+
     wrapper.className = "inline-video-wrap";
 
     const iframe = document.createElement("iframe");
@@ -643,8 +672,10 @@
     iframe.src = src;
     iframe.title = title || "המחשה";
     iframe.loading = "lazy";
+
     iframe.allow =
       "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
     iframe.allowFullscreen = true;
 
     wrapper.append(iframe);
@@ -654,6 +685,7 @@
 
   function createVideoMedia(src) {
     const wrapper = document.createElement("div");
+
     wrapper.className = "inline-video-wrap";
 
     const video = document.createElement("video");
@@ -668,20 +700,25 @@
     return wrapper;
   }
 
-  /*
-    מזהה סרט בתוך עמוד פוסט שנטען ברקע.
-  */
-  function extractMediaFromPostHtml(html, postUrl) {
+  function extractMediaFromPostHtml(
+    html,
+    postUrl
+  ) {
     const parser = new DOMParser();
+
     const documentCopy =
-      parser.parseFromString(html, "text/html");
+      parser.parseFromString(
+        html,
+        "text/html"
+      );
 
     const postContent =
       documentCopy.querySelector(".post-content") ||
       documentCopy.querySelector("article") ||
       documentCopy.body;
 
-    const iframe = postContent.querySelector("iframe[src]");
+    const iframe =
+      postContent.querySelector("iframe[src]");
 
     if (iframe) {
       const iframeUrl = new URL(
@@ -698,17 +735,23 @@
       };
     }
 
-    const video = postContent.querySelector("video");
+    const video =
+      postContent.querySelector("video");
 
     if (video) {
       const directSource =
         video.getAttribute("src") ||
-        video.querySelector("source[src]")?.getAttribute("src");
+        video
+          .querySelector("source[src]")
+          ?.getAttribute("src");
 
       if (directSource) {
         return {
           type: "video",
-          src: new URL(directSource, postUrl).href
+          src: new URL(
+            directSource,
+            postUrl
+          ).href
         };
       }
     }
@@ -723,7 +766,8 @@
         postUrl
       ).href;
 
-      const youtubeUrl = convertYouTubeUrl(href);
+      const youtubeUrl =
+        convertYouTubeUrl(href);
 
       if (youtubeUrl) {
         return {
@@ -733,7 +777,8 @@
         };
       }
 
-      const vimeoUrl = convertVimeoUrl(href);
+      const vimeoUrl =
+        convertVimeoUrl(href);
 
       if (vimeoUrl) {
         return {
@@ -743,7 +788,9 @@
         };
       }
 
-      if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(href)) {
+      if (
+        /\.(mp4|webm|ogg)(\?.*)?$/i.test(href)
+      ) {
         return {
           type: "video",
           src: href
@@ -788,18 +835,27 @@
   }
 
   function saveOriginalCard(card) {
-    if (card.dataset.originalSaved === "true") {
+    if (
+      card.dataset.originalSaved === "true"
+    ) {
       return;
     }
 
-    card.dataset.originalHtml = card.innerHTML;
-    card.dataset.originalClass = card.className;
+    card.dataset.originalHtml =
+      card.innerHTML;
+
+    card.dataset.originalClass =
+      card.className;
+
     card.dataset.originalSaved = "true";
   }
 
   function restoreOriginalCard(card) {
-    const originalHtml = card.dataset.originalHtml;
-    const originalClass = card.dataset.originalClass;
+    const originalHtml =
+      card.dataset.originalHtml;
+
+    const originalClass =
+      card.dataset.originalClass;
 
     if (!originalHtml || !originalClass) {
       return;
@@ -820,28 +876,51 @@
 
     card.classList.add("inline-embed-card");
 
-    const shell = document.createElement("div");
+    const shell =
+      document.createElement("div");
+
     shell.className = "inline-embed-shell";
 
-    const toolbar = document.createElement("div");
-    toolbar.className = "inline-embed-toolbar";
+    const toolbar =
+      document.createElement("div");
 
-    const heading = document.createElement("div");
-    heading.className = "inline-embed-title";
+    toolbar.className =
+      "inline-embed-toolbar";
+
+    const heading =
+      document.createElement("div");
+
+    heading.className =
+      "inline-embed-title";
+
     heading.textContent = title;
 
-    const backButton = document.createElement("button");
+    const backButton =
+      document.createElement("button");
 
     backButton.type = "button";
-    backButton.className = "inline-back-button";
-    backButton.textContent = "חזרה לכרטיס";
+    backButton.className =
+      "inline-back-button";
 
-    backButton.addEventListener("click", () => {
-      restoreOriginalCard(card);
-    });
+    backButton.textContent =
+      "חזרה לכרטיס";
 
-    toolbar.append(heading, backButton);
-    shell.append(toolbar, contentElement);
+    backButton.addEventListener(
+      "click",
+      () => {
+        restoreOriginalCard(card);
+      }
+    );
+
+    toolbar.append(
+      heading,
+      backButton
+    );
+
+    shell.append(
+      toolbar,
+      contentElement
+    );
 
     card.replaceChildren(shell);
 
@@ -851,20 +930,195 @@
     });
   }
 
+  function normalizeGameText(value) {
+    return String(value || "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function removeGamesHomeLinks(
+    gameDocument
+  ) {
+    gameDocument
+      .querySelectorAll("a, button")
+      .forEach((element) => {
+        const text = normalizeGameText(
+          element.textContent
+        );
+
+        const href =
+          element.getAttribute("href") || "";
+
+        if (
+          text === "חזרה לדף הבית" ||
+          text === "לדף הבית" ||
+          text === "חזרה לאתר" ||
+          element.classList.contains("back-home") ||
+          element.classList.contains("home-link") ||
+          href === "../" ||
+          href === "/" ||
+          href.endsWith("/index.html")
+        ) {
+          element.remove();
+        }
+      });
+  }
+
+  function findFirstGameControl(
+    iframe,
+    gameDocument
+  ) {
+    const preferredGames = [
+      "גלילון",
+      "מגירון",
+      "חכמון",
+      "מה ההבדל",
+      "זיכרון",
+      "חקי הבלש"
+    ];
+
+    const candidates = Array.from(
+      gameDocument.querySelectorAll(
+        "button, [role='button'], a[href], .game-card, .game-button, [data-game]"
+      )
+    ).filter((element) => {
+      const style =
+        iframe.contentWindow
+          ?.getComputedStyle(element);
+
+      if (!style) {
+        return true;
+      }
+
+      return (
+        style.display !== "none" &&
+        style.visibility !== "hidden"
+      );
+    });
+
+    for (const gameName of preferredGames) {
+      const match = candidates.find(
+        (element) => {
+          const text = normalizeGameText(
+            element.textContent
+          );
+
+          return text.includes(gameName);
+        }
+      );
+
+      if (match) {
+        return match;
+      }
+    }
+
+    const ignoredTexts = [
+      "חזרה",
+      "דף הבית",
+      "משחקי הפרשה",
+      "בחרו משחק",
+      "בחירת משחק"
+    ];
+
+    return candidates.find((element) => {
+      const text = normalizeGameText(
+        element.textContent
+      );
+
+      if (!text) {
+        return false;
+      }
+
+      return !ignoredTexts.some(
+        (ignored) =>
+          text.includes(ignored)
+      );
+    }) || null;
+  }
+
+  function prepareEmbeddedGames(iframe) {
+    try {
+      const gameDocument =
+        iframe.contentDocument ||
+        iframe.contentWindow?.document;
+
+      if (!gameDocument) {
+        return;
+      }
+
+      removeGamesHomeLinks(gameDocument);
+
+      if (
+        iframe.dataset.firstGameOpened ===
+        "true"
+      ) {
+        return;
+      }
+
+      const firstGame =
+        findFirstGameControl(
+          iframe,
+          gameDocument
+        );
+
+      if (!firstGame) {
+        return;
+      }
+
+      iframe.dataset.firstGameOpened =
+        "true";
+
+      firstGame.click();
+    } catch (error) {
+      console.warn(
+        "לא ניתן להכין את המשחקייה המוטמעת:",
+        error
+      );
+    }
+  }
+
   function openGamesInsideCard(card) {
-    const gamesUrl = card.dataset.gamesUrl;
+    const gamesUrl =
+      card.dataset.gamesUrl;
 
     if (!gamesUrl) {
       return;
     }
 
-    const iframe = document.createElement("iframe");
+    const iframe =
+      document.createElement("iframe");
 
-    iframe.className = "inline-embed-frame";
+    iframe.className =
+      "inline-embed-frame";
+
     iframe.src = gamesUrl;
-    iframe.title = "משחקי פרשת השבוע";
-    iframe.loading = "lazy";
+    iframe.title =
+      "משחקי פרשת השבוע";
+
+    iframe.loading = "eager";
     iframe.allowFullscreen = true;
+
+    iframe.addEventListener(
+      "load",
+      () => {
+        iframe.dataset.firstGameOpened =
+          "false";
+
+        prepareEmbeddedGames(iframe);
+
+        window.setTimeout(() => {
+          prepareEmbeddedGames(iframe);
+        }, 300);
+
+        window.setTimeout(() => {
+          prepareEmbeddedGames(iframe);
+        }, 800);
+
+        window.setTimeout(() => {
+          prepareEmbeddedGames(iframe);
+        }, 1500);
+      }
+    );
 
     openInlineContent(
       card,
@@ -873,7 +1127,10 @@
     );
   }
 
-  function openMediaInsideCard(card, media) {
+  function openMediaInsideCard(
+    card,
+    media
+  ) {
     const mediaElement =
       media.type === "video"
         ? createVideoMedia(media.src)
@@ -894,24 +1151,30 @@
       return;
     }
 
-    const body = card.querySelector(".card-body");
-    const postUrl = getCardPostUrl(card);
+    const body =
+      card.querySelector(".card-body");
+
+    const postUrl =
+      getCardPostUrl(card);
 
     if (!body || !postUrl) {
       return;
     }
 
-    const link = document.createElement("a");
+    const link =
+      document.createElement("a");
 
     link.className = "read-link";
     link.href = postUrl;
-    link.textContent = "לקריאת הפוסט";
+    link.textContent =
+      "לקריאת הפוסט";
 
     body.append(link);
   }
 
   function setupGamesAction(card) {
-    const body = card.querySelector(".card-body");
+    const body =
+      card.querySelector(".card-body");
 
     if (!body) {
       return;
@@ -921,23 +1184,43 @@
       .querySelectorAll(
         ".read-link, .inline-open-button, .card-action-loading"
       )
-      .forEach((element) => element.remove());
+      .forEach((element) => {
+        element.remove();
+      });
 
-    const button = document.createElement("button");
+    const openGames = () => {
+      openGamesInsideCard(card);
+    };
+
+    bindCardLinksToAction(
+      card,
+      openGames
+    );
+
+    const button =
+      document.createElement("button");
 
     button.type = "button";
-    button.className = "inline-open-button";
-    button.textContent = "לפתיחת המשחקים";
 
-    button.addEventListener("click", () => {
-      openGamesInsideCard(card);
-    });
+    button.className =
+      "inline-open-button";
+
+    button.textContent =
+      "לפתיחת המשחקים";
+
+    button.addEventListener(
+      "click",
+      openGames
+    );
 
     body.append(button);
   }
 
-  async function setupIllustrationAction(card) {
-    const body = card.querySelector(".card-body");
+  async function setupIllustrationAction(
+    card
+  ) {
+    const body =
+      card.querySelector(".card-body");
 
     if (!body) {
       return;
@@ -947,47 +1230,99 @@
       .querySelectorAll(
         ".read-link, .inline-open-button, .card-action-loading"
       )
-      .forEach((element) => element.remove());
+      .forEach((element) => {
+        element.remove();
+      });
 
-    const loading = document.createElement("span");
+    const postUrl =
+      getCardPostUrl(card);
 
-    loading.className = "card-action-loading";
-    loading.textContent = "בודק את ההמחשה…";
+    const loading =
+      document.createElement("span");
+
+    loading.className =
+      "card-action-loading";
+
+    loading.textContent =
+      "בודק את ההמחשה…";
 
     body.append(loading);
 
-    const media = await findMediaForCard(card);
+    const mediaPromise =
+      findMediaForCard(card);
+
+    const openIllustration =
+      async () => {
+        const media =
+          card._inlineMedia ||
+          await mediaPromise;
+
+        if (media) {
+          card._inlineMedia = media;
+
+          openMediaInsideCard(
+            card,
+            media
+          );
+
+          return;
+        }
+
+        if (postUrl) {
+          window.location.href = postUrl;
+        }
+      };
+
+    bindCardLinksToAction(
+      card,
+      openIllustration
+    );
+
+    const media = await mediaPromise;
 
     loading.remove();
 
-    /*
-      ייתכן שהכרטיס הוחלף בזמן הבדיקה.
-    */
-    const currentBody = card.querySelector(".card-body");
+    const currentBody =
+      card.querySelector(".card-body");
 
     if (!currentBody) {
       return;
     }
 
     if (!media) {
+      const links =
+        getClickableCardLinks(card);
+
+      links.forEach((link) => {
+        const replacement =
+          link.cloneNode(true);
+
+        replacement.href = postUrl;
+
+        link.replaceWith(replacement);
+      });
+
       appendReadLink(card);
       return;
     }
 
     card._inlineMedia = media;
 
-    const button = document.createElement("button");
+    const button =
+      document.createElement("button");
 
     button.type = "button";
-    button.className = "inline-open-button";
-    button.textContent = "להפעלת ההמחשה";
 
-    button.addEventListener("click", () => {
-      openMediaInsideCard(
-        card,
-        card._inlineMedia
-      );
-    });
+    button.className =
+      "inline-open-button";
+
+    button.textContent =
+      "להפעלת ההמחשה";
+
+    button.addEventListener(
+      "click",
+      openIllustration
+    );
 
     currentBody.append(button);
   }
@@ -1012,9 +1347,11 @@
   }
 
   function setupCardActions() {
-    document.querySelectorAll(".card").forEach((card) => {
-      setupSingleCardAction(card);
-    });
+    document
+      .querySelectorAll(".card")
+      .forEach((card) => {
+        setupSingleCardAction(card);
+      });
   }
 
   function findRegionForCard(card) {
@@ -1028,22 +1365,32 @@
     );
   }
 
-  function getCardOrder(card, region) {
+  function getCardOrder(
+    card,
+    region
+  ) {
     const label = getCardLabel(card);
-    const position = region.order.indexOf(label);
+
+    const position =
+      region.order.indexOf(label);
 
     return position === -1
       ? region.order.length
       : position;
   }
 
-  function sortRegionCards(cards, region) {
-    return [...cards].sort((cardA, cardB) => {
-      return (
-        getCardOrder(cardA, region) -
-        getCardOrder(cardB, region)
-      );
-    });
+  function sortRegionCards(
+    cards,
+    region
+  ) {
+    return [...cards].sort(
+      (cardA, cardB) => {
+        return (
+          getCardOrder(cardA, region) -
+          getCardOrder(cardB, region)
+        );
+      }
+    );
   }
 
   function activateRegionCard(
@@ -1052,7 +1399,9 @@
     moveFocus = false
   ) {
     const tabs = Array.from(
-      section.querySelectorAll(".region-tab")
+      section.querySelectorAll(
+        ".region-tab"
+      )
     );
 
     const cards = Array.from(
@@ -1062,22 +1411,32 @@
     );
 
     tabs.forEach((tab, index) => {
-      const active = index === selectedIndex;
+      const active =
+        index === selectedIndex;
 
-      tab.classList.toggle("is-active", active);
+      tab.classList.toggle(
+        "is-active",
+        active
+      );
 
       tab.setAttribute(
         "aria-selected",
         String(active)
       );
 
-      tab.tabIndex = active ? 0 : -1;
+      tab.tabIndex =
+        active ? 0 : -1;
     });
 
     cards.forEach((card, index) => {
-      const active = index === selectedIndex;
+      const active =
+        index === selectedIndex;
 
-      card.classList.toggle("is-active", active);
+      card.classList.toggle(
+        "is-active",
+        active
+      );
+
       card.hidden = !active;
     });
 
@@ -1088,76 +1447,101 @@
 
   function setupRegionTabs(section) {
     const tabs = Array.from(
-      section.querySelectorAll(".region-tab")
+      section.querySelectorAll(
+        ".region-tab"
+      )
     );
 
     tabs.forEach((tab, index) => {
-      tab.addEventListener("click", () => {
-        activateRegionCard(section, index);
-      });
-
-      tab.addEventListener("keydown", (event) => {
-        let nextIndex = null;
-
-        if (
-          event.key === "ArrowLeft" ||
-          event.key === "ArrowDown"
-        ) {
-          nextIndex = (index + 1) % tabs.length;
+      tab.addEventListener(
+        "click",
+        () => {
+          activateRegionCard(
+            section,
+            index
+          );
         }
+      );
 
-        if (
-          event.key === "ArrowRight" ||
-          event.key === "ArrowUp"
-        ) {
-          nextIndex =
-            (index - 1 + tabs.length) % tabs.length;
+      tab.addEventListener(
+        "keydown",
+        (event) => {
+          let nextIndex = null;
+
+          if (
+            event.key === "ArrowLeft" ||
+            event.key === "ArrowDown"
+          ) {
+            nextIndex =
+              (index + 1) % tabs.length;
+          }
+
+          if (
+            event.key === "ArrowRight" ||
+            event.key === "ArrowUp"
+          ) {
+            nextIndex =
+              (index - 1 + tabs.length) %
+              tabs.length;
+          }
+
+          if (event.key === "Home") {
+            nextIndex = 0;
+          }
+
+          if (event.key === "End") {
+            nextIndex =
+              tabs.length - 1;
+          }
+
+          if (nextIndex === null) {
+            return;
+          }
+
+          event.preventDefault();
+
+          activateRegionCard(
+            section,
+            nextIndex,
+            true
+          );
+
+          tabs[nextIndex].scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "nearest"
+          });
         }
-
-        if (event.key === "Home") {
-          nextIndex = 0;
-        }
-
-        if (event.key === "End") {
-          nextIndex = tabs.length - 1;
-        }
-
-        if (nextIndex === null) {
-          return;
-        }
-
-        event.preventDefault();
-
-        activateRegionCard(
-          section,
-          nextIndex,
-          true
-        );
-
-        tabs[nextIndex].scrollIntoView({
-          behavior: "smooth",
-          block: "nearest",
-          inline: "nearest"
-        });
-      });
+      );
     });
 
     activateRegionCard(section, 0);
   }
 
-  function createRegionElement(region, cards) {
-    const section = document.createElement("section");
+  function createRegionElement(
+    region,
+    cards
+  ) {
+    const section =
+      document.createElement("section");
 
     section.className =
       `content-region content-region-${region.id}`;
 
-    const header = document.createElement("div");
-    header.className = "content-region-header";
+    const header =
+      document.createElement("div");
 
-    const heading = document.createElement("h2");
+    header.className =
+      "content-region-header";
 
-    heading.className = "content-region-title";
-    heading.textContent = region.title;
+    const heading =
+      document.createElement("h2");
+
+    heading.className =
+      "content-region-title";
+
+    heading.textContent =
+      region.title;
 
     const headingId =
       `region-title-${region.id}`;
@@ -1169,17 +1553,22 @@
       headingId
     );
 
-    const tabs = document.createElement("div");
+    const tabs =
+      document.createElement("div");
 
     tabs.className = "region-tabs";
-    tabs.setAttribute("role", "tablist");
+    tabs.setAttribute(
+      "role",
+      "tablist"
+    );
 
     tabs.setAttribute(
       "aria-label",
       region.title
     );
 
-    const panel = document.createElement("div");
+    const panel =
+      document.createElement("div");
 
     panel.className = "region-panel";
 
@@ -1188,7 +1577,8 @@
         getCardLabel(card) ||
         `תוכן ${index + 1}`;
 
-      const tab = document.createElement("button");
+      const tab =
+        document.createElement("button");
 
       const tabId =
         `region-${region.id}-tab-${index}`;
@@ -1201,7 +1591,10 @@
       tab.textContent = label;
       tab.id = tabId;
 
-      tab.setAttribute("role", "tab");
+      tab.setAttribute(
+        "role",
+        "tab"
+      );
 
       tab.setAttribute(
         "aria-controls",
@@ -1216,7 +1609,11 @@
       tab.tabIndex = -1;
 
       card.id = panelId;
-      card.setAttribute("role", "tabpanel");
+
+      card.setAttribute(
+        "role",
+        "tabpanel"
+      );
 
       card.setAttribute(
         "aria-labelledby",
@@ -1229,8 +1626,15 @@
       panel.append(card);
     });
 
-    header.append(heading, tabs);
-    section.append(header, panel);
+    header.append(
+      heading,
+      tabs
+    );
+
+    section.append(
+      header,
+      panel
+    );
 
     setupRegionTabs(section);
 
@@ -1238,17 +1642,24 @@
   }
 
   function organizeParashaCards() {
-    const grid = document.querySelector(".cards-grid");
+    const grid =
+      document.querySelector(
+        ".cards-grid"
+      );
 
     if (
       !grid ||
-      grid.classList.contains("organized-regions")
+      grid.classList.contains(
+        "organized-regions"
+      )
     ) {
       return;
     }
 
     const cards = Array.from(
-      grid.querySelectorAll(":scope > .card")
+      grid.querySelectorAll(
+        ":scope > .card"
+      )
     );
 
     if (!cards.length) {
@@ -1263,7 +1674,8 @@
     );
 
     cards.forEach((card) => {
-      const region = findRegionForCard(card);
+      const region =
+        findRegionForCard(card);
 
       cardsByRegion
         .get(region.id)
@@ -1271,22 +1683,31 @@
     });
 
     grid.replaceChildren();
-    grid.classList.add("organized-regions");
 
-    regionDefinitions.forEach((region) => {
-      const regionCards = sortRegionCards(
-        cardsByRegion.get(region.id),
-        region
-      );
+    grid.classList.add(
+      "organized-regions"
+    );
 
-      if (!regionCards.length) {
-        return;
+    regionDefinitions.forEach(
+      (region) => {
+        const regionCards =
+          sortRegionCards(
+            cardsByRegion.get(region.id),
+            region
+          );
+
+        if (!regionCards.length) {
+          return;
+        }
+
+        grid.append(
+          createRegionElement(
+            region,
+            regionCards
+          )
+        );
       }
-
-      grid.append(
-        createRegionElement(region, regionCards)
-      );
-    });
+    );
   }
 
   async function repairInternalLinks() {
@@ -1308,7 +1729,8 @@
         return;
       }
 
-      redirectMap = await response.json();
+      redirectMap =
+        await response.json();
     } catch (error) {
       console.error(
         "Redirect map error:",
@@ -1321,7 +1743,8 @@
     document
       .querySelectorAll("a[href]")
       .forEach((link) => {
-        const rawHref = link.getAttribute("href");
+        const rawHref =
+          link.getAttribute("href");
 
         if (!rawHref) {
           return;
@@ -1338,7 +1761,11 @@
           return;
         }
 
-        if (!oldSiteHosts.has(oldUrl.hostname)) {
+        if (
+          !oldSiteHosts.has(
+            oldUrl.hostname
+          )
+        ) {
           return;
         }
 
@@ -1354,8 +1781,11 @@
           siteRoot
         );
 
-        target.search = oldUrl.search;
-        target.hash = oldUrl.hash;
+        target.search =
+          oldUrl.search;
+
+        target.hash =
+          oldUrl.hash;
 
         link.href = target.href;
       });
@@ -1375,13 +1805,22 @@
 
       setupNavigation();
 
-      const parashaName = getCurrentParasha();
+      const parashaName =
+        getCurrentParasha();
 
       if (parashaName) {
-        updateGamesNavigation(parashaName);
-        addGamesCard(parashaName);
+        updateGamesNavigation(
+          parashaName
+        );
+
+        addGamesCard(
+          parashaName
+        );
+
         applyFixedSectionImagesToCards();
+
         setupCardActions();
+
         organizeParashaCards();
       }
 
