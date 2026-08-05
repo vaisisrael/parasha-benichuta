@@ -80,13 +80,6 @@
     siteRoot
   );
 
-  /*
-    תמונות קבועות למדורים.
-
-    התמונות מוחלפות:
-    1. בכרטיסים בדף הפרשה.
-    2. בתוך עמודי הפוסטים עצמם.
-  */
   const fixedSectionImages = {
     "ילדים": {
       path: "assets/images/section-covers/children.png",
@@ -329,7 +322,6 @@
 
       if (text === "משחקים") {
         link.href = gamesUrl;
-
         link.textContent =
           `משחקי פרשת ${parashaName}`;
       }
@@ -357,6 +349,8 @@
 
     card.className =
       "card games-system-card fixed-cover-card";
+
+    card.dataset.gamesUrl = gamesUrl;
 
     card.innerHTML = `
       <a
@@ -389,9 +383,6 @@
     grid.prepend(card);
   }
 
-  /*
-    החלפת התמונות בכרטיסים שבדף הפרשה.
-  */
   function applyFixedSectionImagesToCards() {
     document.querySelectorAll(".card").forEach((card) => {
       const label = getCardLabel(card);
@@ -425,68 +416,37 @@
 
       image.removeAttribute("srcset");
       image.removeAttribute("sizes");
+      image.removeAttribute("width");
+      image.removeAttribute("height");
 
       card.classList.add("fixed-cover-card");
     });
   }
 
-  /*
-    זיהוי המדור בעמוד פוסט.
-
-    הקוד מחפש את שם המדור באזור המטא־דאטה
-    או בכותרת המשנית שמעל כותרת הפוסט.
-  */
   function getPostSectionLabel() {
-    const possibleContainers = [
+    const containers = [
       document.querySelector(".post-meta"),
-      document.querySelector(".post-header"),
-      document.querySelector(".post-page")
+      document.querySelector(".post-header")
     ].filter(Boolean);
 
-    for (const container of possibleContainers) {
-      const elements = container.querySelectorAll(
-        "a, span, div, p"
-      );
+    for (const container of containers) {
+      const text = normalizeText(container.textContent);
 
-      for (const element of elements) {
-        const text = normalizeText(element.textContent);
-
-        for (const label of Object.keys(fixedSectionImages)) {
-          if (
-            text === label ||
-            text.endsWith(`· ${label}`) ||
-            text.includes(` · ${label}`) ||
-            text.includes(`־ ${label}`)
-          ) {
-            return label;
-          }
+      for (const label of Object.keys(fixedSectionImages)) {
+        if (text.includes(label)) {
+          return label;
         }
-      }
-    }
-
-    const headerText = normalizeText(
-      document.querySelector(".post-header")?.textContent
-    );
-
-    for (const label of Object.keys(fixedSectionImages)) {
-      if (headerText.includes(label)) {
-        return label;
       }
     }
 
     return null;
   }
 
-  /*
-    החלפת התמונה הגנרית בתוך עמוד הפוסט עצמו.
-
-    מוחל רק על:
-    אסיף, ילדים, משחקים והמשחקיה.
-  */
   function applyFixedSectionImageToPost() {
-    const postPage = document.querySelector(".post-page");
+    const postContent =
+      document.querySelector(".post-content");
 
-    if (!postPage) {
+    if (!postContent) {
       return;
     }
 
@@ -495,13 +455,6 @@
       fixedSectionImages[sectionLabel];
 
     if (!imageDefinition) {
-      return;
-    }
-
-    const postContent =
-      postPage.querySelector(".post-content");
-
-    if (!postContent) {
       return;
     }
 
@@ -519,17 +472,9 @@
     image.src = imageUrl;
     image.alt = imageDefinition.alt;
 
-    /*
-      מונע מהדפדפן לבחור שוב
-      גרסה ישנה מתוך srcset.
-    */
     image.removeAttribute("srcset");
     image.removeAttribute("sizes");
 
-    /*
-      אם התמונה נמצאת בתוך picture,
-      מסירים גם מקורות חלופיים ישנים.
-    */
     const picture = image.closest("picture");
 
     if (picture) {
@@ -537,20 +482,11 @@
         .querySelectorAll("source")
         .forEach((source) => source.remove());
     }
-
-    image.closest("figure")?.classList.add(
-      "fixed-post-cover"
-    );
   }
 
-  /*
-    הסרת תאריך מעמודי פוסטים.
-
-    הקוד מסיר הן רכיב עם המחלקה post-date
-    והן תגית time באזור כותרת הפוסט.
-  */
   function removePostDate() {
-    const postHeader = document.querySelector(".post-header");
+    const postHeader =
+      document.querySelector(".post-header");
 
     if (!postHeader) {
       return;
@@ -558,14 +494,8 @@
 
     postHeader
       .querySelectorAll(".post-date, time")
-      .forEach((element) => {
-        element.remove();
-      });
+      .forEach((element) => element.remove());
 
-    /*
-      גיבוי למקרה שהתאריך נכתב בתוך רכיב רגיל,
-      ללא מחלקה ייעודית.
-    */
     const datePattern =
       /^\s*\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\s*$/;
 
@@ -584,35 +514,506 @@
       });
   }
 
-  function addReadLinks() {
+  /*
+    מאחד את גודל התמונה הראשית בכל הפוסטים,
+    גם כאשר Blogger שמר רוחב, גובה או style ישנים.
+  */
+  function normalizePostMainImage() {
+    const postContent =
+      document.querySelector(".post-content");
+
+    if (!postContent) {
+      return;
+    }
+
+    const image = postContent.querySelector("img");
+
+    if (!image) {
+      return;
+    }
+
+    image.removeAttribute("width");
+    image.removeAttribute("height");
+    image.removeAttribute("srcset");
+    image.removeAttribute("sizes");
+    image.removeAttribute("align");
+
+    image.style.removeProperty("width");
+    image.style.removeProperty("height");
+    image.style.removeProperty("max-width");
+    image.style.removeProperty("min-width");
+    image.style.removeProperty("margin");
+    image.style.removeProperty("float");
+
+    image.classList.add("post-main-image");
+
+    const wrapper =
+      image.closest("figure") ||
+      image.closest("p") ||
+      image.closest("div") ||
+      image.closest("a");
+
+    if (wrapper && postContent.contains(wrapper)) {
+      wrapper.classList.add("post-main-image-wrap");
+
+      wrapper.removeAttribute("width");
+      wrapper.removeAttribute("height");
+      wrapper.removeAttribute("align");
+
+      wrapper.style.removeProperty("width");
+      wrapper.style.removeProperty("height");
+      wrapper.style.removeProperty("max-width");
+      wrapper.style.removeProperty("min-width");
+      wrapper.style.removeProperty("margin");
+      wrapper.style.removeProperty("float");
+      wrapper.style.removeProperty("text-align");
+    }
+  }
+
+  function getCardPostUrl(card) {
+    const link =
+      card.querySelector("h2 a[href]") ||
+      card.querySelector(".card-media[href]");
+
+    return link?.href || null;
+  }
+
+  function convertYouTubeUrl(url) {
+    try {
+      const parsed = new URL(url);
+
+      if (parsed.hostname.includes("youtu.be")) {
+        const videoId =
+          parsed.pathname.replace(/^\/+/, "");
+
+        return videoId
+          ? `https://www.youtube.com/embed/${videoId}`
+          : null;
+      }
+
+      if (parsed.hostname.includes("youtube.com")) {
+        if (parsed.pathname.startsWith("/embed/")) {
+          return parsed.href;
+        }
+
+        const videoId = parsed.searchParams.get("v");
+
+        return videoId
+          ? `https://www.youtube.com/embed/${videoId}`
+          : null;
+      }
+    } catch {
+      return null;
+    }
+
+    return null;
+  }
+
+  function convertVimeoUrl(url) {
+    try {
+      const parsed = new URL(url);
+
+      if (!parsed.hostname.includes("vimeo.com")) {
+        return null;
+      }
+
+      if (parsed.hostname.includes("player.vimeo.com")) {
+        return parsed.href;
+      }
+
+      const videoId = parsed.pathname
+        .split("/")
+        .filter(Boolean)
+        .find((part) => /^\d+$/.test(part));
+
+      return videoId
+        ? `https://player.vimeo.com/video/${videoId}`
+        : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function createIframeMedia(src, title) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "inline-video-wrap";
+
+    const iframe = document.createElement("iframe");
+
+    iframe.src = src;
+    iframe.title = title || "המחשה";
+    iframe.loading = "lazy";
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+
+    wrapper.append(iframe);
+
+    return wrapper;
+  }
+
+  function createVideoMedia(src) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "inline-video-wrap";
+
+    const video = document.createElement("video");
+
+    video.src = src;
+    video.controls = true;
+    video.preload = "metadata";
+    video.playsInline = true;
+
+    wrapper.append(video);
+
+    return wrapper;
+  }
+
+  /*
+    מזהה סרט בתוך עמוד פוסט שנטען ברקע.
+  */
+  function extractMediaFromPostHtml(html, postUrl) {
+    const parser = new DOMParser();
+    const documentCopy =
+      parser.parseFromString(html, "text/html");
+
+    const postContent =
+      documentCopy.querySelector(".post-content") ||
+      documentCopy.querySelector("article") ||
+      documentCopy.body;
+
+    const iframe = postContent.querySelector("iframe[src]");
+
+    if (iframe) {
+      const iframeUrl = new URL(
+        iframe.getAttribute("src"),
+        postUrl
+      ).href;
+
+      return {
+        type: "iframe",
+        src: iframeUrl,
+        title:
+          iframe.getAttribute("title") ||
+          "המחשה לפרשת השבוע"
+      };
+    }
+
+    const video = postContent.querySelector("video");
+
+    if (video) {
+      const directSource =
+        video.getAttribute("src") ||
+        video.querySelector("source[src]")?.getAttribute("src");
+
+      if (directSource) {
+        return {
+          type: "video",
+          src: new URL(directSource, postUrl).href
+        };
+      }
+    }
+
+    const links = Array.from(
+      postContent.querySelectorAll("a[href]")
+    );
+
+    for (const link of links) {
+      const href = new URL(
+        link.getAttribute("href"),
+        postUrl
+      ).href;
+
+      const youtubeUrl = convertYouTubeUrl(href);
+
+      if (youtubeUrl) {
+        return {
+          type: "iframe",
+          src: youtubeUrl,
+          title: "סרטון YouTube"
+        };
+      }
+
+      const vimeoUrl = convertVimeoUrl(href);
+
+      if (vimeoUrl) {
+        return {
+          type: "iframe",
+          src: vimeoUrl,
+          title: "סרטון Vimeo"
+        };
+      }
+
+      if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(href)) {
+        return {
+          type: "video",
+          src: href
+        };
+      }
+    }
+
+    return null;
+  }
+
+  async function findMediaForCard(card) {
+    const postUrl = getCardPostUrl(card);
+
+    if (!postUrl) {
+      return null;
+    }
+
+    try {
+      const response = await fetch(
+        postUrl,
+        { cache: "no-store" }
+      );
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const html = await response.text();
+
+      return extractMediaFromPostHtml(
+        html,
+        postUrl
+      );
+    } catch (error) {
+      console.warn(
+        "לא ניתן לבדוק את פוסט ההמחשה:",
+        error
+      );
+
+      return null;
+    }
+  }
+
+  function saveOriginalCard(card) {
+    if (card.dataset.originalSaved === "true") {
+      return;
+    }
+
+    card.dataset.originalHtml = card.innerHTML;
+    card.dataset.originalClass = card.className;
+    card.dataset.originalSaved = "true";
+  }
+
+  function restoreOriginalCard(card) {
+    const originalHtml = card.dataset.originalHtml;
+    const originalClass = card.dataset.originalClass;
+
+    if (!originalHtml || !originalClass) {
+      return;
+    }
+
+    card.className = originalClass;
+    card.innerHTML = originalHtml;
+
+    setupSingleCardAction(card);
+  }
+
+  function openInlineContent(
+    card,
+    title,
+    contentElement
+  ) {
+    saveOriginalCard(card);
+
+    card.classList.add("inline-embed-card");
+
+    const shell = document.createElement("div");
+    shell.className = "inline-embed-shell";
+
+    const toolbar = document.createElement("div");
+    toolbar.className = "inline-embed-toolbar";
+
+    const heading = document.createElement("div");
+    heading.className = "inline-embed-title";
+    heading.textContent = title;
+
+    const backButton = document.createElement("button");
+
+    backButton.type = "button";
+    backButton.className = "inline-back-button";
+    backButton.textContent = "חזרה לכרטיס";
+
+    backButton.addEventListener("click", () => {
+      restoreOriginalCard(card);
+    });
+
+    toolbar.append(heading, backButton);
+    shell.append(toolbar, contentElement);
+
+    card.replaceChildren(shell);
+
+    card.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  }
+
+  function openGamesInsideCard(card) {
+    const gamesUrl = card.dataset.gamesUrl;
+
+    if (!gamesUrl) {
+      return;
+    }
+
+    const iframe = document.createElement("iframe");
+
+    iframe.className = "inline-embed-frame";
+    iframe.src = gamesUrl;
+    iframe.title = "משחקי פרשת השבוע";
+    iframe.loading = "lazy";
+    iframe.allowFullscreen = true;
+
+    openInlineContent(
+      card,
+      "משחקי פרשת השבוע",
+      iframe
+    );
+  }
+
+  function openMediaInsideCard(card, media) {
+    const mediaElement =
+      media.type === "video"
+        ? createVideoMedia(media.src)
+        : createIframeMedia(
+            media.src,
+            media.title
+          );
+
+    openInlineContent(
+      card,
+      "המחשה לפרשת השבוע",
+      mediaElement
+    );
+  }
+
+  function appendReadLink(card) {
+    if (card.querySelector(".read-link")) {
+      return;
+    }
+
+    const body = card.querySelector(".card-body");
+    const postUrl = getCardPostUrl(card);
+
+    if (!body || !postUrl) {
+      return;
+    }
+
+    const link = document.createElement("a");
+
+    link.className = "read-link";
+    link.href = postUrl;
+    link.textContent = "לקריאת הפוסט";
+
+    body.append(link);
+  }
+
+  function setupGamesAction(card) {
+    const body = card.querySelector(".card-body");
+
+    if (!body) {
+      return;
+    }
+
+    body
+      .querySelectorAll(
+        ".read-link, .inline-open-button, .card-action-loading"
+      )
+      .forEach((element) => element.remove());
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "inline-open-button";
+    button.textContent = "לפתיחת המשחקים";
+
+    button.addEventListener("click", () => {
+      openGamesInsideCard(card);
+    });
+
+    body.append(button);
+  }
+
+  async function setupIllustrationAction(card) {
+    const body = card.querySelector(".card-body");
+
+    if (!body) {
+      return;
+    }
+
+    body
+      .querySelectorAll(
+        ".read-link, .inline-open-button, .card-action-loading"
+      )
+      .forEach((element) => element.remove());
+
+    const loading = document.createElement("span");
+
+    loading.className = "card-action-loading";
+    loading.textContent = "בודק את ההמחשה…";
+
+    body.append(loading);
+
+    const media = await findMediaForCard(card);
+
+    loading.remove();
+
+    /*
+      ייתכן שהכרטיס הוחלף בזמן הבדיקה.
+    */
+    const currentBody = card.querySelector(".card-body");
+
+    if (!currentBody) {
+      return;
+    }
+
+    if (!media) {
+      appendReadLink(card);
+      return;
+    }
+
+    card._inlineMedia = media;
+
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.className = "inline-open-button";
+    button.textContent = "להפעלת ההמחשה";
+
+    button.addEventListener("click", () => {
+      openMediaInsideCard(
+        card,
+        card._inlineMedia
+      );
+    });
+
+    currentBody.append(button);
+  }
+
+  function setupSingleCardAction(card) {
+    const label = getCardLabel(card);
+
+    if (
+      label === "משחקים" ||
+      label === "המשחקיה"
+    ) {
+      setupGamesAction(card);
+      return;
+    }
+
+    if (label === "המחשה") {
+      setupIllustrationAction(card);
+      return;
+    }
+
+    appendReadLink(card);
+  }
+
+  function setupCardActions() {
     document.querySelectorAll(".card").forEach((card) => {
-      if (card.querySelector(".read-link")) {
-        return;
-      }
-
-      const sourceLink =
-        card.querySelector("h2 a[href]") ||
-        card.querySelector(".card-media[href]");
-
-      const body = card.querySelector(".card-body");
-
-      if (!sourceLink || !body) {
-        return;
-      }
-
-      const label = getCardLabel(card);
-      const readLink = document.createElement("a");
-
-      readLink.className = "read-link";
-      readLink.href = sourceLink.href;
-
-      readLink.textContent =
-        label === "משחקים" ||
-        label === "המשחקיה"
-          ? "לפתיחת המשחקים"
-          : "לקריאת הפוסט";
-
-      body.append(readLink);
+      setupSingleCardAction(card);
     });
   }
 
@@ -741,9 +1142,6 @@
       });
     });
 
-    /*
-      רק טאב אחד פעיל בכל אזור.
-    */
     activateRegionCard(section, 0);
   }
 
@@ -970,8 +1368,11 @@
       removeBinaNavigation();
       removeBinaCards();
       removeOldGamesContent();
+
       removePostDate();
       applyFixedSectionImageToPost();
+      normalizePostMainImage();
+
       setupNavigation();
 
       const parashaName = getCurrentParasha();
@@ -980,7 +1381,7 @@
         updateGamesNavigation(parashaName);
         addGamesCard(parashaName);
         applyFixedSectionImagesToCards();
-        addReadLinks();
+        setupCardActions();
         organizeParashaCards();
       }
 
