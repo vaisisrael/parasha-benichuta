@@ -1,17 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700&family=Heebo:wght@500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600&display=swap");
 
 :root {
-  --bg: #f7f4ed;
-  --paper: #f8f6f0;
-  --ink: #26231f;
-  --muted: #6c665d;
-  --accent: #456246;
-  --line: #ded8cc;
-  --shadow: 0 8px 26px rgba(50, 42, 30, 0.08);
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface-soft: #f1f4f1;
+  --surface-warm: #f5f0ea;
+  --surface-blue: #eef3f5;
 
-  --region-knowing: #f3f5f0;
-  --region-stories: #f5f1ea;
-  --region-family: #f1f3f4;
+  --ink: #252825;
+  --muted: #6f746f;
+  --accent: #4f6d5a;
+  --accent-dark: #3f5b49;
+  --line: #dfe4df;
+
+  --shadow: 0 12px 30px rgba(43, 49, 44, 0.07);
+  --radius-large: 24px;
+  --radius-card: 20px;
 }
 
 * {
@@ -26,42 +30,33 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: "Assistant", Arial, sans-serif;
-  font-size: 17px;
-  line-height: 1.65;
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
 }
 
 a {
   color: inherit;
 }
 
-h1,
-h2,
-h3,
-.brand,
-.eyebrow,
-.content-region-title {
-  font-family: "Heebo", Arial, sans-serif;
-}
-
 /* =========================
-   כותרת ותפריט
+   כותרת האתר והתפריט
    ========================= */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.94);
   border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
 }
 
 .header-inner {
-  max-width: 1240px;
-  min-height: 70px;
+  width: min(1160px, calc(100% - 32px));
+  min-height: 68px;
   margin: auto;
-  padding: 0 20px;
   display: flex;
   align-items: center;
   gap: 28px;
@@ -69,8 +64,8 @@ h3,
 
 .brand {
   color: var(--accent);
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: 1.15rem;
+  font-weight: 600;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -94,11 +89,12 @@ h3,
 .main-nav a,
 .main-nav button {
   display: block;
-  padding: 22px 12px;
+  padding: 21px 12px;
   border: 0;
   background: none;
   color: inherit;
   font: inherit;
+  font-size: 0.94rem;
   text-decoration: none;
   cursor: pointer;
 }
@@ -108,12 +104,14 @@ h3,
   position: absolute;
   top: 100%;
   right: 0;
-  min-width: 190px;
+  min-width: 200px;
   background: #fff;
   border: 1px solid var(--line);
+  border-radius: 12px;
   box-shadow: var(--shadow);
   flex-direction: column;
   align-items: stretch;
+  overflow: hidden;
 }
 
 .main-nav li:hover > ul,
@@ -125,8 +123,13 @@ h3,
 .main-nav li ul a,
 .main-nav li ul button {
   width: 100%;
-  padding: 10px 14px;
+  padding: 11px 15px;
   text-align: right;
+}
+
+.main-nav li ul a:hover,
+.main-nav li ul button:hover {
+  background: var(--surface-soft);
 }
 
 .main-nav li ul .has-sub > ul {
@@ -138,7 +141,7 @@ h3,
   display: none;
   padding: 8px 12px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 10px;
   background: #fff;
   font-size: 1.4rem;
 }
@@ -148,204 +151,334 @@ h3,
    ========================= */
 
 .site-main {
-  max-width: 1120px;
+  width: min(1080px, calc(100% - 32px));
   margin: auto;
-  padding: 24px 20px 70px;
+  padding: 20px 0 70px;
 }
 
-/* כותרת פרשת השבוע */
+/* כותרת הפרשה */
 
 .hero {
   display: flex;
   align-items: baseline;
-  gap: 16px;
-  margin-bottom: 14px;
-  padding: 14px 24px;
-  background: linear-gradient(135deg, #fff, #f0eadc);
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  gap: 14px;
+  padding: 8px 2px 18px;
+  margin-bottom: 2px;
+  background: none;
+  border: 0;
 }
 
 .hero.hero-compact {
-  padding-block: 14px;
+  padding-block: 8px 18px;
 }
 
 .hero .eyebrow {
+  flex: 0 0 auto;
   margin: 0;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 500;
   white-space: nowrap;
 }
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(1.9rem, 3.2vw, 2.7rem);
-  line-height: 1.15;
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-/* כותרות של דפי ארכיון */
+/* כותרות דפי ארכיון */
 
 .archive-header {
   margin-bottom: 24px;
-  padding: 32px;
-  background: linear-gradient(135deg, #fff, #f0eadc);
+  padding: 30px 32px;
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: var(--radius-large);
 }
 
 .archive-header h1 {
   margin: 0;
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 500;
   line-height: 1.15;
 }
 
-.eyebrow {
-  color: var(--accent);
-  font-size: 0.82rem;
-  font-weight: 800;
-}
-
 /* =========================
-   אזורי התוכן
+   רשת רגילה בדפי ארכיון
    ========================= */
 
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 
+/*
+  בדף פרשה JavaScript מחליף את הרשת
+  בשלושה אזורי תוכן.
+*/
 .cards-grid.organized-regions {
   display: block;
 }
 
+/* =========================
+   אזורי דף הפרשה
+   ========================= */
+
 .content-region {
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid rgba(69, 98, 70, 0.15);
-  border-radius: 14px;
+  margin-bottom: 28px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
 }
 
 .content-region-knowing {
-  background: var(--region-knowing);
+  background: var(--surface-soft);
 }
 
 .content-region-stories {
-  background: var(--region-stories);
+  background: var(--surface-warm);
 }
 
 .content-region-family {
-  background: var(--region-family);
+  background: var(--surface-blue);
+}
+
+.content-region-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
 }
 
 .content-region-title {
-  margin: 0 2px 10px;
-  padding: 0 4px 7px;
-  border-bottom: 1px solid rgba(69, 98, 70, 0.2);
+  flex: 0 0 auto;
+  margin: 0;
   color: var(--accent);
-  font-size: clamp(1.25rem, 2.4vw, 1.65rem);
-  font-weight: 700;
+  font-size: 1.55rem;
+  font-weight: 500;
   line-height: 1.25;
-}
-
-.region-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: start;
-  gap: 10px;
+  letter-spacing: -0.01em;
 }
 
 /* =========================
-   כרטיסי תוכן
+   טאבים
    ========================= */
 
-.card {
+.region-tabs {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  padding: 2px 0 6px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79, 109, 90, 0.35) transparent;
+}
+
+.region-tabs::-webkit-scrollbar {
+  height: 5px;
+}
+
+.region-tabs::-webkit-scrollbar-thumb {
+  background: rgba(79, 109, 90, 0.35);
+  border-radius: 999px;
+}
+
+.region-tab {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.64);
+  color: #59615b;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.region-tab:hover {
+  background: #fff;
+  border-color: var(--line);
+}
+
+.region-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(79, 109, 90, 0.18);
+}
+
+/* בכל אזור מוצג כרטיס אחד בלבד */
+
+.region-panel {
+  min-width: 0;
+}
+
+.region-panel .card {
+  display: none;
+}
+
+.region-panel .card.is-active {
+  display: grid;
+}
+
+/* =========================
+   כרטיס התוכן המרכזי
+   ========================= */
+
+.region-panel .card {
+  grid-template-columns: minmax(300px, 0.95fr) minmax(0, 1.05fr);
+  min-height: 350px;
   overflow: hidden;
-  background: var(--paper);
-  border: 1px solid rgba(69, 98, 70, 0.16);
-  border-radius: 10px;
-  box-shadow: none;
+  background: var(--surface);
+  border: 1px solid rgba(79, 109, 90, 0.12);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
 }
 
 /*
-  התמונות הרגילות מוצגות ברוחב מלא
-  ובגובה הטבעי שלהן.
+  בתצוגת RTL התמונה מופיעה בצד ימין
+  והטקסט משמאלה.
 */
-.card-media {
-  display: block;
-  width: 100%;
-  height: auto;
+.region-panel .card-media {
+  min-width: 0;
+  min-height: 350px;
   overflow: hidden;
-  background: transparent;
+  background: #e8ece8;
 }
 
-.card-media img {
+.region-panel .card-media img {
   display: block;
-  width: 100%;
-  height: auto;
-  max-height: none;
-  background: transparent;
-}
-
-/*
-  כרטיס הראיון מקבל מסגרת קבועה,
-  כדי שתמונה רחבה לא תשבור את מבנה הרשת.
-*/
-.interview-card .card-media {
-  aspect-ratio: 1 / 1;
-  background: #e9e6df;
-}
-
-.interview-card .card-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-/* כרטיס המשחקים */
-
-.games-system-card .card-media {
-  aspect-ratio: 1 / 1;
-  background: var(--paper);
+.region-panel .card-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(
+      circle at center,
+      #ffffff,
+      #e8ece8
+    );
+  font-size: 5rem;
 }
 
-.card-placeholder {
+.region-panel .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 34px 38px;
+  background: var(--surface);
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.region-panel .card h2 {
+  margin: 0 0 14px;
+  font-size: clamp(1.7rem, 3.5vw, 2.55rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.region-panel .card h2 a {
+  text-decoration: none;
+}
+
+.region-panel .card h2 a:hover {
+  color: var(--accent-dark);
+}
+
+.region-panel .card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.06rem;
+  line-height: 1.75;
+}
+
+/*
+  כל הכרטיס ניתן ללחיצה כרגיל דרך התמונה
+  או דרך הכותרת. אין צורך בכפתור נוסף.
+*/
+
+/* =========================
+   כרטיסים רגילים בדפי ארכיון
+   ========================= */
+
+.cards-grid:not(.organized-regions) .card {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.cards-grid:not(.organized-regions) .card-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #e8ece8;
+}
+
+.cards-grid:not(.organized-regions) .card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards-grid:not(.organized-regions) .card-placeholder {
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  background: var(--paper);
   font-size: 3rem;
 }
 
-/* גוף הכרטיס */
-
-.card-body {
-  padding: 10px 12px 13px;
-  background: var(--paper);
+.cards-grid:not(.organized-regions) .card-body {
+  padding: 18px;
 }
 
-.card h2 {
-  margin: 0.25em 0 0.35em;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.35;
+.cards-grid:not(.organized-regions) .card h2 {
+  margin: 0.3em 0;
+  font-size: 1.18rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-.card h2 a {
+.cards-grid:not(.organized-regions) .card h2 a {
   text-decoration: none;
 }
 
-.card h2 a:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-}
-
-.card p {
+.cards-grid:not(.organized-regions) .card p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.88rem;
-  line-height: 1.48;
+  font-size: 0.96rem;
 }
 
 /* =========================
@@ -355,7 +488,7 @@ h3,
 .post-page {
   max-width: 880px;
   margin: auto;
-  padding: clamp(22px, 5vw, 58px);
+  padding: clamp(24px, 5vw, 58px);
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 20px;
@@ -371,12 +504,13 @@ h3,
 .post-header h1 {
   margin: 0.2em 0;
   font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 500;
   line-height: 1.2;
 }
 
 .post-meta a {
   color: var(--accent);
-  font-weight: 700;
+  font-weight: 500;
   text-decoration: none;
 }
 
@@ -387,6 +521,11 @@ h3,
 .post-content {
   overflow-wrap: anywhere;
   font-size: 1.08rem;
+}
+
+.post-content h2,
+.post-content h3 {
+  font-weight: 500;
 }
 
 .post-content img {
@@ -410,10 +549,12 @@ h3,
    ========================= */
 
 .site-footer {
-  padding: 30px;
+  margin-top: 40px;
+  padding: 28px 20px;
   background: #fff;
   border-top: 1px solid var(--line);
   color: var(--muted);
+  font-size: 0.92rem;
   text-align: center;
 }
 
@@ -422,11 +563,6 @@ h3,
    ========================= */
 
 @media (max-width: 900px) {
-  .cards-grid,
-  .region-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .menu-toggle {
     display: block;
     margin-inline-start: auto;
@@ -435,10 +571,10 @@ h3,
   .main-nav {
     display: none;
     position: absolute;
-    top: 70px;
+    top: 68px;
     right: 0;
     left: 0;
-    max-height: calc(100vh - 70px);
+    max-height: calc(100vh - 68px);
     overflow: auto;
     background: #fff;
     border-bottom: 1px solid var(--line);
@@ -465,6 +601,7 @@ h3,
     padding-right: 18px;
     border: 0;
     border-top: 1px solid var(--line);
+    border-radius: 0;
     box-shadow: none;
   }
 
@@ -475,67 +612,108 @@ h3,
   .main-nav li.open > ul {
     display: block;
   }
+
+  .content-region-header {
+    display: block;
+  }
+
+  .content-region-title {
+    margin-bottom: 12px;
+  }
+
+  .cards-grid:not(.organized-regions) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 /* =========================
    טלפון
    ========================= */
 
-@media (max-width: 620px) {
+@media (max-width: 700px) {
   body {
-    font-size: 16px;
+    font-size: 17px;
+  }
+
+  .header-inner,
+  .site-main {
+    width: min(100% - 20px, 1080px);
   }
 
   .site-main {
-    padding: 14px 10px 48px;
-  }
-
-  .cards-grid,
-  .region-grid {
-    grid-template-columns: 1fr;
+    padding-top: 12px;
+    padding-bottom: 48px;
   }
 
   .hero {
     display: block;
-    margin-bottom: 12px;
-    padding: 12px 16px;
+    padding: 6px 2px 14px;
   }
 
   .hero .eyebrow {
-    margin-bottom: 1px;
+    margin-bottom: 2px;
   }
 
   .hero h1 {
-    font-size: 2rem;
+    font-size: 2.35rem;
+  }
+
+  .content-region {
+    margin-bottom: 20px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .content-region-title {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+  }
+
+  .region-tabs {
+    margin-inline: -2px;
+    padding-bottom: 9px;
+  }
+
+  .region-tab {
+    min-height: 39px;
+    padding: 8px 13px;
+    font-size: 0.9rem;
+  }
+
+  .region-panel .card.is-active {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .region-panel .card-media {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .region-panel .card-placeholder {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .region-panel .card-body {
+    padding: 22px 20px 24px;
+  }
+
+  .region-panel .card h2 {
+    font-size: 1.65rem;
+  }
+
+  .region-panel .card p {
+    font-size: 1rem;
+  }
+
+  .cards-grid:not(.organized-regions) {
+    grid-template-columns: 1fr;
   }
 
   .archive-header {
     padding: 24px 18px;
-  }
-
-  .content-region {
-    margin-bottom: 16px;
-    padding: 8px;
-  }
-
-  .content-region-title {
-    margin-bottom: 8px;
-  }
-
-  .region-grid {
-    gap: 10px;
-  }
-
-  .card-body {
-    padding: 12px 14px 15px;
-  }
-
-  .card h2 {
-    font-size: 1.12rem;
-  }
-
-  .card p {
-    font-size: 0.96rem;
   }
 
   .post-page {
@@ -550,8 +728,17 @@ h3,
 
 @media print {
   .site-header,
-  .menu-toggle {
+  .menu-toggle,
+  .region-tabs {
     display: none !important;
+  }
+
+  .region-panel .card {
+    display: none !important;
+  }
+
+  .region-panel .card.is-active {
+    display: grid !important;
   }
 
   .content-region {
