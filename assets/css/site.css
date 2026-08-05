@@ -428,3 +428,118 @@ a {
     break-inside: avoid;
   }
 }
+
+
+/* ===== הידוק דף הפרשה ===== */
+
+/* אזור הכותרת העליונה: שורה קומפקטית במקום מלבן גדול */
+.hero {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 18px 26px;
+  margin-bottom: 22px;
+  border-radius: 16px;
+}
+
+.hero.hero-compact {
+  padding-block: 18px;
+}
+
+.hero .eyebrow {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  line-height: 1.15;
+}
+
+/* רוחב מעט מצומצם יותר לדף כולו */
+.site-main {
+  max-width: 1120px;
+}
+
+/* אזורי התוכן קומפקטיים יותר */
+.content-region {
+  padding: 20px;
+  margin-bottom: 22px;
+  border-radius: 18px;
+}
+
+.content-region-title {
+  margin-bottom: 16px;
+  padding-bottom: 9px;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+}
+
+/* מרווחים קטנים יותר בין הכרטיסים */
+.region-grid {
+  gap: 16px;
+}
+
+/* הכרטיסים עצמם מעט קטנים ומהודקים יותר */
+.card {
+  border-radius: 15px;
+}
+
+.card-body {
+  padding: 14px 16px 17px;
+}
+
+.card h2 {
+  font-size: 1.13rem;
+  margin: .3em 0;
+}
+
+.card p {
+  font-size: .96rem;
+  line-height: 1.55;
+}
+
+/*
+  מציגים את כל התמונה במקום לחתוך אותה.
+  ייתכנו שוליים עדינים בצדי תמונות שאינן ביחס אחיד.
+*/
+.card-media {
+  aspect-ratio: 3 / 2;
+  background: #f1eee7;
+}
+
+.card-media img {
+  object-fit: contain;
+  object-position: center;
+  background: #f1eee7;
+}
+
+/* כרטיס המשחקים עדיין ממלא את שטח התמונה */
+.games-system-card .card-placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+/* התאמות לנייד */
+@media (max-width: 620px) {
+  .hero {
+    display: block;
+    padding: 18px 20px;
+  }
+
+  .hero .eyebrow {
+    margin-bottom: 2px;
+  }
+
+  .hero h1 {
+    font-size: 2.1rem;
+  }
+
+  .content-region {
+    padding: 14px 10px;
+  }
+
+  .region-grid {
+    gap: 14px;
+  }
+}
