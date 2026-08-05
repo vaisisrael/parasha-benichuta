@@ -169,3 +169,53 @@
     addGamesCard(parashaName);
   });
 })();
+
+(() => {
+  "use strict";
+
+  const scriptSource = document.currentScript?.src || "";
+  const siteRoot = scriptSource
+    ? new URL("../../", scriptSource)
+    : new URL("./", window.location.href);
+
+  const oldSiteHosts = new Set([
+    "www.parasha-week.co.il",
+    "parasha-week.co.il",
+    "theweekparasha.blogspot.com"
+  ]);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('a[href]').forEach((link) => {
+      const originalHref = link.getAttribute("href");
+
+      if (
+        !originalHref ||
+        originalHref.startsWith("#") ||
+        originalHref.startsWith("mailto:") ||
+        originalHref.startsWith("tel:") ||
+        originalHref.startsWith("javascript:")
+      ) {
+        return;
+      }
+
+      let oldUrl;
+
+      try {
+        oldUrl = new URL(originalHref, window.location.href);
+      } catch {
+        return;
+      }
+
+      if (!oldSiteHosts.has(oldUrl.hostname)) {
+        return;
+      }
+
+      const relativePath =
+        oldUrl.pathname.replace(/^\/+/, "") +
+        oldUrl.search +
+        oldUrl.hash;
+
+      link.href = new URL(relativePath, siteRoot).href;
+    });
+  });
+})();
