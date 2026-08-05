@@ -353,11 +353,6 @@ a {
    תמונת הכרטיס
    ========================= */
 
-/*
-  אין גובה קבוע.
-  כל תמונה מוצגת בשלמותה וביחס הטבעי שלה.
-*/
-
 .region-panel .card-media {
   display: block;
   width: 100%;
@@ -442,27 +437,105 @@ a {
 }
 
 /* =========================
-   הקישור לקריאת הפוסט
+   קישורי פעולה
    ========================= */
 
-.read-link {
+.read-link,
+.inline-open-button,
+.inline-back-button {
   align-self: flex-start;
   margin-top: 17px;
-  padding-bottom: 2px;
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  background: transparent;
   color: var(--accent);
+  font: inherit;
   font-size: 0.98rem;
   font-weight: 500;
   line-height: 1.4;
   text-decoration: none;
-  border-bottom: 1px solid currentColor;
+  cursor: pointer;
   transition:
     color 0.18s ease,
     opacity 0.18s ease;
 }
 
-.read-link:hover {
+.read-link:hover,
+.inline-open-button:hover,
+.inline-back-button:hover {
   color: var(--accent-dark);
   opacity: 0.76;
+}
+
+.card-action-loading {
+  margin-top: 17px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* =========================
+   משחק או סרט בתוך הכרטיס
+   ========================= */
+
+.region-panel .card.inline-embed-card {
+  display: block;
+  grid-template-columns: none;
+  overflow: hidden;
+}
+
+.inline-embed-shell {
+  width: 100%;
+  background: #fff;
+}
+
+.inline-embed-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.inline-embed-title {
+  color: var(--accent-dark);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.inline-back-button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.inline-embed-frame {
+  display: block;
+  width: 100%;
+  min-height: 680px;
+  border: 0;
+  background: #fff;
+}
+
+.inline-video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+}
+
+.inline-video-wrap iframe,
+.inline-video-wrap video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.inline-video-wrap video {
+  object-fit: contain;
 }
 
 /* =========================
@@ -521,16 +594,12 @@ a {
   font-size: 0.96rem;
 }
 
-.cards-grid:not(.organized-regions) .read-link {
-  margin-top: 14px;
-}
-
 /* =========================
    עמוד פוסט
    ========================= */
 
 .post-page {
-  max-width: 880px;
+  max-width: 980px;
   margin: auto;
   padding: clamp(24px, 5vw, 58px);
   background: #fff;
@@ -558,8 +627,9 @@ a {
   text-decoration: none;
 }
 
-.post-date {
-  display: none;
+.post-date,
+.post-header time {
+  display: none !important;
 }
 
 .post-content {
@@ -577,7 +647,8 @@ a {
   height: auto;
 }
 
-.post-content iframe {
+.post-content iframe,
+.post-content video {
   max-width: 100%;
 }
 
@@ -589,62 +660,36 @@ a {
 }
 
 /* =========================
-   תמונה ראשית גדולה בפוסטים
+   תמונה ראשית אחידה בפוסטים
    ========================= */
 
-/*
-  התמונה הראשונה בכל פוסט מוצגת ברוחב גדול.
-  יחס התמונה נשמר ואין חיתוך.
-*/
-
-.post-content > figure:first-of-type,
-.post-content > p:first-of-type:has(img),
-.post-content > div:first-of-type:has(img) {
-  width: 100%;
-  max-width: 860px;
-  margin: 0 auto 30px;
+.post-main-image-wrap {
+  display: block !important;
+  width: 100% !important;
+  max-width: 880px !important;
+  margin: 0 auto 32px !important;
+  padding: 0 !important;
+  float: none !important;
+  text-align: center !important;
 }
 
-.post-content > figure:first-of-type img,
-.post-content > p:first-of-type:has(img) img,
-.post-content > div:first-of-type:has(img) img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
+.post-main-image {
+  display: block !important;
+  width: 100% !important;
+  max-width: 880px !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  float: none !important;
   border-radius: 16px;
+  object-fit: contain !important;
 }
-
-/*
-  תמונות קבועות של אסיף, ילדים והמשחקייה.
-*/
 
 .fixed-post-cover {
-  width: 100%;
-  max-width: 860px;
-  margin: 0 auto 30px;
-}
-
-.fixed-post-cover img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-  border-radius: 16px;
-}
-
-/*
-  תמונה שמופיעה ישירות בתוך התוכן,
-  ללא figure או מעטפת מיוחדת.
-*/
-
-.post-content > img:first-of-type {
-  display: block;
-  width: 100%;
-  max-width: 860px;
-  height: auto;
-  margin: 0 auto 30px;
-  border-radius: 16px;
+  display: block !important;
+  width: 100% !important;
+  max-width: 880px !important;
+  margin: 0 auto 32px !important;
 }
 
 /* =========================
@@ -734,6 +779,10 @@ a {
     padding: 21px 24px 23px;
   }
 
+  .inline-embed-frame {
+    min-height: 620px;
+  }
+
   .cards-grid:not(.organized-regions) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -798,6 +847,10 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .region-panel .card.inline-embed-card {
+    display: block;
+  }
+
   .region-panel .card-media {
     width: 100%;
     height: auto;
@@ -806,10 +859,6 @@ a {
   .region-panel .card-media img {
     width: 100%;
     height: auto;
-  }
-
-  .region-panel .card-placeholder {
-    aspect-ratio: 16 / 10;
   }
 
   .region-panel .card-body {
@@ -825,8 +874,17 @@ a {
     -webkit-line-clamp: 5;
   }
 
-  .read-link {
-    margin-top: 16px;
+  .inline-embed-toolbar {
+    align-items: flex-start;
+    padding: 12px 14px;
+  }
+
+  .inline-embed-frame {
+    min-height: 600px;
+  }
+
+  .inline-video-wrap {
+    aspect-ratio: 16 / 9;
   }
 
   .cards-grid:not(.organized-regions) {
@@ -842,23 +900,16 @@ a {
     border-radius: 14px;
   }
 
-  .post-content > figure:first-of-type,
-  .post-content > p:first-of-type:has(img),
-  .post-content > div:first-of-type:has(img),
-  .fixed-post-cover,
-  .post-content > img:first-of-type {
-    width: 100%;
-    max-width: none;
-    margin-bottom: 22px;
+  .post-main-image-wrap,
+  .fixed-post-cover {
+    width: 100% !important;
+    max-width: none !important;
+    margin-bottom: 22px !important;
   }
 
-  .post-content > figure:first-of-type img,
-  .post-content > p:first-of-type:has(img) img,
-  .post-content > div:first-of-type:has(img) img,
-  .fixed-post-cover img,
-  .post-content > img:first-of-type {
-    width: 100%;
-    height: auto;
+  .post-main-image {
+    width: 100% !important;
+    max-width: none !important;
     border-radius: 12px;
   }
 }
@@ -870,7 +921,8 @@ a {
 @media print {
   .site-header,
   .menu-toggle,
-  .region-tabs {
+  .region-tabs,
+  .inline-embed-toolbar {
     display: none !important;
   }
 
