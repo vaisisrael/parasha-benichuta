@@ -1,0 +1,242 @@
+name: Check full Blogger export
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check feed paths
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          import unicodedata
+          import xml.etree.ElementTree as ET
+          from collections import Counter
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          feed = Path("series-feed.atom")
+
+          if not feed.exists():
+              raise SystemExit("ERROR: series-feed.atom was not found")
+
+          ATOM = "http://www.w3.org/2005/Atom"
+          BLOGGER = "http://schemas.google.com/blogger/2018"
+          ns = {"a": ATOM, "b": BLOGGER}
+
+          def text(node, path, default=""):
+              value = node.findtext(
+                  path,
+                  default=default,
+                  namespaces=ns,
+              )
+              return value or default
+
+          def safe_slug(value):
+              value = unicodedata.normalize(
+                  "NFKC",
+                  value,
+              ).strip().lower()
+
+              value = re.sub(
+                  r"[\s_/]+",
+                  "-",
+                  value,
+              )
+
+              value = re.sub(
+                  r"[^\w\-\u0590-\u05ff]+",
+                  "",
+                  value,
+                  flags=re.UNICODE,
+              )
+
+              value = re.sub(
+                  r"-+",
+                  "-",
+                  value,
+              ).strip("-")
+
+              return value or "item"
+
+          def output_path(url, item_type, title):
+              if url:
+                  path = urlparse(url).path.lstrip("/")
+
+                  if path and path.endswith(".html"):
+                      return path
+
+              folder = "p" if item_type == "PAGE" else "posts"
+              return f"{folder}/{safe_slug(title)}.html"
+
+          root = ET.parse(feed).getroot()
+          posts = []
+          pages = []
+
+          for entry in root.findall("a:entry", ns):
+              item_type = text(entry, "b:type")
+              status = text(entry, "b:status")
+
+              if status != "LIVE":
+                  continue
+
+              if item_type not in {"POST", "PAGE"}:
+                  continue
+
+              title = text(
+                  entry,
+                  "a:title",
+                  "ללא כותרת",
+              ).strip()
+
+              source_url = ""
+
+              for link in entry.findall("a:link", ns):
+                  if link.attrib.get("rel") == "alternate":
+                      source_url = link.attrib.get("href", "")
+                      break
+
+              path = output_path(
+                  source_url,
+                  item_type,
+                  title,
+              )
+
+              record = {
+                  "title": title,
+                  "path": path,
+              }
+
+              if item_type == "POST":
+                  posts.append(record)
+              else:
+                  pages.append(record)
+
+          paths = [item["path"] for item in posts + pages]
+          counts = Counter(paths)
+          duplicates = [
+              path
+              for path, count in counts.items()
+              if count > 1
+          ]
+
+          print(f"LIVE posts: {len(posts)}")
+          print(f"LIVE pages: {len(pages)}")
+          print(f"Duplicate output paths: {len(duplicates)}")
+
+          if len(posts) != 946:
+              raise SystemExit(
+                  f"ERROR: expected 946 LIVE posts, found {len(posts)}"
+              )
+
+          if duplicates:
+              print("Duplicate paths:")
+              for path in duplicates:
+                  print(path)
+
+              raise SystemExit(
+                  "ERROR: duplicate output paths found"
+              )
+
+          Path("expected-post-paths.txt").write_text(
+              "\n".join(item["path"] for item in posts),
+              encoding="utf-8",
+          )
+
+          print("Feed path check passed.")
+          PY
+
+      - name: Build full export
+        run: python build_site.py series-feed.atom
+
+      - name: Verify build report
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report_path = Path("build-report.json")
+
+          if not report_path.exists():
+              raise SystemExit(
+                  "ERROR: build-report.json was not created"
+              )
+
+          report = json.loads(
+              report_path.read_text(encoding="utf-8")
+          )
+
+          posts = report.get("posts")
+
+          print(f'Build report posts: {posts}')
+
+          if posts != 946:
+              raise SystemExit(
+                  f"ERROR: build report says {posts} posts instead of 946"
+              )
+
+          print("Build report check passed.")
+          PY
+
+      - name: Verify every post file
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          expected = [
+              line.strip()
+              for line in Path(
+                  "expected-post-paths.txt"
+              ).read_text(
+                  encoding="utf-8"
+              ).splitlines()
+              if line.strip()
+          ]
+
+          missing = [
+              path
+              for path in expected
+              if not Path(path).is_file()
+          ]
+
+          print(f"Expected post files: {len(expected)}")
+          print(f"Missing post files: {len(missing)}")
+
+          if missing:
+              print("First missing files:")
+
+              for path in missing[:30]:
+                  print(path)
+
+              raise SystemExit(
+                  "ERROR: some exported posts have no HTML file"
+              )
+
+          print("All 946 post files exist.")
+          PY
+
+      - name: Verify series pages
+        shell: bash
+        run: |
+          test -f "p/אידנקסה.html"
+          test -f "p/כבודינה.html"
+          test -f "p/המגדל.html"
+
+          echo "All three series pages remain in place."
