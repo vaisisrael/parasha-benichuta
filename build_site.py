@@ -26,6 +26,7 @@ SERIES_LABELS = {"🔖אידנקסה"}
 
 BOOK_ORDER = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"]
 
+
 @dataclass
 class Item:
     item_type: str
@@ -63,12 +64,11 @@ def safe_slug(value: str) -> str:
 
 
 def parasha_info(labels: list[str]) -> tuple[str | None, str | None, str | None]:
-    # Expected form: "5-04 פרשת ראה"
     for label in labels:
-        m = re.match(r"^([1-5])-\d{2}\s+פרשת\s+(.+)$", label.strip())
-        if m:
-            book_num = int(m.group(1))
-            name = m.group(2).strip()
+        match = re.match(r"^([1-5])-\d{2}\s+פרשת\s+(.+)$", label.strip())
+        if match:
+            book_num = int(match.group(1))
+            name = match.group(2).strip()
             book = BOOK_ORDER[book_num - 1]
             return label, name, book
     return None, None, None
@@ -77,9 +77,11 @@ def parasha_info(labels: list[str]) -> tuple[str | None, str | None, str | None]
 def normalize_section(labels: list[str]) -> str | None:
     if any(label in BINA_LABELS for label in labels):
         return "🔖בינה"
+
     for label in labels:
         if label in SECTION_LABELS:
             return label
+
     return None
 
 
@@ -88,6 +90,7 @@ def output_path_from_url(url: str, item_type: str, title: str) -> str:
         path = urlparse(url).path.lstrip("/")
         if path and path.endswith(".html"):
             return path
+
     prefix = "p" if item_type == "PAGE" else "posts"
     return f"{prefix}/{safe_slug(title)}.html"
 
@@ -99,6 +102,7 @@ def parse_feed(feed_path: Path) -> list[Item]:
     for entry in root.findall("a:entry", NS):
         item_type = text(entry, "b:type")
         status = text(entry, "b:status")
+
         if item_type not in {"POST", "PAGE"} or status != "LIVE":
             continue
 
@@ -107,8 +111,11 @@ def parse_feed(feed_path: Path) -> list[Item]:
         description = text(entry, "b:metaDescription")
         published = parse_dt(text(entry, "a:published") or text(entry, "b:created"))
         updated = parse_dt(text(entry, "a:updated") or text(entry, "b:lastUpdated"))
-        labels = [cat.attrib.get("term", "").strip() for cat in entry.findall("a:category", NS)]
-        labels = [x for x in labels if x]
+        labels = [
+            category.attrib.get("term", "").strip()
+            for category in entry.findall("a:category", NS)
+        ]
+        labels = [label for label in labels if label]
 
         source_url = ""
         for link in entry.findall("a:link", NS):
@@ -120,33 +127,45 @@ def parse_feed(feed_path: Path) -> list[Item]:
         section = normalize_section(labels)
         output_path = output_path_from_url(source_url, item_type, title)
 
-        items.append(Item(
-            item_type=item_type,
-            title=title,
-            content=content,
-            description=description,
-            published=published,
-            updated=updated,
-            labels=labels,
-            source_url=source_url,
-            output_path=output_path,
-            parasha_label=parasha_label,
-            parasha_name=parasha_name,
-            book=book,
-            section=section,
-        ))
+        items.append(
+            Item(
+                item_type=item_type,
+                title=title,
+                content=content,
+                description=description,
+                published=published,
+                updated=updated,
+                labels=labels,
+                source_url=source_url,
+                output_path=output_path,
+                parasha_label=parasha_label,
+                parasha_name=parasha_name,
+                book=book,
+                section=section,
+            )
+        )
 
-    return sorted(items, key=lambda x: x.published, reverse=True)
+    return sorted(items, key=lambda item: item.published, reverse=True)
 
 
 def first_image(content: str) -> str | None:
-    m = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', content, flags=re.I)
-    return m.group(1) if m else None
+    match = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', content, flags=re.I)
+    return match.group(1) if match else None
 
 
 def strip_tags(value: str) -> str:
-    value = re.sub(r"<script\b[^<]*(?:(?!</script>)<[^<]*)*</script>", " ", value, flags=re.I)
-    value = re.sub(r"<style\b[^<]*(?:(?!</style>)<[^<]*)*</style>", " ", value, flags=re.I)
+    value = re.sub(
+        r"<script\b[^<]*(?:(?!</script>)<[^<]*)*</script>",
+        " ",
+        value,
+        flags=re.I,
+    )
+    value = re.sub(
+        r"<style\b[^<]*(?:(?!</style>)<[^<]*)*</style>",
+        " ",
+        value,
+        flags=re.I,
+    )
     value = re.sub(r"<[^>]+>", " ", value)
     return re.sub(r"\s+", " ", html.unescape(value)).strip()
 
@@ -163,34 +182,54 @@ def rel_prefix(output_path: str) -> str:
 
 def nav_html(prefix: str, parashot: dict[str, list[str]]) -> str:
     parasha_books = []
+
     for book in BOOK_ORDER:
         names = parashot.get(book, [])
         links = "".join(
-            f'<li><a href="{prefix}parashot/{safe_slug(book)}/{safe_slug(name)}/">{html.escape(name)}</a></li>'
+            (
+                f'<li><a href="{prefix}parashot/{safe_slug(book)}/'
+                f'{safe_slug(name)}/">{html.escape(name)}</a></li>'
+            )
             for name in names
         )
-        parasha_books.append(
-            f'<li class="has-sub"><button type="button">{book}</button><ul>{links}</ul></li>'
-        )
 
-    sections = "".join(
-        f'<li><a href="{prefix}sections/{safe_slug(label.removeprefix("🔖"))}/">{html.escape(label.removeprefix("🔖"))}</a></li>'
-        for label in SECTION_LABELS
-    )
+        parasha_books.append(
+            (
+                f'<li class="has-sub">'
+                f'<button type="button">{book}</button>'
+                f'<ul>{links}</ul>'
+                f'</li>'
+            )
+        )
 
     return f"""
 <header class="site-header">
   <div class="header-inner">
-    <a class="brand" href="{prefix}">פרשת השבוע בניחותא</a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-label="פתיחת תפריט">☰</button>
+    <a class="brand" href="{prefix}" aria-label="פרשת השבוע בניחותא — דף הבית">
+      <img
+        class="brand-logo"
+        src="{prefix}assets/images/branding/logo.png"
+        alt=""
+        width="44"
+        height="44"
+      >
+      <span>פרשת השבוע בניחותא</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-label="פתיחת תפריט"
+    >☰</button>
+
     <nav class="main-nav" aria-label="ניווט ראשי">
       <ul>
-        <li><a href="{prefix}">דף הבית</a></li>
-        <li class="has-sub"><button type="button">כל הפרשות</button><ul>{''.join(parasha_books)}</ul></li>
-        <li class="has-sub"><button type="button">מדורים</button><ul>{sections}</ul></li>
-        <li><a href="{prefix}games/">משחקים</a></li>
+        <li class="has-sub">
+          <button type="button">כל הפרשות</button>
+          <ul>{''.join(parasha_books)}</ul>
+        </li>
         <li><a href="{prefix}series/">סדרות</a></li>
-        <li><a href="{prefix}family/">דף המשפחה</a></li>
         <li><a href="{prefix}search/">חיפוש</a></li>
         <li><a href="{prefix}about/">אודות</a></li>
       </ul>
@@ -200,24 +239,50 @@ def nav_html(prefix: str, parashot: dict[str, list[str]]) -> str:
 """
 
 
-def layout(title: str, body: str, output_path: str, parashot: dict[str, list[str]], description: str = "") -> str:
+def layout(
+    title: str,
+    body: str,
+    output_path: str,
+    parashot: dict[str, list[str]],
+    description: str = "",
+) -> str:
     prefix = rel_prefix(output_path)
     desc = html.escape(description or title, quote=True)
+
     return f"""<!doctype html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>{html.escape(title)} | פרשת השבוע בניחותא</title>
   <meta name="description" content="{desc}">
+
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="64x64"
+    href="{prefix}assets/images/branding/favicon.png"
+  >
+  <link
+    rel="shortcut icon"
+    href="{prefix}assets/images/branding/favicon.ico"
+  >
+  <link
+    rel="apple-touch-icon"
+    href="{prefix}assets/images/branding/logo.png"
+  >
+
   <link rel="stylesheet" href="{prefix}assets/css/site.css">
   <script defer src="{prefix}assets/js/site.js"></script>
 </head>
 <body>
 {nav_html(prefix, parashot)}
+
 <main class="site-main">
 {body}
 </main>
+
 <footer class="site-footer">© פרשת השבוע בניחותא</footer>
 </body>
 </html>
@@ -225,12 +290,17 @@ def layout(title: str, body: str, output_path: str, parashot: dict[str, list[str
 
 
 def card(item: Item, prefix: str = "") -> str:
-    img = first_image(item.content)
-    img_html = f'<img src="{html.escape(img, quote=True)}" alt="">' if img else '<div class="card-placeholder">📖</div>'
+    image = first_image(item.content)
+    image_html = (
+        f'<img src="{html.escape(image, quote=True)}" alt="">'
+        if image
+        else '<div class="card-placeholder">📖</div>'
+    )
     section = item.section.removeprefix("🔖") if item.section else "תוכן"
+
     return f"""
 <article class="card">
-  <a class="card-media" href="{prefix}{item.output_path}">{img_html}</a>
+  <a class="card-media" href="{prefix}{item.output_path}">{image_html}</a>
   <div class="card-body">
     <div class="eyebrow">{html.escape(section)}</div>
     <h2><a href="{prefix}{item.output_path}">{html.escape(item.title)}</a></h2>
@@ -248,38 +318,78 @@ def write_file(root: Path, relative: str, content: str) -> None:
 
 def build(items: list[Item], out: Path, config: dict) -> None:
     if out.exists():
-        # Remove generated folders only; keep repository metadata and source scripts.
-        for name in ["assets", "parashot", "sections", "games", "series", "family", "search", "about"]:
+        # חשוב:
+        # assets אינה נמחקת ואינה נכתבת מחדש.
+        # לכן site.css, site.js, הלוגו, favicon, redirect-map והתמונות נשמרים.
+        for name in [
+            "parashot",
+            "sections",
+        ]:
             target = out / name
             if target.exists():
                 shutil.rmtree(target)
+
         for item in items:
             target = out / item.output_path
             if target.exists():
                 target.unlink()
 
-    posts = [x for x in items if x.item_type == "POST"]
-    pages = [x for x in items if x.item_type == "PAGE"]
+    posts = [item for item in items if item.item_type == "POST"]
+    pages = [item for item in items if item.item_type == "PAGE"]
 
     parashot: dict[str, list[str]] = {book: [] for book in BOOK_ORDER}
-    for item in posts:
-        if item.book and item.parasha_name and item.parasha_name not in parashot[item.book]:
-            parashot[item.book].append(item.parasha_name)
-    # Preserve Torah order by the numeric label rather than alphabetical order.
-    for book in BOOK_ORDER:
-        labels = sorted({x.parasha_label for x in posts if x.book == book and x.parasha_label})
-        parashot[book] = [re.sub(r"^[1-5]-\d{2}\s+פרשת\s+", "", x) for x in labels]
 
-    # Individual posts/pages.
+    for item in posts:
+        if (
+            item.book
+            and item.parasha_name
+            and item.parasha_name not in parashot[item.book]
+        ):
+            parashot[item.book].append(item.parasha_name)
+
+    for book in BOOK_ORDER:
+        labels = sorted(
+            {
+                item.parasha_label
+                for item in posts
+                if item.book == book and item.parasha_label
+            }
+        )
+        parashot[book] = [
+            re.sub(r"^[1-5]-\d{2}\s+פרשת\s+", "", label)
+            for label in labels
+        ]
+
+    # פוסטים ודפים בודדים
     for item in items:
         prefix = rel_prefix(item.output_path)
         chips = []
+
         if item.parasha_name:
-            chips.append(f'<a href="{prefix}parashot/{safe_slug(item.book or "")}/{safe_slug(item.parasha_name)}/">פרשת {html.escape(item.parasha_name)}</a>')
+            chips.append(
+                (
+                    f'<a href="{prefix}parashot/{safe_slug(item.book or "")}/'
+                    f'{safe_slug(item.parasha_name)}/">'
+                    f'פרשת {html.escape(item.parasha_name)}</a>'
+                )
+            )
+
         if item.section:
-            chips.append(f'<a href="{prefix}sections/{safe_slug(item.section.removeprefix("🔖"))}/">{html.escape(item.section.removeprefix("🔖"))}</a>')
+            section_name = item.section.removeprefix("🔖")
+            chips.append(
+                (
+                    f'<a href="{prefix}sections/{safe_slug(section_name)}/">'
+                    f'{html.escape(section_name)}</a>'
+                )
+            )
+
         meta = " · ".join(chips)
-        date = item.published.strftime("%d.%m.%Y") if item.published != datetime.min else ""
+        date = (
+            item.published.strftime("%d.%m.%Y")
+            if item.published != datetime.min
+            else ""
+        )
+
         body = f"""
 <article class="post-page">
   <header class="post-header">
@@ -290,15 +400,34 @@ def build(items: list[Item], out: Path, config: dict) -> None:
   <div class="post-content">{item.content}</div>
 </article>
 """
-        write_file(out, item.output_path, layout(item.title, body, item.output_path, parashot, item.description))
 
+        write_file(
+            out,
+            item.output_path,
+            layout(
+                item.title,
+                body,
+                item.output_path,
+                parashot,
+                item.description,
+            ),
+        )
+
+    # הפרשה הנוכחית נשארת ידנית בשלב זה.
     current = config.get("current_parasha", "").strip()
-    current_items = [x for x in posts if x.parasha_name == current]
-    if not current_items and posts:
-        current = next((x.parasha_name for x in posts if x.parasha_name), "")
-        current_items = [x for x in posts if x.parasha_name == current]
+    current_items = [item for item in posts if item.parasha_name == current]
 
-    home_cards = "".join(card(x) for x in current_items)
+    if not current_items and posts:
+        current = next(
+            (item.parasha_name for item in posts if item.parasha_name),
+            "",
+        )
+        current_items = [
+            item for item in posts if item.parasha_name == current
+        ]
+
+    home_cards = "".join(card(item) for item in current_items)
+
     home_body = f"""
 <section class="hero">
   <div class="eyebrow">הגיליון השבועי</div>
@@ -307,62 +436,117 @@ def build(items: list[Item], out: Path, config: dict) -> None:
 </section>
 <section class="cards-grid">{home_cards}</section>
 """
-    write_file(out, "index.html", layout(f"פרשת {current}", home_body, "index.html", parashot))
 
-    # Parasha archives.
+    write_file(
+        out,
+        "index.html",
+        layout(
+            f"פרשת {current}",
+            home_body,
+            "index.html",
+            parashot,
+        ),
+    )
+
+    # דפי פרשות
     for book in BOOK_ORDER:
         for name in parashot[book]:
-            group = [x for x in posts if x.book == book and x.parasha_name == name]
-            rel = f"parashot/{safe_slug(book)}/{safe_slug(name)}/index.html"
-            body = f'<header class="archive-header"><div class="eyebrow">{book}</div><h1>פרשת {html.escape(name)}</h1></header><section class="cards-grid">' + "".join(card(x, rel_prefix(rel)) for x in group) + "</section>"
-            write_file(out, rel, layout(f"פרשת {name}", body, rel, parashot))
+            group = [
+                item
+                for item in posts
+                if item.book == book and item.parasha_name == name
+            ]
+            relative = (
+                f"parashot/{safe_slug(book)}/{safe_slug(name)}/index.html"
+            )
+            prefix = rel_prefix(relative)
 
-    # Section archives.
+            body = (
+                f'<header class="archive-header">'
+                f'<div class="eyebrow">{book}</div>'
+                f'<h1>פרשת {html.escape(name)}</h1>'
+                f'</header>'
+                f'<section class="cards-grid">'
+                f'{"".join(card(item, prefix) for item in group)}'
+                f'</section>'
+            )
+
+            write_file(
+                out,
+                relative,
+                layout(
+                    f"פרשת {name}",
+                    body,
+                    relative,
+                    parashot,
+                ),
+            )
+
+    # דפי מדורים נשמרים לצורך קישורים ישנים,
+    # אף שהקישור "מדורים" אינו מופיע עוד בתפריט.
     for section in SECTION_LABELS:
-        group = [x for x in posts if x.section == section]
-        rel = f"sections/{safe_slug(section.removeprefix('🔖'))}/index.html"
-        body = f'<header class="archive-header"><div class="eyebrow">מדור</div><h1>{html.escape(section.removeprefix("🔖"))}</h1></header><section class="cards-grid">' + "".join(card(x, rel_prefix(rel)) for x in group) + "</section>"
-        write_file(out, rel, layout(section.removeprefix("🔖"), body, rel, parashot))
+        group = [item for item in posts if item.section == section]
+        section_name = section.removeprefix("🔖")
+        relative = f"sections/{safe_slug(section_name)}/index.html"
+        prefix = rel_prefix(relative)
 
-    # Placeholder destinations, to prevent dead menu links during first preview.
-    placeholders = {
-        "games/index.html": ("משחקים", "כאן ירוכזו משחקי הפרשות."),
-        "series/index.html": ("סדרות", "כאן ירוכזו אידנקסה, כבודינה והמגדל."),
-        "family/index.html": ("דף המשפחה", "כאן יופיע דף המשפחה השבועי."),
-        "search/index.html": ("חיפוש", "מנגנון החיפוש יתווסף בשלב הבא."),
-        "about/index.html": ("אודות", "עמוד האודות יותאם בשלב הבא."),
-    }
-    for rel, (heading, paragraph) in placeholders.items():
-        body = f'<header class="archive-header"><h1>{heading}</h1><p>{paragraph}</p></header>'
-        write_file(out, rel, layout(heading, body, rel, parashot))
+        body = (
+            f'<header class="archive-header">'
+            f'<div class="eyebrow">מדור</div>'
+            f'<h1>{html.escape(section_name)}</h1>'
+            f'</header>'
+            f'<section class="cards-grid">'
+            f'{"".join(card(item, prefix) for item in group)}'
+            f'</section>'
+        )
 
-    css = r"""
-:root{--bg:#f7f4ed;--paper:#fff;--ink:#26231f;--muted:#6c665d;--accent:#456246;--line:#ded8cc;--shadow:0 8px 26px rgba(50,42,30,.08)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Noto Sans Hebrew",sans-serif;line-height:1.65}a{color:inherit}.site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}.header-inner{max-width:1240px;margin:auto;padding:0 20px;display:flex;align-items:center;gap:28px;min-height:70px}.brand{text-decoration:none;font-size:1.25rem;font-weight:800;color:var(--accent);white-space:nowrap}.main-nav{margin-inline-start:auto}.main-nav ul{list-style:none;margin:0;padding:0;display:flex;align-items:center}.main-nav a,.main-nav button{display:block;border:0;background:none;text-decoration:none;font:inherit;padding:22px 12px;cursor:pointer}.main-nav>ul>li{position:relative}.main-nav li ul{display:none;position:absolute;right:0;top:100%;min-width:190px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);flex-direction:column;align-items:stretch}.main-nav li:hover>ul,.main-nav li:focus-within>ul,.main-nav li.open>ul{display:flex}.main-nav li ul a,.main-nav li ul button{padding:10px 14px;width:100%;text-align:right}.main-nav li ul .has-sub>ul{right:100%;top:-1px}.menu-toggle{display:none;border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 12px;font-size:1.4rem}.site-main{max-width:1240px;margin:auto;padding:36px 20px 70px}.hero,.archive-header{background:linear-gradient(135deg,#fff,#f0eadc);border:1px solid var(--line);border-radius:22px;padding:42px;margin-bottom:28px}.hero h1,.archive-header h1{font-size:clamp(2rem,5vw,4rem);margin:.1em 0}.eyebrow{color:var(--accent);font-weight:800;font-size:.9rem}.cards-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}.card-media{display:block;aspect-ratio:16/9;background:#ece7dc;overflow:hidden}.card-media img{width:100%;height:100%;object-fit:cover}.card-placeholder{height:100%;display:grid;place-items:center;font-size:3rem}.card-body{padding:18px}.card h2{font-size:1.28rem;line-height:1.35;margin:.35em 0}.card h2 a{text-decoration:none}.card p{color:var(--muted);margin-bottom:0}.post-page{max-width:880px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(22px,5vw,58px);box-shadow:var(--shadow)}.post-header{border-bottom:1px solid var(--line);margin-bottom:30px;padding-bottom:22px}.post-header h1{font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.2;margin:.2em 0}.post-meta a{text-decoration:none;color:var(--accent);font-weight:700}.post-date{color:var(--muted)}.post-content{font-size:1.08rem;overflow-wrap:anywhere}.post-content img{max-width:100%;height:auto}.post-content iframe{max-width:100%}.post-content table{max-width:100%;border-collapse:collapse;display:block;overflow-x:auto}.site-footer{text-align:center;padding:30px;border-top:1px solid var(--line);color:var(--muted);background:#fff}
-@media(max-width:900px){.cards-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.menu-toggle{display:block;margin-inline-start:auto}.main-nav{display:none;position:absolute;top:70px;right:0;left:0;background:#fff;border-bottom:1px solid var(--line);max-height:calc(100vh - 70px);overflow:auto}.main-nav.open{display:block}.main-nav ul{display:block}.main-nav a,.main-nav button{padding:13px 20px;width:100%;text-align:right}.main-nav li ul,.main-nav li ul .has-sub>ul{position:static;box-shadow:none;border:0;border-top:1px solid var(--line);padding-right:18px}.main-nav li:hover>ul{display:none}.main-nav li.open>ul{display:block}}
-@media(max-width:620px){.cards-grid{grid-template-columns:1fr}.hero,.archive-header{padding:28px 22px}.site-main{padding-inline:14px}.post-page{border-radius:14px;padding:22px 18px}}
-"""
-    js = r"""
-document.addEventListener('DOMContentLoaded',()=>{const toggle=document.querySelector('.menu-toggle');const nav=document.querySelector('.main-nav');if(toggle&&nav){toggle.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));});}document.querySelectorAll('.has-sub>button').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();btn.parentElement.classList.toggle('open');}));});
-"""
-    write_file(out, "assets/css/site.css", css.strip())
-    write_file(out, "assets/js/site.js", js.strip())
+        write_file(
+            out,
+            relative,
+            layout(
+                section_name,
+                body,
+                relative,
+                parashot,
+            ),
+        )
+
+    # התיקיות games, series, family, search ו-about אינן נמחקות
+    # ואינן נכתבות מחדש. כך תוכן ידני ומיוחד נשמר בבטחה.
 
     report = {
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "posts": len(posts),
         "pages": len(pages),
         "current_parasha": current,
-        "parashot": sum(len(v) for v in parashot.values()),
-        "sections": {s: len([x for x in posts if x.section == s]) for s in SECTION_LABELS},
+        "parashot": sum(len(names) for names in parashot.values()),
+        "sections": {
+            section: len(
+                [item for item in posts if item.section == section]
+            )
+            for section in SECTION_LABELS
+        },
     }
-    write_file(out, "build-report.json", json.dumps(report, ensure_ascii=False, indent=2))
+
+    write_file(
+        out,
+        "build-report.json",
+        json.dumps(report, ensure_ascii=False, indent=2),
+    )
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
 def load_config(path: Path) -> dict:
     if not path.exists():
-        path.write_text(json.dumps({"current_parasha": "ראה"}, ensure_ascii=False, indent=2), encoding="utf-8")
+        path.write_text(
+            json.dumps(
+                {"current_parasha": "ראה"},
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -370,19 +554,20 @@ def main() -> int:
     script_dir = Path(__file__).resolve().parent
     default_feed = Path(r"C:\Users\user\Desktop\source\feed.atom")
     feed_path = Path(sys.argv[1]) if len(sys.argv) > 1 else default_feed
-    out = script_dir
+    output_root = script_dir
     config_path = script_dir / "site_config.json"
 
     if not feed_path.exists():
         print(f"ERROR: feed file not found: {feed_path}")
-        print("Run: python build_site.py \"C:\\full\\path\\to\\feed.atom\"")
+        print('Run: python build_site.py "C:\\full\\path\\to\\feed.atom"')
         return 1
 
     config = load_config(config_path)
     items = parse_feed(feed_path)
-    build(items, out, config)
+    build(items, output_root, config)
+
     print("\nSite build completed successfully.")
-    print(f"Open locally: {out / 'index.html'}")
+    print(f"Open locally: {output_root / 'index.html'}")
     return 0
 
 
