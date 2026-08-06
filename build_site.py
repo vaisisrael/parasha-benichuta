@@ -316,6 +316,48 @@ def card(item: Item, prefix: str = "") -> str:
 </article>
 """
 
+def whatsapp_card() -> str:
+    channel_url = (
+        "https://whatsapp.com/channel/"
+        "0029VbCtpPOB4hdMMUaLUb0h"
+    )
+
+    return f"""
+<aside class="whatsapp-card">
+
+  <div class="whatsapp-card-icon" aria-hidden="true">
+    💬
+  </div>
+
+  <div class="whatsapp-card-content">
+
+    <div class="eyebrow">
+      נשארים בניחותא
+    </div>
+
+    <h2>
+      רוצים לקבל את הפרשה בכל שבוע?
+    </h2>
+
+    <p>
+      הצטרפו לערוץ הווטסאפ השקט וקבלו קישור
+      לתכנים החדשים של פרשת השבוע.
+    </p>
+
+  </div>
+
+  <a
+    class="whatsapp-card-button"
+    href="{channel_url}"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    הצטרפות לערוץ
+  </a>
+
+</aside>
+"""
+
 
 def write_file(root: Path, relative: str, content: str) -> None:
     path = root / relative
