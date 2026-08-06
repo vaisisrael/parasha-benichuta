@@ -1484,3 +1484,159 @@
     }
   );
 })();
+
+
+(() => {
+  "use strict";
+
+  const currentScript =
+    document.currentScript ||
+    Array.from(document.scripts)
+      .find((script) =>
+        script.src.includes("/assets/js/site.js")
+      );
+
+  const siteRoot = currentScript?.src
+    ? new URL("../../", currentScript.src)
+    : new URL("/", window.location.href);
+
+  const redirectMapUrl = new URL(
+    "assets/data/redirect-map.json",
+    siteRoot
+  );
+
+  const oldSiteHosts = new Set([
+    "theweekparasha.blogspot.com",
+    "www.theweekparasha.blogspot.com",
+    "parasha-week.co.il",
+    "www.parasha-week.co.il"
+  ]);
+
+  async function repairInternalPostLinks() {
+    let redirectMap;
+
+    try {
+      const response = await fetch(
+        redirectMapUrl,
+        {
+          cache: "no-store"
+        }
+      );
+
+      if (!response.ok) {
+        console.warn(
+          "לא ניתן לטעון את מפת ההפניות:",
+          response.status
+        );
+
+        return;
+      }
+
+      redirectMap = await response.json();
+    } catch (error) {
+      console.warn(
+        "שגיאה בטעינת מפת ההפניות:",
+        error
+      );
+
+      return;
+    }
+
+    document
+      .querySelectorAll("a[href]")
+      .forEach((link) => {
+        const rawHref =
+          link.getAttribute("href");
+
+        if (
+          !rawHref ||
+          rawHref.startsWith("#") ||
+          rawHref.startsWith("mailto:") ||
+          rawHref.startsWith("tel:") ||
+          rawHref.startsWith("javascript:")
+        ) {
+          return;
+        }
+
+        let originalUrl;
+
+        try {
+          originalUrl = new URL(
+            rawHref,
+            window.location.href
+          );
+        } catch {
+          return;
+        }
+
+        if (
+          !oldSiteHosts.has(
+            originalUrl.hostname
+          )
+        ) {
+          return;
+        }
+
+        const possibleKeys = [
+          originalUrl.pathname,
+          decodeURIComponent(
+            originalUrl.pathname
+          ),
+          originalUrl.pathname.replace(
+            /\/+$/,
+            ""
+          )
+        ];
+
+        let newPath = null;
+
+        for (const key of possibleKeys) {
+          if (redirectMap[key]) {
+            newPath = redirectMap[key];
+            break;
+          }
+        }
+
+        if (!newPath) {
+          return;
+        }
+
+        const targetUrl = new URL(
+          String(newPath).replace(/^\/+/, ""),
+          siteRoot
+        );
+
+        targetUrl.search =
+          originalUrl.search;
+
+        targetUrl.hash =
+          originalUrl.hash;
+
+        link.href = targetUrl.href;
+      });
+  }
+
+  function runLinkRepair() {
+    repairInternalPostLinks();
+
+    /*
+      בדיקה נוספת לאחר שה-JavaScript הראשי
+      סיים ליצור ולסדר את הכרטיסים.
+    */
+    window.setTimeout(
+      repairInternalPostLinks,
+      600
+    );
+  }
+
+  if (
+    document.readyState === "loading"
+  ) {
+    document.addEventListener(
+      "DOMContentLoaded",
+      runLinkRepair
+    );
+  } else {
+    runLinkRepair();
+  }
+})();
