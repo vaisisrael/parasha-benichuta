@@ -723,3 +723,85 @@ a { color: inherit; }
     border-radius: 8px;
   }
 }
+
+/* ===== דפי הסדרות ===== */
+
+.series-hero {
+  display: grid;
+  grid-template-columns:
+    minmax(280px, .9fr)
+    minmax(0, 1.1fr);
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow);
+}
+
+.series-hero-media {
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.series-cover-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.series-hero-copy h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.series-hero-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.series-count {
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.series-chapters-title {
+  margin: 0 0 18px;
+  color: var(--accent);
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.series-grid .card {
+  display: flex;
+  flex-direction: column;
+}
+
+.series-grid .card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.series-grid .read-link {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+@media (max-width: 700px) {
+  .series-hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 18px;
+  }
+
+  .series-hero-copy h1 {
+    font-size: 2.5rem;
+  }
+}
