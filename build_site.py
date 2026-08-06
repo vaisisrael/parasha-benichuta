@@ -22,7 +22,17 @@ SECTION_LABELS = [
     "🔖המחשה", "🔖ילדים", "🔖הלכה", "🔖בינה", "🔖המשחקיה",
 ]
 BINA_LABELS = {"🔖בינה-א", "🔖בינה-ב", "🔖בינה-ג"}
-SERIES_LABELS = {"🔖אידנקסה"}
+
+# דפי הסדרות והפרקים שלהן נוצרים באמצעות import_series.py.
+# build_site.py אינו מוחק ואינו כותב אותם מחדש.
+SERIES_LABELS = {
+    "📊אידנקסה",
+    "🤖כבודינה",
+    "🏢המגדל",
+    "🔖אידנקסה",
+    "🔖כבודינה",
+    "🔖המגדל",
+}
 
 BOOK_ORDER = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"]
 
@@ -83,6 +93,16 @@ def normalize_section(labels: list[str]) -> str | None:
             return label
 
     return None
+
+
+def is_series_item(item: Item) -> bool:
+    if any(label in SERIES_LABELS for label in item.labels):
+        return True
+
+    return (
+        item.item_type == "PAGE"
+        and item.title.strip() in {"אידנקסה", "כבודינה", "המגדל"}
+    )
 
 
 def output_path_from_url(url: str, item_type: str, title: str) -> str:
@@ -231,11 +251,11 @@ def nav_html(prefix: str, parashot: dict[str, list[str]]) -> str:
         </li>
         <li class="has-sub">
           <button type="button">סדרות</button>
-            <ul>
-                <li><a href="{prefix}p/אידנקסה.html">אידנקסה</a></li>
-               <li><a href="{prefix}p/כבודינה.html">כבודינה</a></li>
-               <li><a href="{prefix}p/המגדל/">המגדל</a></li>
-            </ul>
+          <ul>
+            <li><a href="{prefix}p/אידנקסה.html">אידנקסה</a></li>
+            <li><a href="{prefix}p/כבודינה.html">כבודינה</a></li>
+            <li><a href="{prefix}p/המגדל.html">המגדל</a></li>
+          </ul>
         </li>
         <li><a href="{prefix}search/">חיפוש</a></li>
         <li><a href="{prefix}about/">אודות</a></li>
@@ -316,6 +336,7 @@ def card(item: Item, prefix: str = "") -> str:
 </article>
 """
 
+
 def whatsapp_card() -> str:
     channel_url = (
         "https://whatsapp.com/channel/"
@@ -378,7 +399,11 @@ def build(items: list[Item], out: Path, config: dict) -> None:
             if target.exists():
                 shutil.rmtree(target)
 
+        # דפי הסדרות ופרקיהן נשמרים כפי שנוצרו ב-import_series.py.
         for item in items:
+            if is_series_item(item):
+                continue
+
             target = out / item.output_path
             if target.exists():
                 target.unlink()
@@ -411,6 +436,11 @@ def build(items: list[Item], out: Path, config: dict) -> None:
 
     # פוסטים ודפים בודדים
     for item in items:
+        # הסדרות נוצרות בנפרד, כדי לשמור את התמונות המקומיות
+        # ואת דפי הסדרה המעוצבים.
+        if is_series_item(item):
+            continue
+
         prefix = rel_prefix(item.output_path)
         chips = []
 
@@ -484,6 +514,7 @@ def build(items: list[Item], out: Path, config: dict) -> None:
   <p>כל התכנים של הפרשה הנוכחית במקום אחד — בלי גלישה לפרשה הבאה.</p>
 </section>
 <section class="cards-grid">{home_cards}</section>
+{whatsapp_card()}
 """
 
     write_file(
@@ -518,6 +549,7 @@ def build(items: list[Item], out: Path, config: dict) -> None:
                 f'<section class="cards-grid">'
                 f'{"".join(card(item, prefix) for item in group)}'
                 f'</section>'
+                f'{whatsapp_card()}'
             )
 
             write_file(
