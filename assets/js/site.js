@@ -750,3 +750,81 @@
     window.setTimeout(repairInternalLinks, 600);
   });
 })();
+
+
+(() => {
+  "use strict";
+
+  /*
+    כאשר משחק או סרט פתוחים, ולוחצים על טאב אחר:
+    סוגרים קודם את התוכן המוטמע ומחזירים את הכרטיס המקורי.
+
+    שימוש בשלב capture מבטיח שהסגירה תתבצע
+    לפני שהקוד הקיים מחליף את הטאב.
+  */
+  document.addEventListener(
+    "click",
+    (event) => {
+      const selectedTab =
+        event.target.closest(".region-tab");
+
+      if (!selectedTab) {
+        return;
+      }
+
+      /*
+        לחיצה חוזרת על הטאב הפעיל אינה סוגרת אותו.
+        הסגירה מתבצעת רק בבחירת מדור אחר.
+      */
+      if (
+        selectedTab.classList.contains(
+          "is-active"
+        )
+      ) {
+        return;
+      }
+
+      document
+        .querySelectorAll(
+          ".card.inline-embed-card"
+        )
+        .forEach((openCard) => {
+          const backButton =
+            openCard.querySelector(
+              ".inline-back-button"
+            );
+
+          /*
+            עדיף להפעיל את כפתור החזרה הקיים,
+            משום שהוא גם מחזיר את הכרטיס
+            וגם מחבר מחדש את פעולות הלחיצה.
+          */
+          if (backButton) {
+            backButton.click();
+            return;
+          }
+
+          /*
+            גיבוי למקרה שכפתור החזרה לא נמצא.
+          */
+          const originalHtml =
+            openCard.dataset.originalHtml;
+
+          const originalClass =
+            openCard.dataset.originalClass;
+
+          if (
+            originalHtml &&
+            originalClass
+          ) {
+            openCard.className =
+              originalClass;
+
+            openCard.innerHTML =
+              originalHtml;
+          }
+        });
+    },
+    true
+  );
+})();
