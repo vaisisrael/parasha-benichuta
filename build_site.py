@@ -340,7 +340,7 @@ def card(item: Item, prefix: str = "") -> str:
 def whatsapp_card() -> str:
     channel_url = (
         "https://whatsapp.com/channel/"
-        "0029VbCtpPOB4hdMMUaLUb0h"
+        "0029Vb5xXFK2Jl87sO5f9f28"
     )
 
     return f"""
