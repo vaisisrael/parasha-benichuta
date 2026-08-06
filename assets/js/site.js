@@ -2,100 +2,56 @@
   "use strict";
 
   const scriptUrl = document.currentScript?.src || "";
-
-  const siteRoot = new URL(
-    "../../",
-    scriptUrl || window.location.href
-  );
+  const siteRoot = new URL("../../", scriptUrl || window.location.href);
 
   const parashaLabels = {
-    "בראשית": "1-01 פרשת בראשית",
-    "נח": "1-02 פרשת נח",
-    "לך לך": "1-03 פרשת לך לך",
-    "וירא": "1-04 פרשת וירא",
-    "חיי שרה": "1-05 פרשת חיי שרה",
-    "תולדות": "1-06 פרשת תולדות",
-    "ויצא": "1-07 פרשת ויצא",
-    "וישלח": "1-08 פרשת וישלח",
-    "וישב": "1-09 פרשת וישב",
-    "מקץ": "1-10 פרשת מקץ",
-    "ויגש": "1-11 פרשת ויגש",
-    "ויחי": "1-12 פרשת ויחי",
+    "בראשית": "1-01 פרשת בראשית", "נח": "1-02 פרשת נח",
+    "לך לך": "1-03 פרשת לך לך", "וירא": "1-04 פרשת וירא",
+    "חיי שרה": "1-05 פרשת חיי שרה", "תולדות": "1-06 פרשת תולדות",
+    "ויצא": "1-07 פרשת ויצא", "וישלח": "1-08 פרשת וישלח",
+    "וישב": "1-09 פרשת וישב", "מקץ": "1-10 פרשת מקץ",
+    "ויגש": "1-11 פרשת ויגש", "ויחי": "1-12 פרשת ויחי",
 
-    "שמות": "2-01 פרשת שמות",
-    "וארא": "2-02 פרשת וארא",
-    "בא": "2-03 פרשת בא",
-    "בשלח": "2-04 פרשת בשלח",
-    "יתרו": "2-05 פרשת יתרו",
-    "משפטים": "2-06 פרשת משפטים",
-    "תרומה": "2-07 פרשת תרומה",
-    "תצווה": "2-08 פרשת תצווה",
-    "כי תשא": "2-09 פרשת כי תשא",
-    "ויקהל": "2-10 פרשת ויקהל",
+    "שמות": "2-01 פרשת שמות", "וארא": "2-02 פרשת וארא",
+    "בא": "2-03 פרשת בא", "בשלח": "2-04 פרשת בשלח",
+    "יתרו": "2-05 פרשת יתרו", "משפטים": "2-06 פרשת משפטים",
+    "תרומה": "2-07 פרשת תרומה", "תצווה": "2-08 פרשת תצווה",
+    "כי תשא": "2-09 פרשת כי תשא", "ויקהל": "2-10 פרשת ויקהל",
     "פקודי": "2-11 פרשת פקודי",
 
-    "ויקרא": "3-01 פרשת ויקרא",
-    "צו": "3-02 פרשת צו",
-    "שמיני": "3-03 פרשת שמיני",
-    "תזריע": "3-04 פרשת תזריע",
-    "מצורע": "3-05 פרשת מצורע",
-    "אחרי מות": "3-06 פרשת אחרי מות",
-    "קדושים": "3-07 פרשת קדושים",
-    "אמור": "3-08 פרשת אמור",
-    "בהר": "3-09 פרשת בהר",
-    "בחקתי": "3-10 פרשת בחקתי",
+    "ויקרא": "3-01 פרשת ויקרא", "צו": "3-02 פרשת צו",
+    "שמיני": "3-03 פרשת שמיני", "תזריע": "3-04 פרשת תזריע",
+    "מצורע": "3-05 פרשת מצורע", "אחרי מות": "3-06 פרשת אחרי מות",
+    "קדושים": "3-07 פרשת קדושים", "אמור": "3-08 פרשת אמור",
+    "בהר": "3-09 פרשת בהר", "בחקתי": "3-10 פרשת בחקתי",
 
-    "במדבר": "4-01 פרשת במדבר",
-    "נשא": "4-02 פרשת נשא",
-    "בהעלתך": "4-03 פרשת בהעלתך",
-    "שלח": "4-04 פרשת שלח",
-    "קורח": "4-05 פרשת קורח",
-    "חקת": "4-06 פרשת חקת",
-    "בלק": "4-07 פרשת בלק",
-    "פנחס": "4-08 פרשת פנחס",
-    "מטות": "4-09 פרשת מטות",
-    "מסעי": "4-10 פרשת מסעי",
+    "במדבר": "4-01 פרשת במדבר", "נשא": "4-02 פרשת נשא",
+    "בהעלתך": "4-03 פרשת בהעלתך", "שלח": "4-04 פרשת שלח",
+    "קורח": "4-05 פרשת קורח", "חקת": "4-06 פרשת חקת",
+    "בלק": "4-07 פרשת בלק", "פנחס": "4-08 פרשת פנחס",
+    "מטות": "4-09 פרשת מטות", "מסעי": "4-10 פרשת מסעי",
 
-    "דברים": "5-01 פרשת דברים",
-    "ואתחנן": "5-02 פרשת ואתחנן",
-    "עקב": "5-03 פרשת עקב",
-    "ראה": "5-04 פרשת ראה",
-    "שופטים": "5-05 פרשת שופטים",
-    "כי תצא": "5-06 פרשת כי תצא",
-    "כי תבוא": "5-07 פרשת כי תבוא",
-    "נצבים": "5-08 פרשת נצבים",
-    "וילך": "5-09 פרשת וילך",
-    "האזינו": "5-10 פרשת האזינו",
+    "דברים": "5-01 פרשת דברים", "ואתחנן": "5-02 פרשת ואתחנן",
+    "עקב": "5-03 פרשת עקב", "ראה": "5-04 פרשת ראה",
+    "שופטים": "5-05 פרשת שופטים", "כי תצא": "5-06 פרשת כי תצא",
+    "כי תבוא": "5-07 פרשת כי תבוא", "נצבים": "5-08 פרשת נצבים",
+    "וילך": "5-09 פרשת וילך", "האזינו": "5-10 פרשת האזינו",
     "וזאת הברכה": "5-11 פרשת וזאת הברכה"
   };
-
-  const oldSiteHosts = new Set([
-    "www.parasha-week.co.il",
-    "parasha-week.co.il",
-    "theweekparasha.blogspot.com"
-  ]);
-
-  const redirectMapUrl = new URL(
-    "assets/data/redirect-map.json",
-    siteRoot
-  );
 
   const fixedSectionImages = {
     "ילדים": {
       path: "assets/images/section-covers/children.png",
       alt: "מדור הילדים של פרשת השבוע"
     },
-
     "אסיף": {
       path: "assets/images/section-covers/asif.png",
-      alt: "מדור אסיף — רעיונות ומחשבות מן הפרשה"
+      alt: "מדור אסיף"
     },
-
     "משחקים": {
       path: "assets/images/section-covers/games.png",
       alt: "משחקי פרשת השבוע"
     },
-
     "המשחקיה": {
       path: "assets/images/section-covers/games.png",
       alt: "משחקי פרשת השבוע"
@@ -120,7 +76,6 @@
         "תנ\"ך"
       ]
     },
-
     {
       id: "stories",
       title: "סיפורים ורעיונות",
@@ -135,7 +90,6 @@
         "שיר"
       ]
     },
-
     {
       id: "family",
       title: "לכל המשפחה",
@@ -161,18 +115,70 @@
   }
 
   function getCurrentParasha() {
-    const heading =
-      document.querySelector(".hero h1") ||
-      document.querySelector(".archive-header h1");
+    const headings = Array.from(
+      document.querySelectorAll(
+        ".hero h1, .archive-header h1, main h1"
+      )
+    );
 
-    if (!heading) {
-      return null;
+    for (const heading of headings) {
+      const text = normalizeText(
+        heading.textContent
+      ).replace(/^פרשת\s+/, "");
+
+      if (parashaLabels[text]) {
+        return text;
+      }
     }
 
-    const name = normalizeText(heading.textContent)
-      .replace(/^פרשת\s+/, "");
+    return null;
+  }
 
-    return parashaLabels[name] ? name : null;
+  function normalizeParashaPageHeader(parashaName) {
+    if (!parashaName) {
+      return;
+    }
+
+    const archiveHeader =
+      document.querySelector(".archive-header");
+
+    if (!archiveHeader) {
+      return;
+    }
+
+    archiveHeader.classList.remove(
+      "archive-header"
+    );
+
+    archiveHeader.classList.add(
+      "hero",
+      "hero-compact"
+    );
+
+    let eyebrow =
+      archiveHeader.querySelector(".eyebrow");
+
+    if (!eyebrow) {
+      eyebrow = document.createElement("div");
+      eyebrow.className = "eyebrow";
+      archiveHeader.prepend(eyebrow);
+    }
+
+    eyebrow.textContent = "הגיליון השבועי";
+
+    const heading =
+      archiveHeader.querySelector("h1");
+
+    if (heading) {
+      heading.textContent =
+        `פרשת ${parashaName}`;
+    }
+
+    archiveHeader
+      .querySelectorAll("p")
+      .forEach((paragraph) => {
+        paragraph.remove();
+      });
   }
 
   function getGamesUrl(parashaName) {
@@ -190,12 +196,16 @@
   }
 
   function setupNavigation() {
-    const toggle = document.querySelector(".menu-toggle");
-    const nav = document.querySelector(".main-nav");
+    const toggle =
+      document.querySelector(".menu-toggle");
+
+    const nav =
+      document.querySelector(".main-nav");
 
     if (toggle && nav) {
       toggle.addEventListener("click", () => {
-        const open = nav.classList.toggle("open");
+        const open =
+          nav.classList.toggle("open");
 
         toggle.setAttribute(
           "aria-expanded",
@@ -207,48 +217,33 @@
     document
       .querySelectorAll(".has-sub > button")
       .forEach((button) => {
-        button.addEventListener("click", (event) => {
-          event.preventDefault();
-          button.parentElement.classList.toggle("open");
-        });
+        button.addEventListener(
+          "click",
+          (event) => {
+            event.preventDefault();
+
+            button.parentElement
+              .classList
+              .toggle("open");
+          }
+        );
       });
   }
 
-  function removeHeroDescription() {
-    const hero = document.querySelector(".hero");
+  function removeNavigationItems() {
+    const unwanted = new Set([
+      "מדורים",
+      "דף המשפחה",
+      "משחקים"
+    ]);
 
-    if (!hero) {
-      return;
-    }
-
-    hero.querySelectorAll("p").forEach((paragraph) => {
-      const text = normalizeText(paragraph.textContent);
-
-      if (
-        text ===
-        "כל התכנים של הפרשה הנוכחית במקום אחד — בלי גלישה לפרשה הבאה."
-      ) {
-        paragraph.remove();
-      }
-    });
-
-    hero.classList.add("hero-compact");
-  }
-
-  function isBinaText(text) {
-    return (
-      text === "בינה" ||
-      text === "בינה מלאכותית"
-    );
-  }
-
-  function removeBinaNavigation() {
     document
       .querySelectorAll(".main-nav li")
       .forEach((item) => {
-        const ownControl = item.querySelector(
-          ":scope > a, :scope > button"
-        );
+        const ownControl =
+          item.querySelector(
+            ":scope > a, :scope > button"
+          );
 
         if (!ownControl) {
           return;
@@ -258,78 +253,82 @@
           ownControl.textContent
         );
 
-        if (isBinaText(text)) {
+        if (
+          unwanted.has(text) ||
+          /^משחקי פרשת\s+/.test(text) ||
+          text === "בינה" ||
+          text === "בינה מלאכותית"
+        ) {
           item.remove();
         }
       });
   }
 
-  function getCardLabel(card) {
-    return normalizeText(
-      card.querySelector(".eyebrow")?.textContent
-    );
+  function removeHeroDescription() {
+    const hero =
+      document.querySelector(".hero");
+
+    if (!hero) {
+      return;
+    }
+
+    hero.querySelectorAll("p")
+      .forEach((paragraph) => {
+        const text = normalizeText(
+          paragraph.textContent
+        );
+
+        if (
+          text ===
+          "כל התכנים של הפרשה הנוכחית במקום אחד — בלי גלישה לפרשה הבאה."
+        ) {
+          paragraph.remove();
+        }
+      });
+
+    hero.classList.add("hero-compact");
   }
 
-  function isBinaCard(card) {
-    const label = getCardLabel(card);
-
-    const heading = normalizeText(
-      card.querySelector("h2, h3")?.textContent
-    );
-
-    return (
-      isBinaText(label) ||
-      isBinaText(heading)
+  function getCardLabel(card) {
+    return normalizeText(
+      card.querySelector(".eyebrow")
+        ?.textContent
     );
   }
 
   function removeBinaCards() {
-    document.querySelectorAll(".card").forEach((card) => {
-      if (isBinaCard(card)) {
-        card.remove();
-      }
-    });
+    document
+      .querySelectorAll(".card")
+      .forEach((card) => {
+        const label = getCardLabel(card);
+
+        if (
+          label === "בינה" ||
+          label === "בינה מלאכותית"
+        ) {
+          card.remove();
+        }
+      });
   }
 
   function removeOldGamesContent() {
-    document.querySelectorAll(".card").forEach((card) => {
-      const label = getCardLabel(card);
-
-      if (label === "המשחקיה") {
-        card.remove();
-      }
-    });
-
-    document.querySelectorAll(".main-nav a").forEach((link) => {
-      const text = normalizeText(link.textContent);
-
-      if (text === "המשחקיה") {
-        link.closest("li")?.remove();
-      }
-    });
-  }
-
-  function updateGamesNavigation(parashaName) {
-    const gamesUrl = getGamesUrl(parashaName);
-
-    if (!gamesUrl) {
-      return;
-    }
-
-    document.querySelectorAll(".main-nav a").forEach((link) => {
-      const text = normalizeText(link.textContent);
-
-      if (text === "משחקים") {
-        link.href = gamesUrl;
-        link.textContent =
-          `משחקי פרשת ${parashaName}`;
-      }
-    });
+    document
+      .querySelectorAll(".card")
+      .forEach((card) => {
+        if (
+          getCardLabel(card) === "המשחקיה"
+        ) {
+          card.remove();
+        }
+      });
   }
 
   function addGamesCard(parashaName) {
-    const gamesUrl = getGamesUrl(parashaName);
-    const grid = document.querySelector(".cards-grid");
+    const gamesUrl =
+      getGamesUrl(parashaName);
+
+    const grid =
+      document.querySelector(".cards-grid");
 
     if (
       !gamesUrl ||
@@ -344,7 +343,8 @@
       siteRoot
     ).href;
 
-    const card = document.createElement("article");
+    const card =
+      document.createElement("article");
 
     card.className =
       "card games-system-card fixed-cover-card";
@@ -383,130 +383,145 @@
   }
 
   function applyFixedSectionImagesToCards() {
-    document.querySelectorAll(".card").forEach((card) => {
-      const label = getCardLabel(card);
-      const imageDefinition =
-        fixedSectionImages[label];
+    document
+      .querySelectorAll(".card")
+      .forEach((card) => {
+        const label = getCardLabel(card);
 
-      if (!imageDefinition) {
-        return;
-      }
+        const imageDefinition =
+          fixedSectionImages[label];
 
-      const media = card.querySelector(".card-media");
+        if (!imageDefinition) {
+          return;
+        }
 
-      if (!media) {
-        return;
-      }
+        const media =
+          card.querySelector(".card-media");
 
-      const imageUrl = new URL(
-        imageDefinition.path,
-        siteRoot
-      ).href;
+        if (!media) {
+          return;
+        }
 
-      let image = media.querySelector("img");
+        let image =
+          media.querySelector("img");
 
-      if (!image) {
-        image = document.createElement("img");
-        media.replaceChildren(image);
-      }
+        if (!image) {
+          image =
+            document.createElement("img");
 
-      image.src = imageUrl;
-      image.alt = imageDefinition.alt;
+          media.replaceChildren(image);
+        }
 
-      image.removeAttribute("srcset");
-      image.removeAttribute("sizes");
-      image.removeAttribute("width");
-      image.removeAttribute("height");
+        image.src = new URL(
+          imageDefinition.path,
+          siteRoot
+        ).href;
 
-      card.classList.add("fixed-cover-card");
-    });
+        image.alt = imageDefinition.alt;
+
+        [
+          "srcset",
+          "sizes",
+          "width",
+          "height"
+        ].forEach((attribute) => {
+          image.removeAttribute(attribute);
+        });
+
+        card.classList.add(
+          "fixed-cover-card"
+        );
+      });
   }
 
   function getPostSectionLabel() {
-    const containers = [
-      document.querySelector(".post-meta"),
-      document.querySelector(".post-header")
-    ].filter(Boolean);
+    const text = normalizeText(
+      `${
+        document.querySelector(".post-meta")
+          ?.textContent || ""
+      } ${
+        document.querySelector(".post-header")
+          ?.textContent || ""
+      }`
+    );
 
-    for (const container of containers) {
-      const text = normalizeText(container.textContent);
-
-      for (const label of Object.keys(fixedSectionImages)) {
-        if (text.includes(label)) {
-          return label;
-        }
-      }
-    }
-
-    return null;
+    return (
+      Object
+        .keys(fixedSectionImages)
+        .find((label) => text.includes(label)) ||
+      null
+    );
   }
 
   function applyFixedSectionImageToPost() {
-    const postContent =
+    const content =
       document.querySelector(".post-content");
 
-    if (!postContent) {
-      return;
-    }
-
-    const sectionLabel = getPostSectionLabel();
-
     const imageDefinition =
-      fixedSectionImages[sectionLabel];
+      fixedSectionImages[
+        getPostSectionLabel()
+      ];
 
-    if (!imageDefinition) {
+    const image =
+      content?.querySelector("img");
+
+    if (
+      !content ||
+      !imageDefinition ||
+      !image
+    ) {
       return;
     }
 
-    const image = postContent.querySelector("img");
-
-    if (!image) {
-      return;
-    }
-
-    const imageUrl = new URL(
+    image.src = new URL(
       imageDefinition.path,
       siteRoot
     ).href;
 
-    image.src = imageUrl;
     image.alt = imageDefinition.alt;
 
-    image.removeAttribute("srcset");
-    image.removeAttribute("sizes");
+    [
+      "srcset",
+      "sizes"
+    ].forEach((attribute) => {
+      image.removeAttribute(attribute);
+    });
 
-    const picture = image.closest("picture");
-
-    if (picture) {
-      picture
-        .querySelectorAll("source")
-        .forEach((source) => source.remove());
-    }
+    image
+      .closest("picture")
+      ?.querySelectorAll("source")
+      .forEach((source) => {
+        source.remove();
+      });
   }
 
   function removePostDate() {
-    const postHeader =
+    const header =
       document.querySelector(".post-header");
 
-    if (!postHeader) {
+    if (!header) {
       return;
     }
 
-    postHeader
+    header
       .querySelectorAll(".post-date, time")
-      .forEach((element) => element.remove());
+      .forEach((element) => {
+        element.remove();
+      });
 
     const datePattern =
       /^\s*\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\s*$/;
 
-    postHeader
+    header
       .querySelectorAll("span, div, p")
       .forEach((element) => {
-        if (element.children.length > 0) {
+        if (element.children.length) {
           return;
         }
 
-        const text = normalizeText(element.textContent);
+        const text = normalizeText(
+          element.textContent
+        );
 
         if (datePattern.test(text)) {
           element.remove();
@@ -515,67 +530,61 @@
   }
 
   function normalizePostMainImage() {
-    const postContent =
+    const content =
       document.querySelector(".post-content");
 
-    if (!postContent) {
+    const image =
+      content?.querySelector("img");
+
+    if (!content || !image) {
       return;
     }
 
-    const image = postContent.querySelector("img");
+    [
+      "width",
+      "height",
+      "srcset",
+      "sizes",
+      "align",
+      "style"
+    ].forEach((attribute) => {
+      image.removeAttribute(attribute);
+    });
 
-    if (!image) {
-      return;
-    }
-
-    image.removeAttribute("width");
-    image.removeAttribute("height");
-    image.removeAttribute("srcset");
-    image.removeAttribute("sizes");
-    image.removeAttribute("align");
-
-    image.style.removeProperty("width");
-    image.style.removeProperty("height");
-    image.style.removeProperty("max-width");
-    image.style.removeProperty("min-width");
-    image.style.removeProperty("margin");
-    image.style.removeProperty("float");
-
-    image.classList.add("post-main-image");
+    image.classList.add(
+      "post-main-image"
+    );
 
     const wrapper =
-      image.closest("figure") ||
-      image.closest("p") ||
-      image.closest("div") ||
-      image.closest("a");
+      image.closest("figure, p, div, a");
 
     if (
       wrapper &&
-      wrapper !== postContent &&
-      postContent.contains(wrapper)
+      wrapper !== content &&
+      content.contains(wrapper)
     ) {
-      wrapper.classList.add("post-main-image-wrap");
+      [
+        "width",
+        "height",
+        "align",
+        "style"
+      ].forEach((attribute) => {
+        wrapper.removeAttribute(attribute);
+      });
 
-      wrapper.removeAttribute("width");
-      wrapper.removeAttribute("height");
-      wrapper.removeAttribute("align");
-
-      wrapper.style.removeProperty("width");
-      wrapper.style.removeProperty("height");
-      wrapper.style.removeProperty("max-width");
-      wrapper.style.removeProperty("min-width");
-      wrapper.style.removeProperty("margin");
-      wrapper.style.removeProperty("float");
-      wrapper.style.removeProperty("text-align");
+      wrapper.classList.add(
+        "post-main-image-wrap"
+      );
     }
   }
 
   function getCardPostUrl(card) {
-    const link =
-      card.querySelector("h2 a[href]") ||
-      card.querySelector(".card-media[href]");
-
-    return link?.href || null;
+    return (
+      card.querySelector(
+        "h2 a[href], .card-media[href]"
+      )?.href ||
+      null
+    );
   }
 
   function getClickableCardLinks(card) {
@@ -586,28 +595,35 @@
     );
   }
 
-  function bindCardLinksToAction(card, action) {
-    getClickableCardLinks(card).forEach((link) => {
-      const replacement = link.cloneNode(true);
+  function bindCardLinksToAction(
+    card,
+    action
+  ) {
+    getClickableCardLinks(card)
+      .forEach((link) => {
+        const replacement =
+          link.cloneNode(true);
 
-      link.replaceWith(replacement);
+        link.replaceWith(replacement);
 
-      replacement.addEventListener(
-        "click",
-        (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          action();
-        }
-      );
-    });
+        replacement.addEventListener(
+          "click",
+          (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            action();
+          }
+        );
+      });
   }
 
   function convertYouTubeUrl(url) {
     try {
       const parsed = new URL(url);
 
-      if (parsed.hostname.includes("youtu.be")) {
+      if (
+        parsed.hostname.includes("youtu.be")
+      ) {
         const videoId =
           parsed.pathname.replace(/^\/+/, "");
 
@@ -616,8 +632,16 @@
           : null;
       }
 
-      if (parsed.hostname.includes("youtube.com")) {
-        if (parsed.pathname.startsWith("/embed/")) {
+      if (
+        parsed.hostname.includes(
+          "youtube.com"
+        )
+      ) {
+        if (
+          parsed.pathname.startsWith(
+            "/embed/"
+          )
+        ) {
           return parsed.href;
         }
 
@@ -635,129 +659,60 @@
     return null;
   }
 
-  function convertVimeoUrl(url) {
-    try {
-      const parsed = new URL(url);
-
-      if (!parsed.hostname.includes("vimeo.com")) {
-        return null;
-      }
-
-      if (
-        parsed.hostname.includes("player.vimeo.com")
-      ) {
-        return parsed.href;
-      }
-
-      const videoId = parsed.pathname
-        .split("/")
-        .filter(Boolean)
-        .find((part) => /^\d+$/.test(part));
-
-      return videoId
-        ? `https://player.vimeo.com/video/${videoId}`
-        : null;
-    } catch {
-      return null;
-    }
-  }
-
-  function createIframeMedia(src, title) {
-    const wrapper = document.createElement("div");
-
-    wrapper.className = "inline-video-wrap";
-
-    const iframe = document.createElement("iframe");
-
-    iframe.src = src;
-    iframe.title = title || "המחשה";
-    iframe.loading = "lazy";
-
-    iframe.allow =
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-
-    iframe.allowFullscreen = true;
-
-    wrapper.append(iframe);
-
-    return wrapper;
-  }
-
-  function createVideoMedia(src) {
-    const wrapper = document.createElement("div");
-
-    wrapper.className = "inline-video-wrap";
-
-    const video = document.createElement("video");
-
-    video.src = src;
-    video.controls = true;
-    video.preload = "metadata";
-    video.playsInline = true;
-
-    wrapper.append(video);
-
-    return wrapper;
-  }
-
   function extractMediaFromPostHtml(
     html,
     postUrl
   ) {
-    const parser = new DOMParser();
-
     const documentCopy =
-      parser.parseFromString(
+      new DOMParser().parseFromString(
         html,
         "text/html"
       );
 
-    const postContent =
-      documentCopy.querySelector(".post-content") ||
+    const content =
+      documentCopy.querySelector(
+        ".post-content"
+      ) ||
       documentCopy.querySelector("article") ||
       documentCopy.body;
 
     const iframe =
-      postContent.querySelector("iframe[src]");
+      content.querySelector("iframe[src]");
 
     if (iframe) {
-      const iframeUrl = new URL(
-        iframe.getAttribute("src"),
-        postUrl
-      ).href;
-
       return {
         type: "iframe",
-        src: iframeUrl,
+        src: new URL(
+          iframe.getAttribute("src"),
+          postUrl
+        ).href,
         title:
           iframe.getAttribute("title") ||
-          "המחשה לפרשת השבוע"
+          "המחשה"
       };
     }
 
     const video =
-      postContent.querySelector("video");
+      content.querySelector("video");
 
-    if (video) {
-      const directSource =
-        video.getAttribute("src") ||
-        video
-          .querySelector("source[src]")
-          ?.getAttribute("src");
+    const directVideoSource =
+      video?.getAttribute("src") ||
+      video
+        ?.querySelector("source[src]")
+        ?.getAttribute("src");
 
-      if (directSource) {
-        return {
-          type: "video",
-          src: new URL(
-            directSource,
-            postUrl
-          ).href
-        };
-      }
+    if (directVideoSource) {
+      return {
+        type: "video",
+        src: new URL(
+          directVideoSource,
+          postUrl
+        ).href
+      };
     }
 
     const links = Array.from(
-      postContent.querySelectorAll("a[href]")
+      content.querySelectorAll("a[href]")
     );
 
     for (const link of links) {
@@ -777,19 +732,9 @@
         };
       }
 
-      const vimeoUrl =
-        convertVimeoUrl(href);
-
-      if (vimeoUrl) {
-        return {
-          type: "iframe",
-          src: vimeoUrl,
-          title: "סרטון Vimeo"
-        };
-      }
-
       if (
-        /\.(mp4|webm|ogg)(\?.*)?$/i.test(href)
+        /\.(mp4|webm|ogg)(\?.*)?$/i
+          .test(href)
       ) {
         return {
           type: "video",
@@ -802,7 +747,8 @@
   }
 
   async function findMediaForCard(card) {
-    const postUrl = getCardPostUrl(card);
+    const postUrl =
+      getCardPostUrl(card);
 
     if (!postUrl) {
       return null;
@@ -811,7 +757,9 @@
     try {
       const response = await fetch(
         postUrl,
-        { cache: "no-store" }
+        {
+          cache: "no-store"
+        }
       );
 
       if (!response.ok) {
@@ -824,14 +772,44 @@
         html,
         postUrl
       );
-    } catch (error) {
-      console.warn(
-        "לא ניתן לבדוק את פוסט ההמחשה:",
-        error
-      );
-
+    } catch {
       return null;
     }
+  }
+
+  function createMediaElement(media) {
+    const wrapper =
+      document.createElement("div");
+
+    wrapper.className =
+      "inline-video-wrap";
+
+    if (media.type === "video") {
+      const video =
+        document.createElement("video");
+
+      video.src = media.src;
+      video.controls = true;
+      video.playsInline = true;
+
+      wrapper.append(video);
+    } else {
+      const iframe =
+        document.createElement("iframe");
+
+      iframe.src = media.src;
+      iframe.title =
+        media.title || "המחשה";
+
+      iframe.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+
+      iframe.allowFullscreen = true;
+
+      wrapper.append(iframe);
+    }
+
+    return wrapper;
   }
 
   function saveOriginalCard(card) {
@@ -851,18 +829,18 @@
   }
 
   function restoreOriginalCard(card) {
-    const originalHtml =
-      card.dataset.originalHtml;
-
-    const originalClass =
-      card.dataset.originalClass;
-
-    if (!originalHtml || !originalClass) {
+    if (
+      !card.dataset.originalHtml ||
+      !card.dataset.originalClass
+    ) {
       return;
     }
 
-    card.className = originalClass;
-    card.innerHTML = originalHtml;
+    card.className =
+      card.dataset.originalClass;
+
+    card.innerHTML =
+      card.dataset.originalHtml;
 
     setupSingleCardAction(card);
   }
@@ -874,12 +852,15 @@
   ) {
     saveOriginalCard(card);
 
-    card.classList.add("inline-embed-card");
+    card.classList.add(
+      "inline-embed-card"
+    );
 
     const shell =
       document.createElement("div");
 
-    shell.className = "inline-embed-shell";
+    shell.className =
+      "inline-embed-shell";
 
     const toolbar =
       document.createElement("div");
@@ -899,6 +880,7 @@
       document.createElement("button");
 
     backButton.type = "button";
+
     backButton.className =
       "inline-back-button";
 
@@ -923,117 +905,6 @@
     );
 
     card.replaceChildren(shell);
-
-    card.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest"
-    });
-  }
-
-  function normalizeGameText(value) {
-    return String(value || "")
-      .replace(/\s+/g, " ")
-      .trim();
-  }
-
-  function removeGamesHomeLinks(
-    gameDocument
-  ) {
-    gameDocument
-      .querySelectorAll("a, button")
-      .forEach((element) => {
-        const text = normalizeGameText(
-          element.textContent
-        );
-
-        const href =
-          element.getAttribute("href") || "";
-
-        if (
-          text === "חזרה לדף הבית" ||
-          text === "לדף הבית" ||
-          text === "חזרה לאתר" ||
-          element.classList.contains("back-home") ||
-          element.classList.contains("home-link") ||
-          href === "../" ||
-          href === "/" ||
-          href.endsWith("/index.html")
-        ) {
-          element.remove();
-        }
-      });
-  }
-
-  function findFirstGameControl(
-    iframe,
-    gameDocument
-  ) {
-    const preferredGames = [
-      "גלילון",
-      "מגירון",
-      "חכמון",
-      "מה ההבדל",
-      "זיכרון",
-      "חקי הבלש"
-    ];
-
-    const candidates = Array.from(
-      gameDocument.querySelectorAll(
-        "button, [role='button'], a[href], .game-card, .game-button, [data-game]"
-      )
-    ).filter((element) => {
-      const style =
-        iframe.contentWindow
-          ?.getComputedStyle(element);
-
-      if (!style) {
-        return true;
-      }
-
-      return (
-        style.display !== "none" &&
-        style.visibility !== "hidden"
-      );
-    });
-
-    for (const gameName of preferredGames) {
-      const match = candidates.find(
-        (element) => {
-          const text = normalizeGameText(
-            element.textContent
-          );
-
-          return text.includes(gameName);
-        }
-      );
-
-      if (match) {
-        return match;
-      }
-    }
-
-    const ignoredTexts = [
-      "חזרה",
-      "דף הבית",
-      "משחקי הפרשה",
-      "בחרו משחק",
-      "בחירת משחק"
-    ];
-
-    return candidates.find((element) => {
-      const text = normalizeGameText(
-        element.textContent
-      );
-
-      if (!text) {
-        return false;
-      }
-
-      return !ignoredTexts.some(
-        (ignored) =>
-          text.includes(ignored)
-      );
-    }) || null;
   }
 
   function prepareEmbeddedGames(iframe) {
@@ -1046,34 +917,102 @@
         return;
       }
 
-      removeGamesHomeLinks(gameDocument);
+      const removeHomeLinks = () => {
+        gameDocument
+          .querySelectorAll("a, button")
+          .forEach((element) => {
+            const text = normalizeText(
+              element.textContent
+            );
 
-      if (
-        iframe.dataset.firstGameOpened ===
-        "true"
-      ) {
-        return;
-      }
+            if (
+              text === "חזרה לדף הבית" ||
+              text === "לדף הבית" ||
+              text === "חזרה לאתר" ||
+              element.classList.contains(
+                "back-home"
+              ) ||
+              element.classList.contains(
+                "home-link"
+              )
+            ) {
+              element.remove();
+            }
+          });
+      };
 
-      const firstGame =
-        findFirstGameControl(
-          iframe,
-          gameDocument
+      const openFirstGame = () => {
+        if (
+          iframe.dataset.firstGameOpened ===
+          "true"
+        ) {
+          return;
+        }
+
+        const candidates = Array.from(
+          gameDocument.querySelectorAll(
+            "button, [role='button'], a[href], .game-card, .game-button, [data-game]"
+          )
         );
 
-      if (!firstGame) {
-        return;
+        const preferredGames = [
+          "גלילון",
+          "מגירון",
+          "חכמון",
+          "מה ההבדל",
+          "זיכרון",
+          "חקי הבלש"
+        ];
+
+        let target = null;
+
+        for (
+          const gameName
+          of preferredGames
+        ) {
+          target = candidates.find(
+            (element) =>
+              normalizeText(
+                element.textContent
+              ).includes(gameName)
+          );
+
+          if (target) {
+            break;
+          }
+        }
+
+        if (target) {
+          iframe.dataset.firstGameOpened =
+            "true";
+
+          target.click();
+        }
+      };
+
+      removeHomeLinks();
+      openFirstGame();
+
+      if (!iframe._gamesObserver) {
+        iframe._gamesObserver =
+          new MutationObserver(() => {
+            removeHomeLinks();
+            openFirstGame();
+          });
+
+        iframe._gamesObserver.observe(
+          gameDocument.documentElement,
+          {
+            childList: true,
+            subtree: true
+          }
+        );
       }
-
-      iframe.dataset.firstGameOpened =
-        "true";
-
-      firstGame.click();
-    } catch (error) {
-      console.warn(
-        "לא ניתן להכין את המשחקייה המוטמעת:",
-        error
-      );
+    } catch {
+      /*
+        אם הדפדפן מונע גישה ל-iframe,
+        המשחקייה עדיין תוצג כרגיל.
+      */
     }
   }
 
@@ -1092,6 +1031,7 @@
       "inline-embed-frame";
 
     iframe.src = gamesUrl;
+
     iframe.title =
       "משחקי פרשת השבוע";
 
@@ -1106,17 +1046,16 @@
 
         prepareEmbeddedGames(iframe);
 
-        window.setTimeout(() => {
-          prepareEmbeddedGames(iframe);
-        }, 300);
-
-        window.setTimeout(() => {
-          prepareEmbeddedGames(iframe);
-        }, 800);
-
-        window.setTimeout(() => {
-          prepareEmbeddedGames(iframe);
-        }, 1500);
+        [
+          250,
+          600,
+          1200,
+          2200
+        ].forEach((delay) => {
+          window.setTimeout(() => {
+            prepareEmbeddedGames(iframe);
+          }, delay);
+        });
       }
     );
 
@@ -1127,27 +1066,10 @@
     );
   }
 
-  function openMediaInsideCard(
-    card,
-    media
-  ) {
-    const mediaElement =
-      media.type === "video"
-        ? createVideoMedia(media.src)
-        : createIframeMedia(
-            media.src,
-            media.title
-          );
-
-    openInlineContent(
-      card,
-      "המחשה לפרשת השבוע",
-      mediaElement
-    );
-  }
-
   function appendReadLink(card) {
-    if (card.querySelector(".read-link")) {
+    if (
+      card.querySelector(".read-link")
+    ) {
       return;
     }
 
@@ -1166,6 +1088,7 @@
 
     link.className = "read-link";
     link.href = postUrl;
+
     link.textContent =
       "לקריאת הפוסט";
 
@@ -1234,8 +1157,8 @@
         element.remove();
       });
 
-    const postUrl =
-      getCardPostUrl(card);
+    const mediaPromise =
+      findMediaForCard(card);
 
     const loading =
       document.createElement("span");
@@ -1248,9 +1171,6 @@
 
     body.append(loading);
 
-    const mediaPromise =
-      findMediaForCard(card);
-
     const openIllustration =
       async () => {
         const media =
@@ -1260,16 +1180,11 @@
         if (media) {
           card._inlineMedia = media;
 
-          openMediaInsideCard(
+          openInlineContent(
             card,
-            media
+            "המחשה לפרשת השבוע",
+            createMediaElement(media)
           );
-
-          return;
-        }
-
-        if (postUrl) {
-          window.location.href = postUrl;
         }
       };
 
@@ -1278,30 +1193,12 @@
       openIllustration
     );
 
-    const media = await mediaPromise;
+    const media =
+      await mediaPromise;
 
     loading.remove();
 
-    const currentBody =
-      card.querySelector(".card-body");
-
-    if (!currentBody) {
-      return;
-    }
-
     if (!media) {
-      const links =
-        getClickableCardLinks(card);
-
-      links.forEach((link) => {
-        const replacement =
-          link.cloneNode(true);
-
-        replacement.href = postUrl;
-
-        link.replaceWith(replacement);
-      });
-
       appendReadLink(card);
       return;
     }
@@ -1324,7 +1221,9 @@
       openIllustration
     );
 
-    currentBody.append(button);
+    card
+      .querySelector(".card-body")
+      ?.append(button);
   }
 
   function setupSingleCardAction(card) {
@@ -1346,176 +1245,16 @@
     appendReadLink(card);
   }
 
-  function setupCardActions() {
-    document
-      .querySelectorAll(".card")
-      .forEach((card) => {
-        setupSingleCardAction(card);
-      });
-  }
-
   function findRegionForCard(card) {
     const label = getCardLabel(card);
 
     return (
-      regionDefinitions.find((region) =>
-        region.order.includes(label)
+      regionDefinitions.find(
+        (region) =>
+          region.order.includes(label)
       ) ||
       regionDefinitions[0]
     );
-  }
-
-  function getCardOrder(
-    card,
-    region
-  ) {
-    const label = getCardLabel(card);
-
-    const position =
-      region.order.indexOf(label);
-
-    return position === -1
-      ? region.order.length
-      : position;
-  }
-
-  function sortRegionCards(
-    cards,
-    region
-  ) {
-    return [...cards].sort(
-      (cardA, cardB) => {
-        return (
-          getCardOrder(cardA, region) -
-          getCardOrder(cardB, region)
-        );
-      }
-    );
-  }
-
-  function activateRegionCard(
-    section,
-    selectedIndex,
-    moveFocus = false
-  ) {
-    const tabs = Array.from(
-      section.querySelectorAll(
-        ".region-tab"
-      )
-    );
-
-    const cards = Array.from(
-      section.querySelectorAll(
-        ".region-panel > .card"
-      )
-    );
-
-    tabs.forEach((tab, index) => {
-      const active =
-        index === selectedIndex;
-
-      tab.classList.toggle(
-        "is-active",
-        active
-      );
-
-      tab.setAttribute(
-        "aria-selected",
-        String(active)
-      );
-
-      tab.tabIndex =
-        active ? 0 : -1;
-    });
-
-    cards.forEach((card, index) => {
-      const active =
-        index === selectedIndex;
-
-      card.classList.toggle(
-        "is-active",
-        active
-      );
-
-      card.hidden = !active;
-    });
-
-    if (moveFocus) {
-      tabs[selectedIndex]?.focus();
-    }
-  }
-
-  function setupRegionTabs(section) {
-    const tabs = Array.from(
-      section.querySelectorAll(
-        ".region-tab"
-      )
-    );
-
-    tabs.forEach((tab, index) => {
-      tab.addEventListener(
-        "click",
-        () => {
-          activateRegionCard(
-            section,
-            index
-          );
-        }
-      );
-
-      tab.addEventListener(
-        "keydown",
-        (event) => {
-          let nextIndex = null;
-
-          if (
-            event.key === "ArrowLeft" ||
-            event.key === "ArrowDown"
-          ) {
-            nextIndex =
-              (index + 1) % tabs.length;
-          }
-
-          if (
-            event.key === "ArrowRight" ||
-            event.key === "ArrowUp"
-          ) {
-            nextIndex =
-              (index - 1 + tabs.length) %
-              tabs.length;
-          }
-
-          if (event.key === "Home") {
-            nextIndex = 0;
-          }
-
-          if (event.key === "End") {
-            nextIndex =
-              tabs.length - 1;
-          }
-
-          if (nextIndex === null) {
-            return;
-          }
-
-          event.preventDefault();
-
-          activateRegionCard(
-            section,
-            nextIndex,
-            true
-          );
-
-          tabs[nextIndex].scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "nearest"
-          });
-        }
-      );
-    });
-
-    activateRegionCard(section, 0);
   }
 
   function createRegionElement(
@@ -1543,88 +1282,91 @@
     heading.textContent =
       region.title;
 
-    const headingId =
-      `region-title-${region.id}`;
-
-    heading.id = headingId;
-
-    section.setAttribute(
-      "aria-labelledby",
-      headingId
-    );
-
     const tabs =
       document.createElement("div");
 
     tabs.className = "region-tabs";
+
     tabs.setAttribute(
       "role",
       "tablist"
     );
 
-    tabs.setAttribute(
-      "aria-label",
-      region.title
-    );
-
     const panel =
       document.createElement("div");
 
-    panel.className = "region-panel";
+    panel.className =
+      "region-panel";
 
-    cards.forEach((card, index) => {
-      const label =
-        getCardLabel(card) ||
-        `תוכן ${index + 1}`;
+    cards.sort(
+      (cardA, cardB) =>
+        region.order.indexOf(
+          getCardLabel(cardA)
+        ) -
+        region.order.indexOf(
+          getCardLabel(cardB)
+        )
+    );
 
-      const tab =
-        document.createElement("button");
+    cards.forEach(
+      (card, index) => {
+        const tab =
+          document.createElement(
+            "button"
+          );
 
-      const tabId =
-        `region-${region.id}-tab-${index}`;
+        tab.type = "button";
 
-      const panelId =
-        `region-${region.id}-card-${index}`;
+        tab.className =
+          "region-tab";
 
-      tab.type = "button";
-      tab.className = "region-tab";
-      tab.textContent = label;
-      tab.id = tabId;
+        tab.textContent =
+          getCardLabel(card) ||
+          `תוכן ${index + 1}`;
 
-      tab.setAttribute(
-        "role",
-        "tab"
-      );
+        tab.addEventListener(
+          "click",
+          () => {
+            tabs
+              .querySelectorAll(
+                ".region-tab"
+              )
+              .forEach((otherTab) => {
+                otherTab.classList.remove(
+                  "is-active"
+                );
+              });
 
-      tab.setAttribute(
-        "aria-controls",
-        panelId
-      );
+            panel
+              .querySelectorAll(
+                ":scope > .card"
+              )
+              .forEach((otherCard) => {
+                otherCard.classList.remove(
+                  "is-active"
+                );
 
-      tab.setAttribute(
-        "aria-selected",
-        "false"
-      );
+                otherCard.hidden = true;
+              });
 
-      tab.tabIndex = -1;
+            tab.classList.add(
+              "is-active"
+            );
 
-      card.id = panelId;
+            card.classList.add(
+              "is-active"
+            );
 
-      card.setAttribute(
-        "role",
-        "tabpanel"
-      );
+            card.hidden = false;
+          }
+        );
 
-      card.setAttribute(
-        "aria-labelledby",
-        tabId
-      );
+        card.hidden = true;
 
-      card.hidden = true;
-
-      tabs.append(tab);
-      panel.append(card);
-    });
+        tabs.append(tab);
+        panel.append(card);
+      }
+    );
 
     header.append(
       heading,
@@ -1636,16 +1378,14 @@
       panel
     );
 
-    setupRegionTabs(section);
+    tabs.firstElementChild?.click();
 
     return section;
   }
 
   function organizeParashaCards() {
     const grid =
-      document.querySelector(
-        ".cards-grid"
-      );
+      document.querySelector(".cards-grid");
 
     if (
       !grid ||
@@ -1666,18 +1406,20 @@
       return;
     }
 
-    const cardsByRegion = new Map(
-      regionDefinitions.map((region) => [
-        region.id,
-        []
-      ])
+    const grouped = new Map(
+      regionDefinitions.map(
+        (region) => [
+          region.id,
+          []
+        ]
+      )
     );
 
     cards.forEach((card) => {
       const region =
         findRegionForCard(card);
 
-      cardsByRegion
+      grouped
         .get(region.id)
         .push(card);
     });
@@ -1691,111 +1433,25 @@
     regionDefinitions.forEach(
       (region) => {
         const regionCards =
-          sortRegionCards(
-            cardsByRegion.get(region.id),
-            region
+          grouped.get(region.id);
+
+        if (regionCards.length) {
+          grid.append(
+            createRegionElement(
+              region,
+              regionCards
+            )
           );
-
-        if (!regionCards.length) {
-          return;
         }
-
-        grid.append(
-          createRegionElement(
-            region,
-            regionCards
-          )
-        );
       }
     );
-  }
-
-  async function repairInternalLinks() {
-    let redirectMap;
-
-    try {
-      const response = await fetch(
-        redirectMapUrl,
-        { cache: "no-store" }
-      );
-
-      if (!response.ok) {
-        console.error(
-          "Redirect map could not be loaded:",
-          response.status,
-          redirectMapUrl.href
-        );
-
-        return;
-      }
-
-      redirectMap =
-        await response.json();
-    } catch (error) {
-      console.error(
-        "Redirect map error:",
-        error
-      );
-
-      return;
-    }
-
-    document
-      .querySelectorAll("a[href]")
-      .forEach((link) => {
-        const rawHref =
-          link.getAttribute("href");
-
-        if (!rawHref) {
-          return;
-        }
-
-        let oldUrl;
-
-        try {
-          oldUrl = new URL(
-            rawHref,
-            window.location.href
-          );
-        } catch {
-          return;
-        }
-
-        if (
-          !oldSiteHosts.has(
-            oldUrl.hostname
-          )
-        ) {
-          return;
-        }
-
-        const newPath =
-          redirectMap[oldUrl.pathname];
-
-        if (!newPath) {
-          return;
-        }
-
-        const target = new URL(
-          newPath.replace(/^\/+/, ""),
-          siteRoot
-        );
-
-        target.search =
-          oldUrl.search;
-
-        target.hash =
-          oldUrl.hash;
-
-        link.href = target.href;
-      });
   }
 
   document.addEventListener(
     "DOMContentLoaded",
     () => {
+      removeNavigationItems();
       removeHeroDescription();
-      removeBinaNavigation();
       removeBinaCards();
       removeOldGamesContent();
 
@@ -1808,23 +1464,23 @@
       const parashaName =
         getCurrentParasha();
 
-      if (parashaName) {
-        updateGamesNavigation(
-          parashaName
-        );
+      normalizeParashaPageHeader(
+        parashaName
+      );
 
-        addGamesCard(
-          parashaName
-        );
+      if (parashaName) {
+        addGamesCard(parashaName);
 
         applyFixedSectionImagesToCards();
 
-        setupCardActions();
+        document
+          .querySelectorAll(".card")
+          .forEach(
+            setupSingleCardAction
+          );
 
         organizeParashaCards();
       }
-
-      repairInternalLinks();
     }
   );
 })();
