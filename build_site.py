@@ -229,7 +229,14 @@ def nav_html(prefix: str, parashot: dict[str, list[str]]) -> str:
           <button type="button">כל הפרשות</button>
           <ul>{''.join(parasha_books)}</ul>
         </li>
-        <li><a href="{prefix}series/">סדרות</a></li>
+        <li class="has-sub">
+          <button type="button">סדרות</button>
+            <ul>
+                <li><a href="{prefix}p/אידנקסה.html">אידנקסה</a></li>
+               <li><a href="{prefix}p/כבודינה.html">כבודינה</a></li>
+               <li><a href="{prefix}p/המגדל/">המגדל</a></li>
+            </ul>
+        </li>
         <li><a href="{prefix}search/">חיפוש</a></li>
         <li><a href="{prefix}about/">אודות</a></li>
       </ul>
