@@ -19,133 +19,85 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Check feed paths
+      - name: Check export contents
         shell: bash
         run: |
           python - <<'PY'
-          import re
-          import unicodedata
-          import xml.etree.ElementTree as ET
           from collections import Counter
           from pathlib import Path
-          from urllib.parse import urlparse
 
-          feed = Path("series-feed.atom")
+          import build_site
+          import import_series
 
-          if not feed.exists():
-              raise SystemExit("ERROR: series-feed.atom was not found")
+          feed_path = Path("series-feed.atom")
 
-          ATOM = "http://www.w3.org/2005/Atom"
-          BLOGGER = "http://schemas.google.com/blogger/2018"
-          ns = {"a": ATOM, "b": BLOGGER}
-
-          def text(node, path, default=""):
-              value = node.findtext(
-                  path,
-                  default=default,
-                  namespaces=ns,
-              )
-              return value or default
-
-          def safe_slug(value):
-              value = unicodedata.normalize(
-                  "NFKC",
-                  value,
-              ).strip().lower()
-
-              value = re.sub(
-                  r"[\s_/]+",
-                  "-",
-                  value,
+          if not feed_path.exists():
+              raise SystemExit(
+                  "ERROR: series-feed.atom was not found"
               )
 
-              value = re.sub(
-                  r"[^\w\-\u0590-\u05ff]+",
-                  "",
-                  value,
-                  flags=re.UNICODE,
-              )
+          items = build_site.parse_feed(feed_path)
 
-              value = re.sub(
-                  r"-+",
-                  "-",
-                  value,
-              ).strip("-")
+          posts = [
+              item
+              for item in items
+              if item.item_type == "POST"
+          ]
 
-              return value or "item"
+          pages = [
+              item
+              for item in items
+              if item.item_type == "PAGE"
+          ]
 
-          def output_path(url, item_type, title):
-              if url:
-                  path = urlparse(url).path.lstrip("/")
+          regular_posts = [
+              item
+              for item in posts
+              if not build_site.is_series_item(item)
+          ]
 
-                  if path and path.endswith(".html"):
-                      return path
+          series_posts = [
+              item
+              for item in posts
+              if build_site.is_series_item(item)
+          ]
 
-              folder = "p" if item_type == "PAGE" else "posts"
-              return f"{folder}/{safe_slug(title)}.html"
+          paths = [
+              item.output_path
+              for item in items
+          ]
 
-          root = ET.parse(feed).getroot()
-          posts = []
-          pages = []
-
-          for entry in root.findall("a:entry", ns):
-              item_type = text(entry, "b:type")
-              status = text(entry, "b:status")
-
-              if status != "LIVE":
-                  continue
-
-              if item_type not in {"POST", "PAGE"}:
-                  continue
-
-              title = text(
-                  entry,
-                  "a:title",
-                  "ללא כותרת",
-              ).strip()
-
-              source_url = ""
-
-              for link in entry.findall("a:link", ns):
-                  if link.attrib.get("rel") == "alternate":
-                      source_url = link.attrib.get("href", "")
-                      break
-
-              path = output_path(
-                  source_url,
-                  item_type,
-                  title,
-              )
-
-              record = {
-                  "title": title,
-                  "path": path,
-              }
-
-              if item_type == "POST":
-                  posts.append(record)
-              else:
-                  pages.append(record)
-
-          paths = [item["path"] for item in posts + pages]
-          counts = Counter(paths)
           duplicates = [
               path
-              for path, count in counts.items()
+              for path, count
+              in Counter(paths).items()
               if count > 1
           ]
 
           print(f"LIVE posts: {len(posts)}")
           print(f"LIVE pages: {len(pages)}")
-          print(f"Duplicate output paths: {len(duplicates)}")
+          print(f"Regular posts: {len(regular_posts)}")
+          print(f"Series posts: {len(series_posts)}")
+          print(
+              "Duplicate output paths: "
+              f"{len(duplicates)}"
+          )
 
           if len(posts) != 946:
               raise SystemExit(
-                  f"ERROR: expected 946 LIVE posts, found {len(posts)}"
+                  "ERROR: expected 946 LIVE posts, "
+                  f"found {len(posts)}"
+              )
+
+          if len(series_posts) != 43:
+              raise SystemExit(
+                  "ERROR: expected 43 series posts, "
+                  f"found {len(series_posts)}"
               )
 
           if duplicates:
               print("Duplicate paths:")
+
               for path in duplicates:
                   print(path)
 
@@ -153,12 +105,48 @@ jobs:
                   "ERROR: duplicate output paths found"
               )
 
-          Path("expected-post-paths.txt").write_text(
-              "\n".join(item["path"] for item in posts),
+          Path(
+              "expected-regular-post-paths.txt"
+          ).write_text(
+              "\n".join(
+                  item.output_path
+                  for item in regular_posts
+              ),
               encoding="utf-8",
           )
 
-          print("Feed path check passed.")
+          series_entries = import_series.parse_feed(
+              feed_path
+          )
+
+          series_chapters = [
+              entry
+              for entry in series_entries
+              if entry.entry_type == "POST"
+          ]
+
+          Path(
+              "expected-series-post-paths.txt"
+          ).write_text(
+              "\n".join(
+                  entry.filename
+                  for entry in series_chapters
+              ),
+              encoding="utf-8",
+          )
+
+          print(
+              "Series importer chapters: "
+              f"{len(series_chapters)}"
+          )
+
+          if len(series_chapters) != 43:
+              raise SystemExit(
+                  "ERROR: series importer did not "
+                  "identify all 43 chapters"
+              )
+
+          print("Export contents check passed.")
           PY
 
       - name: Build full export
@@ -171,30 +159,38 @@ jobs:
           import json
           from pathlib import Path
 
-          report_path = Path("build-report.json")
+          report_path = Path(
+              "build-report.json"
+          )
 
           if not report_path.exists():
               raise SystemExit(
-                  "ERROR: build-report.json was not created"
+                  "ERROR: build-report.json "
+                  "was not created"
               )
 
           report = json.loads(
-              report_path.read_text(encoding="utf-8")
+              report_path.read_text(
+                  encoding="utf-8"
+              )
           )
 
           posts = report.get("posts")
 
-          print(f'Build report posts: {posts}')
+          print(
+              f"Build report posts: {posts}"
+          )
 
           if posts != 946:
               raise SystemExit(
-                  f"ERROR: build report says {posts} posts instead of 946"
+                  "ERROR: build report says "
+                  f"{posts} posts instead of 946"
               )
 
           print("Build report check passed.")
           PY
 
-      - name: Verify every post file
+      - name: Verify regular post files
         shell: bash
         run: |
           python - <<'PY'
@@ -203,7 +199,7 @@ jobs:
           expected = [
               line.strip()
               for line in Path(
-                  "expected-post-paths.txt"
+                  "expected-regular-post-paths.txt"
               ).read_text(
                   encoding="utf-8"
               ).splitlines()
@@ -216,8 +212,15 @@ jobs:
               if not Path(path).is_file()
           ]
 
-          print(f"Expected post files: {len(expected)}")
-          print(f"Missing post files: {len(missing)}")
+          print(
+              "Expected regular post files: "
+              f"{len(expected)}"
+          )
+
+          print(
+              "Missing regular post files: "
+              f"{len(missing)}"
+          )
 
           if missing:
               print("First missing files:")
@@ -226,17 +229,68 @@ jobs:
                   print(path)
 
               raise SystemExit(
-                  "ERROR: some exported posts have no HTML file"
+                  "ERROR: some regular posts "
+                  "have no HTML file"
               )
 
-          print("All 946 post files exist.")
+          print(
+              "All regular post files exist."
+          )
           PY
 
-      - name: Verify series pages
+      - name: Verify series chapter files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          expected = [
+              line.strip()
+              for line in Path(
+                  "expected-series-post-paths.txt"
+              ).read_text(
+                  encoding="utf-8"
+              ).splitlines()
+              if line.strip()
+          ]
+
+          missing = [
+              path
+              for path in expected
+              if not Path(path).is_file()
+          ]
+
+          print(
+              "Expected series chapter files: "
+              f"{len(expected)}"
+          )
+
+          print(
+              "Missing series chapter files: "
+              f"{len(missing)}"
+          )
+
+          if missing:
+              print("Missing series files:")
+
+              for path in missing:
+                  print(path)
+
+              raise SystemExit(
+                  "ERROR: some series chapters "
+                  "have no imported HTML file"
+              )
+
+          print(
+              "All 43 series chapter files exist."
+          )
+          PY
+
+      - name: Verify series index pages
         shell: bash
         run: |
           test -f "p/אידנקסה.html"
           test -f "p/כבודינה.html"
           test -f "p/המגדל.html"
 
-          echo "All three series pages remain in place."
+          echo "All three series index pages exist."
