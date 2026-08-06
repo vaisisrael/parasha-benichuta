@@ -302,6 +302,7 @@ def layout(
 
   <link rel="stylesheet" href="{prefix}assets/css/site.css">
   <script defer src="{prefix}assets/js/site.js"></script>
+  <script defer src="{prefix}assets/js/shabbat-lock.js"></script>
 </head>
 <body>
 {nav_html(prefix, parashot)}
