@@ -1,10 +1,16 @@
-name: Build site
+name: Build and deploy site
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -22,10 +28,49 @@ jobs:
       - name: Build site
         run: python build_site.py blogger-export-links.atom
 
-      - name: Save generated files
+      - name: Prepare publish folder
+        shell: bash
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git diff --cached --quiet || git commit -m "Build site"
-          git push
+          rm -rf _site
+          mkdir -p _site
+
+          for item in \
+            index.html \
+            404.html \
+            CNAME \
+            assets \
+            about \
+            family \
+            games \
+            p \
+            parashot \
+            posts \
+            search \
+            sections \
+            series
+          do
+            if [ -e "$item" ]; then
+              cp -a "$item" _site/
+            fi
+          done
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site files
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
