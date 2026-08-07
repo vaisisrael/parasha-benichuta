@@ -80,19 +80,46 @@ def is_blogger_image(url: str) -> bool:
     ):
         return False
 
-    return bool(
-        IMAGE_EXT_RE.search(parsed.path)
-        or "blogger.googleusercontent.com" in host
-        or "blogspot.com" in host
-    )
+    # שרתי התמונות הישירים של Google/Blogger
+    # עשויים להשתמש גם בכתובות ללא סיומת תמונה.
+    if (
+        "blogger.googleusercontent.com" in host
+        or (
+            "googleusercontent.com" in host
+            and "blogger.googleusercontent.com" not in host
+        )
+    ):
+        return True
+
+    # כתובת blogspot.com יכולה להיות גם קישור לפוסט.
+    # לכן נחשיב אותה כתמונה רק אם הנתיב נראה כמו קובץ תמונה.
+    if "blogspot.com" in host:
+        return bool(
+            IMAGE_EXT_RE.search(parsed.path)
+        )
+
+    return False
 
 
 def canonical_key(url: str) -> str:
     parsed = urlparse(html.unescape(url))
+
     path = unquote(parsed.path)
-    path = SIZE_PATH_RE.sub("/__SIZE__/", path)
-    path = SIZE_SUFFIX_RE.sub("", path)
-    return (parsed.hostname or "").lower() + path
+
+    path = SIZE_PATH_RE.sub(
+        "/__SIZE__/",
+        path,
+    )
+
+    path = SIZE_SUFFIX_RE.sub(
+        "",
+        path,
+    )
+
+    return (
+        (parsed.hostname or "").lower()
+        + path
+    )
 
 
 def size_score(url: str) -> int:
@@ -105,7 +132,11 @@ def size_score(url: str) -> int:
     ):
         width = int(match.group(1))
         height = int(match.group(2) or width)
-        score = max(score, width * height)
+
+        score = max(
+            score,
+            width * height,
+        )
 
     if "/s0/" in url.lower():
         score += 10**12
@@ -156,22 +187,31 @@ def collect_urls_from_html(
     urls: list[str] = []
 
     for match in ATTR_URL_RE.finditer(content_html):
-        url = html.unescape(match.group("url"))
+        url = html.unescape(
+            match.group("url")
+        )
 
         if is_blogger_image(url):
             urls.append(url)
 
     for match in SRCSET_RE.finditer(content_html):
-        value = html.unescape(match.group("value"))
+        value = html.unescape(
+            match.group("value")
+        )
 
         for part in value.split(","):
             candidate = part.strip().split()[0]
 
-            if candidate and is_blogger_image(candidate):
+            if (
+                candidate
+                and is_blogger_image(candidate)
+            ):
                 urls.append(candidate)
 
     for match in CSS_URL_RE.finditer(content_html):
-        url = html.unescape(match.group("url"))
+        url = html.unescape(
+            match.group("url")
+        )
 
         if is_blogger_image(url):
             urls.append(url)
@@ -187,7 +227,9 @@ def load_content_files() -> list[Path]:
         CONTENT_ROOT / "pages",
     ):
         if folder.exists():
-            files.extend(folder.rglob("*.json"))
+            files.extend(
+                folder.rglob("*.json")
+            )
 
     return sorted(files)
 
@@ -203,20 +245,33 @@ def build_inventory(
 
     for path in content_files:
         data = json.loads(
-            path.read_text(encoding="utf-8")
+            path.read_text(
+                encoding="utf-8"
+            )
         )
 
-        content_html = data.get("content_html", "")
+        content_html = data.get(
+            "content_html",
+            "",
+        )
 
-        for url in collect_urls_from_html(content_html):
+        for url in collect_urls_from_html(
+            content_html
+        ):
             key = canonical_key(url)
 
-            variants.setdefault(key, [])
+            variants.setdefault(
+                key,
+                [],
+            )
 
             if url not in variants[key]:
                 variants[key].append(url)
 
-            files_by_key.setdefault(key, set()).add(
+            files_by_key.setdefault(
+                key,
+                set(),
+            ).add(
                 path.as_posix()
             )
 
@@ -226,7 +281,10 @@ def build_inventory(
 def preferred_url(
     urls: list[str],
 ) -> str:
-    return max(urls, key=size_score)
+    return max(
+        urls,
+        key=size_score,
+    )
 
 
 def download_image(
@@ -238,6 +296,8 @@ def download_image(
         exist_ok=True,
     )
 
+    # תמונה שכבר נשמרה מהרצה קודמת
+    # אינה יורדת שוב.
     if (
         destination.exists()
         and destination.stat().st_size > 0
@@ -269,7 +329,9 @@ def download_image(
                 data = response.read()
 
                 if not data:
-                    raise RuntimeError("empty response")
+                    raise RuntimeError(
+                        "empty response"
+                    )
 
                 content_type = (
                     response.headers.get(
@@ -282,6 +344,7 @@ def download_image(
                 )
 
             destination.write_bytes(data)
+
             return content_type
 
         except Exception as error:
@@ -305,7 +368,10 @@ def rewrite_srcset_value(
             continue
 
         pieces = stripped.split()
-        url = html.unescape(pieces[0])
+
+        url = html.unescape(
+            pieces[0]
+        )
 
         descriptor = (
             " ".join(pieces[1:])
@@ -322,9 +388,11 @@ def rewrite_srcset_value(
                 url = local
 
         parts.append(
-            f"{url} {descriptor}"
-            if descriptor
-            else url
+            (
+                f"{url} {descriptor}"
+                if descriptor
+                else url
+            )
         )
 
     return ", ".join(parts)
@@ -425,16 +493,23 @@ def remaining_blogger_urls(
 
     for path in content_files:
         data = json.loads(
-            path.read_text(encoding="utf-8")
+            path.read_text(
+                encoding="utf-8"
+            )
         )
 
         remaining.extend(
             collect_urls_from_html(
-                data.get("content_html", "")
+                data.get(
+                    "content_html",
+                    "",
+                )
             )
         )
 
-    return sorted(set(remaining))
+    return sorted(
+        set(remaining)
+    )
 
 
 def write_report(
@@ -514,6 +589,7 @@ def main() -> int:
 
     local_map: dict[str, str] = {}
     failures: list[dict] = []
+
     downloaded = 0
     existing = 0
 
@@ -524,7 +600,9 @@ def main() -> int:
         sorted(variants.items()),
         start=1,
     ):
-        preferred = preferred_url(urls)
+        preferred = preferred_url(
+            urls
+        )
 
         destination = local_path_for_key(
             key,
@@ -561,14 +639,21 @@ def main() -> int:
             )
 
     if failures:
-        print("\nFailed images:")
+        print(
+            "\nFailed images:"
+        )
 
         for failure in failures:
             print("----")
-            print(f'Key: {failure["key"]}')
+
+            print(
+                f'Key: {failure["key"]}'
+            )
 
             for url in failure["urls"]:
-                print(f"URL: {url}")
+                print(
+                    f"URL: {url}"
+                )
 
             print(
                 f'Error: {failure["error"]}'
@@ -576,7 +661,9 @@ def main() -> int:
 
         report = {
             "status": "failed",
-            "content_files": len(content_files),
+            "content_files": len(
+                content_files
+            ),
             "unique_blogger_image_urls": len(
                 raw_urls
             ),
@@ -585,11 +672,15 @@ def main() -> int:
             ),
             "downloaded_images": downloaded,
             "existing_images": existing,
-            "failed_images": len(failures),
+            "failed_images": len(
+                failures
+            ),
             "failures": failures,
         }
 
-        write_report(report)
+        write_report(
+            report
+        )
 
         print(
             f"\nERROR: {len(failures)} "
@@ -604,7 +695,9 @@ def main() -> int:
 
     for path in content_files:
         data = json.loads(
-            path.read_text(encoding="utf-8")
+            path.read_text(
+                encoding="utf-8"
+            )
         )
 
         old_html = data.get(
@@ -639,15 +732,20 @@ def main() -> int:
             if not remaining
             else "incomplete"
         ),
-        "content_files": len(content_files),
+        "content_files": len(
+            content_files
+        ),
         "unique_blogger_image_urls_before": len(
             raw_urls
         ),
         "canonical_images_downloaded": downloaded,
         "canonical_images_already_existing": existing,
-        "canonical_images_total": len(variants),
+        "canonical_images_total": len(
+            variants
+        ),
         "duplicate_or_size_variants_removed": (
-            len(raw_urls) - len(variants)
+            len(raw_urls)
+            - len(variants)
         ),
         "failed_images": 0,
         "remaining_blogger_image_urls": len(
@@ -656,9 +754,12 @@ def main() -> int:
         "remaining_urls": remaining,
     }
 
-    write_report(report)
+    write_report(
+        report
+    )
 
     print()
+
     print(
         f"Downloaded local images: {downloaded}"
     )
@@ -688,4 +789,6 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    raise SystemExit(
+        main()
+    )
