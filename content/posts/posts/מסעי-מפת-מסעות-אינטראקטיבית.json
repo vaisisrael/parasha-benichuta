@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "item_type": "POST",
+  "title": "מסעי: מפת מסעות אינטראקטיבית",
+  "description": "פרשת מסעי מסכמת את 42 מסעות בני ישראל במדבר, עם מפת מסעות אינטראקטיבית, גבולות הארץ, דיני רצח ועיר מקלט בלימוד נגיש וברור",
+  "published": "2026-07-03T18:38:00Z",
+  "updated": "2026-07-05T09:52:37.471Z",
+  "labels": [
+    "🔖המחשה",
+    "4-09 מטות מסעי",
+    "4-10 פרשת מסעי"
+  ],
+  "source_url": "",
+  "output_path": "posts/מסעי-מפת-מסעות-אינטראקטיבית.html",
+  "parasha_label": "4-10 פרשת מסעי",
+  "parasha_name": "מסעי",
+  "book": "במדבר",
+  "section": "🔖המחשה",
+  "series": null,
+  "content_html": "<h2 style=\"text-align: center;\"><div class=\"separator\" style=\"clear: both; text-align: center;\"><a href=\"/assets/images/content/8f8490272098040ade.png\" imageanchor=\"1\" style=\"margin-left: 1em; margin-right: 1em;\"><img alt=\"צילום &quot;לכידה&quot; של המפה\" border=\"0\" data-original-height=\"442\" data-original-width=\"620\" height=\"228\" src=\"/assets/images/content/8f8490272098040ade.png\" width=\"320\" /></a></div></h2><h2 style=\"text-align: center;\"><span style=\"font-family: arial;\">42 מסעות בני ישראל במדבר – נקודה אחר נקודה</span></h2><p style=\"text-align: right;\"><span style=\"font-family: arial; font-size: medium;\">במפה שלפניך מסומנות 42 התחנות של מסעי בני ישראל במדבר שבין הארצות השכנות לכנען.&nbsp;</span></p><p style=\"text-align: right;\"><span style=\"font-family: arial; font-size: medium;\">ניתן ללחוץ על כל נקודת מסע כדי לקרוא תיאור קצר של המקום, להגדיל או להקטין את המפה, ולגרור אותה כדי לראות את המסע כולו מהיציאה ממצרים ועד ערבות מואב.&nbsp;</span></p><p style=\"text-align: right;\"><span style=\"font-family: arial; font-size: medium;\">מומלץ לעבור נקודה נקודה עם הפסוקים מול העיניים, וכך להרגיש את תנועת המחנה במדבר באופן חי ומוחשי בלימוד הפרשה.</span></p><div><br /></div><iframe height=\"480\" src=\"https://www.google.com/maps/d/embed?mid=1rEKBa16ur1JRa5wYXAc_YngFUABGArs&amp;hl=iw&amp;ehbc=2E312F\" width=\"640\"></iframe>"
+}

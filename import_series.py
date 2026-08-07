@@ -1,65 +1,61 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import html
+import json
 import re
 import shutil
-import unicodedata
-import urllib.request
-import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import unquote, urlparse
 
-ATOM_NS = "http://www.w3.org/2005/Atom"
-BLOGGER_NS = "http://schemas.google.com/blogger/2018"
-NS = {"a": ATOM_NS, "b": BLOGGER_NS}
 
 SERIES = {
     "אידנקסה": {
-        "label": "📊אידנקסה",
-        "description": "קומדיה על סטארט־אפ, בינה מלאכותית, ארגונים והפער שבין הצהרות להתנהגות.",
+        "labels": {
+            "📊אידנקסה",
+            "🔖אידנקסה",
+        },
+        "description": (
+            "קומדיה על סטארט־אפ, בינה מלאכותית, "
+            "ארגונים והפער שבין הצהרות להתנהגות."
+        ),
         "expected": 20,
     },
     "כבודינה": {
-        "label": "🤖כבודינה",
-        "description": "קומדיה דיסטופית־משפטית על מערכת חכמה שנכנסת אל אולם המשפט.",
+        "labels": {
+            "🤖כבודינה",
+            "🔖כבודינה",
+        },
+        "description": (
+            "קומדיה דיסטופית־משפטית על מערכת "
+            "חכמה שנכנסת אל אולם המשפט."
+        ),
         "expected": 13,
     },
     "המגדל": {
-        "label": "🏢המגדל",
-        "description": "קומדיית דיירים על בניין גבוה, ועד בית, קבוצות ווטסאפ וחיים משותפים.",
+        "labels": {
+            "🏢המגדל",
+            "🔖המגדל",
+        },
+        "description": (
+            "קומדיית דיירים על בניין גבוה, ועד בית, "
+            "קבוצות ווטסאפ וחיים משותפים."
+        ),
         "expected": 10,
     },
 }
 
-BOOK_ORDER = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"]
+BOOK_ORDER = [
+    "בראשית",
+    "שמות",
+    "ויקרא",
+    "במדבר",
+    "דברים",
+]
 
-IMAGE_HOST_MARKERS = (
-    "blogger.googleusercontent.com",
-    "googleusercontent.com",
-    "blogspot.com",
-)
-
-ATTR_URL_RE = re.compile(
-    r"(?P<attr>\b(?:src|href|data-src|data-original)\s*=\s*)"
-    r"(?P<quote>[\"'])(?P<url>https?://[^\"'<>]+)(?P=quote)",
-    flags=re.I,
-)
-
-IMG_RE = re.compile(r"<img\b[^>]*>", flags=re.I)
-TAG_RE = re.compile(r"<[^>]+>")
-
-SIZE_RE = re.compile(
-    r"/(?:s\d+|w\d+(?:-h\d+)?(?:-[a-z0-9-]+)?)/",
-    flags=re.I,
-)
-
-EXT_RE = re.compile(
-    r"\.(png|jpe?g|webp|gif)(?:$|\?)",
-    flags=re.I,
+TAG_RE = re.compile(
+    r"<[^>]+>"
 )
 
 
@@ -74,21 +70,9 @@ class Entry:
     series_name: str
 
 
-def text(
-    node: ET.Element,
-    path: str,
-    default: str = "",
+def normalize(
+    value: str,
 ) -> str:
-    value = node.findtext(
-        path,
-        default=default,
-        namespaces=NS,
-    )
-
-    return value or default
-
-
-def normalize(value: str) -> str:
     return re.sub(
         r"\s+",
         " ",
@@ -96,7 +80,9 @@ def normalize(value: str) -> str:
     ).strip()
 
 
-def strip_tags(value: str) -> str:
+def strip_tags(
+    value: str,
+) -> str:
     return normalize(
         html.unescape(
             TAG_RE.sub(
@@ -122,89 +108,143 @@ def chapter_number(
     )
 
 
-def parse_feed(
-    path: Path,
-) -> list[Entry]:
-    root = ET.parse(path).getroot()
-    entries: list[Entry] = []
+def detect_series(
+    data: dict,
+) -> str | None:
+    explicit = data.get(
+        "series"
+    )
 
-    label_to_series = {
-        definition["label"]: name
-        for name, definition
-        in SERIES.items()
+    if explicit in SERIES:
+        return explicit
+
+    title = str(
+        data.get(
+            "title",
+            "",
+        )
+    ).strip()
+
+    item_type = str(
+        data.get(
+            "item_type",
+            "",
+        )
+    ).strip().upper()
+
+    if (
+        item_type == "PAGE"
+        and title in SERIES
+    ):
+        return title
+
+    labels = {
+        str(label).strip()
+        for label in data.get(
+            "labels",
+            [],
+        )
+        if str(label).strip()
     }
 
-    for element in root.findall(
-        "a:entry",
-        NS,
-    ):
-        entry_type = text(
-            element,
-            "b:type",
-        )
-
-        status = text(
-            element,
-            "b:status",
-        )
-
+    for (
+        series_name,
+        definition,
+    ) in SERIES.items():
         if (
-            entry_type not in {
-                "POST",
-                "PAGE",
-            }
-            or status != "LIVE"
+            labels
+            & definition["labels"]
         ):
-            continue
+            return series_name
 
-        title = text(
-            element,
-            "a:title",
-            "ללא כותרת",
-        ).strip()
+    return None
 
-        content = text(
-            element,
-            "a:content",
-        )
 
-        description = text(
-            element,
-            "b:metaDescription",
-        ).strip()
-
-        labels = [
-            category.attrib
-            .get("term", "")
-            .strip()
-            for category
-            in element.findall(
-                "a:category",
-                NS,
-            )
-        ]
-
-        series_name = next(
+def load_entries(
+    content_root: Path,
+) -> list[Entry]:
+    files = sorted(
+        list(
             (
-                name
-                for label, name
-                in label_to_series.items()
-                if label in labels
-            ),
-            None,
+                content_root
+                / "posts"
+            ).rglob("*.json")
+        )
+        + list(
+            (
+                content_root
+                / "pages"
+            ).rglob("*.json")
+        )
+    )
+
+    if not files:
+        raise FileNotFoundError(
+            "No content JSON files found "
+            f"under {content_root}"
         )
 
-        if (
-            entry_type == "PAGE"
-            and title in SERIES
-        ):
-            series_name = title
+    entries: list[Entry] = []
+
+    for path in files:
+        data = json.loads(
+            path.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        series_name = detect_series(
+            data
+        )
 
         if not series_name:
             continue
 
+        entry_type = str(
+            data.get(
+                "item_type",
+                "",
+            )
+        ).strip().upper()
+
+        if entry_type not in {
+            "POST",
+            "PAGE",
+        }:
+            continue
+
+        title = str(
+            data.get(
+                "title",
+                "ללא כותרת",
+            )
+        ).strip()
+
+        content = str(
+            data.get(
+                "content_html",
+                "",
+            )
+        )
+
+        description = str(
+            data.get(
+                "description",
+                "",
+            )
+        ).strip()
+
+        filename = str(
+            data.get(
+                "output_path",
+                "",
+            )
+        ).strip().lstrip("/")
+
         number = (
-            chapter_number(title)
+            chapter_number(
+                title
+            )
             if entry_type == "POST"
             else None
         )
@@ -218,11 +258,6 @@ def parse_feed(
                 f'without number: "{title}"'
             )
             continue
-
-        filename = text(
-            element,
-            "b:filename",
-        ).strip().lstrip("/")
 
         if not filename:
             filename = (
@@ -250,412 +285,6 @@ def parse_feed(
     return entries
 
 
-def is_image_url(
-    url: str,
-) -> bool:
-    try:
-        parsed = urlparse(
-            html.unescape(url)
-        )
-    except ValueError:
-        return False
-
-    host = parsed.hostname or ""
-
-    return (
-        any(
-            marker in host
-            for marker
-            in IMAGE_HOST_MARKERS
-        )
-        and bool(
-            EXT_RE.search(
-                parsed.path
-                + (
-                    "?" + parsed.query
-                    if parsed.query
-                    else ""
-                )
-            )
-        )
-    )
-
-
-def canonical_key(
-    url: str,
-) -> str:
-    parsed = urlparse(
-        html.unescape(url)
-    )
-
-    path = SIZE_RE.sub(
-        "/__SIZE__/",
-        parsed.path,
-    )
-
-    path = re.sub(
-        (
-            r"=w\d+"
-            r"(?:-h\d+)?"
-            r"(?:-[a-z0-9-]+)?$"
-        ),
-        "",
-        path,
-        flags=re.I,
-    )
-
-    return (
-        f"{parsed.netloc.lower()}"
-        f"{path}"
-    )
-
-
-def image_score(
-    url: str,
-) -> int:
-    score = 0
-
-    for match in re.finditer(
-        (
-            r"/(?:s|w)(\d+)"
-            r"(?:-h(\d+))?"
-        ),
-        url,
-        flags=re.I,
-    ):
-        width = int(
-            match.group(1)
-        )
-
-        height = int(
-            match.group(2)
-            or width
-        )
-
-        score = max(
-            score,
-            width * height,
-        )
-
-    if "/s0/" in url:
-        score += 10**12
-
-    return score
-
-
-def safe_name(
-    value: str,
-) -> str:
-    value = unicodedata.normalize(
-        "NFKC",
-        value,
-    )
-
-    value = re.sub(
-        (
-            r"[^\w"
-            r"\u0590-\u05ff"
-            r".-]+"
-        ),
-        "-",
-        value,
-        flags=re.UNICODE,
-    )
-
-    return (
-        re.sub(
-            r"-+",
-            "-",
-            value,
-        )
-        .strip("-.")
-        or "image"
-    )
-
-
-def extension(
-    url: str,
-) -> str:
-    match = re.search(
-        r"\.(png|jpe?g|webp|gif)$",
-        unquote(
-            urlparse(url).path
-        ),
-        flags=re.I,
-    )
-
-    if not match:
-        return ".jpg"
-
-    ext = match.group(1).lower()
-
-    return (
-        ".jpg"
-        if ext in {
-            "jpg",
-            "jpeg",
-        }
-        else f".{ext}"
-    )
-
-
-def collect_images(
-    entries: list[Entry],
-) -> dict[str, list[str]]:
-    images: dict[
-        str,
-        list[str],
-    ] = {}
-
-    for entry in entries:
-        for match in ATTR_URL_RE.finditer(
-            entry.content
-        ):
-            url = html.unescape(
-                match.group("url")
-            )
-
-            if not is_image_url(url):
-                continue
-
-            key = canonical_key(url)
-
-            images.setdefault(
-                key,
-                [],
-            )
-
-            if url not in images[key]:
-                images[key].append(url)
-
-    return images
-
-
-def build_image_map(
-    images: dict[
-        str,
-        list[str],
-    ],
-) -> dict[str, str]:
-    result: dict[
-        str,
-        str,
-    ] = {}
-
-    for key, urls in images.items():
-        preferred = max(
-            urls,
-            key=image_score,
-        )
-
-        digest = hashlib.sha256(
-            key.encode("utf-8")
-        ).hexdigest()[:14]
-
-        stem = safe_name(
-            Path(
-                unquote(
-                    urlparse(
-                        preferred
-                    ).path
-                )
-            ).stem
-        )[:60]
-
-        result[key] = (
-            "assets/images/series/"
-            f"{digest}-{stem}"
-            f"{extension(preferred)}"
-        )
-
-    return result
-
-
-def download(
-    url: str,
-    destination: Path,
-) -> None:
-    destination.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    request = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": (
-                "Mozilla/5.0 "
-                "ParashaBenichuta"
-                "SeriesImporter/1.0"
-            )
-        },
-    )
-
-    with urllib.request.urlopen(
-        request,
-        timeout=60,
-    ) as response:
-        data = response.read()
-
-    if not data:
-        raise RuntimeError(
-            "empty image response"
-        )
-
-    destination.write_bytes(data)
-
-
-def download_images(
-    root: Path,
-    images: dict[
-        str,
-        list[str],
-    ],
-    image_map: dict[
-        str,
-        str,
-    ],
-) -> None:
-    for key, urls in sorted(
-        images.items()
-    ):
-        relative = image_map[key]
-        destination = root / relative
-
-        if (
-            destination.exists()
-            and destination.stat().st_size > 0
-        ):
-            print(
-                f"KEEP     {relative}"
-            )
-            continue
-
-        last_error: (
-            Exception | None
-        ) = None
-
-        for candidate in sorted(
-            urls,
-            key=image_score,
-            reverse=True,
-        ):
-            try:
-                print(
-                    f"DOWNLOAD {relative}"
-                )
-
-                download(
-                    candidate,
-                    destination,
-                )
-
-                last_error = None
-                break
-
-            except Exception as error:
-                last_error = error
-
-        if last_error is not None:
-            raise RuntimeError(
-                "Failed to download "
-                f"{relative}: "
-                f"{last_error}"
-            )
-
-
-def prefix_for(
-    output_path: str,
-) -> str:
-    return "../" * (
-        len(
-            Path(
-                output_path
-            ).parts
-        )
-        - 1
-    )
-
-
-def rewrite_images(
-    content: str,
-    output_path: str,
-    image_map: dict[
-        str,
-        str,
-    ],
-) -> str:
-    prefix = prefix_for(
-        output_path
-    )
-
-    def replace(
-        match: re.Match[str],
-    ) -> str:
-        url = html.unescape(
-            match.group("url")
-        )
-
-        if not is_image_url(url):
-            return match.group(0)
-
-        local = image_map.get(
-            canonical_key(url)
-        )
-
-        if not local:
-            return match.group(0)
-
-        return (
-            f'{match.group("attr")}'
-            f'{match.group("quote")}'
-            f'{prefix}{local}'
-            f'{match.group("quote")}'
-        )
-
-    rewritten = ATTR_URL_RE.sub(
-        replace,
-        content,
-    )
-
-    def clean_img(
-        match: re.Match[str],
-    ) -> str:
-        tag = match.group(0)
-
-        tag = re.sub(
-            (
-                r"\s(?:width|height|border|"
-                r"data-original-width|"
-                r"data-original-height)"
-                r"=([\"']).*?\1"
-            ),
-            "",
-            tag,
-            flags=re.I,
-        )
-
-        tag = re.sub(
-            r"\sstyle=([\"']).*?\1",
-            "",
-            tag,
-            flags=re.I,
-        )
-
-        if "loading=" not in tag.lower():
-            tag = (
-                tag[:-1]
-                + ' loading="lazy">'
-            )
-
-        return tag
-
-    return IMG_RE.sub(
-        clean_img,
-        rewritten,
-    )
-
-
 def first_image(
     content: str,
 ) -> str | None:
@@ -674,6 +303,19 @@ def first_image(
         match.group(1)
         if match
         else None
+    )
+
+
+def prefix_for(
+    output_path: str,
+) -> str:
+    return "../" * (
+        len(
+            Path(
+                output_path
+            ).parts
+        )
+        - 1
     )
 
 
@@ -900,6 +542,11 @@ def layout(
     defer
     src="{prefix}assets/js/site.js"
   ></script>
+
+  <script
+    defer
+    src="{prefix}assets/js/shabbat-lock.js"
+  ></script>
 </head>
 
 <body>
@@ -922,7 +569,6 @@ def layout(
 def chapter_page(
     root: Path,
     entry: Entry,
-    content: str,
 ) -> str:
     prefix = prefix_for(
         entry.filename
@@ -954,7 +600,7 @@ def chapter_page(
   </header>
 
   <div class="post-content">
-    {content}
+    {entry.content}
   </div>
 
 </article>
@@ -974,10 +620,6 @@ def series_page(
     series_name: str,
     page_entry: Entry | None,
     chapters: list[Entry],
-    image_map: dict[
-        str,
-        str,
-    ],
 ) -> tuple[str, str]:
     output_path = (
         f"p/{series_name}.html"
@@ -998,11 +640,7 @@ def series_page(
 
     if page_entry:
         cover = first_image(
-            rewrite_images(
-                page_entry.content,
-                output_path,
-                image_map,
-            )
+            page_entry.content
         )
 
     if (
@@ -1010,11 +648,7 @@ def series_page(
         and chapters
     ):
         cover = first_image(
-            rewrite_images(
-                chapters[0].content,
-                output_path,
-                image_map,
-            )
+            chapters[0].content
         )
 
     cover_html = (
@@ -1036,14 +670,8 @@ def series_page(
             item.number or 0
         ),
     ):
-        local_content = rewrite_images(
-            chapter.content,
-            output_path,
-            image_map,
-        )
-
         image = first_image(
-            local_content
+            chapter.content
         )
 
         image_html = (
@@ -1172,7 +800,10 @@ def backup(
     relative: str,
     backup_root: Path,
 ) -> None:
-    source = root / relative
+    source = (
+        root
+        / relative
+    )
 
     if source.exists():
         destination = (
@@ -1196,7 +827,10 @@ def write(
     relative: str,
     content: str,
 ) -> None:
-    destination = root / relative
+    destination = (
+        root
+        / relative
+    )
 
     destination.parent.mkdir(
         parents=True,
@@ -1211,10 +845,6 @@ def write(
 
 def validate(
     entries: list[Entry],
-    image_map: dict[
-        str,
-        str,
-    ],
 ) -> None:
     for (
         series_name,
@@ -1238,11 +868,16 @@ def validate(
         numbers = sorted(
             entry.number
             for entry in chapters
-            if entry.number
-            is not None
+            if (
+                entry.number
+                is not None
+            )
         )
 
-        if len(chapters) != expected:
+        if (
+            len(chapters)
+            != expected
+        ):
             raise RuntimeError(
                 f"{series_name}: "
                 f"expected {expected}, "
@@ -1261,9 +896,120 @@ def validate(
                 f"sequence: {numbers}"
             )
 
-    if not image_map:
+        pages = [
+            entry
+            for entry in entries
+            if (
+                entry.series_name
+                == series_name
+                and entry.entry_type
+                == "PAGE"
+            )
+        ]
+
+        if len(pages) > 1:
+            raise RuntimeError(
+                f"{series_name}: "
+                f"found {len(pages)} "
+                "series pages"
+            )
+
+
+def validate_local_images(
+    root: Path,
+    entries: list[Entry],
+) -> None:
+    missing: list[
+        tuple[str, str]
+    ] = []
+
+    local_re = re.compile(
+        r'''(?:src|href)=["'](/assets/images/[^"']+)["']''',
+        flags=re.I,
+    )
+
+    for entry in entries:
+        for match in local_re.finditer(
+            entry.content
+        ):
+            url = match.group(1)
+
+            path = (
+                root
+                / url.lstrip("/")
+            )
+
+            if not path.exists():
+                missing.append(
+                    (
+                        entry.title,
+                        url,
+                    )
+                )
+
+    missing = sorted(
+        set(missing)
+    )
+
+    if missing:
+        print()
+        print(
+            "Missing local images:"
+        )
+
+        for title, url in missing:
+            print(
+                f"{title} -> {url}"
+            )
+
         raise RuntimeError(
-            "No images found"
+            f"{len(missing)} local image "
+            "references are missing"
+        )
+
+
+def validate_no_blogger(
+    entries: list[Entry],
+) -> None:
+    markers = (
+        "blogger.googleusercontent.com",
+        "blogspot.com",
+        "theweekparasha.blogspot.com",
+    )
+
+    hits: list[
+        tuple[str, str]
+    ] = []
+
+    for entry in entries:
+        lowered = (
+            entry.content.lower()
+        )
+
+        for marker in markers:
+            if marker in lowered:
+                hits.append(
+                    (
+                        entry.title,
+                        marker,
+                    )
+                )
+
+    if hits:
+        print()
+        print(
+            "Blogger references found "
+            "in series source content:"
+        )
+
+        for title, marker in hits:
+            print(
+                f"{title} -> {marker}"
+            )
+
+        raise RuntimeError(
+            "Series content still contains "
+            "Blogger references"
         )
 
 
@@ -1366,78 +1112,95 @@ def append_css(
 
     if not css_path.exists():
         raise FileNotFoundError(
-            f"CSS file not found: {css_path}"
+            f"CSS file not found: "
+            f"{css_path}"
         )
 
-    current = css_path.read_text(
-        encoding="utf-8"
+    current = (
+        css_path.read_text(
+            encoding="utf-8"
+        )
     )
 
     if marker not in current:
         css_path.write_text(
-            current.rstrip() + css,
+            (
+                current.rstrip()
+                + css
+            ),
             encoding="utf-8",
         )
 
         print(
-            "UPDATED  assets/css/site.css"
+            "UPDATED  "
+            "assets/css/site.css"
         )
 
     else:
         print(
-            "KEEP     assets/css/site.css"
+            "KEEP     "
+            "assets/css/site.css"
         )
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser()
+    parser = (
+        argparse.ArgumentParser()
+    )
 
     parser.add_argument(
         "--apply",
         action="store_true",
     )
 
-    parser.add_argument(
-        "--feed",
-        default="series-feed.atom",
-    )
-
     args = parser.parse_args()
 
-    root = Path(
-        __file__
-    ).resolve().parent
-
-    feed_path = (
-        root
-        / args.feed
+    root = (
+        Path(__file__)
+        .resolve()
+        .parent
     )
 
-    if not feed_path.exists():
-        print(
-            "ERROR: file not found: "
-            f"{feed_path}"
+    content_root = (
+        root
+        / "content"
+    )
+
+    try:
+        entries = load_entries(
+            content_root
         )
+
+        validate(
+            entries
+        )
+
+        validate_no_blogger(
+            entries
+        )
+
+        validate_local_images(
+            root,
+            entries,
+        )
+
+    except (
+        FileNotFoundError,
+        RuntimeError,
+        ValueError,
+        json.JSONDecodeError,
+    ) as error:
+        print(
+            f"ERROR: {error}"
+        )
+
         return 1
 
-    entries = parse_feed(
-        feed_path
+    print(
+        "Series check:"
     )
 
-    images = collect_images(
-        entries
-    )
-
-    image_map = build_image_map(
-        images
-    )
-
-    validate(
-        entries,
-        image_map,
-    )
-
-    print("Series check:")
+    total_chapters = 0
 
     for name in SERIES:
         count = len(
@@ -1453,28 +1216,32 @@ def main() -> int:
             ]
         )
 
+        total_chapters += count
+
         print(
             f"  {name}: "
             f"{count} chapters"
         )
 
     print(
-        "  unique local images: "
-        f"{len(image_map)}"
+        f"  total chapters: "
+        f"{total_chapters}"
+    )
+
+    print(
+        "  source: "
+        "content/posts + content/pages"
     )
 
     if not args.apply:
+        print()
         print(
-            "\nDRY RUN OK — "
-            "no files changed."
+            "DRY RUN OK — "
+            "series content is independent "
+            "of Blogger and no files changed."
         )
-        return 0
 
-    download_images(
-        root,
-        images,
-        image_map,
-    )
+        return 0
 
     backup_root = (
         root
@@ -1522,7 +1289,6 @@ def main() -> int:
             series_name,
             page_entry,
             chapters,
-            image_map,
         )
 
         backup(
@@ -1538,7 +1304,8 @@ def main() -> int:
         )
 
         print(
-            f"WRITE    {index_path}"
+            f"WRITE    "
+            f"{index_path}"
         )
 
         for chapter in sorted(
@@ -1553,37 +1320,33 @@ def main() -> int:
                 backup_root,
             )
 
-            local_content = rewrite_images(
-                chapter.content,
-                chapter.filename,
-                image_map,
-            )
-
             write(
                 root,
                 chapter.filename,
                 chapter_page(
                     root,
                     chapter,
-                    local_content,
                 ),
             )
 
             print(
-                f"WRITE    "
+                "WRITE    "
                 f"{chapter.filename}"
             )
 
-    append_css(root)
+    append_css(
+        root
+    )
 
+    print()
     print(
-        "\nBackup: "
+        "Backup: "
         f"{backup_root.relative_to(root)}"
     )
 
     print(
-        "Series import "
-        "completed successfully."
+        "Series build completed "
+        "successfully from content JSON."
     )
 
     return 0

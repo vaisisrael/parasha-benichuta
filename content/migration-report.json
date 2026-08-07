@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-08-07T07:27:43",
+  "source_file": "series-feed.atom",
+  "schema_version": 1,
+  "validation": {
+    "posts": 946,
+    "pages": 5,
+    "series": {
+      "אידנקסה": 20,
+      "המגדל": 10,
+      "כבודינה": 13
+    },
+    "duplicate_output_paths": 0,
+    "duplicate_content_files": 0
+  },
+  "content_files": 951,
+  "unique_image_urls": 2063,
+  "blogger_image_urls": 2052,
+  "image_hosts": {
+    "blogger.googleusercontent.com": 2052,
+    "commons.wikimedia.org": 1,
+    "img.youtube.com": 7,
+    "upload.wikimedia.org": 3
+  },
+  "next_required_step": "העברת התמונות המקומיות והחלפת כתובות Blogger לפני העברת קובץ ה-Atom לארכיב"
+}

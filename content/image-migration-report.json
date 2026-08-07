@@ -1,0 +1,12 @@
+{
+  "status": "ok",
+  "content_files": 951,
+  "unique_blogger_image_urls_before": 2055,
+  "canonical_images_downloaded": 1033,
+  "canonical_images_already_existing": 0,
+  "canonical_images_total": 1033,
+  "duplicate_or_size_variants_removed": 1022,
+  "failed_images": 0,
+  "remaining_blogger_image_urls": 0,
+  "remaining_urls": []
+}

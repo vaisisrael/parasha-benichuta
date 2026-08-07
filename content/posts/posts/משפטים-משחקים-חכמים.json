@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "item_type": "POST",
+  "title": "משפטים: משחקים חכמים",
+  "description": "פרשת משפטים – משחקי פרשה חינוכיים לילדים: זיכרון, פאזל ומשחקי מילים חכמים שמחזקים ידע בפרשת השבוע בדרך חווייתית ומהנה.",
+  "published": "2026-02-08T12:39:00Z",
+  "updated": "2026-02-08T12:39:19.754Z",
+  "labels": [
+    "2-06 פרשת משפטים",
+    "🔖המשחקיה"
+  ],
+  "source_url": "",
+  "output_path": "posts/משפטים-משחקים-חכמים.html",
+  "parasha_label": "2-06 פרשת משפטים",
+  "parasha_name": "משפטים",
+  "book": "שמות",
+  "section": "🔖המשחקיה",
+  "series": null,
+  "content_html": "<h2 style=\"text-align: center;\"><span style=\"color: #45818e; font-family: arial; font-size: large;\"><div style=\"text-align: center;\"><a href=\"/assets/images/content/6f8798e1fd35eef974.png\" style=\"clear: left; float: left; margin-bottom: 1em; margin-right: 1em; text-align: right;\"><img alt=\"איור ילדים משחקים בפאזל, בזיכרון ובקוביות\" border=\"0\" data-original-height=\"1024\" data-original-width=\"1536\" height=\"133\" src=\"/assets/images/content/6f8798e1fd35eef974.png\" width=\"200\" /></a></div><div style=\"text-align: right;\">בַּחֲרוּ מִשְׂחָק, הַתְחִילוּ&nbsp;לְשַׂחֵק,&nbsp;</div><div style=\"text-align: right;\">וְגַלּוּ אֶת פָּרָשַׁת הַשָּׁבוּעַ בְּכֵּיף</div></span></h2><h2 style=\"text-align: center;\"></h2>\n\n\n\n<div data-parasha-games=\"\"></div>\n<script src=\"https://vaisisrael.github.io/games/loader.js\"></script>"
+}
