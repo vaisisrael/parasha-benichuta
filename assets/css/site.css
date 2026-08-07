@@ -894,3 +894,17 @@ a { color: inherit; }
     width: 100%;
   }
 }
+
+/* ===== תמונות פרקי המגדל בדף הסדרה ===== */
+
+.series-hamigdal .cards-grid.series-grid .card-media {
+  aspect-ratio: 4 / 5;
+  background: #f4f1ea;
+}
+
+.series-hamigdal .cards-grid.series-grid .card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
