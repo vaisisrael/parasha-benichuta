@@ -1,0 +1,219 @@
+name: Remove old series buttons
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Remove old navigation buttons from source
+        shell: bash
+        run: |
+          python - <<'PY'
+          import html
+          import json
+          import re
+          from pathlib import Path
+
+          SERIES_LABELS = {
+              "📊אידנקסה": "אידנקסה",
+              "🔖אידנקסה": "אידנקסה",
+              "🤖כבודינה": "כבודינה",
+              "🔖כבודינה": "כבודינה",
+          }
+
+          anchor_re = re.compile(
+              r'<a\b[^>]*>.*?</a>',
+              flags=re.I | re.S,
+          )
+
+          tag_re = re.compile(
+              r"<[^>]+>"
+          )
+
+          def visible_text(anchor):
+              text = tag_re.sub(
+                  " ",
+                  anchor,
+              )
+
+              text = html.unescape(text)
+
+              return re.sub(
+                  r"\s+",
+                  " ",
+                  text,
+              ).strip()
+
+          counts = {
+              "אידנקסה": 0,
+              "כבודינה": 0,
+          }
+
+          changed_files = 0
+
+          for path in sorted(
+              Path("content/posts").rglob("*.json")
+          ):
+              data = json.loads(
+                  path.read_text(
+                      encoding="utf-8"
+                  )
+              )
+
+              explicit_series = data.get("series")
+
+              labels = data.get(
+                  "labels",
+                  [],
+              )
+
+              series = (
+                  explicit_series
+                  if explicit_series in {
+                      "אידנקסה",
+                      "כבודינה",
+                  }
+                  else next(
+                      (
+                          SERIES_LABELS[label]
+                          for label in labels
+                          if label in SERIES_LABELS
+                      ),
+                      None,
+                  )
+              )
+
+              if not series:
+                  continue
+
+              content = str(
+                  data.get(
+                      "content_html",
+                      "",
+                  )
+              )
+
+              removed_here = 0
+
+              def replace_anchor(match):
+                  nonlocal removed_here
+
+                  anchor = match.group(0)
+                  text = visible_text(anchor)
+
+                  remove = (
+                      "לכל פרקי" in text
+                      or (
+                          "פרק" in text
+                          and "ראשון" in text
+                      )
+                  )
+
+                  if remove:
+                      print()
+                      print(
+                          f"REMOVE [{series}] "
+                          f"{data.get('title', '')}"
+                      )
+                      print(
+                          f"  BUTTON: {text}"
+                      )
+
+                      removed_here += 1
+                      counts[series] += 1
+
+                      return ""
+
+                  return anchor
+
+              new_content = anchor_re.sub(
+                  replace_anchor,
+                  content,
+              )
+
+              if removed_here:
+                  data["content_html"] = (
+                      new_content
+                  )
+
+                  path.write_text(
+                      json.dumps(
+                          data,
+                          ensure_ascii=False,
+                          indent=2,
+                      )
+                      + "\n",
+                      encoding="utf-8",
+                  )
+
+                  changed_files += 1
+
+          print()
+          print("=" * 60)
+          print(
+              f"אידנקסה buttons removed: "
+              f"{counts['אידנקסה']}"
+          )
+          print(
+              f"כבודינה buttons removed: "
+              f"{counts['כבודינה']}"
+          )
+          print(
+              f"Files changed: "
+              f"{changed_files}"
+          )
+
+          if (
+              counts["אידנקסה"] == 0
+              and counts["כבודינה"] == 0
+          ):
+              raise SystemExit(
+                  "ERROR: no matching buttons were found"
+              )
+
+          print()
+          print(
+              "SOURCE BUTTON CLEANUP OK"
+          )
+          PY
+
+      - name: Rebuild series HTML
+        run: python import_series.py --apply
+
+      - name: Commit cleaned source and rebuilt series
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            content/posts \
+            p/אידנקסה.html \
+            p/כבודינה.html \
+            p/המגדל.html \
+            posts/*.html \
+            assets/css/site.css
+
+          echo "Changes:"
+          git status --short
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Remove obsolete series navigation buttons"
+            git push origin HEAD:main
+          fi
