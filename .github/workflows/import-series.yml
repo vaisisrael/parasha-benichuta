@@ -1,44 +1,1402 @@
-name: Import series
+from __future__ import annotations
 
-on:
-  workflow_dispatch:
+import argparse
+import html
+import json
+import re
+import shutil
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
 
-permissions:
-  contents: write
 
-jobs:
-  import:
-    runs-on: ubuntu-latest
+SERIES = {
+    "אידנקסה": {
+        "labels": {
+            "📊אידנקסה",
+            "🔖אידנקסה",
+        },
+        "description": (
+            "קומדיה על סטארט־אפ, בינה מלאכותית, "
+            "ארגונים והפער שבין הצהרות להתנהגות."
+        ),
+        "expected": 20,
+    },
+    "כבודינה": {
+        "labels": {
+            "🤖כבודינה",
+            "🔖כבודינה",
+        },
+        "description": (
+            "קומדיה דיסטופית־משפטית על מערכת "
+            "חכמה שנכנסת אל אולם המשפט."
+        ),
+        "expected": 13,
+    },
+    "המגדל": {
+        "labels": {
+            "🏢המגדל",
+            "🔖המגדל",
+        },
+        "description": (
+            "קומדיית דיירים על בניין גבוה, ועד בית, "
+            "קבוצות ווטסאפ וחיים משותפים."
+        ),
+        "expected": 10,
+    },
+}
 
-    steps:
-      - name: Get repository
-        uses: actions/checkout@v4
+SERIES_CLASSES = {
+    "אידנקסה": "idenexa",
+    "כבודינה": "kvodina",
+    "המגדל": "hamigdal",
+}
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+BOOK_ORDER = [
+    "בראשית",
+    "שמות",
+    "ויקרא",
+    "במדבר",
+    "דברים",
+]
 
-      - name: Import series and images
-        run: python import_series.py --apply
+TAG_RE = re.compile(
+    r"<[^>]+>"
+)
 
-      - name: Commit generated files
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-                   git add \
-            assets/images/series \
-            assets/css/site.css \
-            p \
-            posts \
-            2020 \
-            backups
+@dataclass
+class Entry:
+    entry_type: str
+    title: str
+    content: str
+    description: str
+    filename: str
+    number: int | None
+    series_name: str
 
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Import series pages and images"
-            git push
-          fi
+
+def normalize(
+    value: str,
+) -> str:
+    return re.sub(
+        r"\s+",
+        " ",
+        value or "",
+    ).strip()
+
+
+def strip_tags(
+    value: str,
+) -> str:
+    return normalize(
+        html.unescape(
+            TAG_RE.sub(
+                " ",
+                value or "",
+            )
+        )
+    )
+
+
+def chapter_number(
+    title: str,
+) -> int | None:
+    match = re.match(
+        r"^\s*(\d{1,3})\s*[-–—:]",
+        title or "",
+    )
+
+    return (
+        int(match.group(1))
+        if match
+        else None
+    )
+
+
+def detect_series(
+    data: dict,
+) -> str | None:
+    explicit = data.get(
+        "series"
+    )
+
+    if explicit in SERIES:
+        return explicit
+
+    title = str(
+        data.get(
+            "title",
+            "",
+        )
+    ).strip()
+
+    item_type = str(
+        data.get(
+            "item_type",
+            "",
+        )
+    ).strip().upper()
+
+    if (
+        item_type == "PAGE"
+        and title in SERIES
+    ):
+        return title
+
+    labels = {
+        str(label).strip()
+        for label in data.get(
+            "labels",
+            [],
+        )
+        if str(label).strip()
+    }
+
+    for (
+        series_name,
+        definition,
+    ) in SERIES.items():
+        if (
+            labels
+            & definition["labels"]
+        ):
+            return series_name
+
+    return None
+
+
+def load_entries(
+    content_root: Path,
+) -> list[Entry]:
+    files = sorted(
+        list(
+            (
+                content_root
+                / "posts"
+            ).rglob("*.json")
+        )
+        + list(
+            (
+                content_root
+                / "pages"
+            ).rglob("*.json")
+        )
+    )
+
+    if not files:
+        raise FileNotFoundError(
+            "No content JSON files found "
+            f"under {content_root}"
+        )
+
+    entries: list[Entry] = []
+
+    for path in files:
+        data = json.loads(
+            path.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        series_name = detect_series(
+            data
+        )
+
+        if not series_name:
+            continue
+
+        entry_type = str(
+            data.get(
+                "item_type",
+                "",
+            )
+        ).strip().upper()
+
+        if entry_type not in {
+            "POST",
+            "PAGE",
+        }:
+            continue
+
+        title = str(
+            data.get(
+                "title",
+                "ללא כותרת",
+            )
+        ).strip()
+
+        content = str(
+            data.get(
+                "content_html",
+                "",
+            )
+        )
+
+        description = str(
+            data.get(
+                "description",
+                "",
+            )
+        ).strip()
+
+        filename = str(
+            data.get(
+                "output_path",
+                "",
+            )
+        ).strip().lstrip("/")
+
+        number = (
+            chapter_number(
+                title
+            )
+            if entry_type == "POST"
+            else None
+        )
+
+        if (
+            entry_type == "POST"
+            and number is None
+        ):
+            print(
+                "WARNING: skipped chapter "
+                f'without number: "{title}"'
+            )
+            continue
+
+        if not filename:
+            filename = (
+                f"p/{series_name}.html"
+                if entry_type == "PAGE"
+                else (
+                    f"series/"
+                    f"{series_name}/"
+                    f"{number:02d}.html"
+                )
+            )
+
+        entries.append(
+            Entry(
+                entry_type=entry_type,
+                title=title,
+                content=content,
+                description=description,
+                filename=filename,
+                number=number,
+                series_name=series_name,
+            )
+        )
+
+    return entries
+
+
+def first_image(
+    content: str,
+) -> str | None:
+    match = re.search(
+        (
+            r'<img\b[^>]*'
+            r'\bsrc=["\']'
+            r'([^"\']+)'
+            r'["\']'
+        ),
+        content,
+        flags=re.I,
+    )
+
+    return (
+        match.group(1)
+        if match
+        else None
+    )
+
+
+def prefix_for(
+    output_path: str,
+) -> str:
+    return "../" * (
+        len(
+            Path(
+                output_path
+            ).parts
+        )
+        - 1
+    )
+
+
+def discover_parashot(
+    root: Path,
+    prefix: str,
+) -> str:
+    books_html: list[str] = []
+
+    for book in BOOK_ORDER:
+        book_dir = (
+            root
+            / "parashot"
+            / book
+        )
+
+        links: list[str] = []
+
+        if book_dir.exists():
+            directories = sorted(
+                path
+                for path
+                in book_dir.iterdir()
+                if path.is_dir()
+            )
+
+            for parasha_dir in directories:
+                index_path = (
+                    parasha_dir
+                    / "index.html"
+                )
+
+                name = parasha_dir.name
+
+                if index_path.exists():
+                    source = (
+                        index_path.read_text(
+                            encoding="utf-8",
+                            errors="ignore",
+                        )
+                    )
+
+                    match = re.search(
+                        (
+                            r"<h1[^>]*>"
+                            r"\s*פרשת\s+"
+                            r"([^<]+)"
+                            r"</h1>"
+                        ),
+                        source,
+                        flags=re.I,
+                    )
+
+                    if match:
+                        name = (
+                            html.unescape(
+                                match.group(1)
+                            )
+                            .strip()
+                        )
+
+                links.append(
+                    (
+                        f'<li><a href="'
+                        f'{prefix}parashot/'
+                        f'{book}/'
+                        f'{parasha_dir.name}/">'
+                        f'{html.escape(name)}'
+                        f'</a></li>'
+                    )
+                )
+
+        books_html.append(
+            (
+                '<li class="has-sub">'
+                f'<button type="button">'
+                f'{book}'
+                f'</button>'
+                f'<ul>{"".join(links)}</ul>'
+                f'</li>'
+            )
+        )
+
+    return "".join(
+        books_html
+    )
+
+
+def navigation(
+    root: Path,
+    prefix: str,
+) -> str:
+    return f"""
+<header class="site-header">
+  <div class="header-inner">
+
+    <a
+      class="brand"
+      href="{prefix}"
+      aria-label="פרשת השבוע בניחותא — דף הבית"
+    >
+      <img
+        class="brand-logo"
+        src="{prefix}assets/images/branding/logo.png"
+        alt=""
+        width="44"
+        height="44"
+      >
+      <span>פרשת השבוע בניחותא</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-label="פתיחת תפריט"
+    >☰</button>
+
+    <nav
+      class="main-nav"
+      aria-label="ניווט ראשי"
+    >
+      <ul>
+
+        <li class="has-sub">
+          <button type="button">
+            כל הפרשות
+          </button>
+          <ul>
+            {discover_parashot(root, prefix)}
+          </ul>
+        </li>
+
+        <li class="has-sub">
+          <button type="button">
+            סדרות
+          </button>
+          <ul>
+            <li>
+              <a href="{prefix}p/אידנקסה.html">
+                אידנקסה
+              </a>
+            </li>
+            <li>
+              <a href="{prefix}p/כבודינה.html">
+                כבודינה
+              </a>
+            </li>
+            <li>
+              <a href="{prefix}p/המגדל.html">
+                המגדל
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="{prefix}search/">
+            חיפוש
+          </a>
+        </li>
+
+        <li>
+          <a href="{prefix}about/">
+            אודות
+          </a>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+</header>
+"""
+
+
+def layout(
+    root: Path,
+    title: str,
+    description: str,
+    output_path: str,
+    body: str,
+) -> str:
+    prefix = prefix_for(
+        output_path
+    )
+
+    return f"""<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    {html.escape(title)} | פרשת השבוע בניחותא
+  </title>
+
+  <meta
+    name="description"
+    content="{html.escape(description or title, quote=True)}"
+  >
+
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="64x64"
+    href="{prefix}assets/images/branding/favicon.png"
+  >
+
+  <link
+    rel="shortcut icon"
+    href="{prefix}assets/images/branding/favicon.ico"
+  >
+
+  <link
+    rel="stylesheet"
+    href="{prefix}assets/css/site.css"
+  >
+
+  <script
+    defer
+    src="{prefix}assets/js/site.js"
+  ></script>
+
+  <script
+    defer
+    src="{prefix}assets/js/shabbat-lock.js"
+  ></script>
+</head>
+
+<body>
+
+{navigation(root, prefix)}
+
+<main class="site-main">
+{body}
+</main>
+
+<footer class="site-footer">
+  © פרשת השבוע בניחותא
+</footer>
+
+</body>
+</html>
+"""
+
+
+def chapter_page(
+    root: Path,
+    entry: Entry,
+) -> str:
+    prefix = prefix_for(
+        entry.filename
+    )
+
+    description = (
+        entry.description
+        or strip_tags(
+            entry.content
+        )[:180]
+    )
+
+    body = f"""
+<article class="post-page series-chapter-page">
+
+  <header class="post-header">
+
+    <div class="post-meta">
+      <a href="{prefix}p/{entry.series_name}.html">
+        {html.escape(entry.series_name)}
+      </a>
+      · פרק {entry.number:02d}
+    </div>
+
+    <h1>
+      {html.escape(entry.title)}
+    </h1>
+
+  </header>
+
+  <div class="post-content">
+    {entry.content}
+  </div>
+
+</article>
+"""
+
+    return layout(
+        root,
+        entry.title,
+        description,
+        entry.filename,
+        body,
+    )
+
+
+def series_page(
+    root: Path,
+    series_name: str,
+    page_entry: Entry | None,
+    chapters: list[Entry],
+) -> tuple[str, str]:
+    output_path = (
+        f"p/{series_name}.html"
+    )
+
+    series_class = (
+        SERIES_CLASSES[
+            series_name
+        ]
+    )
+
+    description = (
+        page_entry.description
+        if (
+            page_entry
+            and page_entry.description
+        )
+        else SERIES[
+            series_name
+        ]["description"]
+    )
+
+    cover = None
+
+    if page_entry:
+        cover = first_image(
+            page_entry.content
+        )
+
+    if (
+        not cover
+        and chapters
+    ):
+        cover = first_image(
+            chapters[0].content
+        )
+
+    cover_html = (
+        (
+            '<img '
+            'class="series-cover-image" '
+            f'src="{html.escape(cover, quote=True)}" '
+            f'alt="{html.escape(series_name)}">'
+        )
+        if cover
+        else ""
+    )
+
+    cards: list[str] = []
+
+    for chapter in sorted(
+        chapters,
+        key=lambda item: (
+            item.number or 0
+        ),
+    ):
+        image = first_image(
+            chapter.content
+        )
+
+        image_html = (
+            (
+                f'<img '
+                f'src="{html.escape(image, quote=True)}" '
+                f'alt="" '
+                f'loading="lazy">'
+            )
+            if image
+            else (
+                '<div '
+                'class="card-placeholder">'
+                '📖'
+                '</div>'
+            )
+        )
+
+        chapter_url = (
+            f"../{chapter.filename}"
+        )
+
+        chapter_description = (
+            chapter.description
+            or strip_tags(
+                chapter.content
+            )[:190]
+        )
+
+        cards.append(
+            f"""
+<article class="card series-chapter-card">
+
+  <a
+    class="card-media"
+    href="{html.escape(chapter_url, quote=True)}"
+  >
+    {image_html}
+  </a>
+
+  <div class="card-body">
+
+    <div class="eyebrow">
+      פרק {chapter.number:02d}
+    </div>
+
+    <h2>
+      <a href="{html.escape(chapter_url, quote=True)}">
+        {html.escape(chapter.title)}
+      </a>
+    </h2>
+
+    <p>
+      {html.escape(chapter_description)}
+    </p>
+
+    <a
+      class="read-link"
+      href="{html.escape(chapter_url, quote=True)}"
+    >
+      לקריאת הפרק
+    </a>
+
+  </div>
+
+</article>
+"""
+        )
+
+    body = f"""
+<section class="series-hero">
+
+  <div class="series-hero-media">
+    {cover_html}
+  </div>
+
+  <div class="series-hero-copy">
+
+    <div class="eyebrow">
+      סדרת רשת
+    </div>
+
+    <h1>
+      {html.escape(series_name)}
+    </h1>
+
+    <p>
+      {html.escape(description)}
+    </p>
+
+    <div class="series-count">
+      {len(chapters)} פרקים
+    </div>
+
+  </div>
+
+</section>
+
+<section class="series-chapters series-{series_class}">
+
+  <h2 class="series-chapters-title">
+    פרקי הסדרה
+  </h2>
+
+  <div class="cards-grid series-grid">
+    {"".join(cards)}
+  </div>
+
+</section>
+"""
+
+    return (
+        output_path,
+        layout(
+            root,
+            series_name,
+            description,
+            output_path,
+            body,
+        ),
+    )
+
+
+def backup(
+    root: Path,
+    relative: str,
+    backup_root: Path,
+) -> None:
+    source = (
+        root
+        / relative
+    )
+
+    if source.exists():
+        destination = (
+            backup_root
+            / relative
+        )
+
+        destination.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+        shutil.copy2(
+            source,
+            destination,
+        )
+
+
+def write(
+    root: Path,
+    relative: str,
+    content: str,
+) -> None:
+    destination = (
+        root
+        / relative
+    )
+
+    destination.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    destination.write_text(
+        content,
+        encoding="utf-8",
+    )
+
+
+def validate(
+    entries: list[Entry],
+) -> None:
+    for (
+        series_name,
+        definition,
+    ) in SERIES.items():
+        chapters = [
+            entry
+            for entry in entries
+            if (
+                entry.series_name
+                == series_name
+                and entry.entry_type
+                == "POST"
+            )
+        ]
+
+        expected = definition[
+            "expected"
+        ]
+
+        numbers = sorted(
+            entry.number
+            for entry in chapters
+            if (
+                entry.number
+                is not None
+            )
+        )
+
+        if (
+            len(chapters)
+            != expected
+        ):
+            raise RuntimeError(
+                f"{series_name}: "
+                f"expected {expected}, "
+                f"found {len(chapters)}"
+            )
+
+        if numbers != list(
+            range(
+                1,
+                expected + 1,
+            )
+        ):
+            raise RuntimeError(
+                f"{series_name}: "
+                "incomplete chapter "
+                f"sequence: {numbers}"
+            )
+
+        pages = [
+            entry
+            for entry in entries
+            if (
+                entry.series_name
+                == series_name
+                and entry.entry_type
+                == "PAGE"
+            )
+        ]
+
+        if len(pages) > 1:
+            raise RuntimeError(
+                f"{series_name}: "
+                f"found {len(pages)} "
+                "series pages"
+            )
+
+
+def validate_local_images(
+    root: Path,
+    entries: list[Entry],
+) -> None:
+    missing: list[
+        tuple[str, str]
+    ] = []
+
+    local_re = re.compile(
+        r'''(?:src|href)=["'](/assets/images/[^"']+)["']''',
+        flags=re.I,
+    )
+
+    for entry in entries:
+        for match in local_re.finditer(
+            entry.content
+        ):
+            url = match.group(1)
+
+            path = (
+                root
+                / url.lstrip("/")
+            )
+
+            if not path.exists():
+                missing.append(
+                    (
+                        entry.title,
+                        url,
+                    )
+                )
+
+    missing = sorted(
+        set(missing)
+    )
+
+    if missing:
+        print()
+        print(
+            "Missing local images:"
+        )
+
+        for title, url in missing:
+            print(
+                f"{title} -> {url}"
+            )
+
+        raise RuntimeError(
+            f"{len(missing)} local image "
+            "references are missing"
+        )
+
+
+def validate_no_blogger(
+    entries: list[Entry],
+) -> None:
+    markers = (
+        "blogger.googleusercontent.com",
+        "blogspot.com",
+        "theweekparasha.blogspot.com",
+    )
+
+    hits: list[
+        tuple[str, str]
+    ] = []
+
+    for entry in entries:
+        lowered = (
+            entry.content.lower()
+        )
+
+        for marker in markers:
+            if marker in lowered:
+                hits.append(
+                    (
+                        entry.title,
+                        marker,
+                    )
+                )
+
+    if hits:
+        print()
+        print(
+            "Blogger references found "
+            "in series source content:"
+        )
+
+        for title, marker in hits:
+            print(
+                f"{title} -> {marker}"
+            )
+
+        raise RuntimeError(
+            "Series content still contains "
+            "Blogger references"
+        )
+
+
+def append_css(
+    root: Path,
+) -> None:
+    css_path = (
+        root
+        / "assets/css/site.css"
+    )
+
+    marker = (
+        "/* ===== דפי הסדרות ===== */"
+    )
+
+    hamigdal_marker = (
+        "/* ===== תמונות המגדל בדף הסדרה ===== */"
+    )
+
+    css = r"""
+
+/* ===== דפי הסדרות ===== */
+
+.series-hero {
+  display: grid;
+  grid-template-columns:
+    minmax(280px, .9fr)
+    minmax(0, 1.1fr);
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow);
+}
+
+.series-hero-media {
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.series-cover-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.series-hero-copy h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.series-hero-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.series-count {
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.series-chapters-title {
+  margin: 0 0 18px;
+  color: var(--accent);
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.series-grid .card {
+  display: flex;
+  flex-direction: column;
+}
+
+.series-grid .card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.series-grid .read-link {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+@media (max-width: 700px) {
+  .series-hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 18px;
+  }
+
+  .series-hero-copy h1 {
+    font-size: 2.5rem;
+  }
+}
+"""
+
+    hamigdal_css = r"""
+
+/* ===== תמונות המגדל בדף הסדרה ===== */
+
+.series-hamigdal .card-media {
+  background: #f4f1ea;
+}
+
+.series-hamigdal .card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+"""
+
+    if not css_path.exists():
+        raise FileNotFoundError(
+            f"CSS file not found: "
+            f"{css_path}"
+        )
+
+    current = (
+        css_path.read_text(
+            encoding="utf-8"
+        )
+    )
+
+    changed = False
+
+    if marker not in current:
+        current = (
+            current.rstrip()
+            + css
+        )
+        changed = True
+
+    if hamigdal_marker not in current:
+        current = (
+            current.rstrip()
+            + hamigdal_css
+        )
+        changed = True
+
+    if changed:
+        css_path.write_text(
+            current,
+            encoding="utf-8",
+        )
+
+        print(
+            "UPDATED  "
+            "assets/css/site.css"
+        )
+
+    else:
+        print(
+            "KEEP     "
+            "assets/css/site.css"
+        )
+
+
+def main() -> int:
+    parser = (
+        argparse.ArgumentParser()
+    )
+
+    parser.add_argument(
+        "--apply",
+        action="store_true",
+    )
+
+    args = parser.parse_args()
+
+    root = (
+        Path(__file__)
+        .resolve()
+        .parent
+    )
+
+    content_root = (
+        root
+        / "content"
+    )
+
+    try:
+        entries = load_entries(
+            content_root
+        )
+
+        validate(
+            entries
+        )
+
+        validate_no_blogger(
+            entries
+        )
+
+        validate_local_images(
+            root,
+            entries,
+        )
+
+    except (
+        FileNotFoundError,
+        RuntimeError,
+        ValueError,
+        json.JSONDecodeError,
+    ) as error:
+        print(
+            f"ERROR: {error}"
+        )
+
+        return 1
+
+    print(
+        "Series check:"
+    )
+
+    total_chapters = 0
+
+    for name in SERIES:
+        count = len(
+            [
+                entry
+                for entry in entries
+                if (
+                    entry.series_name
+                    == name
+                    and entry.entry_type
+                    == "POST"
+                )
+            ]
+        )
+
+        total_chapters += count
+
+        print(
+            f"  {name}: "
+            f"{count} chapters"
+        )
+
+    print(
+        f"  total chapters: "
+        f"{total_chapters}"
+    )
+
+    print(
+        "  source: "
+        "content/posts + content/pages"
+    )
+
+    if not args.apply:
+        print()
+        print(
+            "DRY RUN OK — "
+            "series content is independent "
+            "of Blogger and no files changed."
+        )
+
+        return 0
+
+    backup_root = (
+        root
+        / "backups"
+        / (
+            "series-"
+            + datetime.now()
+            .strftime(
+                "%Y%m%d-%H%M%S"
+            )
+        )
+    )
+
+    for series_name in SERIES:
+        page_entry = next(
+            (
+                entry
+                for entry in entries
+                if (
+                    entry.series_name
+                    == series_name
+                    and entry.entry_type
+                    == "PAGE"
+                )
+            ),
+            None,
+        )
+
+        chapters = [
+            entry
+            for entry in entries
+            if (
+                entry.series_name
+                == series_name
+                and entry.entry_type
+                == "POST"
+            )
+        ]
+
+        (
+            index_path,
+            index_html,
+        ) = series_page(
+            root,
+            series_name,
+            page_entry,
+            chapters,
+        )
+
+        backup(
+            root,
+            index_path,
+            backup_root,
+        )
+
+        write(
+            root,
+            index_path,
+            index_html,
+        )
+
+        print(
+            f"WRITE    "
+            f"{index_path}"
+        )
+
+        for chapter in sorted(
+            chapters,
+            key=lambda item: (
+                item.number or 0
+            ),
+        ):
+            backup(
+                root,
+                chapter.filename,
+                backup_root,
+            )
+
+            write(
+                root,
+                chapter.filename,
+                chapter_page(
+                    root,
+                    chapter,
+                ),
+            )
+
+            print(
+                "WRITE    "
+                f"{chapter.filename}"
+            )
+
+    append_css(
+        root
+    )
+
+    print()
+    print(
+        "Backup: "
+        f"{backup_root.relative_to(root)}"
+    )
+
+    print(
+        "Series build completed "
+        "successfully from content JSON."
+    )
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(
+        main()
+    )
