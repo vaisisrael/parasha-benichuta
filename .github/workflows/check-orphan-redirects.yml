@@ -1,0 +1,80 @@
+name: Check orphan redirects
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get content migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: content-migration
+
+      - name: Inspect redirect map
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("assets/data/redirect-map.json")
+
+          data = json.loads(
+              path.read_text(encoding="utf-8")
+          )
+
+          targets = [
+              "posts/שמיני-מָה-פֵּרוּשׁ-הביטוי-מִפַּרְסַת-פַּרְסָה.html",
+              "posts/קרח-פדיון-בכור-האדם-והבהמה.html",
+              "p/ילדים.html",
+              "p/מחוץ-לפרשה.html",
+          ]
+
+          for target in targets:
+              print()
+              print("=" * 70)
+              print(f"TARGET: {target}")
+              print("=" * 70)
+
+              hits = []
+
+              def scan(obj, trail="root"):
+                  if isinstance(obj, dict):
+                      for key, value in obj.items():
+                          new_trail = f"{trail}.{key}"
+
+                          if target in str(key) or target in str(value):
+                              hits.append(
+                                  (
+                                      new_trail,
+                                      key,
+                                      value,
+                                  )
+                              )
+
+                          scan(value, new_trail)
+
+                  elif isinstance(obj, list):
+                      for index, value in enumerate(obj):
+                          scan(
+                              value,
+                              f"{trail}[{index}]",
+                          )
+
+              scan(data)
+
+              print(f"REDIRECT ENTRIES FOUND: {len(hits)}")
+
+              for trail, key, value in hits:
+                  print()
+                  print(f"LOCATION: {trail}")
+                  print(f"KEY: {key}")
+                  print(f"VALUE: {value}")
+
+          PY
