@@ -670,6 +670,12 @@ def series_page(
             item.number or 0
         ),
     ):
+        card_extra_class = (
+            " hamigdal-chapter-card"
+            if series_name == "המגדל"
+            else ""
+        )
+
         image = first_image(
             chapter.content
         )
@@ -703,7 +709,7 @@ def series_page(
 
         cards.append(
             f"""
-<article class="card series-chapter-card">
+<article class="card series-chapter-card{card_extra_class}">
 
   <a
     class="card-media"
@@ -1021,11 +1027,15 @@ def append_css(
         / "assets/css/site.css"
     )
 
-    marker = (
+    series_marker = (
         "/* ===== דפי הסדרות ===== */"
     )
 
-    css = r"""
+    hamigdal_marker = (
+        "/* ===== תמונות פרקי המגדל ===== */"
+    )
+
+    series_css = r"""
 
 /* ===== דפי הסדרות ===== */
 
@@ -1110,6 +1120,28 @@ def append_css(
 }
 """
 
+    hamigdal_css = r"""
+
+/* ===== תמונות פרקי המגדל ===== */
+
+.cards-grid:not(.organized-regions)
+.hamigdal-chapter-card
+.card-media {
+  aspect-ratio: 4 / 5 !important;
+  background: #f4f1ea;
+}
+
+.cards-grid:not(.organized-regions)
+.hamigdal-chapter-card
+.card-media img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+"""
+
     if not css_path.exists():
         raise FileNotFoundError(
             f"CSS file not found: "
@@ -1122,12 +1154,25 @@ def append_css(
         )
     )
 
-    if marker not in current:
+    changed = False
+
+    if series_marker not in current:
+        current = (
+            current.rstrip()
+            + series_css
+        )
+        changed = True
+
+    if hamigdal_marker not in current:
+        current = (
+            current.rstrip()
+            + hamigdal_css
+        )
+        changed = True
+
+    if changed:
         css_path.write_text(
-            (
-                current.rstrip()
-                + css
-            ),
+            current,
             encoding="utf-8",
         )
 
