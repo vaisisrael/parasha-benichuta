@@ -40,23 +40,12 @@ jobs:
               flags=re.I | re.S,
           )
 
-          tag_re = re.compile(
-              r"<[^>]+>"
-          )
+          tag_re = re.compile(r"<[^>]+>")
 
           def visible_text(anchor):
-              text = tag_re.sub(
-                  " ",
-                  anchor,
-              )
-
+              text = tag_re.sub(" ", anchor)
               text = html.unescape(text)
-
-              return re.sub(
-                  r"\s+",
-                  " ",
-                  text,
-              ).strip()
+              return re.sub(r"\s+", " ", text).strip()
 
           counts = {
               "אידנקסה": 0,
@@ -69,9 +58,7 @@ jobs:
               Path("content/posts").rglob("*.json")
           ):
               data = json.loads(
-                  path.read_text(
-                      encoding="utf-8"
-                  )
+                  path.read_text(encoding="utf-8")
               )
 
               explicit_series = data.get("series")
@@ -107,11 +94,9 @@ jobs:
                   )
               )
 
-              removed_here = 0
+              removed_here = [0]
 
               def replace_anchor(match):
-                  nonlocal removed_here
-
                   anchor = match.group(0)
                   text = visible_text(anchor)
 
@@ -133,7 +118,7 @@ jobs:
                           f"  BUTTON: {text}"
                       )
 
-                      removed_here += 1
+                      removed_here[0] += 1
                       counts[series] += 1
 
                       return ""
@@ -145,10 +130,8 @@ jobs:
                   content,
               )
 
-              if removed_here:
-                  data["content_html"] = (
-                      new_content
-                  )
+              if removed_here[0]:
+                  data["content_html"] = new_content
 
                   path.write_text(
                       json.dumps(
@@ -186,9 +169,7 @@ jobs:
               )
 
           print()
-          print(
-              "SOURCE BUTTON CLEANUP OK"
-          )
+          print("SOURCE BUTTON CLEANUP OK")
           PY
 
       - name: Rebuild series HTML
