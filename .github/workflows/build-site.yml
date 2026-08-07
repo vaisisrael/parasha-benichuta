@@ -1,4 +1,4 @@
-name: Build site to gh-pages
+name: פרסום האתר
 
 on:
   workflow_dispatch:
