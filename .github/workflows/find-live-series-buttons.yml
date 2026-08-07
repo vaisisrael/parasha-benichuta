@@ -1,0 +1,77 @@
+name: Find live series buttons
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-site
+
+      - name: Check gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: live-site
+
+      - name: Find remaining buttons
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          searches = [
+              "לכל פרקי",
+              "התחילו מפרק 1",
+          ]
+
+          for root_name in ["main-site", "live-site"]:
+              root = Path(root_name)
+
+              print()
+              print("=" * 70)
+              print(root_name.upper())
+              print("=" * 70)
+
+              total = 0
+
+              for path in sorted(root.rglob("*.html")):
+                  if "backups" in path.parts:
+                      continue
+
+                  text = path.read_text(
+                      encoding="utf-8",
+                      errors="ignore",
+                  )
+
+                  found = [
+                      phrase
+                      for phrase in searches
+                      if phrase in text
+                  ]
+
+                  if found:
+                      total += 1
+                      print(
+                          f"{path.relative_to(root)}"
+                      )
+                      print(
+                          "  FOUND: "
+                          + ", ".join(found)
+                      )
+
+              print()
+              print(
+                  f"HTML FILES WITH BUTTONS: {total}"
+              )
+
+          PY
