@@ -1,0 +1,73 @@
+name: Verify migrated content
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get content migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: content-migration
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify migrated files
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest_path = Path("content/manifest.json")
+
+          if not manifest_path.exists():
+              raise SystemExit("ERROR: content/manifest.json not found")
+
+          manifest = json.loads(
+              manifest_path.read_text(encoding="utf-8")
+          )
+
+          posts = manifest.get("posts", [])
+          pages = manifest.get("pages", [])
+
+          post_files = list(Path("content/posts").rglob("*.json"))
+          page_files = list(Path("content/pages").rglob("*.json"))
+
+          print(f"Manifest posts: {len(posts)}")
+          print(f"Manifest pages: {len(pages)}")
+          print(f"Post JSON files: {len(post_files)}")
+          print(f"Page JSON files: {len(page_files)}")
+          print(f"Total content files: {len(post_files) + len(page_files)}")
+
+          if len(posts) != 946:
+              raise SystemExit(
+                  f"ERROR: expected 946 posts, found {len(posts)}"
+              )
+
+          if len(pages) != 5:
+              raise SystemExit(
+                  f"ERROR: expected 5 pages, found {len(pages)}"
+              )
+
+          if len(post_files) != 946:
+              raise SystemExit(
+                  f"ERROR: expected 946 post files, found {len(post_files)}"
+              )
+
+          if len(page_files) != 5:
+              raise SystemExit(
+                  f"ERROR: expected 5 page files, found {len(page_files)}"
+              )
+
+          print("Migrated content verification passed.")
+          PY
