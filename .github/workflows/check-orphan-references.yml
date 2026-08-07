@@ -1,0 +1,97 @@
+name: Check orphan references
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get content migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: content-migration
+
+      - name: Find references
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          targets = [
+              "posts/שמיני-מָה-פֵּרוּשׁ-הביטוי-מִפַּרְסַת-פַּרְסָה.html",
+              "posts/קרח-פדיון-בכור-האדם-והבהמה.html",
+              "p/ילדים.html",
+              "p/מחוץ-לפרשה.html",
+          ]
+
+          text_extensions = {
+              ".html",
+              ".json",
+              ".js",
+              ".css",
+              ".md",
+              ".py",
+              ".yml",
+              ".yaml",
+          }
+
+          for target in targets:
+              print()
+              print("=" * 70)
+              print(f"TARGET: {target}")
+              print("=" * 70)
+
+              variants = {
+                  target,
+                  "/" + target,
+                  "https://www.parasha-week.co.il/" + target,
+              }
+
+              hits = []
+
+              for path in Path(".").rglob("*"):
+                  if not path.is_file():
+                      continue
+
+                  if ".git" in path.parts:
+                      continue
+
+                  if "backups" in path.parts:
+                      continue
+
+                  if path.suffix.lower() not in text_extensions:
+                      continue
+
+                  if path.as_posix() == target:
+                      continue
+
+                  try:
+                      text = path.read_text(
+                          encoding="utf-8",
+                          errors="ignore",
+                      )
+                  except Exception:
+                      continue
+
+                  for variant in variants:
+                      if variant in text:
+                          hits.append(
+                              (
+                                  path.as_posix(),
+                                  variant,
+                              )
+                          )
+                          break
+
+              print(f"REFERENCES FOUND: {len(hits)}")
+
+              for path, variant in hits:
+                  print(f"{path}")
+                  print(f"  MATCH: {variant}")
+
+          PY
