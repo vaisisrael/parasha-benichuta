@@ -1,0 +1,72 @@
+name: Check content build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get content migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: content-migration
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build from content JSON
+        run: python build_site.py
+
+      - name: Verify build report
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report_path = Path("build-report.json")
+
+          if not report_path.exists():
+              raise SystemExit(
+                  "ERROR: build-report.json was not created"
+              )
+
+          report = json.loads(
+              report_path.read_text(encoding="utf-8")
+          )
+
+          print(
+              f'Posts built: {report.get("posts")}'
+          )
+          print(
+              f'Pages built: {report.get("pages")}'
+          )
+          print(
+              f'Current parasha: {report.get("current_parasha")}'
+          )
+          print(
+              f'Parashot: {report.get("parashot")}'
+          )
+
+          if report.get("posts") != 946:
+              raise SystemExit(
+                  "ERROR: expected 946 posts"
+              )
+
+          if report.get("pages") != 5:
+              raise SystemExit(
+                  "ERROR: expected 5 pages"
+              )
+
+          print()
+          print(
+              "CONTENT BUILD CHECK OK"
+          )
+          PY
