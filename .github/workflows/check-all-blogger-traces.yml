@@ -1,0 +1,151 @@
+name: Check all Blogger traces
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get content migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: content-migration
+
+      - name: Scan for Blogger traces
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          ROOT = Path("content")
+
+          PATTERNS = {
+              "blogger.googleusercontent.com":
+                  re.compile(r"blogger\.googleusercontent\.com", re.I),
+
+              "blogspot.com":
+                  re.compile(r"blogspot\.com", re.I),
+
+              "blogger.com":
+                  re.compile(r"blogger\.com", re.I),
+
+              "blogger":
+                  re.compile(r"\bblogger\b", re.I),
+
+              "theweekparasha":
+                  re.compile(r"theweekparasha", re.I),
+
+              "blog-post.html":
+                  re.compile(r"blog-post(?:_\d+)?\.html", re.I),
+
+              "blogger image path":
+                  re.compile(r"/img/b/R29vZ2xl/", re.I),
+
+              "blogger feed":
+                  re.compile(
+                      r"(?:feeds/posts|feeds/pages|atom\.xml)",
+                      re.I,
+                  ),
+          }
+
+          files = sorted(ROOT.rglob("*"))
+
+          files = [
+              path
+              for path in files
+              if path.is_file()
+          ]
+
+          total_matches = 0
+
+          print(
+              f"Files scanned under content/: {len(files)}"
+          )
+
+          for label, pattern in PATTERNS.items():
+              print()
+              print("=" * 70)
+              print(label)
+              print("=" * 70)
+
+              matches = []
+
+              for path in files:
+                  try:
+                      text = path.read_text(
+                          encoding="utf-8"
+                      )
+                  except UnicodeDecodeError:
+                      continue
+
+                  for match in pattern.finditer(text):
+                      left = max(
+                          0,
+                          match.start() - 160,
+                      )
+
+                      right = min(
+                          len(text),
+                          match.end() + 240,
+                      )
+
+                      snippet = (
+                          text[left:right]
+                          .replace("\n", " ")
+                      )
+
+                      matches.append(
+                          (
+                              path.as_posix(),
+                              snippet,
+                          )
+                      )
+
+              print(
+                  f"MATCHES FOUND: {len(matches)}"
+              )
+
+              total_matches += len(matches)
+
+              for path, snippet in matches[:50]:
+                  print()
+                  print(f"FILE: {path}")
+                  print("SNIPPET:")
+                  print(snippet)
+                  print("---")
+
+              if len(matches) > 50:
+                  print(
+                      f"... {len(matches) - 50} more matches"
+                  )
+
+          print()
+          print("=" * 70)
+          print(
+              f"TOTAL BLOGGER-RELATED MATCHES: "
+              f"{total_matches}"
+          )
+          print("=" * 70)
+
+          if total_matches == 0:
+              print()
+              print(
+                  "STRONG BLOGGER CHECK OK — "
+                  "no Blogger-related traces were found "
+                  "under content/."
+              )
+          else:
+              print()
+              print(
+                  "Review the matches above. "
+                  "Some may be harmless text, "
+                  "but they should be inspected."
+              )
+          PY
