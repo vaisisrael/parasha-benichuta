@@ -26,6 +26,9 @@ jobs:
       - name: Build site
         run: python build_site.py
 
+      - name: Build series
+        run: python import_series.py --apply
+
       - name: Prepare publish folder
         shell: bash
         run: |
