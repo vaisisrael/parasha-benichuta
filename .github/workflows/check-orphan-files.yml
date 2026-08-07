@@ -1,0 +1,124 @@
+name: Check orphan files
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get content migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: content-migration
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Inspect orphan files
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          targets = [
+              "posts/שמיני-מָה-פֵּרוּשׁ-הביטוי-מִפַּרְסַת-פַּרְסָה.html",
+              "posts/קרח-פדיון-בכור-האדם-והבהמה.html",
+              "p/ילדים.html",
+              "p/מחוץ-לפרשה.html",
+          ]
+
+          content_files = sorted(
+              list(Path("content/posts").rglob("*.json"))
+              + list(Path("content/pages").rglob("*.json"))
+          )
+
+          items = []
+
+          for path in content_files:
+              data = json.loads(
+                  path.read_text(encoding="utf-8")
+              )
+
+              items.append(
+                  {
+                      "source": path.as_posix(),
+                      "title": str(data.get("title", "")),
+                      "output_path": str(data.get("output_path", "")),
+                      "source_url": str(data.get("source_url", "")),
+                  }
+              )
+
+          for target in targets:
+              print()
+              print("=" * 70)
+              print(f"TARGET: {target}")
+              print("=" * 70)
+
+              exact = [
+                  item
+                  for item in items
+                  if item["output_path"] == target
+              ]
+
+              if exact:
+                  print("EXACT CONTENT MATCH:")
+
+                  for item in exact:
+                      print(f'TITLE: {item["title"]}')
+                      print(f'SOURCE JSON: {item["source"]}')
+                      print(f'SOURCE URL: {item["source_url"]}')
+
+                  continue
+
+              filename = Path(target).stem
+
+              words = [
+                  word
+                  for word in filename.replace("-", " ").split()
+                  if len(word) >= 3
+              ]
+
+              candidates = []
+
+              for item in items:
+                  haystack = (
+                      item["title"]
+                      + " "
+                      + item["output_path"]
+                  )
+
+                  score = sum(
+                      1
+                      for word in words
+                      if word in haystack
+                  )
+
+                  if score:
+                      candidates.append(
+                          (score, item)
+                      )
+
+              candidates.sort(
+                  key=lambda pair: pair[0],
+                  reverse=True,
+              )
+
+              print("NO EXACT CONTENT MATCH")
+              print("Possible related content:")
+
+              for score, item in candidates[:10]:
+                  print()
+                  print(f"SCORE: {score}")
+                  print(f'TITLE: {item["title"]}')
+                  print(f'OUTPUT: {item["output_path"]}')
+                  print(f'SOURCE JSON: {item["source"]}')
+
+          PY
