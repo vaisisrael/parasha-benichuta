@@ -1,0 +1,42 @@
+name: Fix Blogger leftovers
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get content migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: content-migration
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fix final Blogger references
+        run: python fix_blogger_leftovers.py
+
+      - name: Commit fixes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add \
+            content \
+            assets/images/content
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Remove final Blogger dependencies"
+            git push origin HEAD:content-migration
+          fi
