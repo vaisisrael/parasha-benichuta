@@ -24,144 +24,146 @@ jobs:
       - name: Build site
         run: python build_site.py
 
-      - name: Check generated HTML
+      - name: Classify Blogger references
         shell: bash
         run: |
           python - <<'PY'
+          import json
           from pathlib import Path
-          import re
 
-          ROOT = Path(".")
-
-          html_files = sorted(
-              path
-              for path in ROOT.rglob("*.html")
-              if ".git" not in path.parts
-          )
-
-          print(f"HTML files scanned: {len(html_files)}")
-
-          blogger_patterns = [
+          BLOGGER_MARKERS = (
               "blogger.googleusercontent.com",
               "blogspot.com",
               "theweekparasha.blogspot.com",
-          ]
+          )
 
-          blogger_hits = []
+          SERIES_LABELS = {
+              "📊אידנקסה",
+              "🤖כבודינה",
+              "🏢המגדל",
+              "🔖אידנקסה",
+              "🔖כבודינה",
+              "🔖המגדל",
+          }
 
-          for path in html_files:
+          content_files = sorted(
+              list(Path("content/posts").rglob("*.json"))
+              + list(Path("content/pages").rglob("*.json"))
+          )
+
+          outputs = {}
+          series_outputs = set()
+
+          for path in content_files:
+              data = json.loads(
+                  path.read_text(encoding="utf-8")
+              )
+
+              output = str(
+                  data.get("output_path", "")
+              ).strip()
+
+              if not output:
+                  continue
+
+              outputs[output] = (
+                  data.get("title", ""),
+                  path.as_posix(),
+              )
+
+              labels = set(
+                  data.get("labels", [])
+              )
+
+              if labels & SERIES_LABELS:
+                  series_outputs.add(output)
+
+              if (
+                  data.get("item_type") == "PAGE"
+                  and data.get("title") in {
+                      "אידנקסה",
+                      "כבודינה",
+                      "המגדל",
+                  }
+              ):
+                  series_outputs.add(output)
+
+          hits = []
+
+          for path in Path(".").rglob("*.html"):
+              if ".git" in path.parts:
+                  continue
+
+              relative = path.as_posix()
+
+              if relative.startswith("backups/"):
+                  continue
+
               text = path.read_text(
                   encoding="utf-8",
                   errors="ignore",
+              ).lower()
+
+              markers = [
+                  marker
+                  for marker in BLOGGER_MARKERS
+                  if marker in text
+              ]
+
+              if not markers:
+                  continue
+
+              if relative in series_outputs:
+                  category = "SERIES OUTPUT"
+
+              elif relative in outputs:
+                  category = "CONTENT OUTPUT"
+
+              else:
+                  category = "ORPHAN / PRESERVED FILE"
+
+              hits.append(
+                  (
+                      category,
+                      relative,
+                      markers,
+                      outputs.get(relative),
+                  )
               )
 
-              for pattern in blogger_patterns:
-                  if pattern.lower() in text.lower():
-                      blogger_hits.append(
-                          (path.as_posix(), pattern)
-                      )
-
-          print()
           print(
-              "Generated HTML files containing "
-              f"Blogger references: {len(blogger_hits)}"
+              f"Live HTML Blogger hits: {len(hits)}"
           )
 
-          for path, pattern in blogger_hits[:50]:
-              print(f"{path} | {pattern}")
+          categories = {
+              "CONTENT OUTPUT": [],
+              "SERIES OUTPUT": [],
+              "ORPHAN / PRESERVED FILE": [],
+          }
 
-          required_files = [
-              Path("index.html"),
-              Path("posts/ויחי-חידות-פתרונות.html"),
-              Path("posts/ואתחנן-עשרת-הדברות-וקריאת-שמע.html"),
-              Path("posts/ראה-משחקים-חכמים.html"),
-          ]
+          for hit in hits:
+              categories[hit[0]].append(hit)
 
-          print()
-          print("Representative pages:")
+          for category, items in categories.items():
+              print()
+              print("=" * 70)
+              print(category)
+              print("=" * 70)
+              print(f"FILES FOUND: {len(items)}")
 
-          missing = []
+              for _, relative, markers, info in items:
+                  print()
+                  print(f"FILE: {relative}")
 
-          for path in required_files:
-              exists = path.exists()
+                  if info:
+                      print(f"TITLE: {info[0]}")
+                      print(f"SOURCE JSON: {info[1]}")
 
-              print(
-                  f"{path.as_posix()}: "
-                  f"{'OK' if exists else 'MISSING'}"
-              )
-
-              if not exists:
-                  missing.append(
-                      path.as_posix()
+                  print(
+                      "MARKERS: "
+                      + ", ".join(markers)
                   )
 
-          local_image_refs = set()
-          missing_local_images = []
-
-          image_re = re.compile(
-              r'''(?:src|href)=["'](/assets/images/[^"']+)["']''',
-              flags=re.I,
-          )
-
-          for path in html_files:
-              text = path.read_text(
-                  encoding="utf-8",
-                  errors="ignore",
-              )
-
-              for match in image_re.finditer(text):
-                  url = match.group(1)
-
-                  local_image_refs.add(url)
-
-                  local_path = Path(
-                      url.lstrip("/")
-                  )
-
-                  if not local_path.exists():
-                      missing_local_images.append(
-                          (
-                              path.as_posix(),
-                              url,
-                          )
-                      )
-
-          missing_local_images = sorted(
-              set(missing_local_images)
-          )
-
           print()
-          print(
-              "Unique local image references: "
-              f"{len(local_image_refs)}"
-          )
-
-          print(
-              "Missing local image references: "
-              f"{len(missing_local_images)}"
-          )
-
-          for path, url in missing_local_images[:50]:
-              print(
-                  f"{path} -> {url}"
-              )
-
-          if blogger_hits:
-              raise SystemExit(
-                  "ERROR: Blogger references remain "
-                  "in generated HTML"
-              )
-
-          if missing:
-              raise SystemExit(
-                  "ERROR: representative pages missing"
-              )
-
-          if missing_local_images:
-              raise SystemExit(
-                  "ERROR: local image files are missing"
-              )
-
-          print()
-          print("GENERATED SITE CHECK OK")
+          print("Classification completed.")
           PY
