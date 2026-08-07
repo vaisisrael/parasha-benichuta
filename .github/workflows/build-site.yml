@@ -24,7 +24,7 @@ jobs:
           python-version: "3.12"
 
       - name: Build site
-        run: python build_site.py blogger-export-links.atom
+        run: python build_site.py
 
       - name: Prepare publish folder
         shell: bash
