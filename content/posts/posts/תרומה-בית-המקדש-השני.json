@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "item_type": "POST",
+  "title": "תרומה: בית המקדש השני",
+  "description": "סרטון לפרשת השבוע תרומה - מקדש הורדוס",
+  "published": "2026-02-15T12:04:00.001Z",
+  "updated": "2026-02-15T12:39:14.345Z",
+  "labels": [
+    "2-07 פרשת תרומה",
+    "2-07 תרומה-תצווה",
+    "🔖המחשה"
+  ],
+  "source_url": "",
+  "output_path": "posts/תרומה-בית-המקדש-השני.html",
+  "parasha_label": "2-07 פרשת תרומה",
+  "parasha_name": "תרומה",
+  "book": "שמות",
+  "section": "🔖המחשה",
+  "series": null,
+  "content_html": "<h2 style=\"text-align: center;\"><table align=\"center\" cellpadding=\"0\" cellspacing=\"0\" class=\"tr-caption-container\" style=\"margin-left: auto; margin-right: auto;\"><tbody><tr><td style=\"text-align: center;\"><a href=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Jerusalem_Modell_BW_2.JPG/960px-Jerusalem_Modell_BW_2.JPG?20100527090423\" style=\"margin-left: auto; margin-right: auto;\"><img border=\"0\" data-original-height=\"552\" data-original-width=\"960\" height=\"230\" src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Jerusalem_Modell_BW_2.JPG/960px-Jerusalem_Modell_BW_2.JPG?20100527090423\" width=\"400\" /></a></td></tr><tr><td class=\"tr-caption\" style=\"text-align: center;\"><span style=\"font-family: arial;\">צילום: Berthold Werner, מתוך Wikimedia Commons (Public Domain)</span></td></tr></tbody></table></h2><h2 style=\"text-align: center;\"><span style=\"font-family: arial;\">בנין הורדוס - פאר היצירה</span></h2><blockquote style=\"text-align: center;\"><span style=\"font-family: arial; font-size: medium;\">וְעָשׂוּ לִי מִקְדָּשׁ וְשָׁכַנְתִּי בְּתוֹכָם</span></blockquote><div><span style=\"font-family: arial; font-size: medium;\">חז\"ל אמרו: \"מי שלא ראה בנין הורדוס לא ראה בנין נאה מימיו\".</span></div><div><p><span style=\"font-size: medium;\"><span><span style=\"font-family: arial;\">צפו בסרטון הדמיה מרתק </span><span style=\"font-family: arial;\">על בניית בית המקדש השני שבנה המלך הורדוס. באדיבות&nbsp;</span></span><span style=\"font-family: arial;\">מכון מגלי\"ם.</span></span></p></div>\n\n<iframe allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen=\"\" frameborder=\"0\" height=\"703\" referrerpolicy=\"strict-origin-when-cross-origin\" src=\"https://www.youtube.com/embed/Nz_9k0UuIEY\" title=\"בית המקדש – פאר היצירה בימי הורדוס\" width=\"1250\"></iframe>"
+}

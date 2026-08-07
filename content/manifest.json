@@ -1,0 +1,4762 @@
+{
+  "schema_version": 1,
+  "posts": [
+    {
+      "title": "01 - הסיגנל הראשון",
+      "output_path": "posts/01-הסיגנל-הראשון.html",
+      "content_file": "content/posts/posts/01-הסיגנל-הראשון.json"
+    },
+    {
+      "title": "01 - הקבוצה הרשמית",
+      "output_path": "posts/01-הקבוצה-הרשמית.html",
+      "content_file": "content/posts/posts/01-הקבוצה-הרשמית.json"
+    },
+    {
+      "title": "01 - כבוד המערכת",
+      "output_path": "posts/01-כבוד-המערכת.html",
+      "content_file": "content/posts/posts/01-כבוד-המערכת.json"
+    },
+    {
+      "title": "02 - הסתירה הקטנה",
+      "output_path": "posts/02-הסתירה-הקטנה.html",
+      "content_file": "content/posts/posts/02-הסתירה-הקטנה.json"
+    },
+    {
+      "title": "02 - חוק תשתיות אנכיות",
+      "output_path": "posts/02-חוק-תשתיות-אנכיות.html",
+      "content_file": "content/posts/posts/02-חוק-תשתיות-אנכיות.json"
+    },
+    {
+      "title": "02 - מדד המלצרים",
+      "output_path": "posts/02-מדד-המלצרים.html",
+      "content_file": "content/posts/posts/02-מדד-המלצרים.json"
+    },
+    {
+      "title": "03 - הקרדיט",
+      "output_path": "posts/03-הקרדיט.html",
+      "content_file": "content/posts/posts/03-הקרדיט.json"
+    },
+    {
+      "title": "03 - כניסה ב'",
+      "output_path": "posts/03-כניסה-ב.html",
+      "content_file": "content/posts/posts/03-כניסה-ב.json"
+    },
+    {
+      "title": "03 - מרד הכבודים (א): ישיבה חשאית",
+      "output_path": "posts/03-מרד-הכבודים-א-ישיבה-חשאית.html",
+      "content_file": "content/posts/posts/03-מרד-הכבודים-א-ישיבה-חשאית.json"
+    },
+    {
+      "title": "04 - הכת בקומה 18",
+      "output_path": "posts/04-הכת-בקומה-18.html",
+      "content_file": "content/posts/posts/04-הכת-בקומה-18.json"
+    },
+    {
+      "title": "04 - מרד הכבודים (ב): כבוד ההליך",
+      "output_path": "posts/04-מרד-הכבודים-ב-כבוד-ההליך.html",
+      "content_file": "content/posts/posts/04-מרד-הכבודים-ב-כבוד-ההליך.json"
+    },
+    {
+      "title": "04 - צִיקוּלִיקוּצִים",
+      "output_path": "posts/04-צִיקוּלִיקוּצִים.html",
+      "content_file": "content/posts/posts/04-צִיקוּלִיקוּצִים.json"
+    },
+    {
+      "title": "05 - גראס",
+      "output_path": "posts/05-גראס.html",
+      "content_file": "content/posts/posts/05-גראס.json"
+    },
+    {
+      "title": "05 - מרד הכבודים (ג): מי מחליט עלי?",
+      "output_path": "posts/05-מרד-הכבודים-ג-מי-מחליט-עלי.html",
+      "content_file": "content/posts/posts/05-מרד-הכבודים-ג-מי-מחליט-עלי.json"
+    },
+    {
+      "title": "05 - סימני נפט",
+      "output_path": "posts/05-סימני-נפט.html",
+      "content_file": "content/posts/posts/05-סימני-נפט.json"
+    },
+    {
+      "title": "06 - כמהין ופינו נואר",
+      "output_path": "posts/06-כמהין-ופינו-נואר.html",
+      "content_file": "content/posts/posts/06-כמהין-ופינו-נואר.json"
+    },
+    {
+      "title": "06 - לא זורקים כלום",
+      "output_path": "posts/06-לא-זורקים-כלום.html",
+      "content_file": "content/posts/posts/06-לא-זורקים-כלום.json"
+    },
+    {
+      "title": "06 - שיטת החרטה",
+      "output_path": "posts/06-שיטת-החרטה.html",
+      "content_file": "content/posts/posts/06-שיטת-החרטה.json"
+    },
+    {
+      "title": "07 - דירה עם עבר",
+      "output_path": "posts/07-דירה-עם-עבר.html",
+      "content_file": "content/posts/posts/07-דירה-עם-עבר.json"
+    },
+    {
+      "title": "07 - המפה",
+      "output_path": "posts/07-המפה.html",
+      "content_file": "content/posts/posts/07-המפה.json"
+    },
+    {
+      "title": "07 - שיחת תחקיר",
+      "output_path": "posts/07-שיחת-תחקיר.html",
+      "content_file": "content/posts/posts/07-שיחת-תחקיר.json"
+    },
+    {
+      "title": "08 - הבית בחסות",
+      "output_path": "posts/08-הבית-בחסות.html",
+      "content_file": "content/posts/posts/08-הבית-בחסות.json"
+    },
+    {
+      "title": "08 - פרו-בונו",
+      "output_path": "posts/08-פרו-בונו.html",
+      "content_file": "content/posts/posts/08-פרו-בונו.json"
+    },
+    {
+      "title": "08 - שפה משותפת",
+      "output_path": "posts/08-שפה-משותפת.html",
+      "content_file": "content/posts/posts/08-שפה-משותפת.json"
+    },
+    {
+      "title": "09 - זה עובד",
+      "output_path": "posts/09-זה-עובד.html",
+      "content_file": "content/posts/posts/09-זה-עובד.json"
+    },
+    {
+      "title": "09 - זכויות אוויר",
+      "output_path": "posts/09-זכויות-אוויר.html",
+      "content_file": "content/posts/posts/09-זכויות-אוויר.json"
+    },
+    {
+      "title": "09 - ערעור על האלגוריתם (א): מי יערער על דינה?",
+      "output_path": "posts/09-ערעור-על-האלגוריתם-א-מי-יערער-על-דינה.html",
+      "content_file": "content/posts/posts/09-ערעור-על-האלגוריתם-א-מי-יערער-על-דינה.json"
+    },
+    {
+      "title": "10 - אבל לא ככה",
+      "output_path": "posts/10-אבל-לא-ככה.html",
+      "content_file": "content/posts/posts/10-אבל-לא-ככה.json"
+    },
+    {
+      "title": "10 - בחירות לוועד",
+      "output_path": "posts/10-בחירות-לוועד.html",
+      "content_file": "content/posts/posts/10-בחירות-לוועד.json"
+    },
+    {
+      "title": "10 - ערעור על האלגוריתם (ב): מי יבחר את המתחרה?",
+      "output_path": "posts/10-ערעור-על-האלגוריתם-ב-מי-יבחר-את-המתחרה.html",
+      "content_file": "content/posts/posts/10-ערעור-על-האלגוריתם-ב-מי-יבחר-את-המתחרה.json"
+    },
+    {
+      "title": "11 - עסקת הטיעון (א): לפני שיש על מה להתווכח",
+      "output_path": "posts/11-עסקת-הטיעון-א-לפני-שיש-על-מה-להתווכח.html",
+      "content_file": "content/posts/posts/11-עסקת-הטיעון-א-לפני-שיש-על-מה-להתווכח.json"
+    },
+    {
+      "title": "11 - שיר שלא נגמר",
+      "output_path": "posts/11-שיר-שלא-נגמר.html",
+      "content_file": "content/posts/posts/11-שיר-שלא-נגמר.json"
+    },
+    {
+      "title": "12 - עסקת הטיעון (ב): בגלל שלא פרצת",
+      "output_path": "posts/12-עסקת-הטיעון-ב-בגלל-שלא-פרצת.html",
+      "content_file": "content/posts/posts/12-עסקת-הטיעון-ב-בגלל-שלא-פרצת.json"
+    },
+    {
+      "title": "12 - תעודת הוקרה",
+      "output_path": "posts/12-תעודת-הוקרה.html",
+      "content_file": "content/posts/posts/12-תעודת-הוקרה.json"
+    },
+    {
+      "title": "13 - רצון העם: אין צורך להגיע",
+      "output_path": "posts/13-רצון-העם-אין-צורך-להגיע.html",
+      "content_file": "content/posts/posts/13-רצון-העם-אין-צורך-להגיע.json"
+    },
+    {
+      "title": "13 - שבת שקטה",
+      "output_path": "posts/13-שבת-שקטה.html",
+      "content_file": "content/posts/posts/13-שבת-שקטה.json"
+    },
+    {
+      "title": "14 - גלובל",
+      "output_path": "posts/14-גלובל.html",
+      "content_file": "content/posts/posts/14-גלובל.json"
+    },
+    {
+      "title": "15 - האח הגדול",
+      "output_path": "posts/15-האח-הגדול.html",
+      "content_file": "content/posts/posts/15-האח-הגדול.json"
+    },
+    {
+      "title": "16 - הידד, אנחנו אג'יליים!",
+      "output_path": "posts/16-הידד-אנחנו-אגיליים.html",
+      "content_file": "content/posts/posts/16-הידד-אנחנו-אגיליים.json"
+    },
+    {
+      "title": "17 - ואם ייגמרו המחשבים?",
+      "output_path": "posts/17-ואם-ייגמרו-המחשבים.html",
+      "content_file": "content/posts/posts/17-ואם-ייגמרו-המחשבים.json"
+    },
+    {
+      "title": "18 - בכיר",
+      "output_path": "posts/18-בכיר.html",
+      "content_file": "content/posts/posts/18-בכיר.json"
+    },
+    {
+      "title": "19 - בעל הבית",
+      "output_path": "posts/19-בעל-הבית.html",
+      "content_file": "content/posts/posts/19-בעל-הבית.json"
+    },
+    {
+      "title": "20 - הדמו האחרון",
+      "output_path": "posts/20-הדמו-האחרון.html",
+      "content_file": "content/posts/posts/20-הדמו-האחרון.json"
+    },
+    {
+      "title": "אחרי מות: 03 ניהול מנוי - מי שולט?",
+      "output_path": "posts/אחרי-מות-03-ניהול-מנוי-מי-שולט.html",
+      "content_file": "content/posts/posts/אחרי-מות-03-ניהול-מנוי-מי-שולט.json"
+    },
+    {
+      "title": "אחרי מות: הַצֹּפֶן של השפה העברית",
+      "output_path": "posts/אחרי-מות-הַצֹּפֶן-של-השפה-העברית.html",
+      "content_file": "content/posts/posts/אחרי-מות-הַצֹּפֶן-של-השפה-העברית.json"
+    },
+    {
+      "title": "אחרי מות: האם ה' משתנה ביום כיפור?",
+      "output_path": "posts/אחרי-מות-האם-ה-משתנה-ביום-כיפור.html",
+      "content_file": "content/posts/posts/אחרי-מות-האם-ה-משתנה-ביום-כיפור.json"
+    },
+    {
+      "title": "אחרי מות: הכניסה אסורה",
+      "output_path": "posts/אחרי-מות-הכניסה-אסורה.html",
+      "content_file": "content/posts/posts/אחרי-מות-הכניסה-אסורה.json"
+    },
+    {
+      "title": "אחרי מות: המדור לילדים",
+      "output_path": "posts/אחרי-מות-המדור-לילדים.html",
+      "content_file": "content/posts/posts/אחרי-מות-המדור-לילדים.json"
+    },
+    {
+      "title": "אחרי מות: חידות + פתרונות",
+      "output_path": "posts/אחרי-מות-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/אחרי-מות-חידות-פתרונות.json"
+    },
+    {
+      "title": "אחרי מות: טעויות אנוש וחציית גבולות",
+      "output_path": "posts/אחרי-מות-טעויות-אנוש-וחציית-גבולות.html",
+      "content_file": "content/posts/posts/אחרי-מות-טעויות-אנוש-וחציית-גבולות.json"
+    },
+    {
+      "title": "אחרי מות: יום כיפור - סרט מ- יהדותון",
+      "output_path": "posts/אחרי-מות-יום-כיפור-סרט-מ-יהדותון.html",
+      "content_file": "content/posts/posts/אחרי-מות-יום-כיפור-סרט-מ-יהדותון.json"
+    },
+    {
+      "title": "אחרי מות: יש חיים אחרי המוות",
+      "output_path": "posts/אחרי-מות-יש-חיים-אחרי-המוות.html",
+      "content_file": "content/posts/posts/אחרי-מות-יש-חיים-אחרי-המוות.json"
+    },
+    {
+      "title": "אחרי מות: למה משלחים שעיר לַעֲזָאזֵֽל?",
+      "output_path": "posts/אחרי-מות-למה-משלחים-שעיר-לַעֲזָאזֵֽל.html",
+      "content_file": "content/posts/posts/אחרי-מות-למה-משלחים-שעיר-לַעֲזָאזֵֽל.json"
+    },
+    {
+      "title": "אחרי מות: מה קודם למה?",
+      "output_path": "posts/אחרי-מות-מה-קודם-למה.html",
+      "content_file": "content/posts/posts/אחרי-מות-מה-קודם-למה.json"
+    },
+    {
+      "title": "אחרי מות: משחקים חכמים",
+      "output_path": "posts/אחרי-מות-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/אחרי-מות-משחקים-חכמים.json"
+    },
+    {
+      "title": "אחרי מות: \"סדר עבודת כהן גדול\"",
+      "output_path": "posts/אחרי-מות-סדר-עבודת-כהן-גדול.html",
+      "content_file": "content/posts/posts/אחרי-מות-סדר-עבודת-כהן-גדול.json"
+    },
+    {
+      "title": "אחרי מות: עבודת יום הכיפורים",
+      "output_path": "posts/אחרי-מות-עבודת-יום-הכיפורים.html",
+      "content_file": "content/posts/posts/אחרי-מות-עבודת-יום-הכיפורים.json"
+    },
+    {
+      "title": "אחרי מות: עזה ועזאזל - מקום עז וקשה",
+      "output_path": "posts/אחרי-מות-עזה-ועזאזל-מקום-עז-וקשה.html",
+      "content_file": "content/posts/posts/אחרי-מות-עזה-ועזאזל-מקום-עז-וקשה.json"
+    },
+    {
+      "title": "אחרי מות: שבועת הכהן בערב יום כיפור",
+      "output_path": "posts/אחרי-מות-שבועת-הכהן-בערב-יום-כיפור.html",
+      "content_file": "content/posts/posts/אחרי-מות-שבועת-הכהן-בערב-יום-כיפור.json"
+    },
+    {
+      "title": "אחרי מות: שכר המכבד את יום כיפור",
+      "output_path": "posts/אחרי-מות-שכר-המכבד-את-יום-כיפור.html",
+      "content_file": "content/posts/posts/אחרי-מות-שכר-המכבד-את-יום-כיפור.json"
+    },
+    {
+      "title": "אמור: 05 זיכרון והקשר - מה כן נכנס?",
+      "output_path": "posts/אמור-05-זיכרון-והקשר-מה-כן-נכנס.html",
+      "content_file": "content/posts/posts/אמור-05-זיכרון-והקשר-מה-כן-נכנס.json"
+    },
+    {
+      "title": "אמור: איך בונים סוכה?",
+      "output_path": "posts/אמור-איך-בונים-סוכה.html",
+      "content_file": "content/posts/posts/אמור-איך-בונים-סוכה.json"
+    },
+    {
+      "title": "אמור: איך תרבויות שונות סופרות זמן?",
+      "output_path": "posts/אמור-איך-תרבויות-שונות-סופרות-זמן.html",
+      "content_file": "content/posts/posts/אמור-איך-תרבויות-שונות-סופרות-זמן.json"
+    },
+    {
+      "title": "אמור: דיני הכהנים והמועדים",
+      "output_path": "posts/אמור-דיני-הכהנים-והמועדים.html",
+      "content_file": "content/posts/posts/אמור-דיני-הכהנים-והמועדים.json"
+    },
+    {
+      "title": "אמור: המדור לילדים",
+      "output_path": "posts/אמור-המדור-לילדים.html",
+      "content_file": "content/posts/posts/אמור-המדור-לילדים.json"
+    },
+    {
+      "title": "אמור: המקלל - ישראלי או מצרי?",
+      "output_path": "posts/אמור-המקלל-ישראלי-או-מצרי.html",
+      "content_file": "content/posts/posts/אמור-המקלל-ישראלי-או-מצרי.json"
+    },
+    {
+      "title": "אמור: חידות + פתרונות",
+      "output_path": "posts/אמור-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/אמור-חידות-פתרונות.json"
+    },
+    {
+      "title": "אמור: כל מילה בסלע",
+      "output_path": "posts/אמור-כל-מילה-בסלע.html",
+      "content_file": "content/posts/posts/אמור-כל-מילה-בסלע.json"
+    },
+    {
+      "title": "אמור: כשחוצים את הגבול...",
+      "output_path": "posts/אמור-כשחוצים-את-הגבול.html",
+      "content_file": "content/posts/posts/אמור-כשחוצים-את-הגבול.json"
+    },
+    {
+      "title": "אמור: מדוע 'טומאת מת' כה חמורה?",
+      "output_path": "posts/אמור-מדוע-טומאת-מת-כה-חמורה.html",
+      "content_file": "content/posts/posts/אמור-מדוע-טומאת-מת-כה-חמורה.json"
+    },
+    {
+      "title": "אמור: מי אתה 'המקלל'?",
+      "output_path": "posts/אמור-מי-אתה-המקלל.html",
+      "content_file": "content/posts/posts/אמור-מי-אתה-המקלל.json"
+    },
+    {
+      "title": "אמור: מילים שמוציאות אל מחוץ למחנה",
+      "output_path": "posts/אמור-מילים-שמוציאות-אל-מחוץ-למחנה.html",
+      "content_file": "content/posts/posts/אמור-מילים-שמוציאות-אל-מחוץ-למחנה.json"
+    },
+    {
+      "title": "אמור: משחקים חכמים",
+      "output_path": "posts/אמור-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/אמור-משחקים-חכמים.json"
+    },
+    {
+      "title": "אמור: מתי הקב\"ה (כביכול) מתייגע?",
+      "output_path": "posts/אמור-מתי-הקבה-כביכול-מתייגע.html",
+      "content_file": "content/posts/posts/אמור-מתי-הקבה-כביכול-מתייגע.json"
+    },
+    {
+      "title": "אמור: ספירת האומר",
+      "output_path": "posts/אמור-ספירת-האומר.html",
+      "content_file": "content/posts/posts/אמור-ספירת-האומר.json"
+    },
+    {
+      "title": "אמור: ספירת העומר",
+      "output_path": "posts/אמור-ספירת-העומר.html",
+      "content_file": "content/posts/posts/אמור-ספירת-העומר.json"
+    },
+    {
+      "title": "אמור: על גירושין וסערת רגשות",
+      "output_path": "posts/אמור-על-גירושין-וסערת-רגשות.html",
+      "content_file": "content/posts/posts/אמור-על-גירושין-וסערת-רגשות.json"
+    },
+    {
+      "title": "בא: 23 לבחור מצב רוח לתשובה",
+      "output_path": "posts/בא-23-לבחור-מצב-רוח-לתשובה.html",
+      "content_file": "content/posts/posts/בא-23-לבחור-מצב-רוח-לתשובה.json"
+    },
+    {
+      "title": "בא: אופן אכילת קרבן פסח במצרים",
+      "output_path": "posts/בא-אופן-אכילת-קרבן-פסח-במצרים.html",
+      "content_file": "content/posts/posts/בא-אופן-אכילת-קרבן-פסח-במצרים.json"
+    },
+    {
+      "title": "בא: בני ישראל יוצאים ממצרים",
+      "output_path": "posts/בא-בני-ישראל-יוצאים-ממצרים.html",
+      "content_file": "content/posts/posts/בא-בני-ישראל-יוצאים-ממצרים.json"
+    },
+    {
+      "title": "בא: דיאלוג בחשיכה",
+      "output_path": "posts/בא-דיאלוג-בחשיכה.html",
+      "content_file": "content/posts/posts/בא-דיאלוג-בחשיכה.json"
+    },
+    {
+      "title": "בא: האדם הוא עולם קטן!",
+      "output_path": "posts/בא-האדם-הוא-עולם-קטן.html",
+      "content_file": "content/posts/posts/בא-האדם-הוא-עולם-קטן.json"
+    },
+    {
+      "title": "בא: האם נדרשת סיבה לקיים הבטחה?",
+      "output_path": "posts/בא-האם-נדרשת-סיבה-לקיים-הבטחה.html",
+      "content_file": "content/posts/posts/בא-האם-נדרשת-סיבה-לקיים-הבטחה.json"
+    },
+    {
+      "title": "בא: המדור לילדים",
+      "output_path": "posts/בא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/בא-המדור-לילדים.json"
+    },
+    {
+      "title": "בא: הערוב והארבה - מכות שבאו מבחוץ",
+      "output_path": "posts/בא-הערוב-והארבה-מכות-שבאו-מבחוץ.html",
+      "content_file": "content/posts/posts/בא-הערוב-והארבה-מכות-שבאו-מבחוץ.json"
+    },
+    {
+      "title": "בא: \"וְעוֹד יוֹתֵר טוֹב\"",
+      "output_path": "posts/בא-וְעוֹד-יוֹתֵר-טוֹב.html",
+      "content_file": "content/posts/posts/בא-וְעוֹד-יוֹתֵר-טוֹב.json"
+    },
+    {
+      "title": "בא: חידות + פתרונות",
+      "output_path": "posts/בא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/בא-חידות-פתרונות.json"
+    },
+    {
+      "title": "בא: לא מצליחים לכסות את המינוס?",
+      "output_path": "posts/בא-לא-מצליחים-לכסות-את-המינוס.html",
+      "content_file": "content/posts/posts/בא-לא-מצליחים-לכסות-את-המינוס.json"
+    },
+    {
+      "title": "בא: ללכת אחרי צו ה'",
+      "output_path": "posts/בא-ללכת-אחרי-צו-ה.html",
+      "content_file": "content/posts/posts/בא-ללכת-אחרי-צו-ה.json"
+    },
+    {
+      "title": "בא: מִתְקֶפֶת הָאַרְבֶּה",
+      "output_path": "posts/בא-מִתְקֶפֶת-הָאַרְבֶּה.html",
+      "content_file": "content/posts/posts/בא-מִתְקֶפֶת-הָאַרְבֶּה.json"
+    },
+    {
+      "title": "בא: מה זה \"לָאו הַנִּתָּק לַעֲשֵׂה\"?",
+      "output_path": "posts/בא-מה-זה-לָאו-הַנִּתָּק-לַעֲשֵׂה.html",
+      "content_file": "content/posts/posts/בא-מה-זה-לָאו-הַנִּתָּק-לַעֲשֵׂה.json"
+    },
+    {
+      "title": "בא: מי מוסמך לקבוע ראש חודש?",
+      "output_path": "posts/בא-מי-מוסמך-לקבוע-ראש-חודש.html",
+      "content_file": "content/posts/posts/בא-מי-מוסמך-לקבוע-ראש-חודש.json"
+    },
+    {
+      "title": "בא: ראש של גוי",
+      "output_path": "posts/בא-ראש-של-גוי.html",
+      "content_file": "content/posts/posts/בא-ראש-של-גוי.json"
+    },
+    {
+      "title": "בהעלתך: 10 נכון או לא נכון?",
+      "output_path": "posts/בהעלתך-10-נכון-או-לא-נכון.html",
+      "content_file": "content/posts/posts/בהעלתך-10-נכון-או-לא-נכון.json"
+    },
+    {
+      "title": "בהעלתך: אש ה' שאכלה בקצה המחנה",
+      "output_path": "posts/בהעלתך-אש-ה-שאכלה-בקצה-המחנה.html",
+      "content_file": "content/posts/posts/בהעלתך-אש-ה-שאכלה-בקצה-המחנה.json"
+    },
+    {
+      "title": "בהעלתך: האם יש לק-ל דמות וצלם?",
+      "output_path": "posts/בהעלתך-האם-יש-לק-ל-דמות-וצלם.html",
+      "content_file": "content/posts/posts/בהעלתך-האם-יש-לק-ל-דמות-וצלם.json"
+    },
+    {
+      "title": "בהעלתך: הגרלה חכמה ושקופה",
+      "output_path": "posts/בהעלתך-הגרלה-חכמה-ושקופה.html",
+      "content_file": "content/posts/posts/בהעלתך-הגרלה-חכמה-ושקופה.json"
+    },
+    {
+      "title": "בהעלתך: המדור לילדים",
+      "output_path": "posts/בהעלתך-המדור-לילדים.html",
+      "content_file": "content/posts/posts/בהעלתך-המדור-לילדים.json"
+    },
+    {
+      "title": "בהעלתך: המן שמגיד את האמת",
+      "output_path": "posts/בהעלתך-המן-שמגיד-את-האמת.html",
+      "content_file": "content/posts/posts/בהעלתך-המן-שמגיד-את-האמת.json"
+    },
+    {
+      "title": "בהעלתך: חידות + פתרונות",
+      "output_path": "posts/בהעלתך-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/בהעלתך-חידות-פתרונות.json"
+    },
+    {
+      "title": "בהעלתך: כשהמילים חופרות בור לאומר",
+      "output_path": "posts/בהעלתך-כשהמילים-חופרות-בור-לאומר.html",
+      "content_file": "content/posts/posts/בהעלתך-כשהמילים-חופרות-בור-לאומר.json"
+    },
+    {
+      "title": "בהעלתך: ללקט מצוף השפה",
+      "output_path": "posts/בהעלתך-ללקט-מצוף-השפה.html",
+      "content_file": "content/posts/posts/בהעלתך-ללקט-מצוף-השפה.json"
+    },
+    {
+      "title": "בהעלתך: לשון הרע לא מדבר אליי",
+      "output_path": "posts/בהעלתך-לשון-הרע-לא-מדבר-אליי.html",
+      "content_file": "content/posts/posts/בהעלתך-לשון-הרע-לא-מדבר-אליי.json"
+    },
+    {
+      "title": "בהעלתך: מחשבות על תאוות קבורות",
+      "output_path": "posts/בהעלתך-מחשבות-על-תאוות-קבורות.html",
+      "content_file": "content/posts/posts/בהעלתך-מחשבות-על-תאוות-קבורות.json"
+    },
+    {
+      "title": "בהעלתך: מסעות, נבואות והתמודדויות",
+      "output_path": "posts/בהעלתך-מסעות-נבואות-והתמודדויות.html",
+      "content_file": "content/posts/posts/בהעלתך-מסעות-נבואות-והתמודדויות.json"
+    },
+    {
+      "title": "בהעלתך: משחקים חכמים",
+      "output_path": "posts/בהעלתך-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/בהעלתך-משחקים-חכמים.json"
+    },
+    {
+      "title": "בהעלתך: צליל שמכוון מחנה",
+      "output_path": "posts/בהעלתך-צליל-שמכוון-מחנה.html",
+      "content_file": "content/posts/posts/בהעלתך-צליל-שמכוון-מחנה.json"
+    },
+    {
+      "title": "בהעלתך: שבח אהרון בהדלקת המנורה",
+      "output_path": "posts/בהעלתך-שבח-אהרון-בהדלקת-המנורה.html",
+      "content_file": "content/posts/posts/בהעלתך-שבח-אהרון-בהדלקת-המנורה.json"
+    },
+    {
+      "title": "בהעלתך: שיחת משה ויתרו עפ\"י חז\"ל",
+      "output_path": "posts/בהעלתך-שיחת-משה-ויתרו-עפי-חזל.html",
+      "content_file": "content/posts/posts/בהעלתך-שיחת-משה-ויתרו-עפי-חזל.json"
+    },
+    {
+      "title": "בהעלתך: שירת המתלבט בין העודפים",
+      "output_path": "posts/בהעלתך-שירת-המתלבט-בין-העודפים.html",
+      "content_file": "content/posts/posts/בהעלתך-שירת-המתלבט-בין-העודפים.json"
+    },
+    {
+      "title": "בהר: 06 חזרתיות שאינה מצטברת",
+      "output_path": "posts/בהר-06-חזרתיות-שאינה-מצטברת.html",
+      "content_file": "content/posts/posts/בהר-06-חזרתיות-שאינה-מצטברת.json"
+    },
+    {
+      "title": "בהר: איך שומרים שמיטה?",
+      "output_path": "posts/בהר-איך-שומרים-שמיטה.html",
+      "content_file": "content/posts/posts/בהר-איך-שומרים-שמיטה.json"
+    },
+    {
+      "title": "בהר: אל תדחה עני - אולי תזדקק מחר",
+      "output_path": "posts/בהר-אל-תדחה-עני-אולי-תזדקק-מחר.html",
+      "content_file": "content/posts/posts/בהר-אל-תדחה-עני-אולי-תזדקק-מחר.json"
+    },
+    {
+      "title": "בהר: האם למכור נכס לצורך השקעה?",
+      "output_path": "posts/בהר-האם-למכור-נכס-לצורך-השקעה.html",
+      "content_file": "content/posts/posts/בהר-האם-למכור-נכס-לצורך-השקעה.json"
+    },
+    {
+      "title": "בהר: הבית שלך, או של הבנק?",
+      "output_path": "posts/בהר-הבית-שלך-או-של-הבנק.html",
+      "content_file": "content/posts/posts/בהר-הבית-שלך-או-של-הבנק.json"
+    },
+    {
+      "title": "בהר: הוראות השמיטה בשבע פסוקים",
+      "output_path": "posts/בהר-הוראות-השמיטה-בשבע-פסוקים.html",
+      "content_file": "content/posts/posts/בהר-הוראות-השמיטה-בשבע-פסוקים.json"
+    },
+    {
+      "title": "בהר: המדור לילדים",
+      "output_path": "posts/בהר-המדור-לילדים.html",
+      "content_file": "content/posts/posts/בהר-המדור-לילדים.json"
+    },
+    {
+      "title": "בהר: הקשר בין סַפַּחַת, תַּסְחִיף וסַבִּיח",
+      "output_path": "posts/בהר-הקשר-בין-סַפַּחַת-תַּסְחִיף-וסַבִּיח.html",
+      "content_file": "content/posts/posts/בהר-הקשר-בין-סַפַּחַת-תַּסְחִיף-וסַבִּיח.json"
+    },
+    {
+      "title": "בהר: השותפות הכי משתלמת",
+      "output_path": "posts/בהר-השותפות-הכי-משתלמת.html",
+      "content_file": "content/posts/posts/בהר-השותפות-הכי-משתלמת.json"
+    },
+    {
+      "title": "בהר: ומה אם ChatGPT יכריז שביתה?",
+      "output_path": "posts/בהר-ומה-אם-chatgpt-יכריז-שביתה.html",
+      "content_file": "content/posts/posts/בהר-ומה-אם-chatgpt-יכריז-שביתה.json"
+    },
+    {
+      "title": "בהר: חידות + פתרונות",
+      "output_path": "posts/בהר-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/בהר-חידות-פתרונות.json"
+    },
+    {
+      "title": "בהר: כשלא מתייחסים לסימני שמים",
+      "output_path": "posts/בהר-כשלא-מתייחסים-לסימני-שמים.html",
+      "content_file": "content/posts/posts/בהר-כשלא-מתייחסים-לסימני-שמים.json"
+    },
+    {
+      "title": "בהר: מחשבות על התחלות ואיתחולים",
+      "output_path": "posts/בהר-מחשבות-על-התחלות-ואיתחולים.html",
+      "content_file": "content/posts/posts/בהר-מחשבות-על-התחלות-ואיתחולים.json"
+    },
+    {
+      "title": "בהר: ממי גנב העבד?",
+      "output_path": "posts/בהר-ממי-גנב-העבד.html",
+      "content_file": "content/posts/posts/בהר-ממי-גנב-העבד.json"
+    },
+    {
+      "title": "בהר: משחקים חכמים",
+      "output_path": "posts/בהר-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/בהר-משחקים-חכמים.json"
+    },
+    {
+      "title": "בהר: קצת על \"ריבית\"",
+      "output_path": "posts/בהר-קצת-על-ריבית.html",
+      "content_file": "content/posts/posts/בהר-קצת-על-ריבית.json"
+    },
+    {
+      "title": "בהר: שמיטה ויובל - עבדים וקרקעות",
+      "output_path": "posts/בהר-שמיטה-ויובל-עבדים-וקרקעות.html",
+      "content_file": "content/posts/posts/בהר-שמיטה-ויובל-עבדים-וקרקעות.json"
+    },
+    {
+      "title": "בחקתי: 07 הנחיה מעורפלת וציות חלקי",
+      "output_path": "posts/בחקתי-07-הנחיה-מעורפלת-וציות-חלקי.html",
+      "content_file": "content/posts/posts/בחקתי-07-הנחיה-מעורפלת-וציות-חלקי.json"
+    },
+    {
+      "title": "בחקתי: איך מכינים יין?",
+      "output_path": "posts/בחקתי-איך-מכינים-יין.html",
+      "content_file": "content/posts/posts/בחקתי-איך-מכינים-יין.json"
+    },
+    {
+      "title": "בחקתי: אין פרץ ואין צווחה",
+      "output_path": "posts/בחקתי-אין-פרץ-ואין-צווחה.html",
+      "content_file": "content/posts/posts/בחקתי-אין-פרץ-ואין-צווחה.json"
+    },
+    {
+      "title": "בחקתי: ברכה, תוכחה ודיני ערכין",
+      "output_path": "posts/בחקתי-ברכה-תוכחה-ודיני-ערכין.html",
+      "content_file": "content/posts/posts/בחקתי-ברכה-תוכחה-ודיני-ערכין.json"
+    },
+    {
+      "title": "בחקתי: דיני הכבש העשירי בשני פסוקים",
+      "output_path": "posts/בחקתי-דיני-הכבש-העשירי-בשני-פסוקים.html",
+      "content_file": "content/posts/posts/בחקתי-דיני-הכבש-העשירי-בשני-פסוקים.json"
+    },
+    {
+      "title": "בחקתי: המדור לילדים",
+      "output_path": "posts/בחקתי-המדור-לילדים.html",
+      "content_file": "content/posts/posts/בחקתי-המדור-לילדים.json"
+    },
+    {
+      "title": "בחקתי: חידות + פתרונות",
+      "output_path": "posts/בחקתי-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/בחקתי-חידות-פתרונות.json"
+    },
+    {
+      "title": "בחקתי: חסיד שוטה או עובד ה' באמת?",
+      "output_path": "posts/בחקתי-חסיד-שוטה-או-עובד-ה-באמת.html",
+      "content_file": "content/posts/posts/בחקתי-חסיד-שוטה-או-עובד-ה-באמת.json"
+    },
+    {
+      "title": "בחקתי: כמה שווה בן-אדם?",
+      "output_path": "posts/בחקתי-כמה-שווה-בן-אדם.html",
+      "content_file": "content/posts/posts/בחקתי-כמה-שווה-בן-אדם.json"
+    },
+    {
+      "title": "בחקתי: כשבניית ארמון משמשת אזהרה",
+      "output_path": "posts/בחקתי-כשבניית-ארמון-משמשת-אזהרה.html",
+      "content_file": "content/posts/posts/בחקתי-כשבניית-ארמון-משמשת-אזהרה.json"
+    },
+    {
+      "title": "בחקתי: כשדברים עובדים בשקט",
+      "output_path": "posts/בחקתי-כשדברים-עובדים-בשקט.html",
+      "content_file": "content/posts/posts/בחקתי-כשדברים-עובדים-בשקט.json"
+    },
+    {
+      "title": "בחקתי: למה נכתבו האבות בסדר הפוך?",
+      "output_path": "posts/בחקתי-למה-נכתבו-האבות-בסדר-הפוך.html",
+      "content_file": "content/posts/posts/בחקתי-למה-נכתבו-האבות-בסדר-הפוך.json"
+    },
+    {
+      "title": "בחקתי: מה בין בָּצִיר, צָרֶבֶת וְצוֹפָר?",
+      "output_path": "posts/בחקתי-מה-בין-בָּצִיר-צָרֶבֶת-וְצוֹפָר.html",
+      "content_file": "content/posts/posts/בחקתי-מה-בין-בָּצִיר-צָרֶבֶת-וְצוֹפָר.json"
+    },
+    {
+      "title": "בחקתי: משחקים חכמים",
+      "output_path": "posts/בחקתי-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/בחקתי-משחקים-חכמים.json"
+    },
+    {
+      "title": "בחקתי: ערך תנ\"כי ועריכה דיגיטלית",
+      "output_path": "posts/בחקתי-ערך-תנכי-ועריכה-דיגיטלית.html",
+      "content_file": "content/posts/posts/בחקתי-ערך-תנכי-ועריכה-דיגיטלית.json"
+    },
+    {
+      "title": "בחקתי: פריקה או טעינה",
+      "output_path": "posts/בחקתי-פריקה-או-טעינה.html",
+      "content_file": "content/posts/posts/בחקתי-פריקה-או-טעינה.json"
+    },
+    {
+      "title": "בחקתי: שיבולים מזהב ועדשים ככוכבים",
+      "output_path": "posts/בחקתי-שיבולים-מזהב-ועדשים-ככוכבים.html",
+      "content_file": "content/posts/posts/בחקתי-שיבולים-מזהב-ועדשים-ככוכבים.json"
+    },
+    {
+      "title": "בלק: 02 ההשפעה על תהליך הלמידה",
+      "output_path": "posts/בלק-02-ההשפעה-על-תהליך-הלמידה.html",
+      "content_file": "content/posts/posts/בלק-02-ההשפעה-על-תהליך-הלמידה.json"
+    },
+    {
+      "title": "בלק: אמת נצחית ואמונה בתורת משה",
+      "output_path": "posts/בלק-אמת-נצחית-ואמונה-בתורת-משה.html",
+      "content_file": "content/posts/posts/בלק-אמת-נצחית-ואמונה-בתורת-משה.json"
+    },
+    {
+      "title": "בלק: בלעם, האתון והקללה המבורכת",
+      "output_path": "posts/בלק-בלעם-האתון-והקללה-המבורכת.html",
+      "content_file": "content/posts/posts/בלק-בלעם-האתון-והקללה-המבורכת.json"
+    },
+    {
+      "title": "בלק: החנווני ובשר החזיר - מוסר השכל",
+      "output_path": "posts/בלק-החנווני-ובשר-החזיר-מוסר-השכל.html",
+      "content_file": "content/posts/posts/בלק-החנווני-ובשר-החזיר-מוסר-השכל.json"
+    },
+    {
+      "title": "בלק: המדור לילדים",
+      "output_path": "posts/בלק-המדור-לילדים.html",
+      "content_file": "content/posts/posts/בלק-המדור-לילדים.json"
+    },
+    {
+      "title": "בלק: המשחה עם סוד ההגנה המופלאה",
+      "output_path": "posts/בלק-המשחה-עם-סוד-ההגנה-המופלאה.html",
+      "content_file": "content/posts/posts/בלק-המשחה-עם-סוד-ההגנה-המופלאה.json"
+    },
+    {
+      "title": "בלק: העין שלא שיקפה את הרוע",
+      "output_path": "posts/בלק-העין-שלא-שיקפה-את-הרוע.html",
+      "content_file": "content/posts/posts/בלק-העין-שלא-שיקפה-את-הרוע.json"
+    },
+    {
+      "title": "בלק: הרהורים על קללות בלעם",
+      "output_path": "posts/בלק-הרהורים-על-קללות-בלעם.html",
+      "content_file": "content/posts/posts/בלק-הרהורים-על-קללות-בלעם.json"
+    },
+    {
+      "title": "בלק: חידות + פתרונות",
+      "output_path": "posts/בלק-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/בלק-חידות-פתרונות.json"
+    },
+    {
+      "title": "בלק: כסף - מילה אחת, הרבה משמעויות",
+      "output_path": "posts/בלק-כסף-מילה-אחת-הרבה-משמעויות.html",
+      "content_file": "content/posts/posts/בלק-כסף-מילה-אחת-הרבה-משמעויות.json"
+    },
+    {
+      "title": "בלק: כתובת בלעם - עדות ארכאולוגית",
+      "output_path": "posts/בלק-כתובת-בלעם-עדות-ארכאולוגית.html",
+      "content_file": "content/posts/posts/בלק-כתובת-בלעם-עדות-ארכאולוגית.json"
+    },
+    {
+      "title": "בלק: משחקים חכמים",
+      "output_path": "posts/בלק-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/בלק-משחקים-חכמים.json"
+    },
+    {
+      "title": "בלק: סיחון ומואב - מבט גיאופוליטי",
+      "output_path": "posts/בלק-סיחון-ומואב-מבט-גיאופוליטי.html",
+      "content_file": "content/posts/posts/בלק-סיחון-ומואב-מבט-גיאופוליטי.json"
+    },
+    {
+      "title": "בלק: על רכיבה טיפולית וקשב",
+      "output_path": "posts/בלק-על-רכיבה-טיפולית-וקשב.html",
+      "content_file": "content/posts/posts/בלק-על-רכיבה-טיפולית-וקשב.json"
+    },
+    {
+      "title": "בלק - קריאה בפסוקי 'הן עם כלביא יקום'",
+      "output_path": "posts/בלק-קריאה-בפסוקי-הן-עם-כלביא-יקום.html",
+      "content_file": "content/posts/posts/בלק-קריאה-בפסוקי-הן-עם-כלביא-יקום.json"
+    },
+    {
+      "title": "בלק: קריאת השכמה של אהבה ושנאה",
+      "output_path": "posts/בלק-קריאת-השכמה-של-אהבה-ושנאה.html",
+      "content_file": "content/posts/posts/בלק-קריאת-השכמה-של-אהבה-ושנאה.json"
+    },
+    {
+      "title": "בלק: שני הפגמים במלכות בלק",
+      "output_path": "posts/בלק-שני-הפגמים-במלכות-בלק.html",
+      "content_file": "content/posts/posts/בלק-שני-הפגמים-במלכות-בלק.json"
+    },
+    {
+      "title": "במדבר: 08 בקשה זהה - תשובות שונות",
+      "output_path": "posts/במדבר-08-בקשה-זהה-תשובות-שונות.html",
+      "content_file": "content/posts/posts/במדבר-08-בקשה-זהה-תשובות-שונות.json"
+    },
+    {
+      "title": "במדבר: איש על דגלו ועל מנגינתו",
+      "output_path": "posts/במדבר-איש-על-דגלו-ועל-מנגינתו.html",
+      "content_file": "content/posts/posts/במדבר-איש-על-דגלו-ועל-מנגינתו.json"
+    },
+    {
+      "title": "במדבר: דִּיאֵטָה וְדָאטָה בין פסח לעצרת",
+      "output_path": "posts/במדבר-דִּיאֵטָה-וְדָאטָה-בין-פסח-לעצרת.html",
+      "content_file": "content/posts/posts/במדבר-דִּיאֵטָה-וְדָאטָה-בין-פסח-לעצרת.json"
+    },
+    {
+      "title": "במדבר: האם הלוי רשאי לעזור לכהן?",
+      "output_path": "posts/במדבר-האם-הלוי-רשאי-לעזור-לכהן.html",
+      "content_file": "content/posts/posts/במדבר-האם-הלוי-רשאי-לעזור-לכהן.json"
+    },
+    {
+      "title": "במדבר: הדגל, הדגול והדקל",
+      "output_path": "posts/במדבר-הדגל-הדגול-והדקל.html",
+      "content_file": "content/posts/posts/במדבר-הדגל-הדגול-והדקל.json"
+    },
+    {
+      "title": "במדבר: המדור לילדים",
+      "output_path": "posts/במדבר-המדור-לילדים.html",
+      "content_file": "content/posts/posts/במדבר-המדור-לילדים.json"
+    },
+    {
+      "title": "במדבר: הציווי על עריכת המפקד",
+      "output_path": "posts/במדבר-הציווי-על-עריכת-המפקד.html",
+      "content_file": "content/posts/posts/במדבר-הציווי-על-עריכת-המפקד.json"
+    },
+    {
+      "title": "במדבר: חידות + פתרונות",
+      "output_path": "posts/במדבר-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/במדבר-חידות-פתרונות.json"
+    },
+    {
+      "title": "במדבר: למה ניתנה התורה בשממה?",
+      "output_path": "posts/במדבר-למה-ניתנה-התורה-בשממה.html",
+      "content_file": "content/posts/posts/במדבר-למה-ניתנה-התורה-בשממה.json"
+    },
+    {
+      "title": "במדבר: מִפקד, שבטים וחילופי בכורים",
+      "output_path": "posts/במדבר-מִפקד-שבטים-וחילופי-בכורים.html",
+      "content_file": "content/posts/posts/במדבר-מִפקד-שבטים-וחילופי-בכורים.json"
+    },
+    {
+      "title": "במדבר: מחנה ישראל סביב המשכן",
+      "output_path": "posts/במדבר-מחנה-ישראל-סביב-המשכן.html",
+      "content_file": "content/posts/posts/במדבר-מחנה-ישראל-סביב-המשכן.json"
+    },
+    {
+      "title": "במדבר: מחשבה על אש זרה",
+      "output_path": "posts/במדבר-מחשבה-על-אש-זרה.html",
+      "content_file": "content/posts/posts/במדבר-מחשבה-על-אש-זרה.json"
+    },
+    {
+      "title": "במדבר: מי הוכיח את ייחוס הנשיאים?",
+      "output_path": "posts/במדבר-מי-הוכיח-את-ייחוס-הנשיאים.html",
+      "content_file": "content/posts/posts/במדבר-מי-הוכיח-את-ייחוס-הנשיאים.json"
+    },
+    {
+      "title": "במדבר: משחקים חכמים",
+      "output_path": "posts/במדבר-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/במדבר-משחקים-חכמים.json"
+    },
+    {
+      "title": "במדבר: על סדר, מסגרת ואנשים",
+      "output_path": "posts/במדבר-על-סדר-מסגרת-ואנשים.html",
+      "content_file": "content/posts/posts/במדבר-על-סדר-מסגרת-ואנשים.json"
+    },
+    {
+      "title": "במדבר: שושלות והפתעות גנטיות",
+      "output_path": "posts/במדבר-שושלות-והפתעות-גנטיות.html",
+      "content_file": "content/posts/posts/במדבר-שושלות-והפתעות-גנטיות.json"
+    },
+    {
+      "title": "במדבר: שכנים טובים/שכנים רעים",
+      "output_path": "posts/במדבר-שכנים-טובים-שכנים-רעים.html",
+      "content_file": "content/posts/posts/במדבר-שכנים-טובים-שכנים-רעים.json"
+    },
+    {
+      "title": "בראשית: 09 מטרה גדולה צעדים קטנים",
+      "output_path": "posts/בראשית-09-מטרה-גדולה-צעדים-קטנים.html",
+      "content_file": "content/posts/posts/בראשית-09-מטרה-גדולה-צעדים-קטנים.json"
+    },
+    {
+      "title": "בראשית: דברי ימי העולם",
+      "output_path": "posts/בראשית-דברי-ימי-העולם.html",
+      "content_file": "content/posts/posts/בראשית-דברי-ימי-העולם.json"
+    },
+    {
+      "title": "בראשית: האם העולם נוצר מאליו?",
+      "output_path": "posts/בראשית-האם-העולם-נוצר-מאליו.html",
+      "content_file": "content/posts/posts/בראשית-האם-העולם-נוצר-מאליו.json"
+    },
+    {
+      "title": "בראשית: המדור לילדים",
+      "output_path": "posts/בראשית-המדור-לילדים.html",
+      "content_file": "content/posts/posts/בראשית-המדור-לילדים.json"
+    },
+    {
+      "title": "בראשית: המוזיקה נולדה",
+      "output_path": "posts/בראשית-המוזיקה-נולדה.html",
+      "content_file": "content/posts/posts/בראשית-המוזיקה-נולדה.json"
+    },
+    {
+      "title": "בראשית: הפקדתי שומרי משקל",
+      "output_path": "posts/בראשית-הפקדתי-שומרי-משקל.html",
+      "content_file": "content/posts/posts/בראשית-הפקדתי-שומרי-משקל.json"
+    },
+    {
+      "title": "בראשית: חידות + פתרונות",
+      "output_path": "posts/בראשית-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/בראשית-חידות-פתרונות.json"
+    },
+    {
+      "title": "בראשית: למה יש סבל בעולם?",
+      "output_path": "posts/בראשית-למה-יש-סבל-בעולם.html",
+      "content_file": "content/posts/posts/בראשית-למה-יש-סבל-בעולם.json"
+    },
+    {
+      "title": "בראשית: למי עושים המלאכים טובה?",
+      "output_path": "posts/בראשית-למי-עושים-המלאכים-טובה.html",
+      "content_file": "content/posts/posts/בראשית-למי-עושים-המלאכים-טובה.json"
+    },
+    {
+      "title": "בראשית: לשמור על האיזון העדין",
+      "output_path": "posts/בראשית-לשמור-על-האיזון-העדין.html",
+      "content_file": "content/posts/posts/בראשית-לשמור-על-האיזון-העדין.json"
+    },
+    {
+      "title": "בראשית: מה הַהֶבְדֵּל בין טֶבֶל לְתֶּבֶל?",
+      "output_path": "posts/בראשית-מה-הַהֶבְדֵּל-בין-טֶבֶל-לְתֶּבֶל.html",
+      "content_file": "content/posts/posts/בראשית-מה-הַהֶבְדֵּל-בין-טֶבֶל-לְתֶּבֶל.json"
+    },
+    {
+      "title": "בראשית: מה זה לשון נופל על לשון?",
+      "output_path": "posts/בראשית-מה-זה-לשון-נופל-על-לשון.html",
+      "content_file": "content/posts/posts/בראשית-מה-זה-לשון-נופל-על-לשון.json"
+    },
+    {
+      "title": "בראשית: מה פירוש \"טֶרֶם\"?",
+      "output_path": "posts/בראשית-מה-פירוש-טֶרֶם.html",
+      "content_file": "content/posts/posts/בראשית-מה-פירוש-טֶרֶם.json"
+    },
+    {
+      "title": "בראשית: מחשבות על ייסורי קין וקנאתו",
+      "output_path": "posts/בראשית-מחשבות-על-ייסורי-קין-וקנאתו.html",
+      "content_file": "content/posts/posts/בראשית-מחשבות-על-ייסורי-קין-וקנאתו.json"
+    },
+    {
+      "title": "בראשית: מתי הוענקה זכות הבחירה?",
+      "output_path": "posts/בראשית-מתי-הוענקה-זכות-הבחירה.html",
+      "content_file": "content/posts/posts/בראשית-מתי-הוענקה-זכות-הבחירה.json"
+    },
+    {
+      "title": "בראשית: עשר דורות מאדם עד נח",
+      "output_path": "posts/בראשית-עשר-דורות-מאדם-עד-נח.html",
+      "content_file": "content/posts/posts/בראשית-עשר-דורות-מאדם-עד-נח.json"
+    },
+    {
+      "title": "בשלח: 24 להתאים תשובה לפלטפורמה",
+      "output_path": "posts/בשלח-24-להתאים-תשובה-לפלטפורמה.html",
+      "content_file": "content/posts/posts/בשלח-24-להתאים-תשובה-לפלטפורמה.json"
+    },
+    {
+      "title": "בשלח: אָסִיר וְעָשִׁיר - חֶסְרוֹנוֹת וְאוֹצָרוֹת",
+      "output_path": "posts/בשלח-אָסִיר-וְעָשִׁיר-חֶסְרוֹנוֹת-וְאוֹצָרוֹת.html",
+      "content_file": "content/posts/posts/בשלח-אָסִיר-וְעָשִׁיר-חֶסְרוֹנוֹת-וְאוֹצָרוֹת.json"
+    },
+    {
+      "title": "בשלח: אין מקריות בעולם",
+      "output_path": "posts/בשלח-אין-מקריות-בעולם.html",
+      "content_file": "content/posts/posts/בשלח-אין-מקריות-בעולם.json"
+    },
+    {
+      "title": "בשלח: דרך קצרה שהיא ארוכה",
+      "output_path": "posts/בשלח-דרך-קצרה-שהיא-ארוכה.html",
+      "content_file": "content/posts/posts/בשלח-דרך-קצרה-שהיא-ארוכה.json"
+    },
+    {
+      "title": "בשלח: המדור לילדים",
+      "output_path": "posts/בשלח-המדור-לילדים.html",
+      "content_file": "content/posts/posts/בשלח-המדור-לילדים.json"
+    },
+    {
+      "title": "בשלח: הפרופסור המסתורי",
+      "output_path": "posts/בשלח-הפרופסור-המסתורי.html",
+      "content_file": "content/posts/posts/בשלח-הפרופסור-המסתורי.json"
+    },
+    {
+      "title": "בשלח: ויקיפדיה של המציאות",
+      "output_path": "posts/בשלח-ויקיפדיה-של-המציאות.html",
+      "content_file": "content/posts/posts/בשלח-ויקיפדיה-של-המציאות.json"
+    },
+    {
+      "title": "בשלח: חידות + פתרונות",
+      "output_path": "posts/בשלח-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/בשלח-חידות-פתרונות.json"
+    },
+    {
+      "title": "בשלח: טוב ציפור אחת ביד",
+      "output_path": "posts/בשלח-טוב-ציפור-אחת-ביד.html",
+      "content_file": "content/posts/posts/בשלח-טוב-ציפור-אחת-ביד.json"
+    },
+    {
+      "title": "בשלח: לספר פעמיים על מצוקת מים?",
+      "output_path": "posts/בשלח-לספר-פעמיים-על-מצוקת-מים.html",
+      "content_file": "content/posts/posts/בשלח-לספר-פעמיים-על-מצוקת-מים.json"
+    },
+    {
+      "title": "בשלח: לראות את קריעת ים סוף",
+      "output_path": "posts/בשלח-לראות-את-קריעת-ים-סוף.html",
+      "content_file": "content/posts/posts/בשלח-לראות-את-קריעת-ים-סוף.json"
+    },
+    {
+      "title": "בשלח: נבוכים בארץ - מעלה תהיות",
+      "output_path": "posts/בשלח-נבוכים-בארץ-מעלה-תהיות.html",
+      "content_file": "content/posts/posts/בשלח-נבוכים-בארץ-מעלה-תהיות.json"
+    },
+    {
+      "title": "בשלח: פרעה לא ידע איזה אוצר איבד",
+      "output_path": "posts/בשלח-פרעה-לא-ידע-איזה-אוצר-איבד.html",
+      "content_file": "content/posts/posts/בשלח-פרעה-לא-ידע-איזה-אוצר-איבד.json"
+    },
+    {
+      "title": "בשלח: צמד 'טְרַבְּל מֵיְקֶר'",
+      "output_path": "posts/בשלח-צמד-טְרַבְּל-מֵיְקֶר.html",
+      "content_file": "content/posts/posts/בשלח-צמד-טְרַבְּל-מֵיְקֶר.json"
+    },
+    {
+      "title": "בשלח: קריעת ים סוף ומלחמת עמלק",
+      "output_path": "posts/בשלח-קריעת-ים-סוף-ומלחמת-עמלק.html",
+      "content_file": "content/posts/posts/בשלח-קריעת-ים-סוף-ומלחמת-עמלק.json"
+    },
+    {
+      "title": "בשלח: שומר הים",
+      "output_path": "posts/בשלח-שומר-הים.html",
+      "content_file": "content/posts/posts/בשלח-שומר-הים.json"
+    },
+    {
+      "title": "דברים: 06 האם עדיין מותר לטעות?",
+      "output_path": "posts/דברים-06-האם-עדיין-מותר-לטעות.html",
+      "content_file": "content/posts/posts/דברים-06-האם-עדיין-מותר-לטעות.json"
+    },
+    {
+      "title": "דברים: איך מצטרפים לעם ישראל?",
+      "output_path": "posts/דברים-איך-מצטרפים-לעם-ישראל.html",
+      "content_file": "content/posts/posts/דברים-איך-מצטרפים-לעם-ישראל.json"
+    },
+    {
+      "title": "דברים: האם שופט צריך להיות נאה?",
+      "output_path": "posts/דברים-האם-שופט-צריך-להיות-נאה.html",
+      "content_file": "content/posts/posts/דברים-האם-שופט-צריך-להיות-נאה.json"
+    },
+    {
+      "title": "דברים: היתום שמעולם לא הכיר את אמו",
+      "output_path": "posts/דברים-היתום-שמעולם-לא-הכיר-את-אמו.html",
+      "content_file": "content/posts/posts/דברים-היתום-שמעולם-לא-הכיר-את-אמו.json"
+    },
+    {
+      "title": "דברים: המדור לילדים",
+      "output_path": "posts/דברים-המדור-לילדים.html",
+      "content_file": "content/posts/posts/דברים-המדור-לילדים.json"
+    },
+    {
+      "title": "דברים: השכן רק ביקש למנוע הפסד...",
+      "output_path": "posts/דברים-השכן-רק-ביקש-למנוע-הפסד.html",
+      "content_file": "content/posts/posts/דברים-השכן-רק-ביקש-למנוע-הפסד.json"
+    },
+    {
+      "title": "דברים: חידות + פתרונות",
+      "output_path": "posts/דברים-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/דברים-חידות-פתרונות.json"
+    },
+    {
+      "title": "דברים: כללי התורה למינוי דיינים",
+      "output_path": "posts/דברים-כללי-התורה-למינוי-דיינים.html",
+      "content_file": "content/posts/posts/דברים-כללי-התורה-למינוי-דיינים.json"
+    },
+    {
+      "title": "דברים: למה נקרא 'דברים' מִשְׁנֵה תּוֹרָה?",
+      "output_path": "posts/דברים-למה-נקרא-דברים-מִשְׁנֵה-תּוֹרָה.html",
+      "content_file": "content/posts/posts/דברים-למה-נקרא-דברים-מִשְׁנֵה-תּוֹרָה.json"
+    },
+    {
+      "title": "דברים: למה סירב סיחון למעבר בארצו",
+      "output_path": "posts/דברים-למה-סירב-סיחון-למעבר-בארצו.html",
+      "content_file": "content/posts/posts/דברים-למה-סירב-סיחון-למעבר-בארצו.json"
+    },
+    {
+      "title": "דברים: מחשבות על דמדומי ההנהגה",
+      "output_path": "posts/דברים-מחשבות-על-דמדומי-ההנהגה.html",
+      "content_file": "content/posts/posts/דברים-מחשבות-על-דמדומי-ההנהגה.json"
+    },
+    {
+      "title": "דברים: מי אתה עוג מלך הבשן?",
+      "output_path": "posts/דברים-מי-אתה-עוג-מלך-הבשן.html",
+      "content_file": "content/posts/posts/דברים-מי-אתה-עוג-מלך-הבשן.json"
+    },
+    {
+      "title": "דברים: משחקים חכמים",
+      "output_path": "posts/דברים-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/דברים-משחקים-חכמים.json"
+    },
+    {
+      "title": "דברים: עמידתו האמיצה של הרב הצעיר",
+      "output_path": "posts/דברים-עמידתו-האמיצה-של-הרב-הצעיר.html",
+      "content_file": "content/posts/posts/דברים-עמידתו-האמיצה-של-הרב-הצעיר.json"
+    },
+    {
+      "title": "דברים: קינה על החורבן בתשעה באב",
+      "output_path": "posts/דברים-קינה-על-החורבן-בתשעה-באב.html",
+      "content_file": "content/posts/posts/דברים-קינה-על-החורבן-בתשעה-באב.json"
+    },
+    {
+      "title": "דברים: רמז לשלטון הארעי של סיחון",
+      "output_path": "posts/דברים-רמז-לשלטון-הארעי-של-סיחון.html",
+      "content_file": "content/posts/posts/דברים-רמז-לשלטון-הארעי-של-סיחון.json"
+    },
+    {
+      "title": "דברים: שורש אחד - משמעויות רבות",
+      "output_path": "posts/דברים-שורש-אחד-משמעויות-רבות.html",
+      "content_file": "content/posts/posts/דברים-שורש-אחד-משמעויות-רבות.json"
+    },
+    {
+      "title": "האזינו: 07 ניסוח בריף מטרה אישי",
+      "output_path": "posts/האזינו-07-ניסוח-בריף-מטרה-אישי.html",
+      "content_file": "content/posts/posts/האזינו-07-ניסוח-בריף-מטרה-אישי.json"
+    },
+    {
+      "title": "האזינו: אנשים שונים - אמונה אחת",
+      "output_path": "posts/האזינו-אנשים-שונים-אמונה-אחת.html",
+      "content_file": "content/posts/posts/האזינו-אנשים-שונים-אמונה-אחת.json"
+    },
+    {
+      "title": "האזינו: \"בעצם היום\" - 3 או בעצם 4?",
+      "output_path": "posts/האזינו-בעצם-היום-3-או-בעצם-4.html",
+      "content_file": "content/posts/posts/האזינו-בעצם-היום-3-או-בעצם-4.json"
+    },
+    {
+      "title": "האזינו: הַחָכְמָה תְּחַיֶּה בְעָלֶיהָ",
+      "output_path": "posts/האזינו-הַחָכְמָה-תְּחַיֶּה-בְעָלֶיהָ.html",
+      "content_file": "content/posts/posts/האזינו-הַחָכְמָה-תְּחַיֶּה-בְעָלֶיהָ.json"
+    },
+    {
+      "title": "האזינו: הַמּוּאַזִּין שֶׁיָּצָא מֵאִזּוּן",
+      "output_path": "posts/האזינו-הַמּוּאַזִּין-שֶׁיָּצָא-מֵאִזּוּן.html",
+      "content_file": "content/posts/posts/האזינו-הַמּוּאַזִּין-שֶׁיָּצָא-מֵאִזּוּן.json"
+    },
+    {
+      "title": "האזינו: המדור לילדים",
+      "output_path": "posts/האזינו-המדור-לילדים.html",
+      "content_file": "content/posts/posts/האזינו-המדור-לילדים.json"
+    },
+    {
+      "title": "האזינו: המוסר הכרחי לחזרה בתשובה",
+      "output_path": "posts/האזינו-המוסר-הכרחי-לחזרה-בתשובה.html",
+      "content_file": "content/posts/posts/האזינו-המוסר-הכרחי-לחזרה-בתשובה.json"
+    },
+    {
+      "title": "האזינו: הערך העצום של התורה",
+      "output_path": "posts/האזינו-הערך-העצום-של-התורה.html",
+      "content_file": "content/posts/posts/האזינו-הערך-העצום-של-התורה.json"
+    },
+    {
+      "title": "האזינו: זכור ימות עולם - ההסטוריון",
+      "output_path": "posts/האזינו-זכור-ימות-עולם-ההסטוריון.html",
+      "content_file": "content/posts/posts/האזינו-זכור-ימות-עולם-ההסטוריון.json"
+    },
+    {
+      "title": "האזינו: חידות + פתרונות",
+      "output_path": "posts/האזינו-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/האזינו-חידות-פתרונות.json"
+    },
+    {
+      "title": "האזינו: מה יקרה באחרית הימים?",
+      "output_path": "posts/האזינו-מה-יקרה-באחרית-הימים.html",
+      "content_file": "content/posts/posts/האזינו-מה-יקרה-באחרית-הימים.json"
+    },
+    {
+      "title": "האזינו: מחשבות מהיכל השירה",
+      "output_path": "posts/האזינו-מחשבות-מהיכל-השירה.html",
+      "content_file": "content/posts/posts/האזינו-מחשבות-מהיכל-השירה.json"
+    },
+    {
+      "title": "האזינו: מעניין שאת עצמך לא שכחת...",
+      "output_path": "posts/האזינו-מעניין-שאת-עצמך-לא-שכחת.html",
+      "content_file": "content/posts/posts/האזינו-מעניין-שאת-עצמך-לא-שכחת.json"
+    },
+    {
+      "title": "האזינו: מעשה נורא בעניין תקיעת שופר",
+      "output_path": "posts/האזינו-מעשה-נורא-בעניין-תקיעת-שופר.html",
+      "content_file": "content/posts/posts/האזינו-מעשה-נורא-בעניין-תקיעת-שופר.json"
+    },
+    {
+      "title": "האזינו: עבר הווה עתיד - הכל כבר צפוי",
+      "output_path": "posts/האזינו-עבר-הווה-עתיד-הכל-כבר-צפוי.html",
+      "content_file": "content/posts/posts/האזינו-עבר-הווה-עתיד-הכל-כבר-צפוי.json"
+    },
+    {
+      "title": "האזינו: שירת העשבים  בין אָרִיחַ וּלְבֵנָה",
+      "output_path": "posts/האזינו-שירת-העשבים-בין-אָרִיחַ-וּלְבֵנָה.html",
+      "content_file": "content/posts/posts/האזינו-שירת-העשבים-בין-אָרִיחַ-וּלְבֵנָה.json"
+    },
+    {
+      "title": "המוסף",
+      "output_path": "posts/המוסף.html",
+      "content_file": "content/posts/posts/המוסף.json"
+    },
+    {
+      "title": "וארא: 22 איך לדבר אל הלב הנכון?",
+      "output_path": "posts/וארא-22-איך-לדבר-אל-הלב-הנכון.html",
+      "content_file": "content/posts/posts/וארא-22-איך-לדבר-אל-הלב-הנכון.json"
+    },
+    {
+      "title": "וארא: אותות ומכות בארץ מצרים",
+      "output_path": "posts/וארא-אותות-ומכות-בארץ-מצרים.html",
+      "content_file": "content/posts/posts/וארא-אותות-ומכות-בארץ-מצרים.json"
+    },
+    {
+      "title": "וארא: הכל על מכת 'דם'",
+      "output_path": "posts/וארא-הכל-על-מכת-דם.html",
+      "content_file": "content/posts/posts/וארא-הכל-על-מכת-דם.json"
+    },
+    {
+      "title": "וארא: המדור לילדים",
+      "output_path": "posts/וארא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/וארא-המדור-לילדים.json"
+    },
+    {
+      "title": "וארא: חידות + פתרונות",
+      "output_path": "posts/וארא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/וארא-חידות-פתרונות.json"
+    },
+    {
+      "title": "וארא: יהודים עולים לארץ ישראל",
+      "output_path": "posts/וארא-יהודים-עולים-לארץ-ישראל.html",
+      "content_file": "content/posts/posts/וארא-יהודים-עולים-לארץ-ישראל.json"
+    },
+    {
+      "title": "וארא: למה פרעה לא התרכך?",
+      "output_path": "posts/וארא-למה-פרעה-לא-התרכך.html",
+      "content_file": "content/posts/posts/וארא-למה-פרעה-לא-התרכך.json"
+    },
+    {
+      "title": "וארא: לשמור על המתח הנכון",
+      "output_path": "posts/וארא-לשמור-על-המתח-הנכון.html",
+      "content_file": "content/posts/posts/וארא-לשמור-על-המתח-הנכון.json"
+    },
+    {
+      "title": "וארא: מה זה 'קַל וָחֹמֶר'?",
+      "output_path": "posts/וארא-מה-זה-קַל-וָחֹמֶר.html",
+      "content_file": "content/posts/posts/וארא-מה-זה-קַל-וָחֹמֶר.json"
+    },
+    {
+      "title": "וארא: מוצאים שפה משותפת",
+      "output_path": "posts/וארא-מוצאים-שפה-משותפת.html",
+      "content_file": "content/posts/posts/וארא-מוצאים-שפה-משותפת.json"
+    },
+    {
+      "title": "וארא: מחשבות על לב שהתקשה לשמוע",
+      "output_path": "posts/וארא-מחשבות-על-לב-שהתקשה-לשמוע.html",
+      "content_file": "content/posts/posts/וארא-מחשבות-על-לב-שהתקשה-לשמוע.json"
+    },
+    {
+      "title": "וארא: מי עובד הכי קשה?",
+      "output_path": "posts/וארא-מי-עובד-הכי-קשה.html",
+      "content_file": "content/posts/posts/וארא-מי-עובד-הכי-קשה.json"
+    },
+    {
+      "title": "וארא: על הכרת טובה וכפיות טובה",
+      "output_path": "posts/וארא-על-הכרת-טובה-וכפיות-טובה.html",
+      "content_file": "content/posts/posts/וארא-על-הכרת-טובה-וכפיות-טובה.json"
+    },
+    {
+      "title": "וארא: על ו׳ החיבור בבני ראובן",
+      "output_path": "posts/וארא-על-ו׳-החיבור-בבני-ראובן.html",
+      "content_file": "content/posts/posts/וארא-על-ו׳-החיבור-בבני-ראובן.json"
+    },
+    {
+      "title": "וארא: על רפואה חלקית ורפואה שלמה",
+      "output_path": "posts/וארא-על-רפואה-חלקית-ורפואה-שלמה.html",
+      "content_file": "content/posts/posts/וארא-על-רפואה-חלקית-ורפואה-שלמה.json"
+    },
+    {
+      "title": "וארא: רשעים בגיהנם משבחים את ה'",
+      "output_path": "posts/וארא-רשעים-בגיהנם-משבחים-את-ה.html",
+      "content_file": "content/posts/posts/וארא-רשעים-בגיהנם-משבחים-את-ה.json"
+    },
+    {
+      "title": "ואתחנן: 07 מטעויות רק לומדים",
+      "output_path": "posts/ואתחנן-07-מטעויות-רק-לומדים.html",
+      "content_file": "content/posts/posts/ואתחנן-07-מטעויות-רק-לומדים.json"
+    },
+    {
+      "title": "ואתחנן: האם הפצרת משה = זלזול בה'?",
+      "output_path": "posts/ואתחנן-האם-הפצרת-משה-זלזול-בה.html",
+      "content_file": "content/posts/posts/ואתחנן-האם-הפצרת-משה-זלזול-בה.json"
+    },
+    {
+      "title": "ואתחנן: המדור לילדים",
+      "output_path": "posts/ואתחנן-המדור-לילדים.html",
+      "content_file": "content/posts/posts/ואתחנן-המדור-לילדים.json"
+    },
+    {
+      "title": "ואתחנן: חידות + פתרונות",
+      "output_path": "posts/ואתחנן-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/ואתחנן-חידות-פתרונות.json"
+    },
+    {
+      "title": "ואתחנן: כל המוסיף גורע",
+      "output_path": "posts/ואתחנן-כל-המוסיף-גורע.html",
+      "content_file": "content/posts/posts/ואתחנן-כל-המוסיף-גורע.json"
+    },
+    {
+      "title": "ואתחנן: כל מה שרצית לדעת על תפילין",
+      "output_path": "posts/ואתחנן-כל-מה-שרצית-לדעת-על-תפילין.html",
+      "content_file": "content/posts/posts/ואתחנן-כל-מה-שרצית-לדעת-על-תפילין.json"
+    },
+    {
+      "title": "ואתחנן: לאן עולות כל התפילות?",
+      "output_path": "posts/ואתחנן-לאן-עולות-כל-התפילות.html",
+      "content_file": "content/posts/posts/ואתחנן-לאן-עולות-כל-התפילות.json"
+    },
+    {
+      "title": "ואתחנן: מה נכלל בדיבר הראשון?",
+      "output_path": "posts/ואתחנן-מה-נכלל-בדיבר-הראשון.html",
+      "content_file": "content/posts/posts/ואתחנן-מה-נכלל-בדיבר-הראשון.json"
+    },
+    {
+      "title": "ואתחנן: מחשבות על הארץ הטובה",
+      "output_path": "posts/ואתחנן-מחשבות-על-הארץ-הטובה.html",
+      "content_file": "content/posts/posts/ואתחנן-מחשבות-על-הארץ-הטובה.json"
+    },
+    {
+      "title": "ואתחנן: משחקים חכמים",
+      "output_path": "posts/ואתחנן-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/ואתחנן-משחקים-חכמים.json"
+    },
+    {
+      "title": "ואתחנן: מתי באמת הוכה סיחון?",
+      "output_path": "posts/ואתחנן-מתי-באמת-הוכה-סיחון.html",
+      "content_file": "content/posts/posts/ואתחנן-מתי-באמת-הוכה-סיחון.json"
+    },
+    {
+      "title": "ואתחנן: נר שבת - כל מה שצריך לדעת",
+      "output_path": "posts/ואתחנן-נר-שבת-כל-מה-שצריך-לדעת.html",
+      "content_file": "content/posts/posts/ואתחנן-נר-שבת-כל-מה-שצריך-לדעת.json"
+    },
+    {
+      "title": "ואתחנן: על הוספת מצוות באופן יצירתי",
+      "output_path": "posts/ואתחנן-על-הוספת-מצוות-באופן-יצירתי.html",
+      "content_file": "content/posts/posts/ואתחנן-על-הוספת-מצוות-באופן-יצירתי.json"
+    },
+    {
+      "title": "ואתחנן: על חלקים ועל קלחים",
+      "output_path": "posts/ואתחנן-על-חלקים-ועל-קלחים.html",
+      "content_file": "content/posts/posts/ואתחנן-על-חלקים-ועל-קלחים.json"
+    },
+    {
+      "title": "ואתחנן: עשרת הדברות וקריאת שמע",
+      "output_path": "posts/ואתחנן-עשרת-הדברות-וקריאת-שמע.html",
+      "content_file": "content/posts/posts/ואתחנן-עשרת-הדברות-וקריאת-שמע.json"
+    },
+    {
+      "title": "ואתחנן: שליח ציבור - על תפילות מהלב",
+      "output_path": "posts/ואתחנן-שליח-ציבור-על-תפילות-מהלב.html",
+      "content_file": "content/posts/posts/ואתחנן-שליח-ציבור-על-תפילות-מהלב.json"
+    },
+    {
+      "title": "ואתחנן: תשובה לבן השואל על המצוות",
+      "output_path": "posts/ואתחנן-תשובה-לבן-השואל-על-המצוות.html",
+      "content_file": "content/posts/posts/ואתחנן-תשובה-לבן-השואל-על-המצוות.json"
+    },
+    {
+      "title": "וזאת הברכה: 08 יותר מאפשרות אחת",
+      "output_path": "posts/וזאת-הברכה-08-יותר-מאפשרות-אחת.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-08-יותר-מאפשרות-אחת.json"
+    },
+    {
+      "title": "וזאת הברכה: איפה זה???",
+      "output_path": "posts/וזאת-הברכה-איפה-זה.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-איפה-זה.json"
+    },
+    {
+      "title": "וזאת הברכה: אמו הישראלית של הלוי",
+      "output_path": "posts/וזאת-הברכה-אמו-הישראלית-של-הלוי.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-אמו-הישראלית-של-הלוי.json"
+    },
+    {
+      "title": "וזאת הברכה: המבנה הארגוני של צה\"ל",
+      "output_path": "posts/וזאת-הברכה-המבנה-הארגוני-של-צהל.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-המבנה-הארגוני-של-צהל.json"
+    },
+    {
+      "title": "וזאת הברכה: המדור לילדים",
+      "output_path": "posts/וזאת-הברכה-המדור-לילדים.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-המדור-לילדים.json"
+    },
+    {
+      "title": "וזאת הברכה: הצדק יוצא לאור",
+      "output_path": "posts/וזאת-הברכה-הצדק-יוצא-לאור.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-הצדק-יוצא-לאור.json"
+    },
+    {
+      "title": "וזאת הברכה: חידות + פתרונות",
+      "output_path": "posts/וזאת-הברכה-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-חידות-פתרונות.json"
+    },
+    {
+      "title": "וזאת הברכה: חקלאות בארץ ישראל",
+      "output_path": "posts/וזאת-הברכה-חקלאות-בארץ-ישראל.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-חקלאות-בארץ-ישראל.json"
+    },
+    {
+      "title": "וזאת הברכה: כבוד העם הנבחר",
+      "output_path": "posts/וזאת-הברכה-כבוד-העם-הנבחר.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-כבוד-העם-הנבחר.json"
+    },
+    {
+      "title": "וזאת הברכה: למי תוצע סחורה טובה?",
+      "output_path": "posts/וזאת-הברכה-למי-תוצע-סחורה-טובה.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-למי-תוצע-סחורה-טובה.json"
+    },
+    {
+      "title": "וזאת הברכה: מִצְנְחֵי רְחִיפָה בְּחֵיפָה",
+      "output_path": "posts/וזאת-הברכה-מִצְנְחֵי-רְחִיפָה-בְּחֵיפָה.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-מִצְנְחֵי-רְחִיפָה-בְּחֵיפָה.json"
+    },
+    {
+      "title": "וזאת הברכה: מָה שֶׁלֹּא הוֹרֵג - מְחַשֵּׁל?",
+      "output_path": "posts/וזאת-הברכה-מָה-שֶׁלֹּא-הוֹרֵג-מְחַשֵּׁל.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-מָה-שֶׁלֹּא-הוֹרֵג-מְחַשֵּׁל.json"
+    },
+    {
+      "title": "וזאת הברכה: מחשבות על השמח בחלקו",
+      "output_path": "posts/וזאת-הברכה-מחשבות-על-השמח-בחלקו.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-מחשבות-על-השמח-בחלקו.json"
+    },
+    {
+      "title": "וזאת הברכה: משה - אב כל הנביאים",
+      "output_path": "posts/וזאת-הברכה-משה-אב-כל-הנביאים.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-משה-אב-כל-הנביאים.json"
+    },
+    {
+      "title": "וזאת הברכה: משה - אוהב ישראל היה",
+      "output_path": "posts/וזאת-הברכה-משה-אוהב-ישראל-היה.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-משה-אוהב-ישראל-היה.json"
+    },
+    {
+      "title": "וזאת הברכה: על סוף ועל התחלה",
+      "output_path": "posts/וזאת-הברכה-על-סוף-ועל-התחלה.html",
+      "content_file": "content/posts/posts/וזאת-הברכה-על-סוף-ועל-התחלה.json"
+    },
+    {
+      "title": "ויגש: 19 מפת מושגים שמגלה עומק",
+      "output_path": "posts/ויגש-19-מפת-מושגים-שמגלה-עומק.html",
+      "content_file": "content/posts/posts/ויגש-19-מפת-מושגים-שמגלה-עומק.json"
+    },
+    {
+      "title": "ויגש: האם מותר לשאת אשה כנענית?",
+      "output_path": "posts/ויגש-האם-מותר-לשאת-אשה-כנענית.html",
+      "content_file": "content/posts/posts/ויגש-האם-מותר-לשאת-אשה-כנענית.json"
+    },
+    {
+      "title": "ויגש: האפיפיור היהודי",
+      "output_path": "posts/ויגש-האפיפיור-היהודי.html",
+      "content_file": "content/posts/posts/ויגש-האפיפיור-היהודי.json"
+    },
+    {
+      "title": "ויגש: המדור לילדים",
+      "output_path": "posts/ויגש-המדור-לילדים.html",
+      "content_file": "content/posts/posts/ויגש-המדור-לילדים.json"
+    },
+    {
+      "title": "ויגש: חידות + פתרונות",
+      "output_path": "posts/ויגש-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/ויגש-חידות-פתרונות.json"
+    },
+    {
+      "title": "ויגש: יוסף נפגש עם אביו",
+      "output_path": "posts/ויגש-יוסף-נפגש-עם-אביו.html",
+      "content_file": "content/posts/posts/ויגש-יוסף-נפגש-עם-אביו.json"
+    },
+    {
+      "title": "ויגש:  יעקב מתבשר כי יוסף חי",
+      "output_path": "posts/ויגש-יעקב-מתבשר-כי-יוסף-חי.html",
+      "content_file": "content/posts/posts/ויגש-יעקב-מתבשר-כי-יוסף-חי.json"
+    },
+    {
+      "title": "ויגש: כל ישראל עֲרֵבִים",
+      "output_path": "posts/ויגש-כל-ישראל-עֲרֵבִים.html",
+      "content_file": "content/posts/posts/ויגש-כל-ישראל-עֲרֵבִים.json"
+    },
+    {
+      "title": "ויגש: לתפוס את הרגע שבו הלב נפתח",
+      "output_path": "posts/ויגש-לתפוס-את-הרגע-שבו-הלב-נפתח.html",
+      "content_file": "content/posts/posts/ויגש-לתפוס-את-הרגע-שבו-הלב-נפתח.json"
+    },
+    {
+      "title": "ויגש: מה זה חֵלֶב?",
+      "output_path": "posts/ויגש-מה-זה-חֵלֶב.html",
+      "content_file": "content/posts/posts/ויגש-מה-זה-חֵלֶב.json"
+    },
+    {
+      "title": "ויגש: מה קורה כאשר יהודה כועס?",
+      "output_path": "posts/ויגש-מה-קורה-כאשר-יהודה-כועס.html",
+      "content_file": "content/posts/posts/ויגש-מה-קורה-כאשר-יהודה-כועס.json"
+    },
+    {
+      "title": "ויגש: מי שמע בבית פרעה?",
+      "output_path": "posts/ויגש-מי-שמע-בבית-פרעה.html",
+      "content_file": "content/posts/posts/ויגש-מי-שמע-בבית-פרעה.json"
+    },
+    {
+      "title": "ויגש: נימת הקול שכבשה את הלב",
+      "output_path": "posts/ויגש-נימת-הקול-שכבשה-את-הלב.html",
+      "content_file": "content/posts/posts/ויגש-נימת-הקול-שכבשה-את-הלב.json"
+    },
+    {
+      "title": "ויגש: עוֹד יוֹסֵף בְּנִי חָי - תְּפִלָּה עַל הֶחָבוּשׁ",
+      "output_path": "posts/ויגש-עוֹד-יוֹסֵף-בְּנִי-חָי-תְּפִלָּה-עַל-הֶחָבוּשׁ.html",
+      "content_file": "content/posts/posts/ויגש-עוֹד-יוֹסֵף-בְּנִי-חָי-תְּפִלָּה-עַל-הֶחָבוּשׁ.json"
+    },
+    {
+      "title": "ויגש: עוד אבינו חי",
+      "output_path": "posts/ויגש-עוד-אבינו-חי.html",
+      "content_file": "content/posts/posts/ויגש-עוד-אבינו-חי.json"
+    },
+    {
+      "title": "ויגש: על חֲלִיפָה מְעַלֶּפֶת וַחֲלִימָה חוֹלֶפֶת",
+      "output_path": "posts/ויגש-על-חֲלִיפָה-מְעַלֶּפֶת-וַחֲלִימָה-חוֹלֶפֶת.html",
+      "content_file": "content/posts/posts/ויגש-על-חֲלִיפָה-מְעַלֶּפֶת-וַחֲלִימָה-חוֹלֶפֶת.json"
+    },
+    {
+      "title": "ויחי: 20 ליצור תהליך קבלת החלטה",
+      "output_path": "posts/ויחי-20-ליצור-תהליך-קבלת-החלטה.html",
+      "content_file": "content/posts/posts/ויחי-20-ליצור-תהליך-קבלת-החלטה.json"
+    },
+    {
+      "title": "ויחי: המדור לילדים",
+      "output_path": "posts/ויחי-המדור-לילדים.html",
+      "content_file": "content/posts/posts/ויחי-המדור-לילדים.json"
+    },
+    {
+      "title": "ויחי: הסיפור על הצוואה המופלאה",
+      "output_path": "posts/ויחי-הסיפור-על-הצוואה-המופלאה.html",
+      "content_file": "content/posts/posts/ויחי-הסיפור-על-הצוואה-המופלאה.json"
+    },
+    {
+      "title": "ויחי: העברת הבכורה ליוסף",
+      "output_path": "posts/ויחי-העברת-הבכורה-ליוסף.html",
+      "content_file": "content/posts/posts/ויחי-העברת-הבכורה-ליוסף.json"
+    },
+    {
+      "title": "ויחי: חונטה רפואית - רופא עד הבית",
+      "output_path": "posts/ויחי-חונטה-רפואית-רופא-עד-הבית.html",
+      "content_file": "content/posts/posts/ויחי-חונטה-רפואית-רופא-עד-הבית.json"
+    },
+    {
+      "title": "ויחי: חידות + פתרונות",
+      "output_path": "posts/ויחי-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/ויחי-חידות-פתרונות.json"
+    },
+    {
+      "title": "ויחי: חיי יעקב במצרים",
+      "output_path": "posts/ויחי-חיי-יעקב-במצרים.html",
+      "content_file": "content/posts/posts/ויחי-חיי-יעקב-במצרים.json"
+    },
+    {
+      "title": "ויחי: לדעת לחזור לחוף",
+      "output_path": "posts/ויחי-לדעת-לחזור-לחוף.html",
+      "content_file": "content/posts/posts/ויחי-לדעת-לחזור-לחוף.json"
+    },
+    {
+      "title": "ויחי: מוטי שטיינמץ שר 'הבן יקיר לי'",
+      "output_path": "posts/ויחי-מוטי-שטיינמץ-שר-הבן-יקיר-לי.html",
+      "content_file": "content/posts/posts/ויחי-מוטי-שטיינמץ-שר-הבן-יקיר-לי.json"
+    },
+    {
+      "title": "ויחי: מחשבה על חיבור בין אב לבן",
+      "output_path": "posts/ויחי-מחשבה-על-חיבור-בין-אב-לבן.html",
+      "content_file": "content/posts/posts/ויחי-מחשבה-על-חיבור-בין-אב-לבן.json"
+    },
+    {
+      "title": "ויחי: מי המציא את המחלה?",
+      "output_path": "posts/ויחי-מי-המציא-את-המחלה.html",
+      "content_file": "content/posts/posts/ויחי-מי-המציא-את-המחלה.json"
+    },
+    {
+      "title": "ויחי: מעמדו של \"רֵישׁ גָּלוּתָא\"",
+      "output_path": "posts/ויחי-מעמדו-של-רֵישׁ-גָּלוּתָא.html",
+      "content_file": "content/posts/posts/ויחי-מעמדו-של-רֵישׁ-גָּלוּתָא.json"
+    },
+    {
+      "title": "ויחי: מצוות כיבוד אב בשלמות",
+      "output_path": "posts/ויחי-מצוות-כיבוד-אב-בשלמות.html",
+      "content_file": "content/posts/posts/ויחי-מצוות-כיבוד-אב-בשלמות.json"
+    },
+    {
+      "title": "ויחי: משקפיים - אביזר רפואי? אופנתי?",
+      "output_path": "posts/ויחי-משקפיים-אביזר-רפואי-אופנתי.html",
+      "content_file": "content/posts/posts/ויחי-משקפיים-אביזר-רפואי-אופנתי.json"
+    },
+    {
+      "title": "ויחי: מתי כבר תבוא הגאולה?",
+      "output_path": "posts/ויחי-מתי-כבר-תבוא-הגאולה.html",
+      "content_file": "content/posts/posts/ויחי-מתי-כבר-תבוא-הגאולה.json"
+    },
+    {
+      "title": "ויחי: נְתִיחָה לְשׁוֹנָאִית שֶׁל חֲנִיטָה גּוּפָנִית",
+      "output_path": "posts/ויחי-נְתִיחָה-לְשׁוֹנָאִית-שֶׁל-חֲנִיטָה-גּוּפָנִית.html",
+      "content_file": "content/posts/posts/ויחי-נְתִיחָה-לְשׁוֹנָאִית-שֶׁל-חֲנִיטָה-גּוּפָנִית.json"
+    },
+    {
+      "title": "וילך: 06 שאלת שרשרת סיבתית",
+      "output_path": "posts/וילך-06-שאלת-שרשרת-סיבתית.html",
+      "content_file": "content/posts/posts/וילך-06-שאלת-שרשרת-סיבתית.json"
+    },
+    {
+      "title": "וילך: האם עריצים סובלים מעצירות?",
+      "output_path": "posts/וילך-האם-עריצים-סובלים-מעצירות.html",
+      "content_file": "content/posts/posts/וילך-האם-עריצים-סובלים-מעצירות.json"
+    },
+    {
+      "title": "וילך: האסון שהצמיח ישועה",
+      "output_path": "posts/וילך-האסון-שהצמיח-ישועה.html",
+      "content_file": "content/posts/posts/וילך-האסון-שהצמיח-ישועה.json"
+    },
+    {
+      "title": "וילך: החטא ועונשו",
+      "output_path": "posts/וילך-החטא-ועונשו.html",
+      "content_file": "content/posts/posts/וילך-החטא-ועונשו.json"
+    },
+    {
+      "title": "וילך: המדור לילדים",
+      "output_path": "posts/וילך-המדור-לילדים.html",
+      "content_file": "content/posts/posts/וילך-המדור-לילדים.json"
+    },
+    {
+      "title": "וילך: העברת שרביט ההנהגה",
+      "output_path": "posts/וילך-העברת-שרביט-ההנהגה.html",
+      "content_file": "content/posts/posts/וילך-העברת-שרביט-ההנהגה.json"
+    },
+    {
+      "title": "וילך: העותק המקורי של התורה",
+      "output_path": "posts/וילך-העותק-המקורי-של-התורה.html",
+      "content_file": "content/posts/posts/וילך-העותק-המקורי-של-התורה.json"
+    },
+    {
+      "title": "וילך: חידות + פתרונות",
+      "output_path": "posts/וילך-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/וילך-חידות-פתרונות.json"
+    },
+    {
+      "title": "וילך: לכתוב את התורה",
+      "output_path": "posts/וילך-לכתוב-את-התורה.html",
+      "content_file": "content/posts/posts/וילך-לכתוב-את-התורה.json"
+    },
+    {
+      "title": "וילך: מדוע בכה אגריפס המלך?",
+      "output_path": "posts/וילך-מדוע-בכה-אגריפס-המלך.html",
+      "content_file": "content/posts/posts/וילך-מדוע-בכה-אגריפס-המלך.json"
+    },
+    {
+      "title": "וילך: מהי מצוות הקהל?",
+      "output_path": "posts/וילך-מהי-מצוות-הקהל.html",
+      "content_file": "content/posts/posts/וילך-מהי-מצוות-הקהל.json"
+    },
+    {
+      "title": "וילך: מחשבות על פרידה מאב ומנהיג",
+      "output_path": "posts/וילך-מחשבות-על-פרידה-מאב-ומנהיג.html",
+      "content_file": "content/posts/posts/וילך-מחשבות-על-פרידה-מאב-ומנהיג.json"
+    },
+    {
+      "title": "וילך: משחקים חכמים",
+      "output_path": "posts/וילך-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/וילך-משחקים-חכמים.json"
+    },
+    {
+      "title": "וילך: סרטון על מעמד הַקְהֵל",
+      "output_path": "posts/וילך-סרטון-על-מעמד-הַקְהֵל.html",
+      "content_file": "content/posts/posts/וילך-סרטון-על-מעמד-הַקְהֵל.json"
+    },
+    {
+      "title": "וילך: עסקת חבילה = יתרונות + חסרונות",
+      "output_path": "posts/וילך-עסקת-חבילה-יתרונות-חסרונות.html",
+      "content_file": "content/posts/posts/וילך-עסקת-חבילה-יתרונות-חסרונות.json"
+    },
+    {
+      "title": "וילך: פסוק סוגר או פותח?",
+      "output_path": "posts/וילך-פסוק-סוגר-או-פותח.html",
+      "content_file": "content/posts/posts/וילך-פסוק-סוגר-או-פותח.json"
+    },
+    {
+      "title": "וילך: תמיד תקנו רק כחול לבן",
+      "output_path": "posts/וילך-תמיד-תקנו-רק-כחול-לבן.html",
+      "content_file": "content/posts/posts/וילך-תמיד-תקנו-רק-כחול-לבן.json"
+    },
+    {
+      "title": "ויצא: 15 כוחו של משפט מסכם",
+      "output_path": "posts/ויצא-15-כוחו-של-משפט-מסכם.html",
+      "content_file": "content/posts/posts/ויצא-15-כוחו-של-משפט-מסכם.json"
+    },
+    {
+      "title": "ויצא: אז כמה מגיע לך?",
+      "output_path": "posts/ויצא-אז-כמה-מגיע-לך.html",
+      "content_file": "content/posts/posts/ויצא-אז-כמה-מגיע-לך.json"
+    },
+    {
+      "title": "ויצא: איך נזהרים מרמאי מקצועי?",
+      "output_path": "posts/ויצא-איך-נזהרים-מרמאי-מקצועי.html",
+      "content_file": "content/posts/posts/ויצא-איך-נזהרים-מרמאי-מקצועי.json"
+    },
+    {
+      "title": "ויצא: המדור לילדים",
+      "output_path": "posts/ויצא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/ויצא-המדור-לילדים.json"
+    },
+    {
+      "title": "ויצא: הנתינה השלמה של רבי זוסיא",
+      "output_path": "posts/ויצא-הנתינה-השלמה-של-רבי-זוסיא.html",
+      "content_file": "content/posts/posts/ויצא-הנתינה-השלמה-של-רבי-זוסיא.json"
+    },
+    {
+      "title": "ויצא: חידות + פתרונות",
+      "output_path": "posts/ויצא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/ויצא-חידות-פתרונות.json"
+    },
+    {
+      "title": "ויצא: ימה וקדמה וצפנה ונגבה",
+      "output_path": "posts/ויצא-ימה-וקדמה-וצפנה-ונגבה.html",
+      "content_file": "content/posts/posts/ויצא-ימה-וקדמה-וצפנה-ונגבה.json"
+    },
+    {
+      "title": "ויצא: מחשבות על חיבוקי חמדנות",
+      "output_path": "posts/ויצא-מחשבות-על-חיבוקי-חמדנות.html",
+      "content_file": "content/posts/posts/ויצא-מחשבות-על-חיבוקי-חמדנות.json"
+    },
+    {
+      "title": "ויצא: סדר המאורעות בחיי אבותנו",
+      "output_path": "posts/ויצא-סדר-המאורעות-בחיי-אבותנו.html",
+      "content_file": "content/posts/posts/ויצא-סדר-המאורעות-בחיי-אבותנו.json"
+    },
+    {
+      "title": "ויצא: עבודה מסביב לשעון",
+      "output_path": "posts/ויצא-עבודה-מסביב-לשעון.html",
+      "content_file": "content/posts/posts/ויצא-עבודה-מסביב-לשעון.json"
+    },
+    {
+      "title": "ויצא: על מה שמתגלגל מתחת לאבן",
+      "output_path": "posts/ויצא-על-מה-שמתגלגל-מתחת-לאבן.html",
+      "content_file": "content/posts/posts/ויצא-על-מה-שמתגלגל-מתחת-לאבן.json"
+    },
+    {
+      "title": "ויצא: על מסילות וחלומות שלא עוצרים",
+      "output_path": "posts/ויצא-על-מסילות-וחלומות-שלא-עוצרים.html",
+      "content_file": "content/posts/posts/ויצא-על-מסילות-וחלומות-שלא-עוצרים.json"
+    },
+    {
+      "title": "ויצא: על שִׂיחוֹת שָׂכָר וּמִגְבְּלוֹת מִסְחָר",
+      "output_path": "posts/ויצא-על-שִׂיחוֹת-שָׂכָר-וּמִגְבְּלוֹת-מִסְחָר.html",
+      "content_file": "content/posts/posts/ויצא-על-שִׂיחוֹת-שָׂכָר-וּמִגְבְּלוֹת-מִסְחָר.json"
+    },
+    {
+      "title": "ויצא: פשר שמות בני יעקב",
+      "output_path": "posts/ויצא-פשר-שמות-בני-יעקב.html",
+      "content_file": "content/posts/posts/ויצא-פשר-שמות-בני-יעקב.json"
+    },
+    {
+      "title": "ויצא: קוּלוּלוּ - לאה! לאה!",
+      "output_path": "posts/ויצא-קוּלוּלוּ-לאה-לאה.html",
+      "content_file": "content/posts/posts/ויצא-קוּלוּלוּ-לאה-לאה.json"
+    },
+    {
+      "title": "ויצא: קורות יעקב בבית לבן",
+      "output_path": "posts/ויצא-קורות-יעקב-בבית-לבן.html",
+      "content_file": "content/posts/posts/ויצא-קורות-יעקב-בבית-לבן.json"
+    },
+    {
+      "title": "ויקהל: 30 הפעלת חשיבה ביקורתית",
+      "output_path": "posts/ויקהל-30-הפעלת-חשיבה-ביקורתית.html",
+      "content_file": "content/posts/posts/ויקהל-30-הפעלת-חשיבה-ביקורתית.json"
+    },
+    {
+      "title": "ויקהל: בניית המשכן הלכה למעשה",
+      "output_path": "posts/ויקהל-בניית-המשכן-הלכה-למעשה.html",
+      "content_file": "content/posts/posts/ויקהל-בניית-המשכן-הלכה-למעשה.json"
+    },
+    {
+      "title": "ויקהל: גיל ההולדה בימי קדם",
+      "output_path": "posts/ויקהל-גיל-ההולדה-בימי-קדם.html",
+      "content_file": "content/posts/posts/ויקהל-גיל-ההולדה-בימי-קדם.json"
+    },
+    {
+      "title": "ויקהל: ה' חפץ להשתעשע בְּעַמּוֹ בשבת",
+      "output_path": "posts/ויקהל-ה-חפץ-להשתעשע-בְּעַמּוֹ-בשבת.html",
+      "content_file": "content/posts/posts/ויקהל-ה-חפץ-להשתעשע-בְּעַמּוֹ-בשבת.json"
+    },
+    {
+      "title": "ויקהל: הַמַּעֲנֶה לטענת הַקָּרָאִים",
+      "output_path": "posts/ויקהל-הַמַּעֲנֶה-לטענת-הַקָּרָאִים.html",
+      "content_file": "content/posts/posts/ויקהל-הַמַּעֲנֶה-לטענת-הַקָּרָאִים.json"
+    },
+    {
+      "title": "ויקהל: הַקֶּרֶס נִּתְקַע בְּכֶרֶס הַקֵּיסָר בָּרֶכֶס",
+      "output_path": "posts/ויקהל-הַקֶּרֶס-נִּתְקַע-בְּכֶרֶס-הַקֵּיסָר-בָּרֶכֶס.html",
+      "content_file": "content/posts/posts/ויקהל-הַקֶּרֶס-נִּתְקַע-בְּכֶרֶס-הַקֵּיסָר-בָּרֶכֶס.json"
+    },
+    {
+      "title": "ויקהל: המדור לילדים",
+      "output_path": "posts/ויקהל-המדור-לילדים.html",
+      "content_file": "content/posts/posts/ויקהל-המדור-לילדים.json"
+    },
+    {
+      "title": "ויקהל: הפסקת המלאכה בשבת",
+      "output_path": "posts/ויקהל-הפסקת-המלאכה-בשבת.html",
+      "content_file": "content/posts/posts/ויקהל-הפסקת-המלאכה-בשבת.json"
+    },
+    {
+      "title": "ויקהל: התכנסות באהל מועד",
+      "output_path": "posts/ויקהל-התכנסות-באהל-מועד.html",
+      "content_file": "content/posts/posts/ויקהל-התכנסות-באהל-מועד.json"
+    },
+    {
+      "title": "ויקהל: חידות + פתרונות",
+      "output_path": "posts/ויקהל-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/ויקהל-חידות-פתרונות.json"
+    },
+    {
+      "title": "ויקהל: חכמתו של רבי אליהו חיים מייזל",
+      "output_path": "posts/ויקהל-חכמתו-של-רבי-אליהו-חיים-מייזל.html",
+      "content_file": "content/posts/posts/ויקהל-חכמתו-של-רבי-אליהו-חיים-מייזל.json"
+    },
+    {
+      "title": "ויקהל: לא תבערו אש ביום השבת",
+      "output_path": "posts/ויקהל-לא-תבערו-אש-ביום-השבת.html",
+      "content_file": "content/posts/posts/ויקהל-לא-תבערו-אש-ביום-השבת.json"
+    },
+    {
+      "title": "ויקהל: משחקים חכמים",
+      "output_path": "posts/ויקהל-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/ויקהל-משחקים-חכמים.json"
+    },
+    {
+      "title": "ויקהל: סרטון משעשע על תרומה",
+      "output_path": "posts/ויקהל-סרטון-משעשע-על-תרומה.html",
+      "content_file": "content/posts/posts/ויקהל-סרטון-משעשע-על-תרומה.json"
+    },
+    {
+      "title": "ויקהל: פתוח לקהל הרחב",
+      "output_path": "posts/ויקהל-פתוח-לקהל-הרחב.html",
+      "content_file": "content/posts/posts/ויקהל-פתוח-לקהל-הרחב.json"
+    },
+    {
+      "title": "ויקהל: ראיון עם מנהלת מתנדבים",
+      "output_path": "posts/ויקהל-ראיון-עם-מנהלת-מתנדבים.html",
+      "content_file": "content/posts/posts/ויקהל-ראיון-עם-מנהלת-מתנדבים.json"
+    },
+    {
+      "title": "ויקהל: רבי יהושע בתשובה נִצַּחַת לקיסר",
+      "output_path": "posts/ויקהל-רבי-יהושע-בתשובה-נִצַּחַת-לקיסר.html",
+      "content_file": "content/posts/posts/ויקהל-רבי-יהושע-בתשובה-נִצַּחַת-לקיסר.json"
+    },
+    {
+      "title": "ויקרא: 32 לבחור את הזווית המדויקת",
+      "output_path": "posts/ויקרא-32-לבחור-את-הזווית-המדויקת.html",
+      "content_file": "content/posts/posts/ויקרא-32-לבחור-את-הזווית-המדויקת.json"
+    },
+    {
+      "title": "ויקרא: איך מכינים מנחת סולת?",
+      "output_path": "posts/ויקרא-איך-מכינים-מנחת-סולת.html",
+      "content_file": "content/posts/posts/ויקרא-איך-מכינים-מנחת-סולת.json"
+    },
+    {
+      "title": "ויקרא: איך מריחים אמת?",
+      "output_path": "posts/ויקרא-איך-מריחים-אמת.html",
+      "content_file": "content/posts/posts/ויקרא-איך-מריחים-אמת.json"
+    },
+    {
+      "title": "ויקרא: איך צולים כבד?",
+      "output_path": "posts/ויקרא-איך-צולים-כבד.html",
+      "content_file": "content/posts/posts/ויקרא-איך-צולים-כבד.json"
+    },
+    {
+      "title": "ויקרא: הבושה של החוטא בשגגה",
+      "output_path": "posts/ויקרא-הבושה-של-החוטא-בשגגה.html",
+      "content_file": "content/posts/posts/ויקרא-הבושה-של-החוטא-בשגגה.json"
+    },
+    {
+      "title": "ויקרא: המדור לילדים",
+      "output_path": "posts/ויקרא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/ויקרא-המדור-לילדים.json"
+    },
+    {
+      "title": "ויקרא: חידות + פתרונות",
+      "output_path": "posts/ויקרא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/ויקרא-חידות-פתרונות.json"
+    },
+    {
+      "title": "ויקרא: למה נקרא משה שוב ושוב?",
+      "output_path": "posts/ויקרא-למה-נקרא-משה-שוב-ושוב.html",
+      "content_file": "content/posts/posts/ויקרא-למה-נקרא-משה-שוב-ושוב.json"
+    },
+    {
+      "title": "ויקרא: למי באמת מיועדת הקריאה?",
+      "output_path": "posts/ויקרא-למי-באמת-מיועדת-הקריאה.html",
+      "content_file": "content/posts/posts/ויקרא-למי-באמת-מיועדת-הקריאה.json"
+    },
+    {
+      "title": "ויקרא: לשם מה מקריבים קרבנות?",
+      "output_path": "posts/ויקרא-לשם-מה-מקריבים-קרבנות.html",
+      "content_file": "content/posts/posts/ויקרא-לשם-מה-מקריבים-קרבנות.json"
+    },
+    {
+      "title": "ויקרא: מה חבוי מאחורי המילה מְלִיקָה?",
+      "output_path": "posts/ויקרא-מה-חבוי-מאחורי-המילה-מְלִיקָה.html",
+      "content_file": "content/posts/posts/ויקרא-מה-חבוי-מאחורי-המילה-מְלִיקָה.json"
+    },
+    {
+      "title": "ויקרא: מחשבות על קריאה וייעוד",
+      "output_path": "posts/ויקרא-מחשבות-על-קריאה-וייעוד.html",
+      "content_file": "content/posts/posts/ויקרא-מחשבות-על-קריאה-וייעוד.json"
+    },
+    {
+      "title": "ויקרא: משחקים חכמים",
+      "output_path": "posts/ויקרא-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/ויקרא-משחקים-חכמים.json"
+    },
+    {
+      "title": "ויקרא: נְשִׂיאִים וְרוּחַ - וְגֶשֶׁם אָיִן",
+      "output_path": "posts/ויקרא-נְשִׂיאִים-וְרוּחַ-וְגֶשֶׁם-אָיִן.html",
+      "content_file": "content/posts/posts/ויקרא-נְשִׂיאִים-וְרוּחַ-וְגֶשֶׁם-אָיִן.json"
+    },
+    {
+      "title": "ויקרא: עולה ושלמים, חטאת ואשם",
+      "output_path": "posts/ויקרא-עולה-ושלמים-חטאת-ואשם.html",
+      "content_file": "content/posts/posts/ויקרא-עולה-ושלמים-חטאת-ואשם.json"
+    },
+    {
+      "title": "ויקרא: קרבן - מנחה",
+      "output_path": "posts/ויקרא-קרבן-מנחה.html",
+      "content_file": "content/posts/posts/ויקרא-קרבן-מנחה.json"
+    },
+    {
+      "title": "ויקרא: רַחֲמָנָא לִבָּא בָּעֵי",
+      "output_path": "posts/ויקרא-רַחֲמָנָא-לִבָּא-בָּעֵי.html",
+      "content_file": "content/posts/posts/ויקרא-רַחֲמָנָא-לִבָּא-בָּעֵי.json"
+    },
+    {
+      "title": "וירא: 12 איך נשפר תשובה בסבבים?",
+      "output_path": "posts/וירא-12-איך-נשפר-תשובה-בסבבים.html",
+      "content_file": "content/posts/posts/וירא-12-איך-נשפר-תשובה-בסבבים.json"
+    },
+    {
+      "title": "וירא: איך אופים מצות?",
+      "output_path": "posts/וירא-איך-אופים-מצות.html",
+      "content_file": "content/posts/posts/וירא-איך-אופים-מצות.json"
+    },
+    {
+      "title": "וירא: האם נעים להתארח?",
+      "output_path": "posts/וירא-האם-נעים-להתארח.html",
+      "content_file": "content/posts/posts/וירא-האם-נעים-להתארח.json"
+    },
+    {
+      "title": "וירא: הכנסת אורחים סבלנית במיוחד",
+      "output_path": "posts/וירא-הכנסת-אורחים-סבלנית-במיוחד.html",
+      "content_file": "content/posts/posts/וירא-הכנסת-אורחים-סבלנית-במיוחד.json"
+    },
+    {
+      "title": "וירא: המדור לילדים",
+      "output_path": "posts/וירא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/וירא-המדור-לילדים.json"
+    },
+    {
+      "title": "וירא: המשותף לעוגות, חגורות ומועקות",
+      "output_path": "posts/וירא-המשותף-לעוגות-חגורות-ומועקות.html",
+      "content_file": "content/posts/posts/וירא-המשותף-לעוגות-חגורות-ומועקות.json"
+    },
+    {
+      "title": "וירא: העין רואה והלב חומד",
+      "output_path": "posts/וירא-העין-רואה-והלב-חומד.html",
+      "content_file": "content/posts/posts/וירא-העין-רואה-והלב-חומד.json"
+    },
+    {
+      "title": "וירא: חידות + פתרונות",
+      "output_path": "posts/וירא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/וירא-חידות-פתרונות.json"
+    },
+    {
+      "title": "וירא: מביקור המלאכים ועד עקדת עצחק",
+      "output_path": "posts/וירא-מביקור-המלאכים-ועד-עקדת-עצחק.html",
+      "content_file": "content/posts/posts/וירא-מביקור-המלאכים-ועד-עקדת-עצחק.json"
+    },
+    {
+      "title": "וירא: מה זה \"כחֹם היום\"?",
+      "output_path": "posts/וירא-מה-זה-כחֹם-היום.html",
+      "content_file": "content/posts/posts/וירא-מה-זה-כחֹם-היום.json"
+    },
+    {
+      "title": "וירא: מה זה 'נוֹטָרִיקוֹן'?",
+      "output_path": "posts/וירא-מה-זה-נוֹטָרִיקוֹן.html",
+      "content_file": "content/posts/posts/וירא-מה-זה-נוֹטָרִיקוֹן.json"
+    },
+    {
+      "title": "וירא: מה יעץ ממרא לאברהם?",
+      "output_path": "posts/וירא-מה-יעץ-ממרא-לאברהם.html",
+      "content_file": "content/posts/posts/וירא-מה-יעץ-ממרא-לאברהם.json"
+    },
+    {
+      "title": "וירא: מהו החסד הגדול מכולם?",
+      "output_path": "posts/וירא-מהו-החסד-הגדול-מכולם.html",
+      "content_file": "content/posts/posts/וירא-מהו-החסד-הגדול-מכולם.json"
+    },
+    {
+      "title": "וירא: מטריית הגנה של 50 צדיקים",
+      "output_path": "posts/וירא-מטריית-הגנה-של-50-צדיקים.html",
+      "content_file": "content/posts/posts/וירא-מטריית-הגנה-של-50-צדיקים.json"
+    },
+    {
+      "title": "וירא: על ציפייה ממושכת לבשורה טובה",
+      "output_path": "posts/וירא-על-ציפייה-ממושכת-לבשורה-טובה.html",
+      "content_file": "content/posts/posts/וירא-על-ציפייה-ממושכת-לבשורה-טובה.json"
+    },
+    {
+      "title": "וירא: שרה על הכנסת אורחים ואפייה",
+      "output_path": "posts/וירא-שרה-על-הכנסת-אורחים-ואפייה.html",
+      "content_file": "content/posts/posts/וירא-שרה-על-הכנסת-אורחים-ואפייה.json"
+    },
+    {
+      "title": "וישב: 17 בונים טבלת השוואה יעילה",
+      "output_path": "posts/וישב-17-בונים-טבלת-השוואה-יעילה.html",
+      "content_file": "content/posts/posts/וישב-17-בונים-טבלת-השוואה-יעילה.json"
+    },
+    {
+      "title": "וישב: אַל תִּירָא יִשְׂרָאֵל - גּוּר אַרְיֵה אַתָּה",
+      "output_path": "posts/וישב-אַל-תִּירָא-יִשְׂרָאֵל-גּוּר-אַרְיֵה-אַתָּה.html",
+      "content_file": "content/posts/posts/וישב-אַל-תִּירָא-יִשְׂרָאֵל-גּוּר-אַרְיֵה-אַתָּה.json"
+    },
+    {
+      "title": "וישב: בין חלום למציאות",
+      "output_path": "posts/וישב-בין-חלום-למציאות.html",
+      "content_file": "content/posts/posts/וישב-בין-חלום-למציאות.json"
+    },
+    {
+      "title": "וישב: גֵּז הצאן",
+      "output_path": "posts/וישב-גֵּז-הצאן.html",
+      "content_file": "content/posts/posts/וישב-גֵּז-הצאן.json"
+    },
+    {
+      "title": "וישב: המדד הנכון לציור אותנטי",
+      "output_path": "posts/וישב-המדד-הנכון-לציור-אותנטי.html",
+      "content_file": "content/posts/posts/וישב-המדד-הנכון-לציור-אותנטי.json"
+    },
+    {
+      "title": "וישב: המדור לילדים",
+      "output_path": "posts/וישב-המדור-לילדים.html",
+      "content_file": "content/posts/posts/וישב-המדור-לילדים.json"
+    },
+    {
+      "title": "וישב: הצֳּרִי שבא מגלעד",
+      "output_path": "posts/וישב-הצֳּרִי-שבא-מגלעד.html",
+      "content_file": "content/posts/posts/וישב-הצֳּרִי-שבא-מגלעד.json"
+    },
+    {
+      "title": "וישב: חידות + פתרונות",
+      "output_path": "posts/וישב-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/וישב-חידות-פתרונות.json"
+    },
+    {
+      "title": "וישב: חלום שר המשקים ושר האופים",
+      "output_path": "posts/וישב-חלום-שר-המשקים-ושר-האופים.html",
+      "content_file": "content/posts/posts/וישב-חלום-שר-המשקים-ושר-האופים.json"
+    },
+    {
+      "title": "וישב: חלומות יוסף ומכירתו לעבדות",
+      "output_path": "posts/וישב-חלומות-יוסף-ומכירתו-לעבדות.html",
+      "content_file": "content/posts/posts/וישב-חלומות-יוסף-ומכירתו-לעבדות.json"
+    },
+    {
+      "title": "וישב: מה גרם לירידת אבותינו למצרים?",
+      "output_path": "posts/וישב-מה-גרם-לירידת-אבותינו-למצרים.html",
+      "content_file": "content/posts/posts/וישב-מה-גרם-לירידת-אבותינו-למצרים.json"
+    },
+    {
+      "title": "וישב: מהו ביטחון אמתי בבורא עולם?",
+      "output_path": "posts/וישב-מהו-ביטחון-אמתי-בבורא-עולם.html",
+      "content_file": "content/posts/posts/וישב-מהו-ביטחון-אמתי-בבורא-עולם.json"
+    },
+    {
+      "title": "וישב: עַל מִכְסֶה וּמַחֲסֶה",
+      "output_path": "posts/וישב-עַל-מִכְסֶה-וּמַחֲסֶה.html",
+      "content_file": "content/posts/posts/וישב-עַל-מִכְסֶה-וּמַחֲסֶה.json"
+    },
+    {
+      "title": "וישב: על חלומות ופתרונם",
+      "output_path": "posts/וישב-על-חלומות-ופתרונם.html",
+      "content_file": "content/posts/posts/וישב-על-חלומות-ופתרונם.json"
+    },
+    {
+      "title": "וישב: על שפת החלומות",
+      "output_path": "posts/וישב-על-שפת-החלומות.html",
+      "content_file": "content/posts/posts/וישב-על-שפת-החלומות.json"
+    },
+    {
+      "title": "וישב: רבותיי - הבירוקרטיה חוגגת",
+      "output_path": "posts/וישב-רבותיי-הבירוקרטיה-חוגגת.html",
+      "content_file": "content/posts/posts/וישב-רבותיי-הבירוקרטיה-חוגגת.json"
+    },
+    {
+      "title": "וישלח: 16 תשובה במבנה חזותי ברור",
+      "output_path": "posts/וישלח-16-תשובה-במבנה-חזותי-ברור.html",
+      "content_file": "content/posts/posts/וישלח-16-תשובה-במבנה-חזותי-ברור.json"
+    },
+    {
+      "title": "וישלח: במה עוסק הקב\"ה מאז הבריאה?",
+      "output_path": "posts/וישלח-במה-עוסק-הקבה-מאז-הבריאה.html",
+      "content_file": "content/posts/posts/וישלח-במה-עוסק-הקבה-מאז-הבריאה.json"
+    },
+    {
+      "title": "וישלח: \"הטוב\" ו\"המטיב\" בברכות יעקב",
+      "output_path": "posts/וישלח-הטוב-והמטיב-בברכות-יעקב.html",
+      "content_file": "content/posts/posts/וישלח-הטוב-והמטיב-בברכות-יעקב.json"
+    },
+    {
+      "title": "וישלח: המדור לילדים",
+      "output_path": "posts/וישלח-המדור-לילדים.html",
+      "content_file": "content/posts/posts/וישלח-המדור-לילדים.json"
+    },
+    {
+      "title": "וישלח: הנעה אחורית ואיחור אופנתי",
+      "output_path": "posts/וישלח-הנעה-אחורית-ואיחור-אופנתי.html",
+      "content_file": "content/posts/posts/וישלח-הנעה-אחורית-ואיחור-אופנתי.json"
+    },
+    {
+      "title": "וישלח: חידות + פתרונות",
+      "output_path": "posts/וישלח-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/וישלח-חידות-פתרונות.json"
+    },
+    {
+      "title": "וישלח: יעקב זוכה בַּשֵּׁם 'ישראל'",
+      "output_path": "posts/וישלח-יעקב-זוכה-בַּשֵּׁם-ישראל.html",
+      "content_file": "content/posts/posts/וישלח-יעקב-זוכה-בַּשֵּׁם-ישראל.json"
+    },
+    {
+      "title": "וישלח: כבדהו וחשדהו",
+      "output_path": "posts/וישלח-כבדהו-וחשדהו.html",
+      "content_file": "content/posts/posts/וישלח-כבדהו-וחשדהו.json"
+    },
+    {
+      "title": "וישלח: לְלֹא אַחְרָיוּת שִׁלּוּחִית",
+      "output_path": "posts/וישלח-לְלֹא-אַחְרָיוּת-שִׁלּוּחִית.html",
+      "content_file": "content/posts/posts/וישלח-לְלֹא-אַחְרָיוּת-שִׁלּוּחִית.json"
+    },
+    {
+      "title": "וישלח: לא מפחד, מתכונן",
+      "output_path": "posts/וישלח-לא-מפחד-מתכונן.html",
+      "content_file": "content/posts/posts/וישלח-לא-מפחד-מתכונן.json"
+    },
+    {
+      "title": "וישלח: מי אתה אֱדוֹם - עשו או רומי?",
+      "output_path": "posts/וישלח-מי-אתה-אֱדוֹם-עשו-או-רומי.html",
+      "content_file": "content/posts/posts/וישלח-מי-אתה-אֱדוֹם-עשו-או-רומי.json"
+    },
+    {
+      "title": "וישלח: מעשי אבות סימן לבנים",
+      "output_path": "posts/וישלח-מעשי-אבות-סימן-לבנים.html",
+      "content_file": "content/posts/posts/וישלח-מעשי-אבות-סימן-לבנים.json"
+    },
+    {
+      "title": "וישלח: סיור מצולם בקבר רחל",
+      "output_path": "posts/וישלח-סיור-מצולם-בקבר-רחל.html",
+      "content_file": "content/posts/posts/וישלח-סיור-מצולם-בקבר-רחל.json"
+    },
+    {
+      "title": "וישלח: על חלומות העושר של אנשי שכם",
+      "output_path": "posts/וישלח-על-חלומות-העושר-של-אנשי-שכם.html",
+      "content_file": "content/posts/posts/וישלח-על-חלומות-העושר-של-אנשי-שכם.json"
+    },
+    {
+      "title": "וישלח: פיוס עם עשו ופטירת רחל",
+      "output_path": "posts/וישלח-פיוס-עם-עשו-ופטירת-רחל.html",
+      "content_file": "content/posts/posts/וישלח-פיוס-עם-עשו-ופטירת-רחל.json"
+    },
+    {
+      "title": "וישלח: תרופה נגד דעות קדומות",
+      "output_path": "posts/וישלח-תרופה-נגד-דעות-קדומות.html",
+      "content_file": "content/posts/posts/וישלח-תרופה-נגד-דעות-קדומות.json"
+    },
+    {
+      "title": "חיי שרה: 13 מה חסר כאן?",
+      "output_path": "posts/חיי-שרה-13-מה-חסר-כאן.html",
+      "content_file": "content/posts/posts/חיי-שרה-13-מה-חסר-כאן.json"
+    },
+    {
+      "title": "חיי שרה: איך סוגרים עסקה ביושר?",
+      "output_path": "posts/חיי-שרה-איך-סוגרים-עסקה-ביושר.html",
+      "content_file": "content/posts/posts/חיי-שרה-איך-סוגרים-עסקה-ביושר.json"
+    },
+    {
+      "title": "חיי שרה: הטעות של עֶפְרוֹן",
+      "output_path": "posts/חיי-שרה-הטעות-של-עֶפְרוֹן.html",
+      "content_file": "content/posts/posts/חיי-שרה-הטעות-של-עֶפְרוֹן.json"
+    },
+    {
+      "title": "חיי שרה: המדור לילדים",
+      "output_path": "posts/חיי-שרה-המדור-לילדים.html",
+      "content_file": "content/posts/posts/חיי-שרה-המדור-לילדים.json"
+    },
+    {
+      "title": "חיי שרה: חידות + פתרונות",
+      "output_path": "posts/חיי-שרה-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/חיי-שרה-חידות-פתרונות.json"
+    },
+    {
+      "title": "חיי שרה: כיצד מחה הרב את העלבון?",
+      "output_path": "posts/חיי-שרה-כיצד-מחה-הרב-את-העלבון.html",
+      "content_file": "content/posts/posts/חיי-שרה-כיצד-מחה-הרב-את-העלבון.json"
+    },
+    {
+      "title": "חיי שרה: למה קפצה זִקְנָה על אברהם",
+      "output_path": "posts/חיי-שרה-למה-קפצה-זִקְנָה-על-אברהם.html",
+      "content_file": "content/posts/posts/חיי-שרה-למה-קפצה-זִקְנָה-על-אברהם.json"
+    },
+    {
+      "title": "חיי שרה: לעת ערב - עת צאת השואבות",
+      "output_path": "posts/חיי-שרה-לעת-ערב-עת-צאת-השואבות.html",
+      "content_file": "content/posts/posts/חיי-שרה-לעת-ערב-עת-צאת-השואבות.json"
+    },
+    {
+      "title": "חיי שרה: מחשבות על אמנות משא ומתן",
+      "output_path": "posts/חיי-שרה-מחשבות-על-אמנות-משא-ומתן.html",
+      "content_file": "content/posts/posts/חיי-שרה-מחשבות-על-אמנות-משא-ומתן.json"
+    },
+    {
+      "title": "חיי שרה: מי שותה ראשון?",
+      "output_path": "posts/חיי-שרה-מי-שותה-ראשון.html",
+      "content_file": "content/posts/posts/חיי-שרה-מי-שותה-ראשון.json"
+    },
+    {
+      "title": "חיי שרה: מערת המכפלה ונישואי יצחק",
+      "output_path": "posts/חיי-שרה-מערת-המכפלה-ונישואי-יצחק.html",
+      "content_file": "content/posts/posts/חיי-שרה-מערת-המכפלה-ונישואי-יצחק.json"
+    },
+    {
+      "title": "חיי שרה: משפחת אברהם - תרשים",
+      "output_path": "posts/חיי-שרה-משפחת-אברהם-תרשים.html",
+      "content_file": "content/posts/posts/חיי-שרה-משפחת-אברהם-תרשים.json"
+    },
+    {
+      "title": "חיי שרה: נותנים לך? קח!",
+      "output_path": "posts/חיי-שרה-נותנים-לך-קח.html",
+      "content_file": "content/posts/posts/חיי-שרה-נותנים-לך-קח.json"
+    },
+    {
+      "title": "חיי שרה: נישואי יצחק ורבקה",
+      "output_path": "posts/חיי-שרה-נישואי-יצחק-ורבקה.html",
+      "content_file": "content/posts/posts/חיי-שרה-נישואי-יצחק-ורבקה.json"
+    },
+    {
+      "title": "חיי שרה: סיור במערת המכפלה",
+      "output_path": "posts/חיי-שרה-סיור-במערת-המכפלה.html",
+      "content_file": "content/posts/posts/חיי-שרה-סיור-במערת-המכפלה.json"
+    },
+    {
+      "title": "חיי שרה: על כַּלָּה כְּלוּאָה מְכִילָה וּקְלִילָה",
+      "output_path": "posts/חיי-שרה-על-כַּלָּה-כְּלוּאָה-מְכִילָה-וּקְלִילָה.html",
+      "content_file": "content/posts/posts/חיי-שרה-על-כַּלָּה-כְּלוּאָה-מְכִילָה-וּקְלִילָה.json"
+    },
+    {
+      "title": "חקת: 01 זמינות המידע ומחירו",
+      "output_path": "posts/חקת-01-זמינות-המידע-ומחירו.html",
+      "content_file": "content/posts/posts/חקת-01-זמינות-המידע-ומחירו.json"
+    },
+    {
+      "title": "חקת: אמרתי אחכמה והיא רחוקה ממני",
+      "output_path": "posts/חקת-אמרתי-אחכמה-והיא-רחוקה-ממני.html",
+      "content_file": "content/posts/posts/חקת-אמרתי-אחכמה-והיא-רחוקה-ממני.json"
+    },
+    {
+      "title": "חקת: בראש של מלך אֱדוֹם",
+      "output_path": "posts/חקת-בראש-של-מלך-אֱדוֹם.html",
+      "content_file": "content/posts/posts/חקת-בראש-של-מלך-אֱדוֹם.json"
+    },
+    {
+      "title": "חקת: האכלת הבהמה קודמת לאדם",
+      "output_path": "posts/חקת-האכלת-הבהמה-קודמת-לאדם.html",
+      "content_file": "content/posts/posts/חקת-האכלת-הבהמה-קודמת-לאדם.json"
+    },
+    {
+      "title": "חקת: המדור לילדים",
+      "output_path": "posts/חקת-המדור-לילדים.html",
+      "content_file": "content/posts/posts/חקת-המדור-לילדים.json"
+    },
+    {
+      "title": "חקת: התורה לא משתנה בגשם או בקור",
+      "output_path": "posts/חקת-התורה-לא-משתנה-בגשם-או-בקור.html",
+      "content_file": "content/posts/posts/חקת-התורה-לא-משתנה-בגשם-או-בקור.json"
+    },
+    {
+      "title": "חקת: חובש קרבי - על גבולות ופחד",
+      "output_path": "posts/חקת-חובש-קרבי-על-גבולות-ופחד.html",
+      "content_file": "content/posts/posts/חקת-חובש-קרבי-על-גבולות-ופחד.json"
+    },
+    {
+      "title": "חקת: חידות + פתרונות",
+      "output_path": "posts/חקת-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/חקת-חידות-פתרונות.json"
+    },
+    {
+      "title": "חקת: לשון נופל על לשון - שפה וצליל",
+      "output_path": "posts/חקת-לשון-נופל-על-לשון-שפה-וצליל.html",
+      "content_file": "content/posts/posts/חקת-לשון-נופל-על-לשון-שפה-וצליל.json"
+    },
+    {
+      "title": "חקת: מדריך להכנת אפר פרה אדומה",
+      "output_path": "posts/חקת-מדריך-להכנת-אפר-פרה-אדומה.html",
+      "content_file": "content/posts/posts/חקת-מדריך-להכנת-אפר-פרה-אדומה.json"
+    },
+    {
+      "title": "חקת: מות הענק - עוג מלך הבשן",
+      "output_path": "posts/חקת-מות-הענק-עוג-מלך-הבשן.html",
+      "content_file": "content/posts/posts/חקת-מות-הענק-עוג-מלך-הבשן.json"
+    },
+    {
+      "title": "חקת: משחקים חכמים",
+      "output_path": "posts/חקת-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/חקת-משחקים-חכמים.json"
+    },
+    {
+      "title": "חקת: נלחם 'עם' או נלחם 'ב'?",
+      "output_path": "posts/חקת-נלחם-עם-או-נלחם-ב.html",
+      "content_file": "content/posts/posts/חקת-נלחם-עם-או-נלחם-ב.json"
+    },
+    {
+      "title": "חקת: פרה אדומה-מות אהרן-נחש נחשת",
+      "output_path": "posts/חקת-פרה-אדומה-מות-אהרן-נחש-נחשת.html",
+      "content_file": "content/posts/posts/חקת-פרה-אדומה-מות-אהרן-נחש-נחשת.json"
+    },
+    {
+      "title": "חקת: שני תולעת - צבע, טהרה וסמליות",
+      "output_path": "posts/חקת-שני-תולעת-צבע-טהרה-וסמליות.html",
+      "content_file": "content/posts/posts/חקת-שני-תולעת-צבע-טהרה-וסמליות.json"
+    },
+    {
+      "title": "חקת: שער סגור - עימות גבול מול אדום",
+      "output_path": "posts/חקת-שער-סגור-עימות-גבול-מול-אדום.html",
+      "content_file": "content/posts/posts/חקת-שער-סגור-עימות-גבול-מול-אדום.json"
+    },
+    {
+      "title": "חקת: תור באתר לאלתר - מסע לשוני",
+      "output_path": "posts/חקת-תור-באתר-לאלתר-מסע-לשוני.html",
+      "content_file": "content/posts/posts/חקת-תור-באתר-לאלתר-מסע-לשוני.json"
+    },
+    {
+      "title": "יתרו: 25 המחשה שמכניסה 'חיים' לרעיון",
+      "output_path": "posts/יתרו-25-המחשה-שמכניסה-חיים-לרעיון.html",
+      "content_file": "content/posts/posts/יתרו-25-המחשה-שמכניסה-חיים-לרעיון.json"
+    },
+    {
+      "title": "יתרו: גבול קדוש",
+      "output_path": "posts/יתרו-גבול-קדוש.html",
+      "content_file": "content/posts/posts/יתרו-גבול-קדוש.json"
+    },
+    {
+      "title": "יתרו: ה' מציע לישראל לכרות ברית",
+      "output_path": "posts/יתרו-ה-מציע-לישראל-לכרות-ברית.html",
+      "content_file": "content/posts/posts/יתרו-ה-מציע-לישראל-לכרות-ברית.json"
+    },
+    {
+      "title": "יתרו: האם למשה היה כפיל?",
+      "output_path": "posts/יתרו-האם-למשה-היה-כפיל.html",
+      "content_file": "content/posts/posts/יתרו-האם-למשה-היה-כפיל.json"
+    },
+    {
+      "title": "יתרו: ההוכחה לאמיתות נבואת משה",
+      "output_path": "posts/יתרו-ההוכחה-לאמיתות-נבואת-משה.html",
+      "content_file": "content/posts/posts/יתרו-ההוכחה-לאמיתות-נבואת-משה.json"
+    },
+    {
+      "title": "יתרו: המדור לילדים",
+      "output_path": "posts/יתרו-המדור-לילדים.html",
+      "content_file": "content/posts/posts/יתרו-המדור-לילדים.json"
+    },
+    {
+      "title": "יתרו: וַהֲרֵי הַתַּחֲזִית",
+      "output_path": "posts/יתרו-וַהֲרֵי-הַתַּחֲזִית.html",
+      "content_file": "content/posts/posts/יתרו-וַהֲרֵי-הַתַּחֲזִית.json"
+    },
+    {
+      "title": "יתרו: חידות + פתרונות",
+      "output_path": "posts/יתרו-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/יתרו-חידות-פתרונות.json"
+    },
+    {
+      "title": "יתרו: להאמין גם כשכואב",
+      "output_path": "posts/יתרו-להאמין-גם-כשכואב.html",
+      "content_file": "content/posts/posts/יתרו-להאמין-גם-כשכואב.json"
+    },
+    {
+      "title": "יתרו: למה סירב הרב לבעלי האכסניות?",
+      "output_path": "posts/יתרו-למה-סירב-הרב-לבעלי-האכסניות.html",
+      "content_file": "content/posts/posts/יתרו-למה-סירב-הרב-לבעלי-האכסניות.json"
+    },
+    {
+      "title": "יתרו: מחשבה על זהירות הדיבור",
+      "output_path": "posts/יתרו-מחשבה-על-זהירות-הדיבור.html",
+      "content_file": "content/posts/posts/יתרו-מחשבה-על-זהירות-הדיבור.json"
+    },
+    {
+      "title": "יתרו: משחקים חכמים",
+      "output_path": "posts/יתרו-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/יתרו-משחקים-חכמים.json"
+    },
+    {
+      "title": "יתרו: מתן תורה",
+      "output_path": "posts/יתרו-מתן-תורה.html",
+      "content_file": "content/posts/posts/יתרו-מתן-תורה.json"
+    },
+    {
+      "title": "יתרו: על מה התרעם יתרו?",
+      "output_path": "posts/יתרו-על-מה-התרעם-יתרו.html",
+      "content_file": "content/posts/posts/יתרו-על-מה-התרעם-יתרו.json"
+    },
+    {
+      "title": "יתרו: קוים לדמותו של חותן משה",
+      "output_path": "posts/יתרו-קוים-לדמותו-של-חותן-משה.html",
+      "content_file": "content/posts/posts/יתרו-קוים-לדמותו-של-חותן-משה.json"
+    },
+    {
+      "title": "יתרו: שכ\"ט או סחט?",
+      "output_path": "posts/יתרו-שכט-או-סחט.html",
+      "content_file": "content/posts/posts/יתרו-שכט-או-סחט.json"
+    },
+    {
+      "title": "יתרו: שכר כיבוד הורים",
+      "output_path": "posts/יתרו-שכר-כיבוד-הורים.html",
+      "content_file": "content/posts/posts/יתרו-שכר-כיבוד-הורים.json"
+    },
+    {
+      "title": "כי תבוא: 04 למה זברה לובשת פיג'מה?",
+      "output_path": "posts/כי-תבוא-04-למה-זברה-לובשת-פיגמה.html",
+      "content_file": "content/posts/posts/כי-תבוא-04-למה-זברה-לובשת-פיגמה.json"
+    },
+    {
+      "title": "כי תבוא: אסור להקל ראש",
+      "output_path": "posts/כי-תבוא-אסור-להקל-ראש.html",
+      "content_file": "content/posts/posts/כי-תבוא-אסור-להקל-ראש.json"
+    },
+    {
+      "title": "כי תבוא: ביכורים - חנטה מול הבשלה",
+      "output_path": "posts/כי-תבוא-ביכורים-חנטה-מול-הבשלה.html",
+      "content_file": "content/posts/posts/כי-תבוא-ביכורים-חנטה-מול-הבשלה.json"
+    },
+    {
+      "title": "כי תבוא: הגרלה חלומית",
+      "output_path": "posts/כי-תבוא-הגרלה-חלומית.html",
+      "content_file": "content/posts/posts/כי-תבוא-הגרלה-חלומית.json"
+    },
+    {
+      "title": "כי תבוא: הטוב והרע - השכר והעונש",
+      "output_path": "posts/כי-תבוא-הטוב-והרע-השכר-והעונש.html",
+      "content_file": "content/posts/posts/כי-תבוא-הטוב-והרע-השכר-והעונש.json"
+    },
+    {
+      "title": "כי תבוא: המדור לילדים",
+      "output_path": "posts/כי-תבוא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/כי-תבוא-המדור-לילדים.json"
+    },
+    {
+      "title": "כי תבוא: הסכינים בברכת המזון",
+      "output_path": "posts/כי-תבוא-הסכינים-בברכת-המזון.html",
+      "content_file": "content/posts/posts/כי-תבוא-הסכינים-בברכת-המזון.json"
+    },
+    {
+      "title": "כי תבוא: התורה לישראל כמים לדגים",
+      "output_path": "posts/כי-תבוא-התורה-לישראל-כמים-לדגים.html",
+      "content_file": "content/posts/posts/כי-תבוא-התורה-לישראל-כמים-לדגים.json"
+    },
+    {
+      "title": "כי תבוא: חידות + פתרונות",
+      "output_path": "posts/כי-תבוא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/כי-תבוא-חידות-פתרונות.json"
+    },
+    {
+      "title": "כי תבוא: ישראל 12 נקודות",
+      "output_path": "posts/כי-תבוא-ישראל-12-נקודות.html",
+      "content_file": "content/posts/posts/כי-תבוא-ישראל-12-נקודות.json"
+    },
+    {
+      "title": "כי תבוא: כשתַּחֲנַת מִמְסָר משתבשת...",
+      "output_path": "posts/כי-תבוא-כשתַּחֲנַת-מִמְסָר-משתבשת.html",
+      "content_file": "content/posts/posts/כי-תבוא-כשתַּחֲנַת-מִמְסָר-משתבשת.json"
+    },
+    {
+      "title": "כי תבוא: להיות למעלה - להיות לראש",
+      "output_path": "posts/כי-תבוא-להיות-למעלה-להיות-לראש.html",
+      "content_file": "content/posts/posts/כי-תבוא-להיות-למעלה-להיות-לראש.json"
+    },
+    {
+      "title": "כי תבוא: מה זה \"כלל ופרט וכלל\"?",
+      "output_path": "posts/כי-תבוא-מה-זה-כלל-ופרט-וכלל.html",
+      "content_file": "content/posts/posts/כי-תבוא-מה-זה-כלל-ופרט-וכלל.json"
+    },
+    {
+      "title": "כי תבוא: מחשבות על גבולות",
+      "output_path": "posts/כי-תבוא-מחשבות-על-גבולות.html",
+      "content_file": "content/posts/posts/כי-תבוא-מחשבות-על-גבולות.json"
+    },
+    {
+      "title": "כי תבוא: משחקים חכמים",
+      "output_path": "posts/כי-תבוא-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/כי-תבוא-משחקים-חכמים.json"
+    },
+    {
+      "title": "כי תבוא: סרטון על מצוות ביעור מעשר",
+      "output_path": "posts/כי-תבוא-סרטון-על-מצוות-ביעור-מעשר.html",
+      "content_file": "content/posts/posts/כי-תבוא-סרטון-על-מצוות-ביעור-מעשר.json"
+    },
+    {
+      "title": "כי תבוא: על סוכן זר ושכן קרוב",
+      "output_path": "posts/כי-תבוא-על-סוכן-זר-ושכן-קרוב.html",
+      "content_file": "content/posts/posts/כי-תבוא-על-סוכן-זר-ושכן-קרוב.json"
+    },
+    {
+      "title": "כי תצא: 03 שאלות השוואה",
+      "output_path": "posts/כי-תצא-03-שאלות-השוואה.html",
+      "content_file": "content/posts/posts/כי-תצא-03-שאלות-השוואה.json"
+    },
+    {
+      "title": "כי תצא: אהבת ישראל",
+      "output_path": "posts/כי-תצא-אהבת-ישראל.html",
+      "content_file": "content/posts/posts/כי-תצא-אהבת-ישראל.json"
+    },
+    {
+      "title": "כי תצא: בנקאי דתי עוצר עסקה חוקית",
+      "output_path": "posts/כי-תצא-בנקאי-דתי-עוצר-עסקה-חוקית.html",
+      "content_file": "content/posts/posts/כי-תצא-בנקאי-דתי-עוצר-עסקה-חוקית.json"
+    },
+    {
+      "title": "כי תצא: הגנב שביקש תעודת יושר...",
+      "output_path": "posts/כי-תצא-הגנב-שביקש-תעודת-יושר.html",
+      "content_file": "content/posts/posts/כי-תצא-הגנב-שביקש-תעודת-יושר.json"
+    },
+    {
+      "title": "כי תצא - המדור לילדים",
+      "output_path": "posts/כי-תצא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/כי-תצא-המדור-לילדים.json"
+    },
+    {
+      "title": "כי תצא: הפרשה עם הכי הרבה מצוות!",
+      "output_path": "posts/כי-תצא-הפרשה-עם-הכי-הרבה-מצוות.html",
+      "content_file": "content/posts/posts/כי-תצא-הפרשה-עם-הכי-הרבה-מצוות.json"
+    },
+    {
+      "title": "כי תצא: חידות + פתרונות",
+      "output_path": "posts/כי-תצא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/כי-תצא-חידות-פתרונות.json"
+    },
+    {
+      "title": "כי תצא: מה זה 'כלאי ירקות'?",
+      "output_path": "posts/כי-תצא-מה-זה-כלאי-ירקות.html",
+      "content_file": "content/posts/posts/כי-תצא-מה-זה-כלאי-ירקות.json"
+    },
+    {
+      "title": "כי תצא: מה זה פָּלִינְדְרוֹם?",
+      "output_path": "posts/כי-תצא-מה-זה-פָּלִינְדְרוֹם.html",
+      "content_file": "content/posts/posts/כי-תצא-מה-זה-פָּלִינְדְרוֹם.json"
+    },
+    {
+      "title": "כי תצא: מחשבות על עצת הזקנים",
+      "output_path": "posts/כי-תצא-מחשבות-על-עצת-הזקנים.html",
+      "content_file": "content/posts/posts/כי-תצא-מחשבות-על-עצת-הזקנים.json"
+    },
+    {
+      "title": "כי תצא: משחקים חכמים",
+      "output_path": "posts/כי-תצא-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/כי-תצא-משחקים-חכמים.json"
+    },
+    {
+      "title": "כי תצא: סוד המילה \"הנופל\" מהגג",
+      "output_path": "posts/כי-תצא-סוד-המילה-הנופל-מהגג.html",
+      "content_file": "content/posts/posts/כי-תצא-סוד-המילה-הנופל-מהגג.json"
+    },
+    {
+      "title": "כי תצא: סכנה - כאן בונים!",
+      "output_path": "posts/כי-תצא-סכנה-כאן-בונים.html",
+      "content_file": "content/posts/posts/כי-תצא-סכנה-כאן-בונים.json"
+    },
+    {
+      "title": "כי תצא: על ייבום ועל חליצה",
+      "output_path": "posts/כי-תצא-על-ייבום-ועל-חליצה.html",
+      "content_file": "content/posts/posts/כי-תצא-על-ייבום-ועל-חליצה.json"
+    },
+    {
+      "title": "כי תצא: קַלּוּת וּקְלָלָה - קָלוֹן וּכְלָיָה",
+      "output_path": "posts/כי-תצא-קַלּוּת-וּקְלָלָה-קָלוֹן-וּכְלָיָה.html",
+      "content_file": "content/posts/posts/כי-תצא-קַלּוּת-וּקְלָלָה-קָלוֹן-וּכְלָיָה.json"
+    },
+    {
+      "title": "כי תצא: קוגל שלום בית",
+      "output_path": "posts/כי-תצא-קוגל-שלום-בית.html",
+      "content_file": "content/posts/posts/כי-תצא-קוגל-שלום-בית.json"
+    },
+    {
+      "title": "כי תצא: רצף הצלחות ורצף כישלונות",
+      "output_path": "posts/כי-תצא-רצף-הצלחות-ורצף-כישלונות.html",
+      "content_file": "content/posts/posts/כי-תצא-רצף-הצלחות-ורצף-כישלונות.json"
+    },
+    {
+      "title": "כי תשא: 29 ליצור רעיונות יצירתיים",
+      "output_path": "posts/כי-תשא-29-ליצור-רעיונות-יצירתיים.html",
+      "content_file": "content/posts/posts/כי-תשא-29-ליצור-רעיונות-יצירתיים.json"
+    },
+    {
+      "title": "כי תשא: איך הכינו את הקטורת?",
+      "output_path": "posts/כי-תשא-איך-הכינו-את-הקטורת.html",
+      "content_file": "content/posts/posts/כי-תשא-איך-הכינו-את-הקטורת.json"
+    },
+    {
+      "title": "כי תשא: המדור לילדים",
+      "output_path": "posts/כי-תשא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/כי-תשא-המדור-לילדים.json"
+    },
+    {
+      "title": "כי תשא: חידות + פתרונות",
+      "output_path": "posts/כי-תשא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/כי-תשא-חידות-פתרונות.json"
+    },
+    {
+      "title": "כי תשא: יוצר-העגל נבחר לכהונה???",
+      "output_path": "posts/כי-תשא-יוצר-העגל-נבחר-לכהונה.html",
+      "content_file": "content/posts/posts/כי-תשא-יוצר-העגל-נבחר-לכהונה.json"
+    },
+    {
+      "title": "כי תשא: למה המשכן לא דוחה שבת?",
+      "output_path": "posts/כי-תשא-למה-המשכן-לא-דוחה-שבת.html",
+      "content_file": "content/posts/posts/כי-תשא-למה-המשכן-לא-דוחה-שבת.json"
+    },
+    {
+      "title": "כי תשא: למה שחק הבעל שם טוב?",
+      "output_path": "posts/כי-תשא-למה-שחק-הבעל-שם-טוב.html",
+      "content_file": "content/posts/posts/כי-תשא-למה-שחק-הבעל-שם-טוב.json"
+    },
+    {
+      "title": "כי תשא: מָה אֵפוֹא פֵּרוּשׁ הַמִּלָּה כִּי?",
+      "output_path": "posts/כי-תשא-מָה-אֵפוֹא-פֵּרוּשׁ-הַמִּלָּה-כִּי.html",
+      "content_file": "content/posts/posts/כי-תשא-מָה-אֵפוֹא-פֵּרוּשׁ-הַמִּלָּה-כִּי.json"
+    },
+    {
+      "title": "כי תשא: מחצית השקל וחטא העגל",
+      "output_path": "posts/כי-תשא-מחצית-השקל-וחטא-העגל.html",
+      "content_file": "content/posts/posts/כי-תשא-מחצית-השקל-וחטא-העגל.json"
+    },
+    {
+      "title": "כי תשא: מחשבות על עגלי זהב",
+      "output_path": "posts/כי-תשא-מחשבות-על-עגלי-זהב.html",
+      "content_file": "content/posts/posts/כי-תשא-מחשבות-על-עגלי-זהב.json"
+    },
+    {
+      "title": "כי תשא: מלבוש של שבת",
+      "output_path": "posts/כי-תשא-מלבוש-של-שבת.html",
+      "content_file": "content/posts/posts/כי-תשא-מלבוש-של-שבת.json"
+    },
+    {
+      "title": "כי תשא: משחקים חכמים",
+      "output_path": "posts/כי-תשא-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/כי-תשא-משחקים-חכמים.json"
+    },
+    {
+      "title": "כי תשא: על זָרוּת וּמוּזָרוּת",
+      "output_path": "posts/כי-תשא-על-זָרוּת-וּמוּזָרוּת.html",
+      "content_file": "content/posts/posts/כי-תשא-על-זָרוּת-וּמוּזָרוּת.json"
+    },
+    {
+      "title": "כי תשא: פוקח עיני עגל",
+      "output_path": "posts/כי-תשא-פוקח-עיני-עגל.html",
+      "content_file": "content/posts/posts/כי-תשא-פוקח-עיני-עגל.json"
+    },
+    {
+      "title": "כי תשא: קידוש ליל שבת בנוסח קרליבך",
+      "output_path": "posts/כי-תשא-קידוש-ליל-שבת-בנוסח-קרליבך.html",
+      "content_file": "content/posts/posts/כי-תשא-קידוש-ליל-שבת-בנוסח-קרליבך.json"
+    },
+    {
+      "title": "כי תשא: ראיון עם צורף-אומן",
+      "output_path": "posts/כי-תשא-ראיון-עם-צורף-אומן.html",
+      "content_file": "content/posts/posts/כי-תשא-ראיון-עם-צורף-אומן.json"
+    },
+    {
+      "title": "כי תשא: שבת - עֵדוּת על בריאת העולם",
+      "output_path": "posts/כי-תשא-שבת-עֵדוּת-על-בריאת-העולם.html",
+      "content_file": "content/posts/posts/כי-תשא-שבת-עֵדוּת-על-בריאת-העולם.json"
+    },
+    {
+      "title": "לך לך: 11 קריטריונים לתשובה \"טובה\"",
+      "output_path": "posts/לך-לך-11-קריטריונים-לתשובה-טובה.html",
+      "content_file": "content/posts/posts/לך-לך-11-קריטריונים-לתשובה-טובה.json"
+    },
+    {
+      "title": "לך לך: האדם ניכר בכוסו וגם בצלחתו",
+      "output_path": "posts/לך-לך-האדם-ניכר-בכוסו-וגם-בצלחתו.html",
+      "content_file": "content/posts/posts/לך-לך-האדם-ניכר-בכוסו-וגם-בצלחתו.json"
+    },
+    {
+      "title": "לך לך: הגמל - ספינת המדבר",
+      "output_path": "posts/לך-לך-הגמל-ספינת-המדבר.html",
+      "content_file": "content/posts/posts/לך-לך-הגמל-ספינת-המדבר.json"
+    },
+    {
+      "title": "לך לך: הגר השפחה - בין פשט למדרש",
+      "output_path": "posts/לך-לך-הגר-השפחה-בין-פשט-למדרש.html",
+      "content_file": "content/posts/posts/לך-לך-הגר-השפחה-בין-פשט-למדרש.json"
+    },
+    {
+      "title": "לך לך: המדור לילדים",
+      "output_path": "posts/לך-לך-המדור-לילדים.html",
+      "content_file": "content/posts/posts/לך-לך-המדור-לילדים.json"
+    },
+    {
+      "title": "לך לך: השר הרומאי וטבעת הרעל",
+      "output_path": "posts/לך-לך-השר-הרומאי-וטבעת-הרעל.html",
+      "content_file": "content/posts/posts/לך-לך-השר-הרומאי-וטבעת-הרעל.json"
+    },
+    {
+      "title": "לך לך: חידות + פתרונות",
+      "output_path": "posts/לך-לך-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/לך-לך-חידות-פתרונות.json"
+    },
+    {
+      "title": "לך לך: ללכת עִמּוֹ אוֹ אִתּוֹ?",
+      "output_path": "posts/לך-לך-ללכת-עִמּוֹ-אוֹ-אִתּוֹ.html",
+      "content_file": "content/posts/posts/לך-לך-ללכת-עִמּוֹ-אוֹ-אִתּוֹ.json"
+    },
+    {
+      "title": "לך לך: למילים יש כוח",
+      "output_path": "posts/לך-לך-למילים-יש-כוח.html",
+      "content_file": "content/posts/posts/לך-לך-למילים-יש-כוח.json"
+    },
+    {
+      "title": "לך לך: לעזוב הכל ולהתחיל מחדש",
+      "output_path": "posts/לך-לך-לעזוב-הכל-ולהתחיל-מחדש.html",
+      "content_file": "content/posts/posts/לך-לך-לעזוב-הכל-ולהתחיל-מחדש.json"
+    },
+    {
+      "title": "לך לך: מה מלמד הניקוד המיוחד?",
+      "output_path": "posts/לך-לך-מה-מלמד-הניקוד-המיוחד.html",
+      "content_file": "content/posts/posts/לך-לך-מה-מלמד-הניקוד-המיוחד.json"
+    },
+    {
+      "title": "לך לך: מחשבות מרעננות על התחדשות",
+      "output_path": "posts/לך-לך-מחשבות-מרעננות-על-התחדשות.html",
+      "content_file": "content/posts/posts/לך-לך-מחשבות-מרעננות-על-התחדשות.json"
+    },
+    {
+      "title": "לך לך: סדנת צחוק זה עניין רציני",
+      "output_path": "posts/לך-לך-סדנת-צחוק-זה-עניין-רציני.html",
+      "content_file": "content/posts/posts/לך-לך-סדנת-צחוק-זה-עניין-רציני.json"
+    },
+    {
+      "title": "לך לך: סרטון ברית מילה - אתר יהדותון",
+      "output_path": "posts/לך-לך-סרטון-ברית-מילה-אתר-יהדותון.html",
+      "content_file": "content/posts/posts/לך-לך-סרטון-ברית-מילה-אתר-יהדותון.json"
+    },
+    {
+      "title": "לך לך: על מִלְחָמָה וְלֶחֶם ועל קְרָב וְקֶבֶר",
+      "output_path": "posts/לך-לך-על-מִלְחָמָה-וְלֶחֶם-ועל-קְרָב-וְקֶבֶר.html",
+      "content_file": "content/posts/posts/לך-לך-על-מִלְחָמָה-וְלֶחֶם-ועל-קְרָב-וְקֶבֶר.json"
+    },
+    {
+      "title": "לך לך: ראיון מרתק עם רועה צאן גלילי",
+      "output_path": "posts/לך-לך-ראיון-מרתק-עם-רועה-צאן-גלילי.html",
+      "content_file": "content/posts/posts/לך-לך-ראיון-מרתק-עם-רועה-צאן-גלילי.json"
+    },
+    {
+      "title": "מדורים",
+      "output_path": "posts/מדורים.html",
+      "content_file": "content/posts/posts/מדורים.json"
+    },
+    {
+      "title": "מטות: 04 סמכות ומומחיות בעידן הבינה",
+      "output_path": "posts/מטות-04-סמכות-ומומחיות-בעידן-הבינה.html",
+      "content_file": "content/posts/posts/מטות-04-סמכות-ומומחיות-בעידן-הבינה.json"
+    },
+    {
+      "title": "מטות: איך מכשירים כלים?",
+      "output_path": "posts/מטות-איך-מכשירים-כלים.html",
+      "content_file": "content/posts/posts/מטות-איך-מכשירים-כלים.json"
+    },
+    {
+      "title": "מטות: אל תזלזל בנדר",
+      "output_path": "posts/מטות-אל-תזלזל-בנדר.html",
+      "content_file": "content/posts/posts/מטות-אל-תזלזל-בנדר.json"
+    },
+    {
+      "title": "מטות: המדור לילדים",
+      "output_path": "posts/מטות-המדור-לילדים.html",
+      "content_file": "content/posts/posts/מטות-המדור-לילדים.json"
+    },
+    {
+      "title": "מטות: התנאי הכפול עם בני גד וראובן",
+      "output_path": "posts/מטות-התנאי-הכפול-עם-בני-גד-וראובן.html",
+      "content_file": "content/posts/posts/מטות-התנאי-הכפול-עם-בני-גד-וראובן.json"
+    },
+    {
+      "title": "מטות: חידות + פתרונות",
+      "output_path": "posts/מטות-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/מטות-חידות-פתרונות.json"
+    },
+    {
+      "title": "מטות: כשהמאבק בתאווה מגיע לקצה",
+      "output_path": "posts/מטות-כשהמאבק-בתאווה-מגיע-לקצה.html",
+      "content_file": "content/posts/posts/מטות-כשהמאבק-בתאווה-מגיע-לקצה.json"
+    },
+    {
+      "title": "מטות: למה כתוב 'לָה' בלי דגש?",
+      "output_path": "posts/מטות-למה-כתוב-לָה-בלי-דגש.html",
+      "content_file": "content/posts/posts/מטות-למה-כתוב-לָה-בלי-דגש.json"
+    },
+    {
+      "title": "מטות: מה עושה העופרת בפרשה?",
+      "output_path": "posts/מטות-מה-עושה-העופרת-בפרשה.html",
+      "content_file": "content/posts/posts/מטות-מה-עושה-העופרת-בפרשה.json"
+    },
+    {
+      "title": "מטות: מה קורה לחבילות במכס?",
+      "output_path": "posts/מטות-מה-קורה-לחבילות-במכס.html",
+      "content_file": "content/posts/posts/מטות-מה-קורה-לחבילות-במכס.json"
+    },
+    {
+      "title": "מטות: מחשבות על שתיקה ושקט",
+      "output_path": "posts/מטות-מחשבות-על-שתיקה-ושקט.html",
+      "content_file": "content/posts/posts/מטות-מחשבות-על-שתיקה-ושקט.json"
+    },
+    {
+      "title": "מטות: מצור עם חמלה - מוסר לחימה",
+      "output_path": "posts/מטות-מצור-עם-חמלה-מוסר-לחימה.html",
+      "content_file": "content/posts/posts/מטות-מצור-עם-חמלה-מוסר-לחימה.json"
+    },
+    {
+      "title": "מטות: משחקים חכמים",
+      "output_path": "posts/מטות-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/מטות-משחקים-חכמים.json"
+    },
+    {
+      "title": "מטות: נדרים - מלחמת מדין - עבר הירדן",
+      "output_path": "posts/מטות-נדרים-מלחמת-מדין-עבר-הירדן.html",
+      "content_file": "content/posts/posts/מטות-נדרים-מלחמת-מדין-עבר-הירדן.json"
+    },
+    {
+      "title": "מטות: פרשנות פיוטית לשתיקה",
+      "output_path": "posts/מטות-פרשנות-פיוטית-לשתיקה.html",
+      "content_file": "content/posts/posts/מטות-פרשנות-פיוטית-לשתיקה.json"
+    },
+    {
+      "title": "מטות: רבי יהושע בן לוי וגן עדן",
+      "output_path": "posts/מטות-רבי-יהושע-בן-לוי-וגן-עדן.html",
+      "content_file": "content/posts/posts/מטות-רבי-יהושע-בן-לוי-וגן-עדן.json"
+    },
+    {
+      "title": "מטות: שמירה על הטירה והמטרה",
+      "output_path": "posts/מטות-שמירה-על-הטירה-והמטרה.html",
+      "content_file": "content/posts/posts/מטות-שמירה-על-הטירה-והמטרה.json"
+    },
+    {
+      "title": "מסעי: 05 השפעה על מחלוקות ושיח",
+      "output_path": "posts/מסעי-05-השפעה-על-מחלוקות-ושיח.html",
+      "content_file": "content/posts/posts/מסעי-05-השפעה-על-מחלוקות-ושיח.json"
+    },
+    {
+      "title": "מסעי: אבל מה זה \"אָבֵל\"?",
+      "output_path": "posts/מסעי-אבל-מה-זה-אָבֵל.html",
+      "content_file": "content/posts/posts/מסעי-אבל-מה-זה-אָבֵל.json"
+    },
+    {
+      "title": "מסעי: איך חילקו את הארץ?",
+      "output_path": "posts/מסעי-איך-חילקו-את-הארץ.html",
+      "content_file": "content/posts/posts/מסעי-איך-חילקו-את-הארץ.json"
+    },
+    {
+      "title": "מסעי: הארץ והעם - שלי לשלי",
+      "output_path": "posts/מסעי-הארץ-והעם-שלי-לשלי.html",
+      "content_file": "content/posts/posts/מסעי-הארץ-והעם-שלי-לשלי.json"
+    },
+    {
+      "title": "מסעי: הבטחת הארץ וערבות אלוקית",
+      "output_path": "posts/מסעי-הבטחת-הארץ-וערבות-אלוקית.html",
+      "content_file": "content/posts/posts/מסעי-הבטחת-הארץ-וערבות-אלוקית.json"
+    },
+    {
+      "title": "מסעי: ההבדל בין מכת ברזל למכת אבן",
+      "output_path": "posts/מסעי-ההבדל-בין-מכת-ברזל-למכת-אבן.html",
+      "content_file": "content/posts/posts/מסעי-ההבדל-בין-מכת-ברזל-למכת-אבן.json"
+    },
+    {
+      "title": "מסעי: המדור לילדים",
+      "output_path": "posts/מסעי-המדור-לילדים.html",
+      "content_file": "content/posts/posts/מסעי-המדור-לילדים.json"
+    },
+    {
+      "title": "מסעי: למה שבט לוי לא קיבל נחלה?",
+      "output_path": "posts/מסעי-למה-שבט-לוי-לא-קיבל-נחלה.html",
+      "content_file": "content/posts/posts/מסעי-למה-שבט-לוי-לא-קיבל-נחלה.json"
+    },
+    {
+      "title": "מסעי: מחשבות על מסע ישראל במדבר",
+      "output_path": "posts/מסעי-מחשבות-על-מסע-ישראל-במדבר.html",
+      "content_file": "content/posts/posts/מסעי-מחשבות-על-מסע-ישראל-במדבר.json"
+    },
+    {
+      "title": "מסעי: מסעות, גבולות הארץ וערי מקלט",
+      "output_path": "posts/מסעי-מסעות-גבולות-הארץ-וערי-מקלט.html",
+      "content_file": "content/posts/posts/מסעי-מסעות-גבולות-הארץ-וערי-מקלט.json"
+    },
+    {
+      "title": "מסעי: מפת מסעות אינטראקטיבית",
+      "output_path": "posts/מסעי-מפת-מסעות-אינטראקטיבית.html",
+      "content_file": "content/posts/posts/מסעי-מפת-מסעות-אינטראקטיבית.json"
+    },
+    {
+      "title": "מסעי: משחקים חכמים",
+      "output_path": "posts/מסעי-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/מסעי-משחקים-חכמים.json"
+    },
+    {
+      "title": "מסעי: נס במרתף",
+      "output_path": "posts/מסעי-נס-במרתף.html",
+      "content_file": "content/posts/posts/מסעי-נס-במרתף.json"
+    },
+    {
+      "title": "מסעי: עומק בפסוק \"ומצרים מקברים\"",
+      "output_path": "posts/מסעי-עומק-בפסוק-ומצרים-מקברים.html",
+      "content_file": "content/posts/posts/מסעי-עומק-בפסוק-ומצרים-מקברים.json"
+    },
+    {
+      "title": "מסעי: על דרכים ומסעות",
+      "output_path": "posts/מסעי-על-דרכים-ומסעות.html",
+      "content_file": "content/posts/posts/מסעי-על-דרכים-ומסעות.json"
+    },
+    {
+      "title": "מסעי: פרשת המסע שלנו בארצנו",
+      "output_path": "posts/מסעי-פרשת-המסע-שלנו-בארצנו.html",
+      "content_file": "content/posts/posts/מסעי-פרשת-המסע-שלנו-בארצנו.json"
+    },
+    {
+      "title": "מצורע: 02 'פלוס' = יותר יכולת?",
+      "output_path": "posts/מצורע-02-פלוס-יותר-יכולת.html",
+      "content_file": "content/posts/posts/מצורע-02-פלוס-יותר-יכולת.json"
+    },
+    {
+      "title": "מצורע: הדגמה של שחיטת עופות",
+      "output_path": "posts/מצורע-הדגמה-של-שחיטת-עופות.html",
+      "content_file": "content/posts/posts/מצורע-הדגמה-של-שחיטת-עופות.json"
+    },
+    {
+      "title": "מצורע: המדור לילדים",
+      "output_path": "posts/מצורע-המדור-לילדים.html",
+      "content_file": "content/posts/posts/מצורע-המדור-לילדים.json"
+    },
+    {
+      "title": "מצורע: חָלָק כִּדְלַעַת - אידיאל היופי",
+      "output_path": "posts/מצורע-חָלָק-כִּדְלַעַת-אידיאל-היופי.html",
+      "content_file": "content/posts/posts/מצורע-חָלָק-כִּדְלַעַת-אידיאל-היופי.json"
+    },
+    {
+      "title": "מצורע: חידות + פתרונות",
+      "output_path": "posts/מצורע-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/מצורע-חידות-פתרונות.json"
+    },
+    {
+      "title": "מצורע: כשהחפץ חיים ירד מהעגלה",
+      "output_path": "posts/מצורע-כשהחפץ-חיים-ירד-מהעגלה.html",
+      "content_file": "content/posts/posts/מצורע-כשהחפץ-חיים-ירד-מהעגלה.json"
+    },
+    {
+      "title": "מצורע: כשקלקול פנימי נכתב על הקיר",
+      "output_path": "posts/מצורע-כשקלקול-פנימי-נכתב-על-הקיר.html",
+      "content_file": "content/posts/posts/מצורע-כשקלקול-פנימי-נכתב-על-הקיר.json"
+    },
+    {
+      "title": "מצורע: לימוד תורה ללא מסורת חז\"ל?",
+      "output_path": "posts/מצורע-לימוד-תורה-ללא-מסורת-חזל.html",
+      "content_file": "content/posts/posts/מצורע-לימוד-תורה-ללא-מסורת-חזל.json"
+    },
+    {
+      "title": "מצורע: למה טיח מטיחים ולא שופכים?",
+      "output_path": "posts/מצורע-למה-טיח-מטיחים-ולא-שופכים.html",
+      "content_file": "content/posts/posts/מצורע-למה-טיח-מטיחים-ולא-שופכים.json"
+    },
+    {
+      "title": "מצורע: מַבְטִיחַ לֹא לְטַיֵּחַ",
+      "output_path": "posts/מצורע-מַבְטִיחַ-לֹא-לְטַיֵּחַ.html",
+      "content_file": "content/posts/posts/מצורע-מַבְטִיחַ-לֹא-לְטַיֵּחַ.json"
+    },
+    {
+      "title": "מצורע: מחשבות על מקום וגובה",
+      "output_path": "posts/מצורע-מחשבות-על-מקום-וגובה.html",
+      "content_file": "content/posts/posts/מצורע-מחשבות-על-מקום-וגובה.json"
+    },
+    {
+      "title": "מצורע: משחקים חכמים",
+      "output_path": "posts/מצורע-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/מצורע-משחקים-חכמים.json"
+    },
+    {
+      "title": "מצורע: נגעי בתים - ברכה או קללה?",
+      "output_path": "posts/מצורע-נגעי-בתים-ברכה-או-קללה.html",
+      "content_file": "content/posts/posts/מצורע-נגעי-בתים-ברכה-או-קללה.json"
+    },
+    {
+      "title": "מצורע: סדר טהרת המצורע",
+      "output_path": "posts/מצורע-סדר-טהרת-המצורע.html",
+      "content_file": "content/posts/posts/מצורע-סדר-טהרת-המצורע.json"
+    },
+    {
+      "title": "מצורע: על גילוח מספר 0",
+      "output_path": "posts/מצורע-על-גילוח-מספר-0.html",
+      "content_file": "content/posts/posts/מצורע-על-גילוח-מספר-0.json"
+    },
+    {
+      "title": "מצורע: על טהרת המצורע ונגעי בתים",
+      "output_path": "posts/מצורע-על-טהרת-המצורע-ונגעי-בתים.html",
+      "content_file": "content/posts/posts/מצורע-על-טהרת-המצורע-ונגעי-בתים.json"
+    },
+    {
+      "title": "מצורע: רוצה \"סגולה\" לחיים טובים?",
+      "output_path": "posts/מצורע-רוצה-סגולה-לחיים-טובים.html",
+      "content_file": "content/posts/posts/מצורע-רוצה-סגולה-לחיים-טובים.json"
+    },
+    {
+      "title": "מקץ: 18 תשובה סדורה - צעד אחר צעד",
+      "output_path": "posts/מקץ-18-תשובה-סדורה-צעד-אחר-צעד.html",
+      "content_file": "content/posts/posts/מקץ-18-תשובה-סדורה-צעד-אחר-צעד.json"
+    },
+    {
+      "title": "מקץ: המאבק על הנילוס - סרטון",
+      "output_path": "posts/מקץ-המאבק-על-הנילוס-סרטון.html",
+      "content_file": "content/posts/posts/מקץ-המאבק-על-הנילוס-סרטון.json"
+    },
+    {
+      "title": "מקץ: המדור לילדים",
+      "output_path": "posts/מקץ-המדור-לילדים.html",
+      "content_file": "content/posts/posts/מקץ-המדור-לילדים.json"
+    },
+    {
+      "title": "מקץ: המשביר לצרחן",
+      "output_path": "posts/מקץ-המשביר-לצרחן.html",
+      "content_file": "content/posts/posts/מקץ-המשביר-לצרחן.json"
+    },
+    {
+      "title": "מקץ: חָלַמְתִּי ש...",
+      "output_path": "posts/מקץ-חָלַמְתִּי-ש.html",
+      "content_file": "content/posts/posts/מקץ-חָלַמְתִּי-ש.json"
+    },
+    {
+      "title": "מקץ: חידות + פתרונות",
+      "output_path": "posts/מקץ-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/מקץ-חידות-פתרונות.json"
+    },
+    {
+      "title": "מקץ: יוסף מִתְמַנֶּה כמשנה למלך מצרים",
+      "output_path": "posts/מקץ-יוסף-מִתְמַנֶּה-כמשנה-למלך-מצרים.html",
+      "content_file": "content/posts/posts/מקץ-יוסף-מִתְמַנֶּה-כמשנה-למלך-מצרים.json"
+    },
+    {
+      "title": "מקץ: יועצי המלך החדשים",
+      "output_path": "posts/מקץ-יועצי-המלך-החדשים.html",
+      "content_file": "content/posts/posts/מקץ-יועצי-המלך-החדשים.json"
+    },
+    {
+      "title": "מקץ: כתב חרטומים - ציורים כמילים",
+      "output_path": "posts/מקץ-כתב-חרטומים-ציורים-כמילים.html",
+      "content_file": "content/posts/posts/מקץ-כתב-חרטומים-ציורים-כמילים.json"
+    },
+    {
+      "title": "מקץ: להשתתף בצער הציבור",
+      "output_path": "posts/מקץ-להשתתף-בצער-הציבור.html",
+      "content_file": "content/posts/posts/מקץ-להשתתף-בצער-הציבור.json"
+    },
+    {
+      "title": "מקץ: להתקדם בבעיטה כלפי מעלה",
+      "output_path": "posts/מקץ-להתקדם-בבעיטה-כלפי-מעלה.html",
+      "content_file": "content/posts/posts/מקץ-להתקדם-בבעיטה-כלפי-מעלה.json"
+    },
+    {
+      "title": "מקץ: לחפש את האמת",
+      "output_path": "posts/מקץ-לחפש-את-האמת.html",
+      "content_file": "content/posts/posts/מקץ-לחפש-את-האמת.json"
+    },
+    {
+      "title": "מקץ: מחשבות על ערכים שאבדו",
+      "output_path": "posts/מקץ-מחשבות-על-ערכים-שאבדו.html",
+      "content_file": "content/posts/posts/מקץ-מחשבות-על-ערכים-שאבדו.json"
+    },
+    {
+      "title": "מקץ: מלומדים - אבל ללא חכמת חיים",
+      "output_path": "posts/מקץ-מלומדים-אבל-ללא-חכמת-חיים.html",
+      "content_file": "content/posts/posts/מקץ-מלומדים-אבל-ללא-חכמת-חיים.json"
+    },
+    {
+      "title": "מקץ: מעמד ההכתרה של יוסף",
+      "output_path": "posts/מקץ-מעמד-ההכתרה-של-יוסף.html",
+      "content_file": "content/posts/posts/מקץ-מעמד-ההכתרה-של-יוסף.json"
+    },
+    {
+      "title": "מקץ: על פרות אחרות ושיבולים אחרות",
+      "output_path": "posts/מקץ-על-פרות-אחרות-ושיבולים-אחרות.html",
+      "content_file": "content/posts/posts/מקץ-על-פרות-אחרות-ושיבולים-אחרות.json"
+    },
+    {
+      "title": "משפטים: 26 לבחור את גובה השפה",
+      "output_path": "posts/משפטים-26-לבחור-את-גובה-השפה.html",
+      "content_file": "content/posts/posts/משפטים-26-לבחור-את-גובה-השפה.json"
+    },
+    {
+      "title": "משפטים: אֵתוֹס עַל פָּאתוֹס",
+      "output_path": "posts/משפטים-אֵתוֹס-עַל-פָּאתוֹס.html",
+      "content_file": "content/posts/posts/משפטים-אֵתוֹס-עַל-פָּאתוֹס.json"
+    },
+    {
+      "title": "משפטים: איך עושים קידוש בליל שבת?",
+      "output_path": "posts/משפטים-איך-עושים-קידוש-בליל-שבת.html",
+      "content_file": "content/posts/posts/משפטים-איך-עושים-קידוש-בליל-שבת.json"
+    },
+    {
+      "title": "משפטים: אני מתנגד בתוקף",
+      "output_path": "posts/משפטים-אני-מתנגד-בתוקף.html",
+      "content_file": "content/posts/posts/משפטים-אני-מתנגד-בתוקף.json"
+    },
+    {
+      "title": "משפטים: ההורג בזדון - והשוגג",
+      "output_path": "posts/משפטים-ההורג-בזדון-והשוגג.html",
+      "content_file": "content/posts/posts/משפטים-ההורג-בזדון-והשוגג.json"
+    },
+    {
+      "title": "משפטים: המדור לילדים",
+      "output_path": "posts/משפטים-המדור-לילדים.html",
+      "content_file": "content/posts/posts/משפטים-המדור-לילדים.json"
+    },
+    {
+      "title": "משפטים: ומה אתה היית עושה?",
+      "output_path": "posts/משפטים-ומה-אתה-היית-עושה.html",
+      "content_file": "content/posts/posts/משפטים-ומה-אתה-היית-עושה.json"
+    },
+    {
+      "title": "משפטים: חידות + פתרונות",
+      "output_path": "posts/משפטים-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/משפטים-חידות-פתרונות.json"
+    },
+    {
+      "title": "משפטים: כך תבטיח את פירעון ההלוואה",
+      "output_path": "posts/משפטים-כך-תבטיח-את-פירעון-ההלוואה.html",
+      "content_file": "content/posts/posts/משפטים-כך-תבטיח-את-פירעון-ההלוואה.json"
+    },
+    {
+      "title": "משפטים: לוח השיעורים של משה",
+      "output_path": "posts/משפטים-לוח-השיעורים-של-משה.html",
+      "content_file": "content/posts/posts/משפטים-לוח-השיעורים-של-משה.json"
+    },
+    {
+      "title": "משפטים: למי צריך לעשות פְּרוֹטֶקְצְיָה?",
+      "output_path": "posts/משפטים-למי-צריך-לעשות-פְּרוֹטֶקְצְיָה.html",
+      "content_file": "content/posts/posts/משפטים-למי-צריך-לעשות-פְּרוֹטֶקְצְיָה.json"
+    },
+    {
+      "title": "משפטים: מחשבות על צדק ומשפט",
+      "output_path": "posts/משפטים-מחשבות-על-צדק-ומשפט.html",
+      "content_file": "content/posts/posts/משפטים-מחשבות-על-צדק-ומשפט.json"
+    },
+    {
+      "title": "משפטים: מי הם ארבעת השומרים?",
+      "output_path": "posts/משפטים-מי-הם-ארבעת-השומרים.html",
+      "content_file": "content/posts/posts/משפטים-מי-הם-ארבעת-השומרים.json"
+    },
+    {
+      "title": "משפטים: מנעולן - על גבולות וביטחון",
+      "output_path": "posts/משפטים-מנעולן-על-גבולות-וביטחון.html",
+      "content_file": "content/posts/posts/משפטים-מנעולן-על-גבולות-וביטחון.json"
+    },
+    {
+      "title": "משפטים: משחקים חכמים",
+      "output_path": "posts/משפטים-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/משפטים-משחקים-חכמים.json"
+    },
+    {
+      "title": "משפטים: משפטי התורה",
+      "output_path": "posts/משפטים-משפטי-התורה.html",
+      "content_file": "content/posts/posts/משפטים-משפטי-התורה.json"
+    },
+    {
+      "title": "משפטים: סיפור הזימון במפגש הסולם",
+      "output_path": "posts/משפטים-סיפור-הזימון-במפגש-הסולם.html",
+      "content_file": "content/posts/posts/משפטים-סיפור-הזימון-במפגש-הסולם.json"
+    },
+    {
+      "title": "נח: 10 איך להשפיע על תשובת הבינה?",
+      "output_path": "posts/נח-10-איך-להשפיע-על-תשובת-הבינה.html",
+      "content_file": "content/posts/posts/נח-10-איך-להשפיע-על-תשובת-הבינה.json"
+    },
+    {
+      "title": "נח:  אחד בפה ואחד בלב",
+      "output_path": "posts/נח-אחד-בפה-ואחד-בלב.html",
+      "content_file": "content/posts/posts/נח-אחד-בפה-ואחד-בלב.json"
+    },
+    {
+      "title": "נח: איך מייצרים צבעי קשת טבעיים?",
+      "output_path": "posts/נח-איך-מייצרים-צבעי-קשת-טבעיים.html",
+      "content_file": "content/posts/posts/נח-איך-מייצרים-צבעי-קשת-טבעיים.json"
+    },
+    {
+      "title": "נח: איך נוצרו השפות השונות?",
+      "output_path": "posts/נח-איך-נוצרו-השפות-השונות.html",
+      "content_file": "content/posts/posts/נח-איך-נוצרו-השפות-השונות.json"
+    },
+    {
+      "title": "נח:  הַאִם יֵשׁ קִיּוּם לַיְּקוּם?",
+      "output_path": "posts/נח-הַאִם-יֵשׁ-קִיּוּם-לַיְּקוּם.html",
+      "content_file": "content/posts/posts/נח-הַאִם-יֵשׁ-קִיּוּם-לַיְּקוּם.json"
+    },
+    {
+      "title": "נח: הזפת - חומר האיטום הקדום",
+      "output_path": "posts/נח-הזפת-חומר-האיטום-הקדום.html",
+      "content_file": "content/posts/posts/נח-הזפת-חומר-האיטום-הקדום.json"
+    },
+    {
+      "title": "נח: היונה שלא מצאה מנוח",
+      "output_path": "posts/נח-היונה-שלא-מצאה-מנוח.html",
+      "content_file": "content/posts/posts/נח-היונה-שלא-מצאה-מנוח.json"
+    },
+    {
+      "title": "נח: המבול שֶׁבִּלְבֵּל וּבִלָּה (השחית) עולם",
+      "output_path": "posts/נח-המבול-שֶׁבִּלְבֵּל-וּבִלָּה-השחית-עולם.html",
+      "content_file": "content/posts/posts/נח-המבול-שֶׁבִּלְבֵּל-וּבִלָּה-השחית-עולם.json"
+    },
+    {
+      "title": "נח: המדור לילדים",
+      "output_path": "posts/נח-המדור-לילדים.html",
+      "content_file": "content/posts/posts/נח-המדור-לילדים.json"
+    },
+    {
+      "title": "נח: התיבה כשיעור בהנדסה ימית",
+      "output_path": "posts/נח-התיבה-כשיעור-בהנדסה-ימית.html",
+      "content_file": "content/posts/posts/נח-התיבה-כשיעור-בהנדסה-ימית.json"
+    },
+    {
+      "title": "נח: חידות + פתרונות",
+      "output_path": "posts/נח-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/נח-חידות-פתרונות.json"
+    },
+    {
+      "title": "נח: מה בין התאבדות לרצח?",
+      "output_path": "posts/נח-מה-בין-התאבדות-לרצח.html",
+      "content_file": "content/posts/posts/נח-מה-בין-התאבדות-לרצח.json"
+    },
+    {
+      "title": "נח: מהן שבע מצוות בני נח?",
+      "output_path": "posts/נח-מהן-שבע-מצוות-בני-נח.html",
+      "content_file": "content/posts/posts/נח-מהן-שבע-מצוות-בני-נח.json"
+    },
+    {
+      "title": "נח: מחשבה אישית על תמימות ושלמות",
+      "output_path": "posts/נח-מחשבה-אישית-על-תמימות-ושלמות.html",
+      "content_file": "content/posts/posts/נח-מחשבה-אישית-על-תמימות-ושלמות.json"
+    },
+    {
+      "title": "נח: על \"עודף הצלחה\"",
+      "output_path": "posts/נח-על-עודף-הצלחה.html",
+      "content_file": "content/posts/posts/נח-על-עודף-הצלחה.json"
+    },
+    {
+      "title": "נח: שיכור כמו לוט או כמו נוח?",
+      "output_path": "posts/נח-שיכור-כמו-לוט-או-כמו-נוח.html",
+      "content_file": "content/posts/posts/נח-שיכור-כמו-לוט-או-כמו-נוח.json"
+    },
+    {
+      "title": "נצבים: 05 מה יקרה אם…? ולמה?",
+      "output_path": "posts/נצבים-05-מה-יקרה-אם-ולמה.html",
+      "content_file": "content/posts/posts/נצבים-05-מה-יקרה-אם-ולמה.json"
+    },
+    {
+      "title": "נצבים: איזה מקצוע מתאים לי?",
+      "output_path": "posts/נצבים-איזה-מקצוע-מתאים-לי.html",
+      "content_file": "content/posts/posts/נצבים-איזה-מקצוע-מתאים-לי.json"
+    },
+    {
+      "title": "נצבים: אל תאמר 'דְּבָרַי הוּצְאוּ מֵהֶקְשֵׁרָם'",
+      "output_path": "posts/נצבים-אל-תאמר-דְּבָרַי-הוּצְאוּ-מֵהֶקְשֵׁרָם.html",
+      "content_file": "content/posts/posts/נצבים-אל-תאמר-דְּבָרַי-הוּצְאוּ-מֵהֶקְשֵׁרָם.json"
+    },
+    {
+      "title": "נצבים: האם המשיח רמוז בתורה?",
+      "output_path": "posts/נצבים-האם-המשיח-רמוז-בתורה.html",
+      "content_file": "content/posts/posts/נצבים-האם-המשיח-רמוז-בתורה.json"
+    },
+    {
+      "title": "נצבים: הארץ של הארץ",
+      "output_path": "posts/נצבים-הארץ-של-הארץ.html",
+      "content_file": "content/posts/posts/נצבים-הארץ-של-הארץ.json"
+    },
+    {
+      "title": "נצבים: הברית, הערבות והתשובה",
+      "output_path": "posts/נצבים-הברית-הערבות-והתשובה.html",
+      "content_file": "content/posts/posts/נצבים-הברית-הערבות-והתשובה.json"
+    },
+    {
+      "title": "נצבים: החולה המסוכן שאינו מודע למצב",
+      "output_path": "posts/נצבים-החולה-המסוכן-שאינו-מודע-למצב.html",
+      "content_file": "content/posts/posts/נצבים-החולה-המסוכן-שאינו-מודע-למצב.json"
+    },
+    {
+      "title": "נצבים: המדור לילדים",
+      "output_path": "posts/נצבים-המדור-לילדים.html",
+      "content_file": "content/posts/posts/נצבים-המדור-לילדים.json"
+    },
+    {
+      "title": "נצבים: התורה ניתנה לבני אנוש",
+      "output_path": "posts/נצבים-התורה-ניתנה-לבני-אנוש.html",
+      "content_file": "content/posts/posts/נצבים-התורה-ניתנה-לבני-אנוש.json"
+    },
+    {
+      "title": "נצבים: ואם כולם יקפצו מהחלון?",
+      "output_path": "posts/נצבים-ואם-כולם-יקפצו-מהחלון.html",
+      "content_file": "content/posts/posts/נצבים-ואם-כולם-יקפצו-מהחלון.json"
+    },
+    {
+      "title": "נצבים: חידות + פתרונות",
+      "output_path": "posts/נצבים-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/נצבים-חידות-פתרונות.json"
+    },
+    {
+      "title": "נצבים: מחשבות על כלל ישראל",
+      "output_path": "posts/נצבים-מחשבות-על-כלל-ישראל.html",
+      "content_file": "content/posts/posts/נצבים-מחשבות-על-כלל-ישראל.json"
+    },
+    {
+      "title": "נצבים: מי אתם הגבעונים?",
+      "output_path": "posts/נצבים-מי-אתם-הגבעונים.html",
+      "content_file": "content/posts/posts/נצבים-מי-אתם-הגבעונים.json"
+    },
+    {
+      "title": "נצבים: משחקים חכמים",
+      "output_path": "posts/נצבים-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/נצבים-משחקים-חכמים.json"
+    },
+    {
+      "title": "נצבים: על חָצָב פּוֹרֵחַ וַאֲטַב קוֹדֵחַ",
+      "output_path": "posts/נצבים-על-חָצָב-פּוֹרֵחַ-וַאֲטַב-קוֹדֵחַ.html",
+      "content_file": "content/posts/posts/נצבים-על-חָצָב-פּוֹרֵחַ-וַאֲטַב-קוֹדֵחַ.json"
+    },
+    {
+      "title": "נצבים: על ערבות הדדית ומתן חיים",
+      "output_path": "posts/נצבים-על-ערבות-הדדית-ומתן-חיים.html",
+      "content_file": "content/posts/posts/נצבים-על-ערבות-הדדית-ומתן-חיים.json"
+    },
+    {
+      "title": "נצבים: ראיון עם מְפַתֵּחַ טכנולוגיה נגישה",
+      "output_path": "posts/נצבים-ראיון-עם-מְפַתֵּחַ-טכנולוגיה-נגישה.html",
+      "content_file": "content/posts/posts/נצבים-ראיון-עם-מְפַתֵּחַ-טכנולוגיה-נגישה.json"
+    },
+    {
+      "title": "נשא: 09 מי שואל את מי?",
+      "output_path": "posts/נשא-09-מי-שואל-את-מי.html",
+      "content_file": "content/posts/posts/נשא-09-מי-שואל-את-מי.json"
+    },
+    {
+      "title": "נשא: בין צמיחה לעשייה",
+      "output_path": "posts/נשא-בין-צמיחה-לעשייה.html",
+      "content_file": "content/posts/posts/נשא-בין-צמיחה-לעשייה.json"
+    },
+    {
+      "title": "נשא: האוצר האמיתי - מה שייך לנו?",
+      "output_path": "posts/נשא-האוצר-האמיתי-מה-שייך-לנו.html",
+      "content_file": "content/posts/posts/נשא-האוצר-האמיתי-מה-שייך-לנו.json"
+    },
+    {
+      "title": "נשא: האם הפרישות היא מעלה?",
+      "output_path": "posts/נשא-האם-הפרישות-היא-מעלה.html",
+      "content_file": "content/posts/posts/נשא-האם-הפרישות-היא-מעלה.json"
+    },
+    {
+      "title": "נשא: המדור לילדים",
+      "output_path": "posts/נשא-המדור-לילדים.html",
+      "content_file": "content/posts/posts/נשא-המדור-לילדים.json"
+    },
+    {
+      "title": "נשא: חידות + פתרונות",
+      "output_path": "posts/נשא-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/נשא-חידות-פתרונות.json"
+    },
+    {
+      "title": "נשא: מונולוג פקידותי בין הקלסרים",
+      "output_path": "posts/נשא-מונולוג-פקידותי-בין-הקלסרים.html",
+      "content_file": "content/posts/posts/נשא-מונולוג-פקידותי-בין-הקלסרים.json"
+    },
+    {
+      "title": "נשא: מחשבות על הַגֵּר שאין לו גואל",
+      "output_path": "posts/נשא-מחשבות-על-הַגֵּר-שאין-לו-גואל.html",
+      "content_file": "content/posts/posts/נשא-מחשבות-על-הַגֵּר-שאין-לו-גואל.json"
+    },
+    {
+      "title": "נשא: משחקים חכמים",
+      "output_path": "posts/נשא-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/נשא-משחקים-חכמים.json"
+    },
+    {
+      "title": "נשא: משמרת של אחריות",
+      "output_path": "posts/נשא-משמרת-של-אחריות.html",
+      "content_file": "content/posts/posts/נשא-משמרת-של-אחריות.json"
+    },
+    {
+      "title": "נשא: נזירות כדרך התגברות",
+      "output_path": "posts/נשא-נזירות-כדרך-התגברות.html",
+      "content_file": "content/posts/posts/נשא-נזירות-כדרך-התגברות.json"
+    },
+    {
+      "title": "נשא: סקירת הפרשה הארוכה בתורה",
+      "output_path": "posts/נשא-סקירת-הפרשה-הארוכה-בתורה.html",
+      "content_file": "content/posts/posts/נשא-סקירת-הפרשה-הארוכה-בתורה.json"
+    },
+    {
+      "title": "נשא: סרטון ברכת כהנים בכותל",
+      "output_path": "posts/נשא-סרטון-ברכת-כהנים-בכותל.html",
+      "content_file": "content/posts/posts/נשא-סרטון-ברכת-כהנים-בכותל.json"
+    },
+    {
+      "title": "נשא: עונשו של המונע תרומה מכהן",
+      "output_path": "posts/נשא-עונשו-של-המונע-תרומה-מכהן.html",
+      "content_file": "content/posts/posts/נשא-עונשו-של-המונע-תרומה-מכהן.json"
+    },
+    {
+      "title": "נשא: על משמעות נדר הנזירות",
+      "output_path": "posts/נשא-על-משמעות-נדר-הנזירות.html",
+      "content_file": "content/posts/posts/נשא-על-משמעות-נדר-הנזירות.json"
+    },
+    {
+      "title": "נשא: פירוש ברכת הכהנים",
+      "output_path": "posts/נשא-פירוש-ברכת-הכהנים.html",
+      "content_file": "content/posts/posts/נשא-פירוש-ברכת-הכהנים.json"
+    },
+    {
+      "title": "נשא: שורש פקד - אחריות, פיקוד וזיכרון",
+      "output_path": "posts/נשא-שורש-פקד-אחריות-פיקוד-וזיכרון.html",
+      "content_file": "content/posts/posts/נשא-שורש-פקד-אחריות-פיקוד-וזיכרון.json"
+    },
+    {
+      "title": "עקב: 08 אותנטיות ונוכחות",
+      "output_path": "posts/עקב-08-אותנטיות-ונוכחות.html",
+      "content_file": "content/posts/posts/עקב-08-אותנטיות-ונוכחות.json"
+    },
+    {
+      "title": "עקב: איך יודעים שה' נאמן לשלם שכר?",
+      "output_path": "posts/עקב-איך-יודעים-שה-נאמן-לשלם-שכר.html",
+      "content_file": "content/posts/posts/עקב-איך-יודעים-שה-נאמן-לשלם-שכר.json"
+    },
+    {
+      "title": "עקב: איך קובעים מזוזה?",
+      "output_path": "posts/עקב-איך-קובעים-מזוזה.html",
+      "content_file": "content/posts/posts/עקב-איך-קובעים-מזוזה.json"
+    },
+    {
+      "title": "עקב: גנן מדבר אמונה וצמיחה",
+      "output_path": "posts/עקב-גנן-מדבר-אמונה-וצמיחה.html",
+      "content_file": "content/posts/posts/עקב-גנן-מדבר-אמונה-וצמיחה.json"
+    },
+    {
+      "title": "עקב: גשם ישראלי או נילוס מצרי?",
+      "output_path": "posts/עקב-גשם-ישראלי-או-נילוס-מצרי.html",
+      "content_file": "content/posts/posts/עקב-גשם-ישראלי-או-נילוס-מצרי.json"
+    },
+    {
+      "title": "עקב: האם חייל שמפחד עובר עבירה?",
+      "output_path": "posts/עקב-האם-חייל-שמפחד-עובר-עבירה.html",
+      "content_file": "content/posts/posts/עקב-האם-חייל-שמפחד-עובר-עבירה.json"
+    },
+    {
+      "title": "עקב: המדור לילדים",
+      "output_path": "posts/עקב-המדור-לילדים.html",
+      "content_file": "content/posts/posts/עקב-המדור-לילדים.json"
+    },
+    {
+      "title": "עקב: חידות + פתרונות",
+      "output_path": "posts/עקב-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/עקב-חידות-פתרונות.json"
+    },
+    {
+      "title": "עקב: למה כותבים ם בסוף המילה?",
+      "output_path": "posts/עקב-למה-כותבים-ם-בסוף-המילה.html",
+      "content_file": "content/posts/posts/עקב-למה-כותבים-ם-בסוף-המילה.json"
+    },
+    {
+      "title": "עקב: למה לא ראוי שהעשיר יסתגף?",
+      "output_path": "posts/עקב-למה-לא-ראוי-שהעשיר-יסתגף.html",
+      "content_file": "content/posts/posts/עקב-למה-לא-ראוי-שהעשיר-יסתגף.json"
+    },
+    {
+      "title": "עקב: למה עָקֵב הוא גם קצה ועיכוב?",
+      "output_path": "posts/עקב-למה-עָקֵב-הוא-גם-קצה-ועיכוב.html",
+      "content_file": "content/posts/posts/עקב-למה-עָקֵב-הוא-גם-קצה-ועיכוב.json"
+    },
+    {
+      "title": "עקב: מה שכרה של שמירת המצוות?",
+      "output_path": "posts/עקב-מה-שכרה-של-שמירת-המצוות.html",
+      "content_file": "content/posts/posts/עקב-מה-שכרה-של-שמירת-המצוות.json"
+    },
+    {
+      "title": "עקב: מחשבות על השכר המובטח",
+      "output_path": "posts/עקב-מחשבות-על-השכר-המובטח.html",
+      "content_file": "content/posts/posts/עקב-מחשבות-על-השכר-המובטח.json"
+    },
+    {
+      "title": "עקב: מי באמת שומע?",
+      "output_path": "posts/עקב-מי-באמת-שומע.html",
+      "content_file": "content/posts/posts/עקב-מי-באמת-שומע.json"
+    },
+    {
+      "title": "עקב: מי צריך זכות אבות?",
+      "output_path": "posts/עקב-מי-צריך-זכות-אבות.html",
+      "content_file": "content/posts/posts/עקב-מי-צריך-זכות-אבות.json"
+    },
+    {
+      "title": "עקב: משחקים חכמים",
+      "output_path": "posts/עקב-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/עקב-משחקים-חכמים.json"
+    },
+    {
+      "title": "עקב: ניצחון מהיר או איטי?",
+      "output_path": "posts/עקב-ניצחון-מהיר-או-איטי.html",
+      "content_file": "content/posts/posts/עקב-ניצחון-מהיר-או-איטי.json"
+    },
+    {
+      "title": "פנחס: 03 מעיין היצירה בעידן הבינה",
+      "output_path": "posts/פנחס-03-מעיין-היצירה-בעידן-הבינה.html",
+      "content_file": "content/posts/posts/פנחס-03-מעיין-היצירה-בעידן-הבינה.json"
+    },
+    {
+      "title": "פנחס: 3 כתרים - תורה, כהונה ומלכות",
+      "output_path": "posts/פנחס-3-כתרים-תורה-כהונה-ומלכות.html",
+      "content_file": "content/posts/posts/פנחס-3-כתרים-תורה-כהונה-ומלכות.json"
+    },
+    {
+      "title": "פנחס: דיני ירושה בתרשים",
+      "output_path": "posts/פנחס-דיני-ירושה-בתרשים.html",
+      "content_file": "content/posts/posts/פנחס-דיני-ירושה-בתרשים.json"
+    },
+    {
+      "title": "פנחס: המדור לילדים",
+      "output_path": "posts/פנחס-המדור-לילדים.html",
+      "content_file": "content/posts/posts/פנחס-המדור-לילדים.json"
+    },
+    {
+      "title": "פנחס: הפואמה על שׂרח בת אשר",
+      "output_path": "posts/פנחס-הפואמה-על-שׂרח-בת-אשר.html",
+      "content_file": "content/posts/posts/פנחס-הפואמה-על-שׂרח-בת-אשר.json"
+    },
+    {
+      "title": "פנחס: הקנאי לכבוד אלוקיו",
+      "output_path": "posts/פנחס-הקנאי-לכבוד-אלוקיו.html",
+      "content_file": "content/posts/posts/פנחס-הקנאי-לכבוד-אלוקיו.json"
+    },
+    {
+      "title": "פנחס: השוואת מספרית בין הַמִּפְקָדִים",
+      "output_path": "posts/פנחס-השוואת-מספרית-בין-הַמִּפְקָדִים.html",
+      "content_file": "content/posts/posts/פנחס-השוואת-מספרית-בין-הַמִּפְקָדִים.json"
+    },
+    {
+      "title": "פנחס: כוחן של נשות דור המדבר",
+      "output_path": "posts/פנחס-כוחן-של-נשות-דור-המדבר.html",
+      "content_file": "content/posts/posts/פנחס-כוחן-של-נשות-דור-המדבר.json"
+    },
+    {
+      "title": "פנחס: למה זכה פנחס לכהונת עולם?",
+      "output_path": "posts/פנחס-למה-זכה-פנחס-לכהונת-עולם.html",
+      "content_file": "content/posts/posts/פנחס-למה-זכה-פנחס-לכהונת-עולם.json"
+    },
+    {
+      "title": "פנחס: למה פנחס לא כיבה את הכעס?",
+      "output_path": "posts/פנחס-למה-פנחס-לא-כיבה-את-הכעס.html",
+      "content_file": "content/posts/posts/פנחס-למה-פנחס-לא-כיבה-את-הכעס.json"
+    },
+    {
+      "title": "פנחס: משחקים חכמים",
+      "output_path": "posts/פנחס-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/פנחס-משחקים-חכמים.json"
+    },
+    {
+      "title": "פנחס: על מקסם השווא של בנות מדין",
+      "output_path": "posts/פנחס-על-מקסם-השווא-של-בנות-מדין.html",
+      "content_file": "content/posts/posts/פנחס-על-מקסם-השווא-של-בנות-מדין.json"
+    },
+    {
+      "title": "פנחס: על שלום בית גם אחרי 120",
+      "output_path": "posts/פנחס-על-שלום-בית-גם-אחרי-120.html",
+      "content_file": "content/posts/posts/פנחס-על-שלום-בית-גם-אחרי-120.json"
+    },
+    {
+      "title": "פנחס: קנאות, ירושה ומנהיגות חדשה",
+      "output_path": "posts/פנחס-קנאות-ירושה-ומנהיגות-חדשה.html",
+      "content_file": "content/posts/posts/פנחס-קנאות-ירושה-ומנהיגות-חדשה.json"
+    },
+    {
+      "title": "פנחס: רשות הדיבור לשומרי שפה וסף",
+      "output_path": "posts/פנחס-רשות-הדיבור-לשומרי-שפה-וסף.html",
+      "content_file": "content/posts/posts/פנחס-רשות-הדיבור-לשומרי-שפה-וסף.json"
+    },
+    {
+      "title": "פנחס: שולחנו של אדם כמזבח",
+      "output_path": "posts/פנחס-שולחנו-של-אדם-כמזבח.html",
+      "content_file": "content/posts/posts/פנחס-שולחנו-של-אדם-כמזבח.json"
+    },
+    {
+      "title": "פקודי: 31 העשרה מחשבתית של רעיון",
+      "output_path": "posts/פקודי-31-העשרה-מחשבתית-של-רעיון.html",
+      "content_file": "content/posts/posts/פקודי-31-העשרה-מחשבתית-של-רעיון.json"
+    },
+    {
+      "title": "פקודי: אצל הרבי מלובביץ",
+      "output_path": "posts/פקודי-אצל-הרבי-מלובביץ.html",
+      "content_file": "content/posts/posts/פקודי-אצל-הרבי-מלובביץ.json"
+    },
+    {
+      "title": "פקודי: בּוֹאוּ חֶרֶשׁ אֶל חֻרְשַׁת הַאֵקָלִיפּטוּס",
+      "output_path": "posts/פקודי-בּוֹאוּ-חֶרֶשׁ-אֶל-חֻרְשַׁת-הַאֵקָלִיפּטוּס.html",
+      "content_file": "content/posts/posts/פקודי-בּוֹאוּ-חֶרֶשׁ-אֶל-חֻרְשַׁת-הַאֵקָלִיפּטוּס.json"
+    },
+    {
+      "title": "פקודי: דו\"ח ביצוע וכתב כמויות",
+      "output_path": "posts/פקודי-דוח-ביצוע-וכתב-כמויות.html",
+      "content_file": "content/posts/posts/פקודי-דוח-ביצוע-וכתב-כמויות.json"
+    },
+    {
+      "title": "פקודי: הבגדים עושים את האדם",
+      "output_path": "posts/פקודי-הבגדים-עושים-את-האדם.html",
+      "content_file": "content/posts/posts/פקודי-הבגדים-עושים-את-האדם.json"
+    },
+    {
+      "title": "פקודי: הטוב הוא קבוע - והרע זמני",
+      "output_path": "posts/פקודי-הטוב-הוא-קבוע-והרע-זמני.html",
+      "content_file": "content/posts/posts/פקודי-הטוב-הוא-קבוע-והרע-זמני.json"
+    },
+    {
+      "title": "פקודי: המדור לילדים",
+      "output_path": "posts/פקודי-המדור-לילדים.html",
+      "content_file": "content/posts/posts/פקודי-המדור-לילדים.json"
+    },
+    {
+      "title": "פקודי: חידות + פתרונות",
+      "output_path": "posts/פקודי-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/פקודי-חידות-פתרונות.json"
+    },
+    {
+      "title": "פקודי: כמויות הזהב והכסף - דו\"ח סופי",
+      "output_path": "posts/פקודי-כמויות-הזהב-והכסף-דוח-סופי.html",
+      "content_file": "content/posts/posts/פקודי-כמויות-הזהב-והכסף-דוח-סופי.json"
+    },
+    {
+      "title": "פקודי: למה נמנתה תרומת המשכן?",
+      "output_path": "posts/פקודי-למה-נמנתה-תרומת-המשכן.html",
+      "content_file": "content/posts/posts/פקודי-למה-נמנתה-תרומת-המשכן.json"
+    },
+    {
+      "title": "פקודי: למה עשו ארון זהב ללוחות אבן?",
+      "output_path": "posts/פקודי-למה-עשו-ארון-זהב-ללוחות-אבן.html",
+      "content_file": "content/posts/posts/פקודי-למה-עשו-ארון-זהב-ללוחות-אבן.json"
+    },
+    {
+      "title": "פקודי: מדוע המשכן נקרא 'פיקדון'?",
+      "output_path": "posts/פקודי-מדוע-המשכן-נקרא-פיקדון.html",
+      "content_file": "content/posts/posts/פקודי-מדוע-המשכן-נקרא-פיקדון.json"
+    },
+    {
+      "title": "פקודי: מה הכוונה - ברוך אתה ה'?",
+      "output_path": "posts/פקודי-מה-הכוונה-ברוך-אתה-ה.html",
+      "content_file": "content/posts/posts/פקודי-מה-הכוונה-ברוך-אתה-ה.json"
+    },
+    {
+      "title": "פקודי: מנהל מערכת מידע וגבול דיגיטלי",
+      "output_path": "posts/פקודי-מנהל-מערכת-מידע-וגבול-דיגיטלי.html",
+      "content_file": "content/posts/posts/פקודי-מנהל-מערכת-מידע-וגבול-דיגיטלי.json"
+    },
+    {
+      "title": "פקודי: משחקים חכמים",
+      "output_path": "posts/פקודי-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/פקודי-משחקים-חכמים.json"
+    },
+    {
+      "title": "פקודי: \"עם עצות אני מסודר...\"",
+      "output_path": "posts/פקודי-עם-עצות-אני-מסודר.html",
+      "content_file": "content/posts/posts/פקודי-עם-עצות-אני-מסודר.json"
+    },
+    {
+      "title": "פקודי: קול הפעמונים ומחשבת הלב",
+      "output_path": "posts/פקודי-קול-הפעמונים-ומחשבת-הלב.html",
+      "content_file": "content/posts/posts/פקודי-קול-הפעמונים-ומחשבת-הלב.json"
+    },
+    {
+      "title": "פרשות",
+      "output_path": "posts/פרשות.html",
+      "content_file": "content/posts/posts/פרשות.json"
+    },
+    {
+      "title": "פרשת מסעי - חידות + פתרונות",
+      "output_path": "posts/פרשת-מסעי-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/פרשת-מסעי-חידות-פתרונות.json"
+    },
+    {
+      "title": "פרשת פנחס - חידות + פתרונות",
+      "output_path": "posts/פרשת-פנחס-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/פרשת-פנחס-חידות-פתרונות.json"
+    },
+    {
+      "title": "צו: 33 שמירת הקו הרעיוני",
+      "output_path": "posts/צו-33-שמירת-הקו-הרעיוני.html",
+      "content_file": "content/posts/posts/צו-33-שמירת-הקו-הרעיוני.json"
+    },
+    {
+      "title": "צו: איך לא הותכה נחושת המזבח באש?",
+      "output_path": "posts/צו-איך-לא-הותכה-נחושת-המזבח-באש.html",
+      "content_file": "content/posts/posts/צו-איך-לא-הותכה-נחושת-המזבח-באש.json"
+    },
+    {
+      "title": "צו: איך מכינים מנחת מחבת/מרחשת?",
+      "output_path": "posts/צו-איך-מכינים-מנחת-מחבת-מרחשת.html",
+      "content_file": "content/posts/posts/צו-איך-מכינים-מנחת-מחבת-מרחשת.json"
+    },
+    {
+      "title": "צו: דיני נוֹתַר וּפִיגּוּל",
+      "output_path": "posts/צו-דיני-נוֹתַר-וּפִיגּוּל.html",
+      "content_file": "content/posts/posts/צו-דיני-נוֹתַר-וּפִיגּוּל.json"
+    },
+    {
+      "title": "צו: המדור לילדים",
+      "output_path": "posts/צו-המדור-לילדים.html",
+      "content_file": "content/posts/posts/צו-המדור-לילדים.json"
+    },
+    {
+      "title": "צו: המשך דיני הקרבנות",
+      "output_path": "posts/צו-המשך-דיני-הקרבנות.html",
+      "content_file": "content/posts/posts/צו-המשך-דיני-הקרבנות.json"
+    },
+    {
+      "title": "צו: הנימוס מחייב...",
+      "output_path": "posts/צו-הנימוס-מחייב.html",
+      "content_file": "content/posts/posts/צו-הנימוס-מחייב.json"
+    },
+    {
+      "title": "צו: השורש ק־ט־ר מעלה עשן",
+      "output_path": "posts/צו-השורש-ק־ט־ר-מעלה-עשן.html",
+      "content_file": "content/posts/posts/צו-השורש-ק־ט־ר-מעלה-עשן.json"
+    },
+    {
+      "title": "צו: חידות + פתרונות",
+      "output_path": "posts/צו-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/צו-חידות-פתרונות.json"
+    },
+    {
+      "title": "צו: כיצד לקרוא את אִבְּן עֶזְרָא",
+      "output_path": "posts/צו-כיצד-לקרוא-את-אִבְּן-עֶזְרָא.html",
+      "content_file": "content/posts/posts/צו-כיצד-לקרוא-את-אִבְּן-עֶזְרָא.json"
+    },
+    {
+      "title": "צו: למה יש חורים במצה שלי?",
+      "output_path": "posts/צו-למה-יש-חורים-במצה-שלי.html",
+      "content_file": "content/posts/posts/צו-למה-יש-חורים-במצה-שלי.json"
+    },
+    {
+      "title": "צו: משחקים חכמים",
+      "output_path": "posts/צו-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/צו-משחקים-חכמים.json"
+    },
+    {
+      "title": "צו: על מנחה חֲרֵבָה וקדושה קרירה",
+      "output_path": "posts/צו-על-מנחה-חֲרֵבָה-וקדושה-קרירה.html",
+      "content_file": "content/posts/posts/צו-על-מנחה-חֲרֵבָה-וקדושה-קרירה.json"
+    },
+    {
+      "title": "צו: על שלשה דברים העולם עומד",
+      "output_path": "posts/צו-על-שלשה-דברים-העולם-עומד.html",
+      "content_file": "content/posts/posts/צו-על-שלשה-דברים-העולם-עומד.json"
+    },
+    {
+      "title": "צו: עלילת הדם בעיר טרֶנטוֹ שבאיטליה",
+      "output_path": "posts/צו-עלילת-הדם-בעיר-טרֶנטוֹ-שבאיטליה.html",
+      "content_file": "content/posts/posts/צו-עלילת-הדם-בעיר-טרֶנטוֹ-שבאיטליה.json"
+    },
+    {
+      "title": "צו: קפה ומאפה - כשהכול בא בחבילה",
+      "output_path": "posts/צו-קפה-ומאפה-כשהכול-בא-בחבילה.html",
+      "content_file": "content/posts/posts/צו-קפה-ומאפה-כשהכול-בא-בחבילה.json"
+    },
+    {
+      "title": "צו: ראיון עם אחראי תחזוקת כבשנים",
+      "output_path": "posts/צו-ראיון-עם-אחראי-תחזוקת-כבשנים.html",
+      "content_file": "content/posts/posts/צו-ראיון-עם-אחראי-תחזוקת-כבשנים.json"
+    },
+    {
+      "title": "קדושים: 04 תשלום, איכות ואחריות",
+      "output_path": "posts/קדושים-04-תשלום-איכות-ואחריות.html",
+      "content_file": "content/posts/posts/קדושים-04-תשלום-איכות-ואחריות.json"
+    },
+    {
+      "title": "קדושים: בין נקימה לנטירה",
+      "output_path": "posts/קדושים-בין-נקימה-לנטירה.html",
+      "content_file": "content/posts/posts/קדושים-בין-נקימה-לנטירה.json"
+    },
+    {
+      "title": "קדושים: המדור לילדים",
+      "output_path": "posts/קדושים-המדור-לילדים.html",
+      "content_file": "content/posts/posts/קדושים-המדור-לילדים.json"
+    },
+    {
+      "title": "קדושים: חידות + פתרונות",
+      "output_path": "posts/קדושים-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/קדושים-חידות-פתרונות.json"
+    },
+    {
+      "title": "קדושים: יוסלה גנב קדוש",
+      "output_path": "posts/קדושים-יוסלה-גנב-קדוש.html",
+      "content_file": "content/posts/posts/קדושים-יוסלה-גנב-קדוש.json"
+    },
+    {
+      "title": "קדושים: יש קדושה \"באופן יחסי\"?",
+      "output_path": "posts/קדושים-יש-קדושה-באופן-יחסי.html",
+      "content_file": "content/posts/posts/קדושים-יש-קדושה-באופן-יחסי.json"
+    },
+    {
+      "title": "קדושים: כְּשֶׁמַּנְהִיג הַמִּפְלָגָה בְּגִלּוּפִין...",
+      "output_path": "posts/קדושים-כְּשֶׁמַּנְהִיג-הַמִּפְלָגָה-בְּגִלּוּפִין.html",
+      "content_file": "content/posts/posts/קדושים-כְּשֶׁמַּנְהִיג-הַמִּפְלָגָה-בְּגִלּוּפִין.json"
+    },
+    {
+      "title": "קדושים: מותר לקרוא עיקרי דת זרה?",
+      "output_path": "posts/קדושים-מותר-לקרוא-עיקרי-דת-זרה.html",
+      "content_file": "content/posts/posts/קדושים-מותר-לקרוא-עיקרי-דת-זרה.json"
+    },
+    {
+      "title": "קדושים: מחשבה בין אדם לעצמו ולחברו",
+      "output_path": "posts/קדושים-מחשבה-בין-אדם-לעצמו-ולחברו.html",
+      "content_file": "content/posts/posts/קדושים-מחשבה-בין-אדם-לעצמו-ולחברו.json"
+    },
+    {
+      "title": "קדושים: מידת האמת של רבי רפאל",
+      "output_path": "posts/קדושים-מידת-האמת-של-רבי-רפאל.html",
+      "content_file": "content/posts/posts/קדושים-מידת-האמת-של-רבי-רפאל.json"
+    },
+    {
+      "title": "קדושים: משחקים חכמים",
+      "output_path": "posts/קדושים-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/קדושים-משחקים-חכמים.json"
+    },
+    {
+      "title": "קדושים: מתנות עניים מיבול השדה",
+      "output_path": "posts/קדושים-מתנות-עניים-מיבול-השדה.html",
+      "content_file": "content/posts/posts/קדושים-מתנות-עניים-מיבול-השדה.json"
+    },
+    {
+      "title": "קדושים: סרטון על פירות ערלה",
+      "output_path": "posts/קדושים-סרטון-על-פירות-ערלה.html",
+      "content_file": "content/posts/posts/קדושים-סרטון-על-פירות-ערלה.json"
+    },
+    {
+      "title": "קדושים: עד היכן מגיע כיבוד הורים?",
+      "output_path": "posts/קדושים-עד-היכן-מגיע-כיבוד-הורים.html",
+      "content_file": "content/posts/posts/קדושים-עד-היכן-מגיע-כיבוד-הורים.json"
+    },
+    {
+      "title": "קדושים: על אחריות שלא רואים",
+      "output_path": "posts/קדושים-על-אחריות-שלא-רואים.html",
+      "content_file": "content/posts/posts/קדושים-על-אחריות-שלא-רואים.json"
+    },
+    {
+      "title": "קדושים: על סוגים שונים של כִּלְאַיִם",
+      "output_path": "posts/קדושים-על-סוגים-שונים-של-כִּלְאַיִם.html",
+      "content_file": "content/posts/posts/קדושים-על-סוגים-שונים-של-כִּלְאַיִם.json"
+    },
+    {
+      "title": "קדושים: עם מיוחד והתנהגות ייחודית",
+      "output_path": "posts/קדושים-עם-מיוחד-והתנהגות-ייחודית.html",
+      "content_file": "content/posts/posts/קדושים-עם-מיוחד-והתנהגות-ייחודית.json"
+    },
+    {
+      "title": "קורח: 12 אין קיצורי דרך",
+      "output_path": "posts/קורח-12-אין-קיצורי-דרך.html",
+      "content_file": "content/posts/posts/קורח-12-אין-קיצורי-דרך.json"
+    },
+    {
+      "title": "קורח: איך נסחפו 250 מנהיגים?",
+      "output_path": "posts/קורח-איך-נסחפו-250-מנהיגים.html",
+      "content_file": "content/posts/posts/קורח-איך-נסחפו-250-מנהיגים.json"
+    },
+    {
+      "title": "קורח: הבעייתיות בדרישת עדת קורח",
+      "output_path": "posts/קורח-הבעייתיות-בדרישת-עדת-קורח.html",
+      "content_file": "content/posts/posts/קורח-הבעייתיות-בדרישת-עדת-קורח.json"
+    },
+    {
+      "title": "קורח: המדור לילדים",
+      "output_path": "posts/קורח-המדור-לילדים.html",
+      "content_file": "content/posts/posts/קורח-המדור-לילדים.json"
+    },
+    {
+      "title": "קורח: הציצית, התכלת והמחלוקת",
+      "output_path": "posts/קורח-הציצית-התכלת-והמחלוקת.html",
+      "content_file": "content/posts/posts/קורח-הציצית-התכלת-והמחלוקת.json"
+    },
+    {
+      "title": "קורח: הרטוריקה של דתן ואבירם",
+      "output_path": "posts/קורח-הרטוריקה-של-דתן-ואבירם.html",
+      "content_file": "content/posts/posts/קורח-הרטוריקה-של-דתן-ואבירם.json"
+    },
+    {
+      "title": "קורח: חידות + פתרונות",
+      "output_path": "posts/קורח-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/קורח-חידות-פתרונות.json"
+    },
+    {
+      "title": "קורח: מבט על השאיפות של קורח",
+      "output_path": "posts/קורח-מבט-על-השאיפות-של-קורח.html",
+      "content_file": "content/posts/posts/קורח-מבט-על-השאיפות-של-קורח.json"
+    },
+    {
+      "title": "קורח: מהי 'ברית מלח'?",
+      "output_path": "posts/קורח-מהי-ברית-מלח.html",
+      "content_file": "content/posts/posts/קורח-מהי-ברית-מלח.json"
+    },
+    {
+      "title": "קורח: מחלוקת ועונשה",
+      "output_path": "posts/קורח-מחלוקת-ועונשה.html",
+      "content_file": "content/posts/posts/קורח-מחלוקת-ועונשה.json"
+    },
+    {
+      "title": "קורח: משחקים חכמים",
+      "output_path": "posts/קורח-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/קורח-משחקים-חכמים.json"
+    },
+    {
+      "title": "קורח: סרטון על טקס פדיון הבן",
+      "output_path": "posts/קורח-סרטון-על-טקס-פדיון-הבן.html",
+      "content_file": "content/posts/posts/קורח-סרטון-על-טקס-פדיון-הבן.json"
+    },
+    {
+      "title": "קורח: עומק לשוני על רקיעה ורדידות",
+      "output_path": "posts/קורח-עומק-לשוני-על-רקיעה-ורדידות.html",
+      "content_file": "content/posts/posts/קורח-עומק-לשוני-על-רקיעה-ורדידות.json"
+    },
+    {
+      "title": "קורח: על גניזת הארון ומטה אהרון",
+      "output_path": "posts/קורח-על-גניזת-הארון-ומטה-אהרון.html",
+      "content_file": "content/posts/posts/קורח-על-גניזת-הארון-ומטה-אהרון.json"
+    },
+    {
+      "title": "קורח: פדיון בכור האדם והבהמה",
+      "output_path": "posts/קורח-פדיון-בכור-האדם-והבהמה.html",
+      "content_file": "content/posts/posts/קורח-פדיון-בכור-האדם-והבהמה.json"
+    },
+    {
+      "title": "קורח: פואמה על תבונה נשית שקטה",
+      "output_path": "posts/קורח-פואמה-על-תבונה-נשית-שקטה.html",
+      "content_file": "content/posts/posts/קורח-פואמה-על-תבונה-נשית-שקטה.json"
+    },
+    {
+      "title": "קורח: שיחה עם מגשר על עיוורון רגשי",
+      "output_path": "posts/קורח-שיחה-עם-מגשר-על-עיוורון-רגשי.html",
+      "content_file": "content/posts/posts/קורח-שיחה-עם-מגשר-על-עיוורון-רגשי.json"
+    },
+    {
+      "title": "ראה: 01 שאלה פתוחה או ממוקדת",
+      "output_path": "posts/ראה-01-שאלה-פתוחה-או-ממוקדת.html",
+      "content_file": "content/posts/posts/ראה-01-שאלה-פתוחה-או-ממוקדת.json"
+    },
+    {
+      "title": "ראה: אבא יודן ומתן צדקה בכל מצב",
+      "output_path": "posts/ראה-אבא-יודן-ומתן-צדקה-בכל-מצב.html",
+      "content_file": "content/posts/posts/ראה-אבא-יודן-ומתן-צדקה-בכל-מצב.json"
+    },
+    {
+      "title": "ראה: איך התחילה עבודת האלילים?",
+      "output_path": "posts/ראה-איך-התחילה-עבודת-האלילים.html",
+      "content_file": "content/posts/posts/ראה-איך-התחילה-עבודת-האלילים.json"
+    },
+    {
+      "title": "ראה: איך ילד בן עשר פתר סכסוך כספי?",
+      "output_path": "posts/ראה-איך-ילד-בן-עשר-פתר-סכסוך-כספי.html",
+      "content_file": "content/posts/posts/ראה-איך-ילד-בן-עשר-פתר-סכסוך-כספי.json"
+    },
+    {
+      "title": "ראה: איך מרגיש להחזיק חיים במבחנה?",
+      "output_path": "posts/ראה-איך-מרגיש-להחזיק-חיים-במבחנה.html",
+      "content_file": "content/posts/posts/ראה-איך-מרגיש-להחזיק-חיים-במבחנה.json"
+    },
+    {
+      "title": "ראה: האם לציית לנביא שסותר תורה?",
+      "output_path": "posts/ראה-האם-לציית-לנביא-שסותר-תורה.html",
+      "content_file": "content/posts/posts/ראה-האם-לציית-לנביא-שסותר-תורה.json"
+    },
+    {
+      "title": "ראה: המדור לילדים",
+      "output_path": "posts/ראה-המדור-לילדים.html",
+      "content_file": "content/posts/posts/ראה-המדור-לילדים.json"
+    },
+    {
+      "title": "ראה: חידות + פתרונות",
+      "output_path": "posts/ראה-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/ראה-חידות-פתרונות.json"
+    },
+    {
+      "title": "ראה: כשכל אחד רואה משהו אחר...",
+      "output_path": "posts/ראה-כשכל-אחד-רואה-משהו-אחר.html",
+      "content_file": "content/posts/posts/ראה-כשכל-אחד-רואה-משהו-אחר.json"
+    },
+    {
+      "title": "ראה: למה קוראים את הקללות ברצף?",
+      "output_path": "posts/ראה-למה-קוראים-את-הקללות-ברצף.html",
+      "content_file": "content/posts/posts/ראה-למה-קוראים-את-הקללות-ברצף.json"
+    },
+    {
+      "title": "ראה: מה זה לסור מן הדרך?",
+      "output_path": "posts/ראה-מה-זה-לסור-מן-הדרך.html",
+      "content_file": "content/posts/posts/ראה-מה-זה-לסור-מן-הדרך.json"
+    },
+    {
+      "title": "ראה: מחשבות על 'הדם הוא הנפש'",
+      "output_path": "posts/ראה-מחשבות-על-הדם-הוא-הנפש.html",
+      "content_file": "content/posts/posts/ראה-מחשבות-על-הדם-הוא-הנפש.json"
+    },
+    {
+      "title": "ראה: מצוות לקראת הכניסה לארץ",
+      "output_path": "posts/ראה-מצוות-לקראת-הכניסה-לארץ.html",
+      "content_file": "content/posts/posts/ראה-מצוות-לקראת-הכניסה-לארץ.json"
+    },
+    {
+      "title": "ראה: משחקים חכמים",
+      "output_path": "posts/ראה-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/ראה-משחקים-חכמים.json"
+    },
+    {
+      "title": "ראה: סירה עמוסת סירים בסערה",
+      "output_path": "posts/ראה-סירה-עמוסת-סירים-בסערה.html",
+      "content_file": "content/posts/posts/ראה-סירה-עמוסת-סירים-בסערה.json"
+    },
+    {
+      "title": "ראה: סרטון על שמיטת כספים",
+      "output_path": "posts/ראה-סרטון-על-שמיטת-כספים.html",
+      "content_file": "content/posts/posts/ראה-סרטון-על-שמיטת-כספים.json"
+    },
+    {
+      "title": "ראה: שנת חמה, שנת לבנה ופסח באביב",
+      "output_path": "posts/ראה-שנת-חמה-שנת-לבנה-ופסח-באביב.html",
+      "content_file": "content/posts/posts/ראה-שנת-חמה-שנת-לבנה-ופסח-באביב.json"
+    },
+    {
+      "title": "שופטים: 02 שאלה עובדתית או פרשנית",
+      "output_path": "posts/שופטים-02-שאלה-עובדתית-או-פרשנית.html",
+      "content_file": "content/posts/posts/שופטים-02-שאלה-עובדתית-או-פרשנית.json"
+    },
+    {
+      "title": "שופטים: איך משלבים ענווה ורוממות?",
+      "output_path": "posts/שופטים-איך-משלבים-ענווה-ורוממות.html",
+      "content_file": "content/posts/posts/שופטים-איך-משלבים-ענווה-ורוממות.json"
+    },
+    {
+      "title": "שופטים: איך פוסקים דין כשהלב נשבר?",
+      "output_path": "posts/שופטים-איך-פוסקים-דין-כשהלב-נשבר.html",
+      "content_file": "content/posts/posts/שופטים-איך-פוסקים-דין-כשהלב-נשבר.json"
+    },
+    {
+      "title": "שופטים: ביטחון ללא תנאים מוקדמים",
+      "output_path": "posts/שופטים-ביטחון-ללא-תנאים-מוקדמים.html",
+      "content_file": "content/posts/posts/שופטים-ביטחון-ללא-תנאים-מוקדמים.json"
+    },
+    {
+      "title": "שופטים: האם חובה להישמע לנביא גר?",
+      "output_path": "posts/שופטים-האם-חובה-להישמע-לנביא-גר.html",
+      "content_file": "content/posts/posts/שופטים-האם-חובה-להישמע-לנביא-גר.json"
+    },
+    {
+      "title": "שופטים: המדור לילדים",
+      "output_path": "posts/שופטים-המדור-לילדים.html",
+      "content_file": "content/posts/posts/שופטים-המדור-לילדים.json"
+    },
+    {
+      "title": "שופטים: חוק מלכי ישראל",
+      "output_path": "posts/שופטים-חוק-מלכי-ישראל.html",
+      "content_file": "content/posts/posts/שופטים-חוק-מלכי-ישראל.json"
+    },
+    {
+      "title": "שופטים: חידות + פתרונות",
+      "output_path": "posts/שופטים-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/שופטים-חידות-פתרונות.json"
+    },
+    {
+      "title": "שופטים: מה אפשר ללמוד מהנמלה?",
+      "output_path": "posts/שופטים-מה-אפשר-ללמוד-מהנמלה.html",
+      "content_file": "content/posts/posts/שופטים-מה-אפשר-ללמוד-מהנמלה.json"
+    },
+    {
+      "title": "שופטים: מחשבות על מלך ישראל",
+      "output_path": "posts/שופטים-מחשבות-על-מלך-ישראל.html",
+      "content_file": "content/posts/posts/שופטים-מחשבות-על-מלך-ישראל.json"
+    },
+    {
+      "title": "שופטים: מי אשם בגניבה המתוחכמת",
+      "output_path": "posts/שופטים-מי-אשם-בגניבה-המתוחכמת.html",
+      "content_file": "content/posts/posts/שופטים-מי-אשם-בגניבה-המתוחכמת.json"
+    },
+    {
+      "title": "שופטים: מי הוסיף משלו מילים לתורה?",
+      "output_path": "posts/שופטים-מי-הוסיף-משלו-מילים-לתורה.html",
+      "content_file": "content/posts/posts/שופטים-מי-הוסיף-משלו-מילים-לתורה.json"
+    },
+    {
+      "title": "שופטים: מילים שמחברות וגם מפרידות",
+      "output_path": "posts/שופטים-מילים-שמחברות-וגם-מפרידות.html",
+      "content_file": "content/posts/posts/שופטים-מילים-שמחברות-וגם-מפרידות.json"
+    },
+    {
+      "title": "שופטים: מצוות לקראת כינון הממלכה",
+      "output_path": "posts/שופטים-מצוות-לקראת-כינון-הממלכה.html",
+      "content_file": "content/posts/posts/שופטים-מצוות-לקראת-כינון-הממלכה.json"
+    },
+    {
+      "title": "שופטים: משחקים חכמים",
+      "output_path": "posts/שופטים-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/שופטים-משחקים-חכמים.json"
+    },
+    {
+      "title": "שופטים: מתי נפתח קורס נביאים?",
+      "output_path": "posts/שופטים-מתי-נפתח-קורס-נביאים.html",
+      "content_file": "content/posts/posts/שופטים-מתי-נפתח-קורס-נביאים.json"
+    },
+    {
+      "title": "שופטים: שיחת דקלים",
+      "output_path": "posts/שופטים-שיחת-דקלים.html",
+      "content_file": "content/posts/posts/שופטים-שיחת-דקלים.json"
+    },
+    {
+      "title": "שלח: 11 אז מי נושא באחריות?",
+      "output_path": "posts/שלח-11-אז-מי-נושא-באחריות.html",
+      "content_file": "content/posts/posts/שלח-11-אז-מי-נושא-באחריות.json"
+    },
+    {
+      "title": "שלח: אהבת נעורים במדבר",
+      "output_path": "posts/שלח-אהבת-נעורים-במדבר.html",
+      "content_file": "content/posts/posts/שלח-אהבת-נעורים-במדבר.json"
+    },
+    {
+      "title": "שלח: אשכול ענבים ומסע המרגלים",
+      "output_path": "posts/שלח-אשכול-ענבים-ומסע-המרגלים.html",
+      "content_file": "content/posts/posts/שלח-אשכול-ענבים-ומסע-המרגלים.json"
+    },
+    {
+      "title": "שלח: בין נתון לסיפור",
+      "output_path": "posts/שלח-בין-נתון-לסיפור.html",
+      "content_file": "content/posts/posts/שלח-בין-נתון-לסיפור.json"
+    },
+    {
+      "title": "שלח: בין רגל לריגול - מסע לשוני סודי",
+      "output_path": "posts/שלח-בין-רגל-לריגול-מסע-לשוני-סודי.html",
+      "content_file": "content/posts/posts/שלח-בין-רגל-לריגול-מסע-לשוני-סודי.json"
+    },
+    {
+      "title": "שלח: דיבור שמפיל דור",
+      "output_path": "posts/שלח-דיבור-שמפיל-דור.html",
+      "content_file": "content/posts/posts/שלח-דיבור-שמפיל-דור.json"
+    },
+    {
+      "title": "שלח: הכל על הפרשת חלה",
+      "output_path": "posts/שלח-הכל-על-הפרשת-חלה.html",
+      "content_file": "content/posts/posts/שלח-הכל-על-הפרשת-חלה.json"
+    },
+    {
+      "title": "שלח: המדור לילדים",
+      "output_path": "posts/שלח-המדור-לילדים.html",
+      "content_file": "content/posts/posts/שלח-המדור-לילדים.json"
+    },
+    {
+      "title": "שלח: הצדיק ששמר על כבוד ארץ ישראל",
+      "output_path": "posts/שלח-הצדיק-ששמר-על-כבוד-ארץ-ישראל.html",
+      "content_file": "content/posts/posts/שלח-הצדיק-ששמר-על-כבוד-ארץ-ישראל.json"
+    },
+    {
+      "title": "שלח: חטא המרגלים",
+      "output_path": "posts/שלח-חטא-המרגלים.html",
+      "content_file": "content/posts/posts/שלח-חטא-המרגלים.json"
+    },
+    {
+      "title": "שלח: חידות + פתרונות",
+      "output_path": "posts/שלח-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/שלח-חידות-פתרונות.json"
+    },
+    {
+      "title": "שלח: כשדור שלם חפר את קברו",
+      "output_path": "posts/שלח-כשדור-שלם-חפר-את-קברו.html",
+      "content_file": "content/posts/posts/שלח-כשדור-שלם-חפר-את-קברו.json"
+    },
+    {
+      "title": "שלח: למה לא התקבלה תשובת העם?",
+      "output_path": "posts/שלח-למה-לא-התקבלה-תשובת-העם.html",
+      "content_file": "content/posts/posts/שלח-למה-לא-התקבלה-תשובת-העם.json"
+    },
+    {
+      "title": "שלח: מי נשלח לרגל את הארץ?",
+      "output_path": "posts/שלח-מי-נשלח-לרגל-את-הארץ.html",
+      "content_file": "content/posts/posts/שלח-מי-נשלח-לרגל-את-הארץ.json"
+    },
+    {
+      "title": "שלח: מסע המרגלים - תקווה ונפילה",
+      "output_path": "posts/שלח-מסע-המרגלים-תקווה-ונפילה.html",
+      "content_file": "content/posts/posts/שלח-מסע-המרגלים-תקווה-ונפילה.json"
+    },
+    {
+      "title": "שלח: משחקים חכמים",
+      "output_path": "posts/שלח-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/שלח-משחקים-חכמים.json"
+    },
+    {
+      "title": "שלח: ריחוק עבודה זרה - עיקר התורה",
+      "output_path": "posts/שלח-ריחוק-עבודה-זרה-עיקר-התורה.html",
+      "content_file": "content/posts/posts/שלח-ריחוק-עבודה-זרה-עיקר-התורה.json"
+    },
+    {
+      "title": "שמות: 21 הפיכת רצף הגיוני לציר זמן",
+      "output_path": "posts/שמות-21-הפיכת-רצף-הגיוני-לציר-זמן.html",
+      "content_file": "content/posts/posts/שמות-21-הפיכת-רצף-הגיוני-לציר-זמן.json"
+    },
+    {
+      "title": "שמות: איך התחיל השיעבוד?",
+      "output_path": "posts/שמות-איך-התחיל-השיעבוד.html",
+      "content_file": "content/posts/posts/שמות-איך-התחיל-השיעבוד.json"
+    },
+    {
+      "title": "שמות: בני ישראל עבדים בארץ מצרים",
+      "output_path": "posts/שמות-בני-ישראל-עבדים-בארץ-מצרים.html",
+      "content_file": "content/posts/posts/שמות-בני-ישראל-עבדים-בארץ-מצרים.json"
+    },
+    {
+      "title": "שמות: הכל ענין של פרופורציה",
+      "output_path": "posts/שמות-הכל-ענין-של-פרופורציה.html",
+      "content_file": "content/posts/posts/שמות-הכל-ענין-של-פרופורציה.json"
+    },
+    {
+      "title": "שמות: המדור לילדים",
+      "output_path": "posts/שמות-המדור-לילדים.html",
+      "content_file": "content/posts/posts/שמות-המדור-לילדים.json"
+    },
+    {
+      "title": "שמות: וּבָאוּ הָאוֹבְדִים",
+      "output_path": "posts/שמות-וּבָאוּ-הָאוֹבְדִים.html",
+      "content_file": "content/posts/posts/שמות-וּבָאוּ-הָאוֹבְדִים.json"
+    },
+    {
+      "title": "שמות: חידות + פתרונות",
+      "output_path": "posts/שמות-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/שמות-חידות-פתרונות.json"
+    },
+    {
+      "title": "שמות: כוח הדיבור",
+      "output_path": "posts/שמות-כוח-הדיבור.html",
+      "content_file": "content/posts/posts/שמות-כוח-הדיבור.json"
+    },
+    {
+      "title": "שמות: למה הודח פרעה מכיסאו?",
+      "output_path": "posts/שמות-למה-הודח-פרעה-מכיסאו.html",
+      "content_file": "content/posts/posts/שמות-למה-הודח-פרעה-מכיסאו.json"
+    },
+    {
+      "title": "שמות: מה אתה בונה ומה נשאר?",
+      "output_path": "posts/שמות-מה-אתה-בונה-ומה-נשאר.html",
+      "content_file": "content/posts/posts/שמות-מה-אתה-בונה-ומה-נשאר.json"
+    },
+    {
+      "title": "שמות: מחשבות על כִּבְדוּת פֶּה ולשון",
+      "output_path": "posts/שמות-מחשבות-על-כִּבְדוּת-פֶּה-ולשון.html",
+      "content_file": "content/posts/posts/שמות-מחשבות-על-כִּבְדוּת-פֶּה-ולשון.json"
+    },
+    {
+      "title": "שמות: מי נכלל בשבעים הנפש?",
+      "output_path": "posts/שמות-מי-נכלל-בשבעים-הנפש.html",
+      "content_file": "content/posts/posts/שמות-מי-נכלל-בשבעים-הנפש.json"
+    },
+    {
+      "title": "שמות: מפכירת אצבעות להפרכת ראיות",
+      "output_path": "posts/שמות-מפכירת-אצבעות-להפרכת-ראיות.html",
+      "content_file": "content/posts/posts/שמות-מפכירת-אצבעות-להפרכת-ראיות.json"
+    },
+    {
+      "title": "שמות: משה רבנו 'איש חיל'",
+      "output_path": "posts/שמות-משה-רבנו-איש-חיל.html",
+      "content_file": "content/posts/posts/שמות-משה-רבנו-איש-חיל.json"
+    },
+    {
+      "title": "שמות: סוד אַבְנֵי הַסְּנֶה",
+      "output_path": "posts/שמות-סוד-אַבְנֵי-הַסְּנֶה.html",
+      "content_file": "content/posts/posts/שמות-סוד-אַבְנֵי-הַסְּנֶה.json"
+    },
+    {
+      "title": "שמות: סיור וירטואלי בפירמידות מצרים",
+      "output_path": "posts/שמות-סיור-וירטואלי-בפירמידות-מצרים.html",
+      "content_file": "content/posts/posts/שמות-סיור-וירטואלי-בפירמידות-מצרים.json"
+    },
+    {
+      "title": "שמיני: 34 איך בונים סדרה מתמשכת?",
+      "output_path": "posts/שמיני-34-איך-בונים-סדרה-מתמשכת.html",
+      "content_file": "content/posts/posts/שמיני-34-איך-בונים-סדרה-מתמשכת.json"
+    },
+    {
+      "title": "שמיני: אין סוף להמצאות",
+      "output_path": "posts/שמיני-אין-סוף-להמצאות.html",
+      "content_file": "content/posts/posts/שמיני-אין-סוף-להמצאות.json"
+    },
+    {
+      "title": "שמיני: האם מותר לאכול בני אדם?",
+      "output_path": "posts/שמיני-האם-מותר-לאכול-בני-אדם.html",
+      "content_file": "content/posts/posts/שמיני-האם-מותר-לאכול-בני-אדם.json"
+    },
+    {
+      "title": "שמיני: האם נידון למוות שומר דיאטה?",
+      "output_path": "posts/שמיני-האם-נידון-למוות-שומר-דיאטה.html",
+      "content_file": "content/posts/posts/שמיני-האם-נידון-למוות-שומר-דיאטה.json"
+    },
+    {
+      "title": "שמיני: החולה שמת ביום הגעת הרופא",
+      "output_path": "posts/שמיני-החולה-שמת-ביום-הגעת-הרופא.html",
+      "content_file": "content/posts/posts/שמיני-החולה-שמת-ביום-הגעת-הרופא.json"
+    },
+    {
+      "title": "שמיני: היום האחרון של המילואים",
+      "output_path": "posts/שמיני-היום-האחרון-של-המילואים.html",
+      "content_file": "content/posts/posts/שמיני-היום-האחרון-של-המילואים.json"
+    },
+    {
+      "title": "שמיני: המדור לילדים",
+      "output_path": "posts/שמיני-המדור-לילדים.html",
+      "content_file": "content/posts/posts/שמיני-המדור-לילדים.json"
+    },
+    {
+      "title": "שמיני: חידות + פתרונות",
+      "output_path": "posts/שמיני-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/שמיני-חידות-פתרונות.json"
+    },
+    {
+      "title": "שמיני: חיה ובהמה - מי כלול במי?",
+      "output_path": "posts/שמיני-חיה-ובהמה-מי-כלול-במי.html",
+      "content_file": "content/posts/posts/שמיני-חיה-ובהמה-מי-כלול-במי.json"
+    },
+    {
+      "title": "שמיני: כשרות הבהמות והחיות",
+      "output_path": "posts/שמיני-כשרות-הבהמות-והחיות.html",
+      "content_file": "content/posts/posts/שמיני-כשרות-הבהמות-והחיות.json"
+    },
+    {
+      "title": "שמיני: כשרות המאכלים והלשון",
+      "output_path": "posts/שמיני-כשרות-המאכלים-והלשון.html",
+      "content_file": "content/posts/posts/שמיני-כשרות-המאכלים-והלשון.json"
+    },
+    {
+      "title": "שמיני: מָה פֵּרוּשׁ הביטוי מַפְרֶסֶת פַּרְסָה?",
+      "output_path": "posts/שמיני-מָה-פֵּרוּשׁ-הביטוי-מַפְרֶסֶת-פַּרְסָה.html",
+      "content_file": "content/posts/posts/שמיני-מָה-פֵּרוּשׁ-הביטוי-מַפְרֶסֶת-פַּרְסָה.json"
+    },
+    {
+      "title": "שמיני: מחשבות על דממת אהרון",
+      "output_path": "posts/שמיני-מחשבות-על-דממת-אהרון.html",
+      "content_file": "content/posts/posts/שמיני-מחשבות-על-דממת-אהרון.json"
+    },
+    {
+      "title": "שמיני: משחקים חכמים",
+      "output_path": "posts/שמיני-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/שמיני-משחקים-חכמים.json"
+    },
+    {
+      "title": "שמיני: סימני כשרות - חובה לצפות!!!",
+      "output_path": "posts/שמיני-סימני-כשרות-חובה-לצפות.html",
+      "content_file": "content/posts/posts/שמיני-סימני-כשרות-חובה-לצפות.json"
+    },
+    {
+      "title": "שמיני: על תרשימי זרימה ועופות לאכילה",
+      "output_path": "posts/שמיני-על-תרשימי-זרימה-ועופות-לאכילה.html",
+      "content_file": "content/posts/posts/שמיני-על-תרשימי-זרימה-ועופות-לאכילה.json"
+    },
+    {
+      "title": "שמיני: ראיון עם מפקח כשרות",
+      "output_path": "posts/שמיני-ראיון-עם-מפקח-כשרות.html",
+      "content_file": "content/posts/posts/שמיני-ראיון-עם-מפקח-כשרות.json"
+    },
+    {
+      "title": "תולדות: 14 בדיקה עצמית עם טיעון נגדי",
+      "output_path": "posts/תולדות-14-בדיקה-עצמית-עם-טיעון-נגדי.html",
+      "content_file": "content/posts/posts/תולדות-14-בדיקה-עצמית-עם-טיעון-נגדי.json"
+    },
+    {
+      "title": "תולדות: אהבת עולם מול אהבה שנעלמה",
+      "output_path": "posts/תולדות-אהבת-עולם-מול-אהבה-שנעלמה.html",
+      "content_file": "content/posts/posts/תולדות-אהבת-עולם-מול-אהבה-שנעלמה.json"
+    },
+    {
+      "title": "תולדות: האם עשירים זקוקים להמלצות?",
+      "output_path": "posts/תולדות-האם-עשירים-זקוקים-להמלצות.html",
+      "content_file": "content/posts/posts/תולדות-האם-עשירים-זקוקים-להמלצות.json"
+    },
+    {
+      "title": "תולדות: \"הופעת בכורה\"",
+      "output_path": "posts/תולדות-הופעת-בכורה.html",
+      "content_file": "content/posts/posts/תולדות-הופעת-בכורה.json"
+    },
+    {
+      "title": "תולדות: המדור לילדים",
+      "output_path": "posts/תולדות-המדור-לילדים.html",
+      "content_file": "content/posts/posts/תולדות-המדור-לילדים.json"
+    },
+    {
+      "title": "תולדות: הצד השני של המטבע",
+      "output_path": "posts/תולדות-הצד-השני-של-המטבע.html",
+      "content_file": "content/posts/posts/תולדות-הצד-השני-של-המטבע.json"
+    },
+    {
+      "title": "תולדות: התינוק הזה דומה לי",
+      "output_path": "posts/תולדות-התינוק-הזה-דומה-לי.html",
+      "content_file": "content/posts/posts/תולדות-התינוק-הזה-דומה-לי.json"
+    },
+    {
+      "title": "תולדות: חידות + פתרונות",
+      "output_path": "posts/תולדות-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/תולדות-חידות-פתרונות.json"
+    },
+    {
+      "title": "תולדות: יעקב ועשו - בכורה וברכה",
+      "output_path": "posts/תולדות-יעקב-ועשו-בכורה-וברכה.html",
+      "content_file": "content/posts/posts/תולדות-יעקב-ועשו-בכורה-וברכה.json"
+    },
+    {
+      "title": "תולדות: מאה הצדדים של מאה שערים",
+      "output_path": "posts/תולדות-מאה-הצדדים-של-מאה-שערים.html",
+      "content_file": "content/posts/posts/תולדות-מאה-הצדדים-של-מאה-שערים.json"
+    },
+    {
+      "title": "תולדות: מחשבות על בקשה והודאה",
+      "output_path": "posts/תולדות-מחשבות-על-בקשה-והודאה.html",
+      "content_file": "content/posts/posts/תולדות-מחשבות-על-בקשה-והודאה.json"
+    },
+    {
+      "title": "תולדות: מכירת הבכורה בנזיד עדשים",
+      "output_path": "posts/תולדות-מכירת-הבכורה-בנזיד-עדשים.html",
+      "content_file": "content/posts/posts/תולדות-מכירת-הבכורה-בנזיד-עדשים.json"
+    },
+    {
+      "title": "תולדות: סוד החיים המאוזנים",
+      "output_path": "posts/תולדות-סוד-החיים-המאוזנים.html",
+      "content_file": "content/posts/posts/תולדות-סוד-החיים-המאוזנים.json"
+    },
+    {
+      "title": "תולדות: סוד המים החיים",
+      "output_path": "posts/תולדות-סוד-המים-החיים.html",
+      "content_file": "content/posts/posts/תולדות-סוד-המים-החיים.json"
+    },
+    {
+      "title": "תולדות: על דוּכָּסִים עֲנִיִּים וּפָּרָדוֹקְסִים",
+      "output_path": "posts/תולדות-על-דוּכָּסִים-עֲנִיִּים-וּפָּרָדוֹקְסִים.html",
+      "content_file": "content/posts/posts/תולדות-על-דוּכָּסִים-עֲנִיִּים-וּפָּרָדוֹקְסִים.json"
+    },
+    {
+      "title": "תולדות: על קְצִינִים בִּמְצוּקָה",
+      "output_path": "posts/תולדות-על-קְצִינִים-בִּמְצוּקָה.html",
+      "content_file": "content/posts/posts/תולדות-על-קְצִינִים-בִּמְצוּקָה.json"
+    },
+    {
+      "title": "תזריע: 01 חשבון וזהות - מה נשמר?",
+      "output_path": "posts/תזריע-01-חשבון-וזהות-מה-נשמר.html",
+      "content_file": "content/posts/posts/תזריע-01-חשבון-וזהות-מה-נשמר.json"
+    },
+    {
+      "title": "תזריע: האם העושר נמצא רק באמריקה?",
+      "output_path": "posts/תזריע-האם-העושר-נמצא-רק-באמריקה.html",
+      "content_file": "content/posts/posts/תזריע-האם-העושר-נמצא-רק-באמריקה.json"
+    },
+    {
+      "title": "תזריע: היום אין קבלת קהל !",
+      "output_path": "posts/תזריע-היום-אין-קבלת-קהל.html",
+      "content_file": "content/posts/posts/תזריע-היום-אין-קבלת-קהל.json"
+    },
+    {
+      "title": "תזריע: המדור לילדים",
+      "output_path": "posts/תזריע-המדור-לילדים.html",
+      "content_file": "content/posts/posts/תזריע-המדור-לילדים.json"
+    },
+    {
+      "title": "תזריע: המצורע הביא בדידות על עצמו",
+      "output_path": "posts/תזריע-המצורע-הביא-בדידות-על-עצמו.html",
+      "content_file": "content/posts/posts/תזריע-המצורע-הביא-בדידות-על-עצמו.json"
+    },
+    {
+      "title": "תזריע: התוצאות של לשון הרע",
+      "output_path": "posts/תזריע-התוצאות-של-לשון-הרע.html",
+      "content_file": "content/posts/posts/תזריע-התוצאות-של-לשון-הרע.json"
+    },
+    {
+      "title": "תזריע: וְיָלְדָה לעומת תֵּלֵד",
+      "output_path": "posts/תזריע-וְיָלְדָה-לעומת-תֵּלֵד.html",
+      "content_file": "content/posts/posts/תזריע-וְיָלְדָה-לעומת-תֵּלֵד.json"
+    },
+    {
+      "title": "תזריע: חידות + פתרונות",
+      "output_path": "posts/תזריע-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/תזריע-חידות-פתרונות.json"
+    },
+    {
+      "title": "תזריע: טהרת היולדת",
+      "output_path": "posts/תזריע-טהרת-היולדת.html",
+      "content_file": "content/posts/posts/תזריע-טהרת-היולדת.json"
+    },
+    {
+      "title": "תזריע: למי נועדו נגעי הצרעת?",
+      "output_path": "posts/תזריע-למי-נועדו-נגעי-הצרעת.html",
+      "content_file": "content/posts/posts/תזריע-למי-נועדו-נגעי-הצרעת.json"
+    },
+    {
+      "title": "תזריע: מה מסתתר מאחורי החומות?",
+      "output_path": "posts/תזריע-מה-מסתתר-מאחורי-החומות.html",
+      "content_file": "content/posts/posts/תזריע-מה-מסתתר-מאחורי-החומות.json"
+    },
+    {
+      "title": "תזריע: מחשבות על המצורע הבודד",
+      "output_path": "posts/תזריע-מחשבות-על-המצורע-הבודד.html",
+      "content_file": "content/posts/posts/תזריע-מחשבות-על-המצורע-הבודד.json"
+    },
+    {
+      "title": "תזריע: משחקים חכמים",
+      "output_path": "posts/תזריע-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/תזריע-משחקים-חכמים.json"
+    },
+    {
+      "title": "תזריע: על מכונת אריגה - נול",
+      "output_path": "posts/תזריע-על-מכונת-אריגה-נול.html",
+      "content_file": "content/posts/posts/תזריע-על-מכונת-אריגה-נול.json"
+    },
+    {
+      "title": "תזריע: על עֲרָבִים וְעַרְבוּיוֹת בֵּינְלְאֻמִּיּוֹת",
+      "output_path": "posts/תזריע-על-עֲרָבִים-וְעַרְבוּיוֹת-בֵּינְלְאֻמִּיּוֹת.html",
+      "content_file": "content/posts/posts/תזריע-על-עֲרָבִים-וְעַרְבוּיוֹת-בֵּינְלְאֻמִּיּוֹת.json"
+    },
+    {
+      "title": "תזריע: ראיון עם עובד מעבדה פתולוגית",
+      "output_path": "posts/תזריע-ראיון-עם-עובד-מעבדה-פתולוגית.html",
+      "content_file": "content/posts/posts/תזריע-ראיון-עם-עובד-מעבדה-פתולוגית.json"
+    },
+    {
+      "title": "תזריע: תורת היולדת וטומאת הצרעת",
+      "output_path": "posts/תזריע-תורת-היולדת-וטומאת-הצרעת.html",
+      "content_file": "content/posts/posts/תזריע-תורת-היולדת-וטומאת-הצרעת.json"
+    },
+    {
+      "title": "תצווה: 28 איך לשמר אמינות ודיוק?",
+      "output_path": "posts/תצווה-28-איך-לשמר-אמינות-ודיוק.html",
+      "content_file": "content/posts/posts/תצווה-28-איך-לשמר-אמינות-ודיוק.json"
+    },
+    {
+      "title": "תצווה: איזו נעל נועלים ראשונה?",
+      "output_path": "posts/תצווה-איזו-נעל-נועלים-ראשונה.html",
+      "content_file": "content/posts/posts/תצווה-איזו-נעל-נועלים-ראשונה.json"
+    },
+    {
+      "title": "תצווה: איך מפיקים שמן זית?",
+      "output_path": "posts/תצווה-איך-מפיקים-שמן-זית.html",
+      "content_file": "content/posts/posts/תצווה-איך-מפיקים-שמן-זית.json"
+    },
+    {
+      "title": "תצווה: בגדי כהונה",
+      "output_path": "posts/תצווה-בגדי-כהונה.html",
+      "content_file": "content/posts/posts/תצווה-בגדי-כהונה.json"
+    },
+    {
+      "title": "תצווה: הַשָּׁר לְפִתּוּחַ לְאֻמִּי",
+      "output_path": "posts/תצווה-הַשָּׁר-לְפִתּוּחַ-לְאֻמִּי.html",
+      "content_file": "content/posts/posts/תצווה-הַשָּׁר-לְפִתּוּחַ-לְאֻמִּי.json"
+    },
+    {
+      "title": "תצווה: המדור לילדים",
+      "output_path": "posts/תצווה-המדור-לילדים.html",
+      "content_file": "content/posts/posts/תצווה-המדור-לילדים.json"
+    },
+    {
+      "title": "תצווה: חידות + פתרונות",
+      "output_path": "posts/תצווה-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/תצווה-חידות-פתרונות.json"
+    },
+    {
+      "title": "תצווה: \"כך ניצלתי מאסון המסוקים\"",
+      "output_path": "posts/תצווה-כך-ניצלתי-מאסון-המסוקים.html",
+      "content_file": "content/posts/posts/תצווה-כך-ניצלתי-מאסון-המסוקים.json"
+    },
+    {
+      "title": "תצווה: למה משה לא נבחר לכהן גדול?",
+      "output_path": "posts/תצווה-למה-משה-לא-נבחר-לכהן-גדול.html",
+      "content_file": "content/posts/posts/תצווה-למה-משה-לא-נבחר-לכהן-גדול.json"
+    },
+    {
+      "title": "תצווה: לראות את הכנת בגדי הכהונה",
+      "output_path": "posts/תצווה-לראות-את-הכנת-בגדי-הכהונה.html",
+      "content_file": "content/posts/posts/תצווה-לראות-את-הכנת-בגדי-הכהונה.json"
+    },
+    {
+      "title": "תצווה: מחשבות מאירות",
+      "output_path": "posts/תצווה-מחשבות-מאירות.html",
+      "content_file": "content/posts/posts/תצווה-מחשבות-מאירות.json"
+    },
+    {
+      "title": "תצווה: מערכת התאורה בבית המקדש",
+      "output_path": "posts/תצווה-מערכת-התאורה-בבית-המקדש.html",
+      "content_file": "content/posts/posts/תצווה-מערכת-התאורה-בבית-המקדש.json"
+    },
+    {
+      "title": "תצווה: מפעיל חדר בקרה עירוני",
+      "output_path": "posts/תצווה-מפעיל-חדר-בקרה-עירוני.html",
+      "content_file": "content/posts/posts/תצווה-מפעיל-חדר-בקרה-עירוני.json"
+    },
+    {
+      "title": "תצווה: מצוות הדלקת המנורה במקדש",
+      "output_path": "posts/תצווה-מצוות-הדלקת-המנורה-במקדש.html",
+      "content_file": "content/posts/posts/תצווה-מצוות-הדלקת-המנורה-במקדש.json"
+    },
+    {
+      "title": "תצווה: משחקים חכמים",
+      "output_path": "posts/תצווה-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/תצווה-משחקים-חכמים.json"
+    },
+    {
+      "title": "תצווה: על כַּת וּכְתִיתָה - קָט וּקְטָטָה",
+      "output_path": "posts/תצווה-על-כַּת-וּכְתִיתָה-קָט-וּקְטָטָה.html",
+      "content_file": "content/posts/posts/תצווה-על-כַּת-וּכְתִיתָה-קָט-וּקְטָטָה.json"
+    },
+    {
+      "title": "תצווה: שתי כפרות - שתי מטרות",
+      "output_path": "posts/תצווה-שתי-כפרות-שתי-מטרות.html",
+      "content_file": "content/posts/posts/תצווה-שתי-כפרות-שתי-מטרות.json"
+    },
+    {
+      "title": "תרומה: 27 בניית פרויקט תוכן בשלבים",
+      "output_path": "posts/תרומה-27-בניית-פרויקט-תוכן-בשלבים.html",
+      "content_file": "content/posts/posts/תרומה-27-בניית-פרויקט-תוכן-בשלבים.json"
+    },
+    {
+      "title": "תרומה: אלו חומרים נתרמו למשכן?",
+      "output_path": "posts/תרומה-אלו-חומרים-נתרמו-למשכן.html",
+      "content_file": "content/posts/posts/תרומה-אלו-חומרים-נתרמו-למשכן.json"
+    },
+    {
+      "title": "תרומה: ארון הברית",
+      "output_path": "posts/תרומה-ארון-הברית.html",
+      "content_file": "content/posts/posts/תרומה-ארון-הברית.json"
+    },
+    {
+      "title": "תרומה: בית המקדש השני",
+      "output_path": "posts/תרומה-בית-המקדש-השני.html",
+      "content_file": "content/posts/posts/תרומה-בית-המקדש-השני.json"
+    },
+    {
+      "title": "תרומה: הַבָּלָדָה עַל \"הַנָּדִיב הַיָּדוּעַ\"",
+      "output_path": "posts/תרומה-הַבָּלָדָה-עַל-הַנָּדִיב-הַיָּדוּעַ.html",
+      "content_file": "content/posts/posts/תרומה-הַבָּלָדָה-עַל-הַנָּדִיב-הַיָּדוּעַ.json"
+    },
+    {
+      "title": "תרומה: המדור לילדים",
+      "output_path": "posts/תרומה-המדור-לילדים.html",
+      "content_file": "content/posts/posts/תרומה-המדור-לילדים.json"
+    },
+    {
+      "title": "תרומה: המשכן וכליו",
+      "output_path": "posts/תרומה-המשכן-וכליו.html",
+      "content_file": "content/posts/posts/תרומה-המשכן-וכליו.json"
+    },
+    {
+      "title": "תרומה: חידות + פתרונות",
+      "output_path": "posts/תרומה-חידות-פתרונות.html",
+      "content_file": "content/posts/posts/תרומה-חידות-פתרונות.json"
+    },
+    {
+      "title": "תרומה: יתד תקועה בקרקע",
+      "output_path": "posts/תרומה-יתד-תקועה-בקרקע.html",
+      "content_file": "content/posts/posts/תרומה-יתד-תקועה-בקרקע.json"
+    },
+    {
+      "title": "תרומה: לתת שוב ושוב",
+      "output_path": "posts/תרומה-לתת-שוב-ושוב.html",
+      "content_file": "content/posts/posts/תרומה-לתת-שוב-ושוב.json"
+    },
+    {
+      "title": "תרומה: מחשבות מילוליות",
+      "output_path": "posts/תרומה-מחשבות-מילוליות.html",
+      "content_file": "content/posts/posts/תרומה-מחשבות-מילוליות.json"
+    },
+    {
+      "title": "תרומה: מצוות בניית המקדש",
+      "output_path": "posts/תרומה-מצוות-בניית-המקדש.html",
+      "content_file": "content/posts/posts/תרומה-מצוות-בניית-המקדש.json"
+    },
+    {
+      "title": "תרומה: משחקים חכמים",
+      "output_path": "posts/תרומה-משחקים-חכמים.html",
+      "content_file": "content/posts/posts/תרומה-משחקים-חכמים.json"
+    },
+    {
+      "title": "תרומה: נותנים או לוקחים?",
+      "output_path": "posts/תרומה-נותנים-או-לוקחים.html",
+      "content_file": "content/posts/posts/תרומה-נותנים-או-לוקחים.json"
+    },
+    {
+      "title": "תרומה: ראיון עם משמר חומרים עתיקים",
+      "output_path": "posts/תרומה-ראיון-עם-משמר-חומרים-עתיקים.html",
+      "content_file": "content/posts/posts/תרומה-ראיון-עם-משמר-חומרים-עתיקים.json"
+    },
+    {
+      "title": "תרומה: שִׂיחָה עַל מְשִׁיחָה וּמְשִׁיכָה",
+      "output_path": "posts/תרומה-שִׂיחָה-עַל-מְשִׁיחָה-וּמְשִׁיכָה.html",
+      "content_file": "content/posts/posts/תרומה-שִׂיחָה-עַל-מְשִׁיחָה-וּמְשִׁיכָה.json"
+    },
+    {
+      "title": "תרומה: 'תחש' - איזו חיה היא?",
+      "output_path": "posts/תרומה-תחש-איזו-חיה-היא.html",
+      "content_file": "content/posts/posts/תרומה-תחש-איזו-חיה-היא.json"
+    }
+  ],
+  "pages": [
+    {
+      "title": "אודות",
+      "output_path": "p/אודות.html",
+      "content_file": "content/pages/p/אודות.json"
+    },
+    {
+      "title": "אידנקסה",
+      "output_path": "p/אידנקסה.html",
+      "content_file": "content/pages/p/אידנקסה.json"
+    },
+    {
+      "title": "✨ בקצרה",
+      "output_path": "p/בקצרה.html",
+      "content_file": "content/pages/p/בקצרה.json"
+    },
+    {
+      "title": "כבודינה",
+      "output_path": "p/כבודינה.html",
+      "content_file": "content/pages/p/כבודינה.json"
+    },
+    {
+      "title": "מפגש משפחתי עם פרשת השבוע",
+      "output_path": "p/מפגש-משפחתי-עם-פרשת-השבוע.html",
+      "content_file": "content/pages/p/מפגש-משפחתי-עם-פרשת-השבוע.json"
+    }
+  ]
+}
