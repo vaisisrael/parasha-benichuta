@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get content migration branch
+      - name: Get main branch
         uses: actions/checkout@v4
         with:
-          ref: content-migration
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -44,5 +44,5 @@ jobs:
             echo "No generated series changes to commit."
           else
             git commit -m "Build series from independent content"
-            git push origin HEAD:content-migration
+            git push origin HEAD:main
           fi
