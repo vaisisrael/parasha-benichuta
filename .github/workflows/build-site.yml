@@ -48,7 +48,6 @@ jobs:
             posts \
             search \
             sections \
-            series
           do
             if [ -e "$item" ]; then
               cp -a "$item" _site/
