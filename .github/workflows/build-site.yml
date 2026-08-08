@@ -46,7 +46,7 @@ jobs:
             p \
             parashot \
             posts \
-            search \
+            search
           do
             if [ -e "$item" ]; then
               cp -a "$item" _site/
