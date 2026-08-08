@@ -637,6 +637,11 @@ def layout(
     src="{prefix}assets/js/shabbat-lock.js"
   ></script>
 
+  <script
+    defer
+    src="{prefix}shorts/shorts.js"
+  ></script>
+
 </head>
 
 <body>
