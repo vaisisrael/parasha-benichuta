@@ -41,7 +41,6 @@ jobs:
             CNAME \
             assets \
             about \
-            family \
             games \
             p \
             parashot \
