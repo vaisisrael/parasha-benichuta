@@ -935,11 +935,9 @@ def build(
 
             chips.append(
                 (
-                    f'<a href="'
-                    f'{prefix}sections/'
-                    f'{safe_slug(section_name)}/">'
+                    f'<span>'
                     f'{html.escape(section_name)}'
-                    f'</a>'
+                    f'</span>'
                 )
             )
 
@@ -1132,65 +1130,12 @@ def build(
                 ),
             )
 
-    # דפי מדורים נשמרים
-    # לצורך קישורים ישנים,
-    # אף שהקישור "מדורים"
-    # אינו מופיע בתפריט.
-
-    for section in SECTION_LABELS:
-        group = [
-            item
-            for item in posts
-            if (
-                item.section
-                == section
-            )
-        ]
-
-        section_name = (
-            section.removeprefix(
-                "🔖"
-            )
-        )
-
-        relative = (
-            f"sections/"
-            f"{safe_slug(section_name)}/"
-            f"index.html"
-        )
-
-        prefix = rel_prefix(
-            relative
-        )
-
-        body = (
-            '<header class="archive-header">'
-            '<div class="eyebrow">'
-            'מדור'
-            '</div>'
-            f'<h1>'
-            f'{html.escape(section_name)}'
-            f'</h1>'
-            '</header>'
-            '<section class="cards-grid">'
-            f'{"".join(card(item, prefix) for item in group)}'
-            '</section>'
-        )
-
-        write_file(
-            out,
-            relative,
-            layout(
-                section_name,
-                body,
-                relative,
-                parashot,
-            ),
-        )
+    # דפי מדורים אינם נוצרים עוד.
+    # שם המדור נשמר בתוך הפוסטים ובכרטיסים,
+    # אך אין עוד דפי ארכיון תחת sections/.
 
     # התיקיות:
     # games
-    # series
     # family
     # search
     # about
