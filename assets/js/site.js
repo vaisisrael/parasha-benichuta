@@ -85,31 +85,20 @@
 
   const fixedSectionImages = {
     "ילדים": {
-      path:
-        "assets/images/section-covers/children.png",
-      alt:
-        "מדור הילדים של פרשת השבוע"
+      path: "assets/images/section-covers/children.png",
+      alt: "מדור הילדים של פרשת השבוע"
     },
-
     "אסיף": {
-      path:
-        "assets/images/section-covers/asif.png",
-      alt:
-        "מדור אסיף"
+      path: "assets/images/section-covers/asif.png",
+      alt: "מדור אסיף"
     },
-
     "משחקים": {
-      path:
-        "assets/images/section-covers/games.png",
-      alt:
-        "משחקי פרשת השבוע"
+      path: "assets/images/section-covers/games.png",
+      alt: "משחקי פרשת השבוע"
     },
-
     "המשחקיה": {
-      path:
-        "assets/images/section-covers/games.png",
-      alt:
-        "משחקי פרשת השבוע"
+      path: "assets/images/section-covers/games.png",
+      alt: "משחקי פרשת השבוע"
     }
   };
 
@@ -131,7 +120,6 @@
         "תנ\"ך"
       ]
     },
-
     {
       id: "stories",
       title: "סיפורים ורעיונות",
@@ -146,7 +134,6 @@
         "שיר"
       ]
     },
-
     {
       id: "family",
       title: "לכל המשפחה",
@@ -179,10 +166,7 @@
       .trim()
       .toLowerCase()
       .replace(/[\s_/]+/g, "-")
-      .replace(
-        /[^\w\u0590-\u05ff-]+/g,
-        ""
-      )
+      .replace(/[^\w\u0590-\u05ff-]+/g, "")
       .replace(/-+/g, "-")
       .replace(/^-|-$/g, "");
   }
@@ -220,37 +204,19 @@
     return null;
   }
 
-  function getBookForParasha(
-    parashaName
-  ) {
-    const label =
-      parashaLabels[parashaName];
+  function getBookForParasha(parashaName) {
+    const label = parashaLabels[parashaName];
+    if (!label) return null;
 
-    if (!label) {
-      return null;
-    }
-
-    const match =
-      label.match(/^([1-5])-/);
-
-    if (!match) {
-      return null;
-    }
+    const match = label.match(/^([1-5])-/);
+    if (!match) return null;
 
     return bookNames[match[1]] || null;
   }
 
-  function getParashaArchiveUrl(
-    parashaName
-  ) {
-    const book =
-      getBookForParasha(
-        parashaName
-      );
-
-    if (!book) {
-      return null;
-    }
+  function getParashaArchiveUrl(parashaName) {
+    const book = getBookForParasha(parashaName);
+    if (!book) return null;
 
     return new URL(
       `parashot/${safeSlug(book)}/${safeSlug(parashaName)}/`,
@@ -258,48 +224,29 @@
     );
   }
 
-  function normalizeParashaPageHeader(
-    parashaName
-  ) {
-    if (!parashaName) {
-      return;
-    }
+  function normalizeParashaPageHeader(parashaName) {
+    if (!parashaName) return;
 
     const archiveHeader =
-      document.querySelector(
-        ".archive-header"
-      );
+      document.querySelector(".archive-header");
 
-    if (!archiveHeader) {
-      return;
-    }
+    if (!archiveHeader) return;
 
-    archiveHeader.classList.remove(
-      "archive-header"
-    );
-
-    archiveHeader.classList.add(
-      "hero",
-      "hero-compact"
-    );
+    archiveHeader.classList.remove("archive-header");
+    archiveHeader.classList.add("hero", "hero-compact");
 
     const eyebrow =
-      archiveHeader.querySelector(
-        ".eyebrow"
-      );
+      archiveHeader.querySelector(".eyebrow");
 
     if (eyebrow) {
       eyebrow.remove();
     }
 
     const heading =
-      archiveHeader.querySelector(
-        "h1"
-      );
+      archiveHeader.querySelector("h1");
 
     if (heading) {
-      heading.textContent =
-        `פרשת ${parashaName}`;
+      heading.textContent = `פרשת ${parashaName}`;
     }
 
     archiveHeader
@@ -309,121 +256,67 @@
       });
   }
 
-  function getGamesUrl(
-    parashaName
-  ) {
-    const label =
-      parashaLabels[parashaName];
+  function getGamesUrl(parashaName) {
+    const label = parashaLabels[parashaName];
+    if (!label) return null;
 
-    if (!label) {
-      return null;
-    }
-
-    const url =
-      new URL(
-        "games/",
-        siteRoot
-      );
-
-    url.searchParams.set(
-      "label",
-      label
-    );
+    const url = new URL("games/", siteRoot);
+    url.searchParams.set("label", label);
 
     return url.href;
   }
 
   function setupNavigation() {
-    const toggle =
-      document.querySelector(
-        ".menu-toggle"
-      );
-
-    const nav =
-      document.querySelector(
-        ".main-nav"
-      );
+    const toggle = document.querySelector(".menu-toggle");
+    const nav = document.querySelector(".main-nav");
 
     if (
       toggle &&
       nav &&
-      toggle.dataset.navigationReady
-      !== "true"
+      toggle.dataset.navigationReady !== "true"
     ) {
-      toggle.dataset.navigationReady =
-        "true";
+      toggle.dataset.navigationReady = "true";
 
-      toggle.addEventListener(
-        "click",
-        () => {
-          const open =
-            nav.classList.toggle(
-              "open"
-            );
-
-          toggle.setAttribute(
-            "aria-expanded",
-            String(open)
-          );
-        }
-      );
+      toggle.addEventListener("click", () => {
+        const open = nav.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", String(open));
+      });
     }
 
     document
-      .querySelectorAll(
-        ".has-sub > button"
-      )
+      .querySelectorAll(".has-sub > button")
       .forEach((button) => {
         if (
-          button.dataset.navigationReady
-          === "true"
+          button.dataset.navigationReady === "true"
         ) {
           return;
         }
 
-        button.dataset.navigationReady =
-          "true";
+        button.dataset.navigationReady = "true";
 
-        button.addEventListener(
-          "click",
-          (event) => {
-            event.preventDefault();
-
-            button.parentElement
-              ?.classList.toggle(
-                "open"
-              );
-          }
-        );
+        button.addEventListener("click", (event) => {
+          event.preventDefault();
+          button.parentElement?.classList.toggle("open");
+        });
       });
   }
 
   function removeNavigationItems() {
-    const unwanted =
-      new Set([
-        "מדורים",
-        "דף המשפחה",
-        "משחקים"
-      ]);
+    const unwanted = new Set([
+      "מדורים",
+      "דף המשפחה",
+      "משחקים"
+    ]);
 
     document
-      .querySelectorAll(
-        ".main-nav li"
-      )
+      .querySelectorAll(".main-nav li")
       .forEach((item) => {
         const own =
-          item.querySelector(
-            ":scope > a, :scope > button"
-          );
+          item.querySelector(":scope > a, :scope > button");
 
-        if (!own) {
-          return;
-        }
+        if (!own) return;
 
-        const text =
-          normalizeText(
-            own.textContent
-          );
+        const text = normalizeText(own.textContent);
 
         if (
           unwanted.has(text) ||
@@ -437,22 +330,13 @@
   }
 
   function removeHeroDescription() {
-    const hero =
-      document.querySelector(
-        ".hero"
-      );
-
-    if (!hero) {
-      return;
-    }
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
 
     hero
       .querySelectorAll("p")
       .forEach((paragraph) => {
-        const text =
-          normalizeText(
-            paragraph.textContent
-          );
+        const text = normalizeText(paragraph.textContent);
 
         if (
           text ===
@@ -462,21 +346,16 @@
         }
       });
 
-    hero.classList.add(
-      "hero-compact"
-    );
+    hero.classList.add("hero-compact");
   }
 
   function removeWeeklyEyebrow() {
     document
-      .querySelectorAll(
-        ".hero > .eyebrow"
-      )
+      .querySelectorAll(".hero > .eyebrow")
       .forEach((eyebrow) => {
         if (
-          normalizeText(
-            eyebrow.textContent
-          ) === "הגיליון השבועי"
+          normalizeText(eyebrow.textContent) ===
+          "הגיליון השבועי"
         ) {
           eyebrow.remove();
         }
@@ -485,25 +364,19 @@
 
   function getCardLabel(card) {
     return normalizeText(
-      card.querySelector(
-        ".eyebrow"
-      )?.textContent
+      card.querySelector(".eyebrow")?.textContent
     );
   }
 
   function removeBinaCards() {
     document
-      .querySelectorAll(
-        ".card"
-      )
+      .querySelectorAll(".card")
       .forEach((card) => {
-        const label =
-          getCardLabel(card);
+        const label = getCardLabel(card);
 
         if (
           label === "בינה" ||
-          label ===
-            "בינה מלאכותית"
+          label === "בינה מלאכותית"
         ) {
           card.remove();
         }
@@ -512,60 +385,37 @@
 
   function removeOldGamesContent() {
     document
-      .querySelectorAll(
-        ".card"
-      )
+      .querySelectorAll(".card")
       .forEach((card) => {
-        if (
-          getCardLabel(card)
-          === "המשחקיה"
-        ) {
+        if (getCardLabel(card) === "המשחקיה") {
           card.remove();
         }
       });
   }
 
-  function addGamesCard(
-    parashaName
-  ) {
-    const gamesUrl =
-      getGamesUrl(
-        parashaName
-      );
-
-    const grid =
-      document.querySelector(
-        ".cards-grid"
-      );
+  function addGamesCard(parashaName) {
+    const gamesUrl = getGamesUrl(parashaName);
+    const grid = document.querySelector(".cards-grid");
 
     if (
       !gamesUrl ||
       !grid ||
-      grid.querySelector(
-        ".games-system-card"
-      )
+      grid.querySelector(".games-system-card")
     ) {
       return;
     }
 
-    const imageUrl =
-      new URL(
-        fixedSectionImages[
-          "משחקים"
-        ].path,
-        siteRoot
-      ).href;
+    const imageUrl = new URL(
+      fixedSectionImages["משחקים"].path,
+      siteRoot
+    ).href;
 
-    const card =
-      document.createElement(
-        "article"
-      );
+    const card = document.createElement("article");
 
     card.className =
       "card games-system-card fixed-cover-card";
 
-    card.dataset.gamesUrl =
-      gamesUrl;
+    card.dataset.gamesUrl = gamesUrl;
 
     card.innerHTML = `
       <a
@@ -580,22 +430,15 @@
       </a>
 
       <div class="card-body">
-
-        <div class="eyebrow">
-          משחקים
-        </div>
-
+        <div class="eyebrow">משחקים</div>
         <h2>
           <a href="${gamesUrl}">
             משחקי פרשת ${parashaName}
           </a>
         </h2>
-
         <p>
-          משחקים, חידות ואתגרים אינטראקטיביים
-          סביב פרשת ${parashaName}.
+          משחקים, חידות ואתגרים אינטראקטיביים סביב פרשת ${parashaName}.
         </p>
-
       </div>
     `;
 
@@ -604,164 +447,82 @@
 
   function applyFixedSectionImagesToCards() {
     document
-      .querySelectorAll(
-        ".card"
-      )
+      .querySelectorAll(".card")
       .forEach((card) => {
         const def =
-          fixedSectionImages[
-            getCardLabel(card)
-          ];
+          fixedSectionImages[getCardLabel(card)];
 
-        if (!def) {
-          return;
-        }
+        if (!def) return;
 
-        const media =
-          card.querySelector(
-            ".card-media"
-          );
+        const media = card.querySelector(".card-media");
+        if (!media) return;
 
-        if (!media) {
-          return;
-        }
-
-        let image =
-          media.querySelector(
-            "img"
-          );
+        let image = media.querySelector("img");
 
         if (!image) {
-          image =
-            document.createElement(
-              "img"
-            );
-
-          media.replaceChildren(
-            image
-          );
+          image = document.createElement("img");
+          media.replaceChildren(image);
         }
 
-        image.src =
-          new URL(
-            def.path,
-            siteRoot
-          ).href;
-
-        image.alt =
-          def.alt;
+        image.src = new URL(def.path, siteRoot).href;
+        image.alt = def.alt;
 
         [
           "srcset",
           "sizes",
           "width",
           "height"
-        ].forEach(
-          (attribute) => {
-            image.removeAttribute(
-              attribute
-            );
-          }
-        );
+        ].forEach((attribute) => {
+          image.removeAttribute(attribute);
+        });
 
-        card.classList.add(
-          "fixed-cover-card"
-        );
+        card.classList.add("fixed-cover-card");
       });
   }
 
   function getPostSectionLabel() {
-    const text =
-      normalizeText(
-        `${
-          document.querySelector(
-            ".post-meta"
-          )?.textContent || ""
-        } ${
-          document.querySelector(
-            ".post-header"
-          )?.textContent || ""
-        }`
-      );
+    const text = normalizeText(
+      `${
+        document.querySelector(".post-meta")?.textContent || ""
+      } ${
+        document.querySelector(".post-header")?.textContent || ""
+      }`
+    );
 
     return (
-      Object.keys(
-        fixedSectionImages
-      ).find(
-        (label) =>
-          text.includes(label)
-      ) || null
+      Object.keys(fixedSectionImages)
+        .find((label) => text.includes(label)) || null
     );
   }
 
   function applyFixedSectionImageToPost() {
-    const content =
-      document.querySelector(
-        ".post-content"
-      );
+    const content = document.querySelector(".post-content");
+    const def = fixedSectionImages[getPostSectionLabel()];
+    const image = content?.querySelector("img");
 
-    const def =
-      fixedSectionImages[
-        getPostSectionLabel()
-      ];
+    if (!content || !def || !image) return;
 
-    const image =
-      content?.querySelector(
-        "img"
-      );
+    image.src = new URL(def.path, siteRoot).href;
+    image.alt = def.alt;
 
-    if (
-      !content ||
-      !def ||
-      !image
-    ) {
-      return;
-    }
-
-    image.src =
-      new URL(
-        def.path,
-        siteRoot
-      ).href;
-
-    image.alt =
-      def.alt;
-
-    [
-      "srcset",
-      "sizes"
-    ].forEach(
-      (attribute) => {
-        image.removeAttribute(
-          attribute
-        );
-      }
-    );
+    ["srcset", "sizes"].forEach((attribute) => {
+      image.removeAttribute(attribute);
+    });
 
     image
       .closest("picture")
-      ?.querySelectorAll(
-        "source"
-      )
+      ?.querySelectorAll("source")
       .forEach((source) => {
         source.remove();
       });
   }
 
   function removePostDate() {
-    const header =
-      document.querySelector(
-        ".post-header"
-      );
-
-    if (!header) {
-      return;
-    }
+    const header = document.querySelector(".post-header");
+    if (!header) return;
 
     header
-      .querySelectorAll(
-        ".post-date, time"
-      )
+      .querySelectorAll(".post-date, time")
       .forEach((element) => {
         element.remove();
       });
@@ -770,17 +531,11 @@
       /^\s*\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\s*$/;
 
     header
-      .querySelectorAll(
-        "span, div, p"
-      )
+      .querySelectorAll("span, div, p")
       .forEach((element) => {
         if (
           !element.children.length &&
-          datePattern.test(
-            normalizeText(
-              element.textContent
-            )
-          )
+          datePattern.test(normalizeText(element.textContent))
         ) {
           element.remove();
         }
@@ -788,22 +543,10 @@
   }
 
   function normalizePostMainImage() {
-    const content =
-      document.querySelector(
-        ".post-content"
-      );
+    const content = document.querySelector(".post-content");
+    const image = content?.querySelector("img");
 
-    const image =
-      content?.querySelector(
-        "img"
-      );
-
-    if (
-      !content ||
-      !image
-    ) {
-      return;
-    }
+    if (!content || !image) return;
 
     [
       "width",
@@ -812,22 +555,14 @@
       "sizes",
       "align",
       "style"
-    ].forEach(
-      (attribute) => {
-        image.removeAttribute(
-          attribute
-        );
-      }
-    );
+    ].forEach((attribute) => {
+      image.removeAttribute(attribute);
+    });
 
-    image.classList.add(
-      "post-main-image"
-    );
+    image.classList.add("post-main-image");
 
     const wrapper =
-      image.closest(
-        "figure, p, div, a"
-      );
+      image.closest("figure, p, div, a");
 
     if (
       wrapper &&
@@ -839,17 +574,11 @@
         "height",
         "align",
         "style"
-      ].forEach(
-        (attribute) => {
-          wrapper.removeAttribute(
-            attribute
-          );
-        }
-      );
+      ].forEach((attribute) => {
+        wrapper.removeAttribute(attribute);
+      });
 
-      wrapper.classList.add(
-        "post-main-image-wrap"
-      );
+      wrapper.classList.add("post-main-image-wrap");
     }
   }
 
@@ -861,9 +590,7 @@
     );
   }
 
-  function getClickableCardLinks(
-    card
-  ) {
+  function getClickableCardLinks(card) {
     return Array.from(
       card.querySelectorAll(
         ".card-media[href], h2 a[href]"
@@ -871,72 +598,36 @@
     );
   }
 
-  function bindCardLinksToAction(
-    card,
-    action
-  ) {
-    getClickableCardLinks(
-      card
-    ).forEach((link) => {
-      const replacement =
-        link.cloneNode(true);
+  function bindCardLinksToAction(card, action) {
+    getClickableCardLinks(card).forEach((link) => {
+      const replacement = link.cloneNode(true);
+      link.replaceWith(replacement);
 
-      link.replaceWith(
-        replacement
-      );
-
-      replacement.addEventListener(
-        "click",
-        (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          action();
-        }
-      );
+      replacement.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        action();
+      });
     });
   }
 
-  function convertYouTubeUrl(
-    url
-  ) {
+  function convertYouTubeUrl(url) {
     try {
-      const parsed =
-        new URL(url);
+      const parsed = new URL(url);
 
-      if (
-        parsed.hostname.includes(
-          "youtu.be"
-        )
-      ) {
-        const id =
-          parsed.pathname.replace(
-            /^\/+/,
-            ""
-          );
-
+      if (parsed.hostname.includes("youtu.be")) {
+        const id = parsed.pathname.replace(/^\/+/, "");
         return id
           ? `https://www.youtube.com/embed/${id}`
           : null;
       }
 
-      if (
-        parsed.hostname.includes(
-          "youtube.com"
-        )
-      ) {
-        if (
-          parsed.pathname.startsWith(
-            "/embed/"
-          )
-        ) {
+      if (parsed.hostname.includes("youtube.com")) {
+        if (parsed.pathname.startsWith("/embed/")) {
           return parsed.href;
         }
 
-        const id =
-          parsed.searchParams.get(
-            "v"
-          );
-
+        const id = parsed.searchParams.get("v");
         return id
           ? `https://www.youtube.com/embed/${id}`
           : null;
@@ -948,106 +639,64 @@
     return null;
   }
 
-  function extractMediaFromPostHtml(
-    htmlText,
-    postUrl
-  ) {
-    const doc =
-      new DOMParser()
-        .parseFromString(
-          htmlText,
-          "text/html"
-        );
+  function extractMediaFromPostHtml(htmlText, postUrl) {
+    const doc = new DOMParser().parseFromString(
+      htmlText,
+      "text/html"
+    );
 
     const content =
-      doc.querySelector(
-        ".post-content"
-      ) ||
-      doc.querySelector(
-        "article"
-      ) ||
+      doc.querySelector(".post-content") ||
+      doc.querySelector("article") ||
       doc.body;
 
     const iframe =
-      content.querySelector(
-        "iframe[src]"
-      );
+      content.querySelector("iframe[src]");
 
     if (iframe) {
       return {
         type: "iframe",
         src: new URL(
-          iframe.getAttribute(
-            "src"
-          ),
+          iframe.getAttribute("src"),
           postUrl
         ).href,
         title:
-          iframe.getAttribute(
-            "title"
-          ) || "המחשה"
+          iframe.getAttribute("title") || "המחשה"
       };
     }
 
-    const video =
-      content.querySelector(
-        "video"
-      );
+    const video = content.querySelector("video");
 
     const videoSrc =
-      video?.getAttribute(
-        "src"
-      ) ||
+      video?.getAttribute("src") ||
       video
-        ?.querySelector(
-          "source[src]"
-        )
-        ?.getAttribute(
-          "src"
-        );
+        ?.querySelector("source[src]")
+        ?.getAttribute("src");
 
     if (videoSrc) {
       return {
         type: "video",
-        src: new URL(
-          videoSrc,
-          postUrl
-        ).href
+        src: new URL(videoSrc, postUrl).href
       };
     }
 
-    for (
-      const link
-      of content.querySelectorAll(
-        "a[href]"
-      )
-    ) {
-      const href =
-        new URL(
-          link.getAttribute(
-            "href"
-          ),
-          postUrl
-        ).href;
+    for (const link of content.querySelectorAll("a[href]")) {
+      const href = new URL(
+        link.getAttribute("href"),
+        postUrl
+      ).href;
 
-      const youtube =
-        convertYouTubeUrl(
-          href
-        );
+      const youtube = convertYouTubeUrl(href);
 
       if (youtube) {
         return {
           type: "iframe",
           src: youtube,
-          title:
-            "סרטון YouTube"
+          title: "סרטון YouTube"
         };
       }
 
-      if (
-        /\.(mp4|webm|ogg)(\?.*)?$/i
-          .test(href)
-      ) {
+      if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(href)) {
         return {
           type: "video",
           src: href
@@ -1058,31 +707,19 @@
     return null;
   }
 
-  async function findMediaForCard(
-    card
-  ) {
-    const postUrl =
-      getCardPostUrl(
-        card
-      );
-
-    if (!postUrl) {
-      return null;
-    }
+  async function findMediaForCard(card) {
+    const postUrl = getCardPostUrl(card);
+    if (!postUrl) return null;
 
     try {
-      const response =
-        await fetch(
-          postUrl,
-          {
-            cache:
-              "no-store"
-          }
-        );
+      const response = await fetch(
+        postUrl,
+        {
+          cache: "no-store"
+        }
+      );
 
-      if (!response.ok) {
-        return null;
-      }
+      if (!response.ok) return null;
 
       return extractMediaFromPostHtml(
         await response.text(),
@@ -1093,85 +730,38 @@
     }
   }
 
-  function createMediaElement(
-    media
-  ) {
-    const wrap =
-      document.createElement(
-        "div"
-      );
+  function createMediaElement(media) {
+    const wrap = document.createElement("div");
+    wrap.className = "inline-video-wrap";
 
-    wrap.className =
-      "inline-video-wrap";
-
-    if (
-      media.type === "video"
-    ) {
-      const video =
-        document.createElement(
-          "video"
-        );
-
-      video.src =
-        media.src;
-
-      video.controls =
-        true;
-
-      video.playsInline =
-        true;
-
+    if (media.type === "video") {
+      const video = document.createElement("video");
+      video.src = media.src;
+      video.controls = true;
+      video.playsInline = true;
       wrap.append(video);
     } else {
-      const iframe =
-        document.createElement(
-          "iframe"
-        );
-
-      iframe.src =
-        media.src;
-
-      iframe.title =
-        media.title ||
-        "המחשה";
-
+      const iframe = document.createElement("iframe");
+      iframe.src = media.src;
+      iframe.title = media.title || "המחשה";
       iframe.allow =
         "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-
-      iframe.allowFullscreen =
-        true;
-
-      wrap.append(
-        iframe
-      );
+      iframe.allowFullscreen = true;
+      wrap.append(iframe);
     }
 
     return wrap;
   }
 
-  function saveOriginalCard(
-    card
-  ) {
-    if (
-      card.dataset.originalSaved
-      === "true"
-    ) {
-      return;
-    }
+  function saveOriginalCard(card) {
+    if (card.dataset.originalSaved === "true") return;
 
-    card.dataset.originalHtml =
-      card.innerHTML;
-
-    card.dataset.originalClass =
-      card.className;
-
-    card.dataset.originalSaved =
-      "true";
+    card.dataset.originalHtml = card.innerHTML;
+    card.dataset.originalClass = card.className;
+    card.dataset.originalSaved = "true";
   }
 
-  function restoreOriginalCard(
-    card
-  ) {
+  function restoreOriginalCard(card) {
     if (
       !card.dataset.originalHtml ||
       !card.dataset.originalClass
@@ -1179,320 +769,182 @@
       return;
     }
 
-    card.className =
-      card.dataset.originalClass;
+    card.className = card.dataset.originalClass;
+    card.innerHTML = card.dataset.originalHtml;
 
-    card.innerHTML =
-      card.dataset.originalHtml;
-
-    setupSingleCardAction(
-      card
-    );
+    setupSingleCardAction(card);
   }
 
-  function openInlineContent(
-    card,
-    title,
-    contentElement
-  ) {
-    saveOriginalCard(
-      card
-    );
+  function openInlineContent(card, title, contentElement) {
+    saveOriginalCard(card);
+    card.classList.add("inline-embed-card");
 
-    card.classList.add(
-      "inline-embed-card"
-    );
+    const shell = document.createElement("div");
+    shell.className = "inline-embed-shell";
 
-    const shell =
-      document.createElement(
-        "div"
-      );
+    const toolbar = document.createElement("div");
+    toolbar.className = "inline-embed-toolbar";
 
-    shell.className =
-      "inline-embed-shell";
+    const heading = document.createElement("div");
+    heading.className = "inline-embed-title";
+    heading.textContent = title;
 
-    const toolbar =
-      document.createElement(
-        "div"
-      );
+    const back = document.createElement("button");
+    back.type = "button";
+    back.className = "inline-back-button";
+    back.textContent = "חזרה לכרטיס";
 
-    toolbar.className =
-      "inline-embed-toolbar";
+    back.addEventListener("click", () => {
+      restoreOriginalCard(card);
+    });
 
-    const heading =
-      document.createElement(
-        "div"
-      );
-
-    heading.className =
-      "inline-embed-title";
-
-    heading.textContent =
-      title;
-
-    const back =
-      document.createElement(
-        "button"
-      );
-
-    back.type =
-      "button";
-
-    back.className =
-      "inline-back-button";
-
-    back.textContent =
-      "חזרה לכרטיס";
-
-    back.addEventListener(
-      "click",
-      () => {
-        restoreOriginalCard(
-          card
-        );
-      }
-    );
-
-    toolbar.append(
-      heading,
-      back
-    );
-
-    shell.append(
-      toolbar,
-      contentElement
-    );
-
-    card.replaceChildren(
-      shell
-    );
+    toolbar.append(heading, back);
+    shell.append(toolbar, contentElement);
+    card.replaceChildren(shell);
   }
 
-  function prepareEmbeddedGames(
-    iframe
-  ) {
+  function prepareEmbeddedGames(iframe) {
     try {
       const doc =
         iframe.contentDocument ||
-        iframe.contentWindow
-          ?.document;
+        iframe.contentWindow?.document;
 
-      if (!doc) {
-        return;
-      }
+      if (!doc) return;
 
-      const cleanup =
-        () => {
-          doc
-            .querySelectorAll(
-              "a, button"
+      const cleanup = () => {
+        doc
+          .querySelectorAll("a, button")
+          .forEach((element) => {
+            const text =
+              normalizeText(element.textContent);
+
+            if (
+              text === "חזרה לדף הבית" ||
+              text === "לדף הבית" ||
+              text === "חזרה לאתר" ||
+              element.classList.contains("back-home") ||
+              element.classList.contains("home-link")
+            ) {
+              element.remove();
+            }
+          });
+      };
+
+      const openFirst = () => {
+        if (
+          iframe.dataset.firstGameOpened === "true"
+        ) {
+          return;
+        }
+
+        const candidates = Array.from(
+          doc.querySelectorAll(
+            "button, [role='button'], a[href], .game-card, .game-button, [data-game]"
+          )
+        );
+
+        const preferred = [
+          "גלילון",
+          "מגירון",
+          "חכמון",
+          "מה ההבדל",
+          "זיכרון",
+          "חקי הבלש"
+        ];
+
+        let target = null;
+
+        for (const name of preferred) {
+          target = candidates.find(
+            (element) =>
+              normalizeText(
+                element.textContent
+              ).includes(name)
+          );
+
+          if (target) break;
+        }
+
+        if (target) {
+          iframe.dataset.firstGameOpened = "true";
+
+          try {
+            target.dispatchEvent(
+              new PointerEvent(
+                "pointerdown",
+                { bubbles: true }
+              )
+            );
+          } catch {
+            // PointerEvent לא זמין בכל דפדפן.
+          }
+
+          target.dispatchEvent(
+            new MouseEvent(
+              "mousedown",
+              { bubbles: true }
             )
-            .forEach((element) => {
-              const text =
-                normalizeText(
-                  element.textContent
-                );
+          );
 
-              if (
-                text ===
-                  "חזרה לדף הבית" ||
-                text ===
-                  "לדף הבית" ||
-                text ===
-                  "חזרה לאתר" ||
-                element.classList
-                  .contains(
-                    "back-home"
-                  ) ||
-                element.classList
-                  .contains(
-                    "home-link"
-                  )
-              ) {
-                element.remove();
-              }
-            });
-        };
+          target.dispatchEvent(
+            new MouseEvent(
+              "mouseup",
+              { bubbles: true }
+            )
+          );
 
-      const openFirst =
-        () => {
-          if (
-            iframe.dataset
-              .firstGameOpened
-            === "true"
-          ) {
-            return;
-          }
-
-          const candidates =
-            Array.from(
-              doc.querySelectorAll(
-                "button, [role='button'], a[href], .game-card, .game-button, [data-game]"
-              )
-            );
-
-          const preferred = [
-            "גלילון",
-            "מגירון",
-            "חכמון",
-            "מה ההבדל",
-            "זיכרון",
-            "חקי הבלש"
-          ];
-
-          let target =
-            null;
-
-          for (
-            const name
-            of preferred
-          ) {
-            target =
-              candidates.find(
-                (element) =>
-                  normalizeText(
-                    element.textContent
-                  ).includes(name)
-              );
-
-            if (target) {
-              break;
-            }
-          }
-
-          if (target) {
-            iframe.dataset
-              .firstGameOpened =
-                "true";
-
-            try {
-              target.dispatchEvent(
-                new PointerEvent(
-                  "pointerdown",
-                  {
-                    bubbles:
-                      true
-                  }
-                )
-              );
-            } catch {
-              // דפדפנים ישנים:
-              // ממשיכים ללחיצות העכבר.
-            }
-
-            target.dispatchEvent(
-              new MouseEvent(
-                "mousedown",
-                {
-                  bubbles:
-                    true
-                }
-              )
-            );
-
-            target.dispatchEvent(
-              new MouseEvent(
-                "mouseup",
-                {
-                  bubbles:
-                    true
-                }
-              )
-            );
-
-            target.click();
-          }
-        };
+          target.click();
+        }
+      };
 
       cleanup();
       openFirst();
 
-      if (
-        !iframe._gamesObserver
-      ) {
+      if (!iframe._gamesObserver) {
         iframe._gamesObserver =
-          new MutationObserver(
-            () => {
-              cleanup();
-              openFirst();
-            }
-          );
+          new MutationObserver(() => {
+            cleanup();
+            openFirst();
+          });
 
-        iframe._gamesObserver
-          .observe(
-            doc.documentElement,
-            {
-              childList:
-                true,
-              subtree:
-                true
-            }
-          );
+        iframe._gamesObserver.observe(
+          doc.documentElement,
+          {
+            childList: true,
+            subtree: true
+          }
+        );
       }
     } catch {
-      // אם אין גישה למסמך הפנימי,
-      // המשחק עצמו עדיין נשאר זמין.
+      // המשחק עצמו עדיין זמין גם אם אין גישה למסמך הפנימי.
     }
   }
 
-  function openGamesInsideCard(
-    card
-  ) {
-    const gamesUrl =
-      card.dataset.gamesUrl;
-
-    if (!gamesUrl) {
-      return;
-    }
+  function openGamesInsideCard(card) {
+    const gamesUrl = card.dataset.gamesUrl;
+    if (!gamesUrl) return;
 
     const iframe =
-      document.createElement(
-        "iframe"
-      );
+      document.createElement("iframe");
 
-    iframe.className =
-      "inline-embed-frame";
+    iframe.className = "inline-embed-frame";
+    iframe.src = gamesUrl;
+    iframe.title = "משחקי פרשת השבוע";
+    iframe.loading = "eager";
+    iframe.allowFullscreen = true;
 
-    iframe.src =
-      gamesUrl;
+    iframe.addEventListener("load", () => {
+      iframe.dataset.firstGameOpened = "false";
 
-    iframe.title =
-      "משחקי פרשת השבוע";
+      prepareEmbeddedGames(iframe);
 
-    iframe.loading =
-      "eager";
-
-    iframe.allowFullscreen =
-      true;
-
-    iframe.addEventListener(
-      "load",
-      () => {
-        iframe.dataset
-          .firstGameOpened =
-            "false";
-
-        prepareEmbeddedGames(
-          iframe
+      [250, 600, 1200, 2200].forEach((ms) => {
+        setTimeout(
+          () => prepareEmbeddedGames(iframe),
+          ms
         );
-
-        [
-          250,
-          600,
-          1200,
-          2200
-        ].forEach((ms) => {
-          setTimeout(
-            () => {
-              prepareEmbeddedGames(
-                iframe
-              );
-            },
-            ms
-          );
-        });
-      }
-    );
+      });
+    });
 
     openInlineContent(
       card,
@@ -1501,64 +953,25 @@
     );
   }
 
-  function appendReadLink(
-    card
-  ) {
-    if (
-      card.querySelector(
-        ".read-link"
-      )
-    ) {
-      return;
-    }
+  function appendReadLink(card) {
+    if (card.querySelector(".read-link")) return;
 
-    const body =
-      card.querySelector(
-        ".card-body"
-      );
+    const body = card.querySelector(".card-body");
+    const url = getCardPostUrl(card);
 
-    const url =
-      getCardPostUrl(
-        card
-      );
+    if (!body || !url) return;
 
-    if (
-      !body ||
-      !url
-    ) {
-      return;
-    }
+    const link = document.createElement("a");
+    link.className = "read-link";
+    link.href = url;
+    link.textContent = "לקריאת הפוסט";
 
-    const link =
-      document.createElement(
-        "a"
-      );
-
-    link.className =
-      "read-link";
-
-    link.href =
-      url;
-
-    link.textContent =
-      "לקריאת הפוסט";
-
-    body.append(
-      link
-    );
+    body.append(link);
   }
 
-  function setupGamesAction(
-    card
-  ) {
-    const body =
-      card.querySelector(
-        ".card-body"
-      );
-
-    if (!body) {
-      return;
-    }
+  function setupGamesAction(card) {
+    const body = card.querySelector(".card-body");
+    if (!body) return;
 
     body
       .querySelectorAll(
@@ -1568,53 +981,24 @@
         element.remove();
       });
 
-    const open =
-      () => {
-        openGamesInsideCard(
-          card
-        );
-      };
+    const open = () => {
+      openGamesInsideCard(card);
+    };
 
-    bindCardLinksToAction(
-      card,
-      open
-    );
+    bindCardLinksToAction(card, open);
 
-    const button =
-      document.createElement(
-        "button"
-      );
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "inline-open-button";
+    button.textContent = "לפתיחת המשחקים";
+    button.addEventListener("click", open);
 
-    button.type =
-      "button";
-
-    button.className =
-      "inline-open-button";
-
-    button.textContent =
-      "לפתיחת המשחקים";
-
-    button.addEventListener(
-      "click",
-      open
-    );
-
-    body.append(
-      button
-    );
+    body.append(button);
   }
 
-  async function setupIllustrationAction(
-    card
-  ) {
-    const body =
-      card.querySelector(
-        ".card-body"
-      );
-
-    if (!body) {
-      return;
-    }
+  async function setupIllustrationAction(card) {
+    const body = card.querySelector(".card-body");
+    if (!body) return;
 
     body
       .querySelectorAll(
@@ -1625,14 +1009,10 @@
       });
 
     const mediaPromise =
-      findMediaForCard(
-        card
-      );
+      findMediaForCard(card);
 
     const loading =
-      document.createElement(
-        "span"
-      );
+      document.createElement("span");
 
     loading.className =
       "card-action-loading";
@@ -1640,127 +1020,75 @@
     loading.textContent =
       "בודק את ההמחשה…";
 
-    body.append(
-      loading
-    );
+    body.append(loading);
 
-    const open =
-      async () => {
-        const media =
-          card._inlineMedia ||
-          await mediaPromise;
+    const open = async () => {
+      const media =
+        card._inlineMedia ||
+        await mediaPromise;
 
-        if (media) {
-          card._inlineMedia =
-            media;
+      if (media) {
+        card._inlineMedia = media;
 
-          openInlineContent(
-            card,
-            "המחשה לפרשת השבוע",
-            createMediaElement(
-              media
-            )
-          );
-        }
-      };
+        openInlineContent(
+          card,
+          "המחשה לפרשת השבוע",
+          createMediaElement(media)
+        );
+      }
+    };
 
-    bindCardLinksToAction(
-      card,
-      open
-    );
+    bindCardLinksToAction(card, open);
 
-    const media =
-      await mediaPromise;
-
+    const media = await mediaPromise;
     loading.remove();
 
     if (!media) {
-      appendReadLink(
-        card
-      );
-
+      appendReadLink(card);
       return;
     }
 
-    card._inlineMedia =
-      media;
+    card._inlineMedia = media;
 
     const button =
-      document.createElement(
-        "button"
-      );
+      document.createElement("button");
 
-    button.type =
-      "button";
-
-    button.className =
-      "inline-open-button";
-
-    button.textContent =
-      "להפעלת ההמחשה";
-
-    button.addEventListener(
-      "click",
-      open
-    );
+    button.type = "button";
+    button.className = "inline-open-button";
+    button.textContent = "להפעלת ההמחשה";
+    button.addEventListener("click", open);
 
     card
-      .querySelector(
-        ".card-body"
-      )
-      ?.append(
-        button
-      );
+      .querySelector(".card-body")
+      ?.append(button);
   }
 
-  function setupSingleCardAction(
-    card
-  ) {
-    const label =
-      getCardLabel(
-        card
-      );
+  function setupSingleCardAction(card) {
+    const label = getCardLabel(card);
 
     if (
       label === "משחקים" ||
       label === "המשחקיה"
     ) {
-      setupGamesAction(
-        card
-      );
-
+      setupGamesAction(card);
       return;
     }
 
-    if (
-      label === "המחשה"
-    ) {
-      setupIllustrationAction(
-        card
-      );
-
+    if (label === "המחשה") {
+      setupIllustrationAction(card);
       return;
     }
 
-    appendReadLink(
-      card
-    );
+    appendReadLink(card);
   }
 
-  function findRegionForCard(
-    card
-  ) {
-    const label =
-      getCardLabel(
-        card
-      );
+  function findRegionForCard(card) {
+    const label = getCardLabel(card);
 
     return (
       regionDefinitions.find(
         (region) =>
-          region.order.includes(
-            label
-          )
+          region.order.includes(label)
       ) ||
       regionDefinitions[0]
     );
@@ -1774,44 +1102,27 @@
       .querySelectorAll(
         ":scope > .card.inline-embed-card"
       )
-      .forEach(
-        (openCard) => {
-          if (
-            openCard !==
-            exceptCard
-          ) {
-            restoreOriginalCard(
-              openCard
-            );
-          }
+      .forEach((openCard) => {
+        if (openCard !== exceptCard) {
+          restoreOriginalCard(openCard);
         }
-      );
+      });
   }
 
   function closeAllOpenEmbeds() {
     document
-      .querySelectorAll(
-        ".card.inline-embed-card"
-      )
-      .forEach(
-        (openCard) => {
-          restoreOriginalCard(
-            openCard
-          );
-        }
-      );
+      .querySelectorAll(".card.inline-embed-card")
+      .forEach((openCard) => {
+        restoreOriginalCard(openCard);
+      });
   }
 
   function clearRegionCleanup() {
-    regionCleanupFunctions
-      .forEach(
-        (cleanup) => {
-          cleanup();
-        }
-      );
+    regionCleanupFunctions.forEach((cleanup) => {
+      cleanup();
+    });
 
-    regionCleanupFunctions =
-      [];
+    regionCleanupFunctions = [];
   }
 
   function updateTabsOverflowHint(
@@ -1828,34 +1139,24 @@
       hasOverflow
     );
 
-    hint.hidden =
-      !hasOverflow;
+    hint.hidden = !hasOverflow;
   }
 
-  function createRegionElement(
-    region,
-    cards
-  ) {
+  function createRegionElement(region, cards) {
     const section =
-      document.createElement(
-        "section"
-      );
+      document.createElement("section");
 
     section.className =
       `content-region content-region-${region.id}`;
 
     const header =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
     header.className =
       "content-region-header";
 
     const heading =
-      document.createElement(
-        "h2"
-      );
+      document.createElement("h2");
 
     heading.className =
       "content-region-title";
@@ -1864,17 +1165,13 @@
       region.title;
 
     const tabsArea =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
     tabsArea.className =
       "region-tabs-area";
 
     const tabs =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
     tabs.className =
       "region-tabs";
@@ -1890,9 +1187,7 @@
     );
 
     const hint =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
     hint.className =
       "region-tabs-hint";
@@ -1900,405 +1195,255 @@
     hint.textContent =
       "יש מדורים נוספים — החליקו לצדדים";
 
-    hint.hidden =
-      true;
+    hint.hidden = true;
 
-    tabsArea.append(
-      tabs,
-      hint
-    );
+    tabsArea.append(tabs, hint);
 
     const panel =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
     panel.className =
       "region-panel";
 
-    cards.sort(
-      (a, b) => {
-        const aIndex =
-          region.order.indexOf(
-            getCardLabel(a)
+    cards.sort((a, b) => {
+      const aIndex =
+        region.order.indexOf(
+          getCardLabel(a)
+        );
+
+      const bIndex =
+        region.order.indexOf(
+          getCardLabel(b)
+        );
+
+      return aIndex - bIndex;
+    });
+
+    cards.forEach((card, index) => {
+      const tab =
+        document.createElement("button");
+
+      tab.type = "button";
+      tab.className = "region-tab";
+
+      tab.textContent =
+        getCardLabel(card) ||
+        `תוכן ${index + 1}`;
+
+      tab.setAttribute("role", "tab");
+      tab.setAttribute(
+        "aria-selected",
+        "false"
+      );
+
+      tab.tabIndex = -1;
+
+      tab.addEventListener("click", () => {
+        const currentlyActive =
+          panel.querySelector(
+            ":scope > .card.is-active"
           );
 
-        const bIndex =
-          region.order.indexOf(
-            getCardLabel(b)
-          );
+        if (currentlyActive === card) {
+          return;
+        }
 
-        return (
-          aIndex - bIndex
-        );
-      }
-    );
-
-    cards.forEach(
-      (card, index) => {
-        const tab =
-          document.createElement(
-            "button"
-          );
-
-        tab.type =
-          "button";
-
-        tab.className =
-          "region-tab";
-
-        tab.textContent =
-          getCardLabel(card) ||
-          `תוכן ${index + 1}`;
-
-        tab.setAttribute(
-          "role",
-          "tab"
-        );
-
-        tab.setAttribute(
-          "aria-selected",
-          "false"
-        );
-
-        tab.tabIndex =
-          -1;
-
-        tab.addEventListener(
-          "click",
-          () => {
-            const currentlyActive =
-              panel.querySelector(
-                ":scope > .card.is-active"
-              );
-
-            if (
-              currentlyActive ===
-              card
-            ) {
-              return;
-            }
-
-            closeOpenEmbedsInRegion(
-              panel,
-              card
-            );
-
-            tabs
-              .querySelectorAll(
-                ".region-tab"
-              )
-              .forEach(
-                (otherTab) => {
-                  otherTab.classList
-                    .remove(
-                      "is-active"
-                    );
-
-                  otherTab
-                    .setAttribute(
-                      "aria-selected",
-                      "false"
-                    );
-
-                  otherTab.tabIndex =
-                    -1;
-                }
-              );
-
-            panel
-              .querySelectorAll(
-                ":scope > .card"
-              )
-              .forEach(
-                (otherCard) => {
-                  otherCard.classList
-                    .remove(
-                      "is-active"
-                    );
-
-                  otherCard.hidden =
-                    true;
-                }
-              );
-
-            tab.classList.add(
-              "is-active"
-            );
-
-            tab.setAttribute(
-              "aria-selected",
-              "true"
-            );
-
-            tab.tabIndex =
-              0;
-
-            card.classList.add(
-              "is-active"
-            );
-
-            card.hidden =
-              false;
-          }
-        );
-
-        card.hidden =
-          true;
-
-        tabs.append(
-          tab
-        );
-
-        panel.append(
+        closeOpenEmbedsInRegion(
+          panel,
           card
         );
-      }
-    );
 
-    header.append(
-      heading,
-      tabsArea
-    );
+        tabs
+          .querySelectorAll(".region-tab")
+          .forEach((otherTab) => {
+            otherTab.classList.remove("is-active");
+            otherTab.setAttribute(
+              "aria-selected",
+              "false"
+            );
+            otherTab.tabIndex = -1;
+          });
 
-    section.append(
-      header,
-      panel
-    );
+        panel
+          .querySelectorAll(":scope > .card")
+          .forEach((otherCard) => {
+            otherCard.classList.remove("is-active");
+            otherCard.hidden = true;
+          });
 
-    tabs.firstElementChild
-      ?.click();
-
-    const refreshHint =
-      () => {
-        updateTabsOverflowHint(
-          tabsArea,
-          tabs,
-          hint
+        tab.classList.add("is-active");
+        tab.setAttribute(
+          "aria-selected",
+          "true"
         );
-      };
+        tab.tabIndex = 0;
 
-    requestAnimationFrame(
-      refreshHint
-    );
+        card.classList.add("is-active");
+        card.hidden = false;
+      });
+
+      card.hidden = true;
+
+      tabs.append(tab);
+      panel.append(card);
+    });
+
+    header.append(heading, tabsArea);
+    section.append(header, panel);
+
+    tabs.firstElementChild?.click();
+
+    const refreshHint = () => {
+      updateTabsOverflowHint(
+        tabsArea,
+        tabs,
+        hint
+      );
+    };
+
+    requestAnimationFrame(refreshHint);
 
     window.addEventListener(
       "resize",
       refreshHint,
-      {
-        passive:
-          true
-      }
+      { passive: true }
     );
 
-    const scrollHandler =
-      () => {
-        if (
-          tabs.scrollLeft !== 0
-        ) {
-          hint.classList.add(
-            "was-scrolled"
-          );
-        }
-      };
+    const scrollHandler = () => {
+      if (tabs.scrollLeft !== 0) {
+        hint.classList.add("was-scrolled");
+      }
+    };
 
     tabs.addEventListener(
       "scroll",
       scrollHandler,
-      {
-        passive:
-          true
-      }
+      { passive: true }
     );
 
-    regionCleanupFunctions.push(
-      () => {
-        window.removeEventListener(
-          "resize",
-          refreshHint
-        );
+    regionCleanupFunctions.push(() => {
+      window.removeEventListener(
+        "resize",
+        refreshHint
+      );
 
-        tabs.removeEventListener(
-          "scroll",
-          scrollHandler
-        );
-      }
-    );
+      tabs.removeEventListener(
+        "scroll",
+        scrollHandler
+      );
+    });
 
     return section;
   }
 
   function organizeParashaCards() {
     const grid =
-      document.querySelector(
-        ".cards-grid"
-      );
+      document.querySelector(".cards-grid");
 
-    if (!grid) {
-      return;
-    }
+    if (!grid) return;
 
     clearRegionCleanup();
 
     const cards =
       Array.from(
-        grid.querySelectorAll(
-          ":scope > .card"
-        )
+        grid.querySelectorAll(":scope > .card")
       );
 
-    if (!cards.length) {
-      return;
-    }
+    if (!cards.length) return;
 
     const grouped =
       new Map(
-        regionDefinitions.map(
-          (region) => [
-            region.id,
-            []
-          ]
-        )
+        regionDefinitions.map((region) => [
+          region.id,
+          []
+        ])
       );
 
-    cards.forEach(
-      (card) => {
-        grouped
-          .get(
-            findRegionForCard(
-              card
-            ).id
-          )
-          .push(card);
-      }
-    );
+    cards.forEach((card) => {
+      grouped
+        .get(
+          findRegionForCard(card).id
+        )
+        .push(card);
+    });
 
     grid.replaceChildren();
+    grid.classList.add("organized-regions");
 
-    grid.classList.add(
-      "organized-regions"
-    );
+    regionDefinitions.forEach((region) => {
+      const regionCards =
+        grouped.get(region.id);
 
-    regionDefinitions.forEach(
-      (region) => {
-        const regionCards =
-          grouped.get(
-            region.id
-          );
-
-        if (
-          regionCards.length
-        ) {
-          grid.append(
-            createRegionElement(
-              region,
-              regionCards
-            )
-          );
-        }
+      if (regionCards.length) {
+        grid.append(
+          createRegionElement(
+            region,
+            regionCards
+          )
+        );
       }
-    );
+    });
   }
 
-  function absolutizeElementUrls(
-    root,
-    baseUrl
-  ) {
+  function absolutizeElementUrls(root, baseUrl) {
     root
-      .querySelectorAll(
-        "[href]"
-      )
-      .forEach(
-        (element) => {
-          const value =
-            element.getAttribute(
-              "href"
-            );
+      .querySelectorAll("[href]")
+      .forEach((element) => {
+        const value =
+          element.getAttribute("href");
 
-          if (!value) {
-            return;
-          }
+        if (!value) return;
 
-          try {
-            element.setAttribute(
-              "href",
-              new URL(
-                value,
-                baseUrl
-              ).href
-            );
-          } catch {
-            // משאירים את הקישור המקורי.
-          }
+        try {
+          element.setAttribute(
+            "href",
+            new URL(value, baseUrl).href
+          );
+        } catch {
+          // משאירים את הקישור המקורי.
         }
-      );
+      });
 
     root
-      .querySelectorAll(
-        "[src]"
-      )
-      .forEach(
-        (element) => {
-          const value =
-            element.getAttribute(
-              "src"
-            );
+      .querySelectorAll("[src]")
+      .forEach((element) => {
+        const value =
+          element.getAttribute("src");
 
-          if (!value) {
-            return;
-          }
+        if (!value) return;
 
-          try {
-            element.setAttribute(
-              "src",
-              new URL(
-                value,
-                baseUrl
-              ).href
-            );
-          } catch {
-            // משאירים את המקור המקורי.
-          }
+        try {
+          element.setAttribute(
+            "src",
+            new URL(value, baseUrl).href
+          );
+        } catch {
+          // משאירים את המקור המקורי.
         }
-      );
+      });
 
     root
-      .querySelectorAll(
-        "[poster]"
-      )
-      .forEach(
-        (element) => {
-          const value =
-            element.getAttribute(
-              "poster"
-            );
+      .querySelectorAll("[poster]")
+      .forEach((element) => {
+        const value =
+          element.getAttribute("poster");
 
-          if (!value) {
-            return;
-          }
+        if (!value) return;
 
-          try {
-            element.setAttribute(
-              "poster",
-              new URL(
-                value,
-                baseUrl
-              ).href
-            );
-          } catch {
-            // משאירים את המקור המקורי.
-          }
+        try {
+          element.setAttribute(
+            "poster",
+            new URL(value, baseUrl).href
+          );
+        } catch {
+          // משאירים את המקור המקורי.
         }
-      );
+      });
   }
 
-  async function fetchParashaCards(
-    parashaName
-  ) {
+  async function fetchParashaCards(parashaName) {
     const archiveUrl =
-      getParashaArchiveUrl(
-        parashaName
-      );
+      getParashaArchiveUrl(parashaName);
 
     if (!archiveUrl) {
       throw new Error(
@@ -2306,14 +1451,12 @@
       );
     }
 
-    const response =
-      await fetch(
-        archiveUrl.href,
-        {
-          cache:
-            "no-store"
-        }
-      );
+    const response = await fetch(
+      archiveUrl.href,
+      {
+        cache: "no-store"
+      }
+    );
 
     if (!response.ok) {
       throw new Error(
@@ -2325,16 +1468,13 @@
       await response.text();
 
     const doc =
-      new DOMParser()
-        .parseFromString(
-          htmlText,
-          "text/html"
-        );
+      new DOMParser().parseFromString(
+        htmlText,
+        "text/html"
+      );
 
     const sourceGrid =
-      doc.querySelector(
-        ".cards-grid"
-      );
+      doc.querySelector(".cards-grid");
 
     if (!sourceGrid) {
       throw new Error(
@@ -2355,63 +1495,42 @@
       );
     }
 
-    return cards.map(
-      (sourceCard) => {
-        const card =
-          sourceCard.cloneNode(
-            true
-          );
+    return cards.map((sourceCard) => {
+      const card =
+        sourceCard.cloneNode(true);
 
-        absolutizeElementUrls(
-          card,
-          archiveUrl.href
-        );
+      absolutizeElementUrls(
+        card,
+        archiveUrl.href
+      );
 
-        card.hidden =
-          false;
+      card.hidden = false;
 
-        card.classList.remove(
-          "is-active",
-          "inline-embed-card"
-        );
+      card.classList.remove(
+        "is-active",
+        "inline-embed-card"
+      );
 
-        delete card.dataset
-          .originalHtml;
+      delete card.dataset.originalHtml;
+      delete card.dataset.originalClass;
+      delete card.dataset.originalSaved;
 
-        delete card.dataset
-          .originalClass;
-
-        delete card.dataset
-          .originalSaved;
-
-        return card;
-      }
-    );
+      return card;
+    });
   }
 
-  function initializeCurrentGrid(
-    parashaName
-  ) {
+  function initializeCurrentGrid(parashaName) {
     removeBinaCards();
     removeOldGamesContent();
 
-    addGamesCard(
-      parashaName
-    );
-
+    addGamesCard(parashaName);
     applyFixedSectionImagesToCards();
 
     document
-      .querySelectorAll(
-        ".cards-grid > .card"
-      )
-      .forEach(
-        (card) => {
-          setupSingleCardAction(
-            card
-          );
-        }
-      );
+      .querySelectorAll(".cards-grid > .card")
+      .forEach((card) => {
+        setupSingleCardAction(card);
+      });
 
     organizeParashaCards();
   }
@@ -2420,40 +1539,24 @@
     parashaName,
     configuredParashot
   ) {
-    const hero =
-      document.querySelector(
-        ".hero"
-      );
-
-    if (!hero) {
-      return;
-    }
+    const hero = document.querySelector(".hero");
+    if (!hero) return;
 
     removeWeeklyEyebrow();
 
-    let heading =
-      hero.querySelector(
-        "h1"
-      );
-
-    if (heading) {
-      heading.remove();
+    const oldHeading = hero.querySelector("h1");
+    if (oldHeading) {
+      oldHeading.remove();
     }
 
     hero
-      .querySelectorAll(
-        ".parasha-home-heading"
-      )
-      .forEach(
-        (element) => {
-          element.remove();
-        }
-      );
+      .querySelectorAll(".parasha-home-heading")
+      .forEach((element) => {
+        element.remove();
+      });
 
     const wrapper =
-      document.createElement(
-        "div"
-      );
+      document.createElement("div");
 
     wrapper.className =
       "parasha-home-heading";
@@ -2469,9 +1572,7 @@
     );
 
     const prefix =
-      document.createElement(
-        "span"
-      );
+      document.createElement("span");
 
     prefix.className =
       "parasha-home-prefix";
@@ -2481,135 +1582,87 @@
         ? "פרשות"
         : "פרשת";
 
-    wrapper.append(
-      prefix
-    );
+    wrapper.append(prefix);
 
     const choices =
-      document.createElement(
-        "span"
-      );
+      document.createElement("span");
 
     choices.className =
       "parasha-home-choices";
 
-    configuredParashot.forEach(
-      (name) => {
-        if (
-          configuredParashot.length
-          === 1
-        ) {
-          const choice =
-            document.createElement(
-              "span"
-            );
+    configuredParashot.forEach((name) => {
+      if (
+        configuredParashot.length === 1
+      ) {
+        const choice =
+          document.createElement("span");
 
-          choice.className =
-            "parasha-choice is-active is-static";
+        choice.className =
+          "parasha-choice is-active is-static";
 
-          choice.textContent =
-            name;
+        choice.textContent = name;
 
-          choices.append(
-            choice
-          );
+        choices.append(choice);
+        return;
+      }
 
-          return;
-        }
+      const button =
+        document.createElement("button");
 
-        const button =
-          document.createElement(
-            "button"
-          );
+      button.type = "button";
+      button.className = "parasha-choice";
+      button.dataset.parasha = name;
+      button.textContent = name;
 
-        button.type =
-          "button";
-
-        button.className =
-          "parasha-choice";
-
-        button.dataset.parasha =
-          name;
-
-        button.textContent =
-          name;
-
-        if (
-          name ===
-          parashaName
-        ) {
-          button.classList.add(
-            "is-active"
-          );
-
-          button.setAttribute(
-            "aria-pressed",
-            "true"
-          );
-        } else {
-          button.setAttribute(
-            "aria-pressed",
-            "false"
-          );
-        }
-
-        choices.append(
-          button
+      if (name === parashaName) {
+        button.classList.add("is-active");
+        button.setAttribute(
+          "aria-pressed",
+          "true"
+        );
+      } else {
+        button.setAttribute(
+          "aria-pressed",
+          "false"
         );
       }
-    );
 
-    wrapper.append(
-      choices
-    );
+      choices.append(button);
+    });
 
-    hero.prepend(
-      wrapper
-    );
+    wrapper.append(choices);
+    hero.prepend(wrapper);
   }
 
-  function setActiveParashaChoice(
-    parashaName
-  ) {
+  function setActiveParashaChoice(parashaName) {
     document
       .querySelectorAll(
         ".parasha-choice[data-parasha]"
       )
-      .forEach(
-        (button) => {
-          const active =
-            button.dataset.parasha
-            === parashaName;
+      .forEach((button) => {
+        const active =
+          button.dataset.parasha === parashaName;
 
-          button.classList.toggle(
-            "is-active",
-            active
-          );
+        button.classList.toggle(
+          "is-active",
+          active
+        );
 
-          button.setAttribute(
-            "aria-pressed",
-            active
-              ? "true"
-              : "false"
-          );
-        }
-      );
+        button.setAttribute(
+          "aria-pressed",
+          active ? "true" : "false"
+        );
+      });
   }
 
-  function updateDocumentTitle(
-    parashaName
-  ) {
+  function updateDocumentTitle(parashaName) {
     document.title =
       `פרשת ${parashaName} | פרשת השבוע בניחותא`;
   }
 
-  async function replaceHomeParasha(
-    parashaName
-  ) {
+  async function replaceHomeParasha(parashaName) {
     const grid =
-      document.querySelector(
-        ".cards-grid"
-      );
+      document.querySelector(".cards-grid");
 
     if (!grid) {
       throw new Error(
@@ -2618,72 +1671,40 @@
     }
 
     /*
-      חשוב:
-      קודם טוענים את כל התוכן החדש.
-      רק אם הטעינה הצליחה — מחליפים את
-      התוכן הקיים. כך דף הבית הקיים
-      נשאר fallback במקרה של תקלה.
+      טוענים קודם את כל התוכן החדש.
+      רק אם הטעינה הצליחה מחליפים את הקיים,
+      כדי לשמור את דף הבית הסטטי כ-fallback.
     */
     const cards =
-      await fetchParashaCards(
-        parashaName
-      );
+      await fetchParashaCards(parashaName);
 
     closeAllOpenEmbeds();
     clearRegionCleanup();
 
-    grid.classList.remove(
-      "organized-regions"
-    );
+    grid.classList.remove("organized-regions");
+    grid.replaceChildren(...cards);
 
-    grid.replaceChildren(
-      ...cards
-    );
-
-    initializeCurrentGrid(
-      parashaName
-    );
-
-    setActiveParashaChoice(
-      parashaName
-    );
-
-    updateDocumentTitle(
-      parashaName
-    );
+    initializeCurrentGrid(parashaName);
+    setActiveParashaChoice(parashaName);
+    updateDocumentTitle(parashaName);
   }
 
-  function normalizeConfiguredParashot(
-    config
-  ) {
-    let values =
-      config?.current_parasha;
+  function normalizeConfiguredParashot(config) {
+    let values = config?.current_parasha;
 
-    if (
-      typeof values
-      === "string"
-    ) {
-      values = [
-        values
-      ];
+    if (typeof values === "string") {
+      values = [values];
     }
 
-    if (
-      !Array.isArray(values)
-    ) {
+    if (!Array.isArray(values)) {
       throw new Error(
         "current_parasha אינו במבנה תקין"
       );
     }
 
-    values =
-      values
-        .map(
-          (name) =>
-            String(name)
-              .trim()
-        )
-        .filter(Boolean);
+    values = values
+      .map((name) => String(name).trim())
+      .filter(Boolean);
 
     if (
       values.length < 1 ||
@@ -2695,25 +1716,14 @@
     }
 
     const allowed =
-      Array.isArray(
-        config?.allowed_parashot
-      )
+      Array.isArray(config?.allowed_parashot)
         ? config.allowed_parashot
-            .map(
-              (name) =>
-                String(name)
-                  .trim()
-            )
+            .map((name) => String(name).trim())
             .filter(Boolean)
         : [];
 
-    for (
-      const name
-      of values
-    ) {
-      if (
-        !parashaLabels[name]
-      ) {
+    for (const name of values) {
+      if (!parashaLabels[name]) {
         throw new Error(
           `שם פרשה לא מוכר: ${name}`
         );
@@ -2721,9 +1731,7 @@
 
       if (
         allowed.length &&
-        !allowed.includes(
-          name
-        )
+        !allowed.includes(name)
       ) {
         throw new Error(
           `הפרשה ${name} אינה מופיעה ב-allowed_parashot`
@@ -2735,14 +1743,12 @@
   }
 
   async function loadSiteConfig() {
-    const response =
-      await fetch(
-        configUrl.href,
-        {
-          cache:
-            "no-store"
-        }
-      );
+    const response = await fetch(
+      configUrl.href,
+      {
+        cache: "no-store"
+      }
+    );
 
     if (!response.ok) {
       throw new Error(
@@ -2754,28 +1760,19 @@
   }
 
   async function initializeDynamicHome() {
-    /*
-      אין מוחקים את תוכן ה-fallback לפני
-      שה-config והכרטיסים החדשים נטענו
-      בהצלחה.
-    */
-
     try {
-      const config =
-        await loadSiteConfig();
+      const config = await loadSiteConfig();
 
       const configuredParashot =
-        normalizeConfiguredParashot(
-          config
-        );
+        normalizeConfiguredParashot(config);
 
       const firstParasha =
         configuredParashot[0];
 
       /*
-        טוענים קודם את הפרשה הראשונה.
-        רק לאחר הצלחה מציגים את בקר
-        הפרשה החדש.
+        טוענים את הפרשה הראשונה לפני שמשנים
+        את כותרת הבית. אם הטעינה נכשלת,
+        ה-fallback הסטטי נשאר.
       */
       await replaceHomeParasha(
         firstParasha
@@ -2787,75 +1784,57 @@
       );
 
       if (
-        configuredParashot.length
-        === 2
+        configuredParashot.length === 2
       ) {
         document
           .querySelectorAll(
             ".parasha-choice[data-parasha]"
           )
-          .forEach(
-            (button) => {
-              button.addEventListener(
-                "click",
-                async () => {
-                  const requested =
-                    button.dataset
-                      .parasha;
+          .forEach((button) => {
+            button.addEventListener(
+              "click",
+              async () => {
+                const requested =
+                  button.dataset.parasha;
 
-                  if (
-                    !requested ||
-                    button.classList
-                      .contains(
-                        "is-active"
-                      )
-                  ) {
-                    return;
-                  }
-
-                  const buttons =
-                    Array.from(
-                      document.querySelectorAll(
-                        ".parasha-choice[data-parasha]"
-                      )
-                    );
-
-                  buttons.forEach(
-                    (item) => {
-                      item.disabled =
-                        true;
-                    }
-                  );
-
-                  try {
-                    await replaceHomeParasha(
-                      requested
-                    );
-                  } catch (
-                    error
-                  ) {
-                    console.error(
-                      error
-                    );
-                  } finally {
-                    buttons.forEach(
-                      (item) => {
-                        item.disabled =
-                          false;
-                      }
-                    );
-                  }
+                if (
+                  !requested ||
+                  button.classList.contains(
+                    "is-active"
+                  )
+                ) {
+                  return;
                 }
-              );
-            }
-          );
+
+                const buttons = Array.from(
+                  document.querySelectorAll(
+                    ".parasha-choice[data-parasha]"
+                  )
+                );
+
+                buttons.forEach((item) => {
+                  item.disabled = true;
+                });
+
+                try {
+                  await replaceHomeParasha(
+                    requested
+                  );
+                } catch (error) {
+                  console.error(error);
+                } finally {
+                  buttons.forEach((item) => {
+                    item.disabled = false;
+                  });
+                }
+              }
+            );
+          });
       }
     } catch (error) {
       /*
-        אין פגיעה באתר:
-        אם config או דף פרשה אינם זמינים,
-        ממשיכים עם דף הבית הסטטי שכבר
-        נוצר ב-build_site.py.
+        אם הקונפיג או דף הפרשה אינם זמינים,
+        נשארים עם דף הבית הסטטי שכבר נבנה.
       */
       console.error(
         "Dynamic parasha home fallback:",
@@ -2867,9 +1846,7 @@
 
       removeWeeklyEyebrow();
 
-      if (
-        fallbackParasha
-      ) {
+      if (fallbackParasha) {
         initializeCurrentGrid(
           fallbackParasha
         );
@@ -2883,30 +1860,25 @@
       siteRoot
     );
 
-  const oldSiteHosts =
-    new Set([
-      "theweekparasha.blogspot.com",
-      "www.theweekparasha.blogspot.com",
-      "parasha-week.co.il",
-      "www.parasha-week.co.il"
-    ]);
+  const oldSiteHosts = new Set([
+    "theweekparasha.blogspot.com",
+    "www.theweekparasha.blogspot.com",
+    "parasha-week.co.il",
+    "www.parasha-week.co.il"
+  ]);
 
   async function repairInternalLinks() {
     let redirectMap;
 
     try {
-      const response =
-        await fetch(
-          redirectMapUrl,
-          {
-            cache:
-              "no-store"
-          }
-        );
+      const response = await fetch(
+        redirectMapUrl,
+        {
+          cache: "no-store"
+        }
+      );
 
-      if (!response.ok) {
-        return;
-      }
+      if (!response.ok) return;
 
       redirectMap =
         await response.json();
@@ -2915,29 +1887,17 @@
     }
 
     document
-      .querySelectorAll(
-        "a[href]"
-      )
+      .querySelectorAll("a[href]")
       .forEach((link) => {
         const rawHref =
-          link.getAttribute(
-            "href"
-          );
+          link.getAttribute("href");
 
         if (
           !rawHref ||
-          rawHref.startsWith(
-            "#"
-          ) ||
-          rawHref.startsWith(
-            "mailto:"
-          ) ||
-          rawHref.startsWith(
-            "tel:"
-          ) ||
-          rawHref.startsWith(
-            "javascript:"
-          )
+          rawHref.startsWith("#") ||
+          rawHref.startsWith("mailto:") ||
+          rawHref.startsWith("tel:") ||
+          rawHref.startsWith("javascript:")
         ) {
           return;
         }
@@ -2967,30 +1927,22 @@
           decodeURIComponent(
             originalUrl.pathname
           ),
-          originalUrl.pathname
-            .replace(
-              /\/+$/,
-              ""
-            )
+          originalUrl.pathname.replace(
+            /\/+$/,
+            ""
+          )
         ];
 
         const newPath =
           keys
-            .map(
-              (key) =>
-                redirectMap[key]
-            )
+            .map((key) => redirectMap[key])
             .find(Boolean);
 
-        if (!newPath) {
-          return;
-        }
+        if (!newPath) return;
 
         const target =
           new URL(
-            String(
-              newPath
-            ).replace(
+            String(newPath).replace(
               /^\/+/,
               ""
             ),
@@ -3018,9 +1970,7 @@
       normalizePostMainImage();
       setupNavigation();
 
-      if (
-        isHomePage()
-      ) {
+      if (isHomePage()) {
         await initializeDynamicHome();
       } else {
         const parashaName =
@@ -3033,26 +1983,15 @@
         removeBinaCards();
         removeOldGamesContent();
 
-        if (
-          parashaName
-        ) {
-          addGamesCard(
-            parashaName
-          );
-
+        if (parashaName) {
+          addGamesCard(parashaName);
           applyFixedSectionImagesToCards();
 
           document
-            .querySelectorAll(
-              ".card"
-            )
-            .forEach(
-              (card) => {
-                setupSingleCardAction(
-                  card
-                );
-              }
-            );
+            .querySelectorAll(".card")
+            .forEach((card) => {
+              setupSingleCardAction(card);
+            });
 
           organizeParashaCards();
         }
@@ -3070,28 +2009,20 @@
   /*
     כאשר משחק או סרט פתוחים ולוחצים
     על טאב אחר, מחזירים תחילה את הכרטיס
-    המקורי.
-
-    capture גורם לכך לקרות לפני פעולת
-    החלפת הטאב עצמה.
+    המקורי לפני החלפת הטאב.
   */
   document.addEventListener(
     "click",
     (event) => {
       const selectedTab =
-        event.target.closest(
-          ".region-tab"
-        );
+        event.target.closest(".region-tab");
 
-      if (!selectedTab) {
-        return;
-      }
+      if (!selectedTab) return;
 
       if (
-        selectedTab.classList
-          .contains(
-            "is-active"
-          )
+        selectedTab.classList.contains(
+          "is-active"
+        )
       ) {
         return;
       }
@@ -3100,13 +2031,9 @@
         .querySelectorAll(
           ".card.inline-embed-card"
         )
-        .forEach(
-          (openCard) => {
-            restoreOriginalCard(
-              openCard
-            );
-          }
-        );
+        .forEach((openCard) => {
+          restoreOriginalCard(openCard);
+        });
     },
     true
   );
