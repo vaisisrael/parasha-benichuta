@@ -226,25 +226,20 @@ a { color: inherit; }
 
 /* טאבים */
 .region-tabs {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
   gap: 8px;
+  width: 100%;
   min-width: 0;
   padding: 2px 0 6px;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(79, 109, 90, 0.35) transparent;
-}
-
-.region-tabs::-webkit-scrollbar { height: 5px; }
-.region-tabs::-webkit-scrollbar-thumb {
-  background: rgba(79, 109, 90, 0.35);
-  border-radius: 999px;
+  overflow: visible;
 }
 
 .region-tab {
-  flex: 0 0 auto;
-  min-height: 40px;
-  padding: 8px 14px;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 10px;
   border: 1px solid transparent;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.64);
@@ -252,6 +247,8 @@ a { color: inherit; }
   font: inherit;
   font-size: 0.92rem;
   font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
   white-space: nowrap;
   cursor: pointer;
   transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
@@ -613,6 +610,18 @@ a { color: inherit; }
     font-size: 1.4rem;
   }
 
+  .region-tabs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding-bottom: 6px;
+  }
+
+  .region-tab {
+    min-height: 42px;
+    padding: 8px 6px;
+    font-size: 0.88rem;
+  }
+
   .region-panel .card.is-active {
     display: grid;
     grid-template-columns: 1fr;
@@ -644,54 +653,21 @@ a { color: inherit; }
   }
 }
 
-
-/* רמז לגלילה אופקית של המדורים בנייד */
+/* אזור הטאבים */
 .region-tabs-area {
   position: relative;
   min-width: 0;
+  width: 100%;
 }
 
 .region-tabs-hint {
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.35;
-  text-align: center;
-}
-
-.region-tabs-hint[hidden] {
   display: none !important;
 }
 
-@media (max-width: 700px) {
-  .region-tabs-area.has-overflow::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 34px;
-    height: 44px;
-    pointer-events: none;
-    background: linear-gradient(to right, rgba(238, 243, 245, 0.96), rgba(238, 243, 245, 0));
-  }
-
-  .content-region-knowing .region-tabs-area.has-overflow::after {
-    background: linear-gradient(to right, rgba(241, 244, 241, 0.96), rgba(241, 244, 241, 0));
-  }
-
-  .content-region-stories .region-tabs-area.has-overflow::after {
-    background: linear-gradient(to right, rgba(245, 240, 234, 0.96), rgba(245, 240, 234, 0));
-  }
-
-  .region-tabs-hint {
-    display: block;
-  }
-
-  .region-tabs-hint.was-scrolled {
-    opacity: 0.72;
-  }
+.region-tabs-area.has-overflow::after {
+  display: none !important;
+  content: none !important;
 }
-
 
 /* לוגו האתר בכותרת */
 
@@ -805,7 +781,6 @@ a { color: inherit; }
     font-size: 2.5rem;
   }
 }
-
 
 /* ===== כרטיס הצטרפות לערוץ הווטסאפ ===== */
 
