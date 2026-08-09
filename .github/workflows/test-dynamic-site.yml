@@ -40,5 +40,35 @@ jobs:
       - name: Verify parasha archives exist
         run: test -d parashot
 
-      - name: Test completed
-        run: echo "Dynamic site validation completed successfully."
+      - name: Prepare preview folder
+        shell: bash
+        run: |
+          rm -rf _preview
+          mkdir -p _preview
+
+          for item in \
+            index.html \
+            404.html \
+            CNAME \
+            site_config.json \
+            assets \
+            about \
+            games \
+            shorts \
+            p \
+            parashot \
+            posts
+          do
+            if [ -e "$item" ]; then
+              cp -a "$item" _preview/
+            fi
+          done
+
+          touch _preview/.nojekyll
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamic-site-preview
+          path: _preview
+          if-no-files-found: error
