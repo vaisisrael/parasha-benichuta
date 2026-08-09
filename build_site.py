@@ -603,6 +603,16 @@ def layout(
 
 <head>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XB2TT31YM1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){{dataLayer.push(arguments);}}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XB2TT31YM1');
+  </script>
+
   <meta charset="utf-8">
 
   <meta
@@ -620,27 +630,6 @@ def layout(
   >
 
   {robots_tag}
-
-  <!-- Google Analytics -->
-  <script
-    async
-    src="https://www.googletagmanager.com/gtag/js?id=G-XB2TT31YM1"
-  ></script>
-
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {{
-      dataLayer.push(arguments);
-    }}
-
-    gtag("js", new Date());
-
-    gtag(
-      "config",
-      "G-XB2TT31YM1"
-    );
-  </script>
 
   <link
     rel="icon"
