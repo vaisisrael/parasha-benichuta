@@ -610,18 +610,6 @@ a { color: inherit; }
     font-size: 1.4rem;
   }
 
-  .region-tabs {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    padding-bottom: 6px;
-  }
-
-  .region-tab {
-    min-height: 42px;
-    padding: 8px 6px;
-    font-size: 0.88rem;
-  }
-
   .region-panel .card.is-active {
     display: grid;
     grid-template-columns: 1fr;
