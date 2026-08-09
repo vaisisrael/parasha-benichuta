@@ -15,7 +15,12 @@ SECTION_LABELS = [
     "🔖מושג", "🔖עיון", "🔖ראיון", "🔖מדרש", "🔖פיצוחים", "🔖משל",
     "🔖המחשה", "🔖ילדים", "🔖הלכה", "🔖בינה", "🔖המשחקיה",
 ]
-BINA_LABELS = {"🔖בינה-א", "🔖בינה-ב", "🔖בינה-ג"}
+
+BINA_LABELS = {
+    "🔖בינה-א",
+    "🔖בינה-ב",
+    "🔖בינה-ג",
+}
 
 # דפי הסדרות והפרקים שלהן נוצרים באמצעות import_series.py.
 # build_site.py אינו מוחק ואינו כותב אותם מחדש.
@@ -28,7 +33,13 @@ SERIES_LABELS = {
     "🔖המגדל",
 }
 
-BOOK_ORDER = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"]
+BOOK_ORDER = [
+    "בראשית",
+    "שמות",
+    "ויקרא",
+    "במדבר",
+    "דברים",
+]
 
 
 @dataclass
@@ -514,6 +525,7 @@ def nav_html(
           <button type="button">
             כל הפרשות
           </button>
+
           <ul>
             {''.join(parasha_books)}
           </ul>
@@ -525,6 +537,7 @@ def nav_html(
           </button>
 
           <ul>
+
             <li>
               <a href="{prefix}p/אידנקסה.html">
                 אידנקסה
@@ -542,13 +555,8 @@ def nav_html(
                 המגדל
               </a>
             </li>
-          </ul>
-        </li>
 
-        <li>
-          <a href="{prefix}search/">
-            חיפוש
-          </a>
+          </ul>
         </li>
 
         <li>
@@ -584,6 +592,12 @@ def layout(
         quote=True,
     )
 
+    robots_tag = (
+        '<meta name="robots" content="index, follow">'
+        if output_path == "index.html"
+        else '<meta name="robots" content="noindex, follow">'
+    )
+
     return f"""<!doctype html>
 <html lang="he" dir="rtl">
 
@@ -604,6 +618,8 @@ def layout(
     name="description"
     content="{desc}"
   >
+
+  {robots_tag}
 
   <!-- Google Analytics -->
   <script
@@ -1162,8 +1178,7 @@ def build(
 
     # התיקיות:
     # games
-    # family
-    # search
+    # shorts
     # about
     # אינן נמחקות ואינן נכתבות מחדש.
 
