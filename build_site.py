@@ -1028,13 +1028,30 @@ def build(
     # הפרשה הנוכחית נשארת
     # ידנית בשלב זה.
 
-    current = (
-        config.get(
-            "current_parasha",
-            "",
-        )
-        .strip()
-    )
+current_parashot = config.get(
+    "current_parasha",
+    [],
+)
+
+if isinstance(
+    current_parashot,
+    str,
+):
+    current_parashot = [
+        current_parashot.strip()
+    ]
+
+current_parashot = [
+    str(name).strip()
+    for name in current_parashot
+    if str(name).strip()
+]
+
+current = (
+    current_parashot[0]
+    if current_parashot
+    else ""
+)
 
     current_items = [
         item
