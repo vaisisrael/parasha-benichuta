@@ -871,3 +871,108 @@ a { color: inherit; }
   object-fit: contain;
   object-position: center;
 }
+
+/* ===== בחירת הפרשה בדף הבית ===== */
+
+.parasha-home-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 2px 0 4px;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.parasha-home-prefix {
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+.parasha-home-choices {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.parasha-choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  min-height: 42px;
+  padding: 8px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--accent-dark);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(43, 49, 44, 0.05);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+button.parasha-choice:hover:not(.is-active) {
+  border-color: var(--accent);
+  background: var(--surface-soft);
+  transform: translateY(-1px);
+}
+
+.parasha-choice.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(79, 109, 90, 0.2);
+}
+
+.parasha-choice.is-static {
+  cursor: default;
+}
+
+.parasha-choice:focus-visible {
+  outline: 3px solid rgba(79, 109, 90, 0.22);
+  outline-offset: 2px;
+}
+
+.parasha-choice:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+/* בדף הבית הכותרת נשארת קומפקטית */
+.hero:has(.parasha-home-heading) {
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 18px;
+}
+
+@media (max-width: 700px) {
+  .parasha-home-heading {
+    gap: 9px;
+    font-size: 1.25rem;
+  }
+
+  .parasha-home-choices {
+    gap: 6px;
+  }
+
+  .parasha-choice {
+    min-width: 78px;
+    min-height: 39px;
+    padding: 7px 16px;
+    font-size: 0.95rem;
+  }
+}
