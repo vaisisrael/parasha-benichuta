@@ -1,17 +1,16 @@
-name: פרסום האתר
+name: בדיקת האתר הדינמי
 
 on:
+  push:
+    branches:
+      - dynamic-parasha-home
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: publish-gh-pages
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,17 +22,29 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Check JavaScript syntax
+        run: node --check assets/js/site.js
+
       - name: Build site
         run: python build_site.py
 
       - name: Build series
         run: python import_series.py --apply
 
-      - name: Prepare publish folder
+      - name: Verify site config exists
+        run: test -f site_config.json
+
+      - name: Verify generated home page exists
+        run: test -f index.html
+
+      - name: Verify parasha archives exist
+        run: test -d parashot
+
+      - name: Prepare preview folder
         shell: bash
         run: |
-          rm -rf _site
-          mkdir -p _site
+          rm -rf _preview
+          mkdir -p _preview
 
           for item in \
             index.html \
@@ -49,17 +60,15 @@ jobs:
             posts
           do
             if [ -e "$item" ]; then
-              cp -a "$item" _site/
+              cp -a "$item" _preview/
             fi
           done
 
-          touch _site/.nojekyll
+          touch _preview/.nojekyll
 
-      - name: Publish to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./_site
-          force_orphan: true
-          cname: www.parasha-week.co.il
+          name: dynamic-site-preview
+          path: _preview
+          if-no-files-found: error

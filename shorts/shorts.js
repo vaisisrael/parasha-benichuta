@@ -112,12 +112,30 @@
   }
 
   function getCurrentParasha() {
+    const activeChoice = document.querySelector(
+      ".parasha-choice.is-active"
+    );
+
+    if (activeChoice) {
+      const activeName = normalizeText(
+        activeChoice.textContent
+      );
+
+      if (parashaLabels[activeName]) {
+        return activeName;
+      }
+    }
+
     const headings = Array.from(
-      document.querySelectorAll(".hero h1, .archive-header h1, main h1")
+      document.querySelectorAll(
+        ".hero h1, .archive-header h1, main h1"
+      )
     );
 
     for (const heading of headings) {
-      const name = normalizeText(heading.textContent)
+      const name = normalizeText(
+        heading.textContent
+      )
         .replace(/^פרשת\s+/, "")
         .trim();
 
@@ -183,6 +201,7 @@
     const card = document.createElement("article");
 
     card.className = "card shorts-system-card fixed-cover-card";
+    card.dataset.parashaName = parashaName;
 
     card.innerHTML = `
       <a class="card-media shorts-card-open" href="#" aria-label="פתיחת קצרים לפרשת ${parashaName}">
@@ -533,21 +552,40 @@
       return false;
     }
 
-    if (grid.dataset.shortsOrganized === "true") {
+    const existingShortsCard = grid.querySelector(
+      ".shorts-system-card"
+    );
+
+    if (
+      grid.dataset.shortsOrganized === "true" &&
+      existingShortsCard &&
+      existingShortsCard.dataset.parashaName === parashaName
+    ) {
       return true;
+    }
+
+    if (existingShortsCard) {
+      existingShortsCard.remove();
     }
 
     const existingCards = Array.from(
       grid.querySelectorAll(
         ".content-region .region-panel > .card"
       )
+    ).filter(
+      (card) =>
+        !card.classList.contains(
+          "shorts-system-card"
+        )
     );
 
     if (!existingCards.length) {
       return false;
     }
 
-    const shortsCard = createShortsCard(parashaName);
+    const shortsCard = createShortsCard(
+      parashaName
+    );
 
     const allCards = [
       ...existingCards,
@@ -555,7 +593,10 @@
     ];
 
     regionPlans.forEach((plan) => {
-      const section = ensureRegion(grid, plan);
+      const section = ensureRegion(
+        grid,
+        plan
+      );
 
       rebuildRegion(
         section,
@@ -567,6 +608,7 @@
     });
 
     grid.dataset.shortsOrganized = "true";
+    grid.dataset.shortsParasha = parashaName;
 
     return true;
   }
@@ -574,30 +616,77 @@
   function start() {
     ensureCss();
 
-    const parashaName = getCurrentParasha();
+    let scheduledTimer = null;
 
-    if (!parashaName) {
-      return;
-    }
+    const organizeForCurrentParasha = () => {
+      const parashaName = getCurrentParasha();
 
-    let attempts = 0;
-
-    const tryOrganize = () => {
-      attempts += 1;
-
-      if (reorganizeRegions(parashaName)) {
+      if (!parashaName) {
         return;
       }
 
-      if (attempts < 40) {
-        window.setTimeout(
-          tryOrganize,
-          50
-        );
-      }
+      let attempts = 0;
+
+      const tryOrganize = () => {
+        attempts += 1;
+
+        if (
+          reorganizeRegions(
+            parashaName
+          )
+        ) {
+          return;
+        }
+
+        if (attempts < 60) {
+          window.setTimeout(
+            tryOrganize,
+            50
+          );
+        }
+      };
+
+      tryOrganize();
     };
 
-    tryOrganize();
+    const scheduleOrganize = () => {
+      if (scheduledTimer !== null) {
+        window.clearTimeout(
+          scheduledTimer
+        );
+      }
+
+      scheduledTimer = window.setTimeout(
+        () => {
+          scheduledTimer = null;
+          organizeForCurrentParasha();
+        },
+        30
+      );
+    };
+
+    const observedRoot =
+      document.querySelector("main") ||
+      document.body;
+
+    const observer = new MutationObserver(
+      scheduleOrganize
+    );
+
+    observer.observe(
+      observedRoot,
+      {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: [
+          "class",
+          "aria-pressed"
+        ]
+      }
+    );
+
+    scheduleOrganize();
   }
 
   document.addEventListener(
