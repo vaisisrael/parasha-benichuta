@@ -1,6 +1,9 @@
 name: בדיקת האתר הדינמי
 
 on:
+  push:
+    branches:
+      - dynamic-parasha-home
   workflow_dispatch:
 
 permissions:
