@@ -39,6 +39,7 @@ jobs:
             index.html \
             404.html \
             CNAME \
+            site_config.json \
             assets \
             about \
             games \
