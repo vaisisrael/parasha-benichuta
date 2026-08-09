@@ -506,6 +506,7 @@ def layout(
 <html lang="he" dir="rtl">
 <head>
   <meta charset="utf-8">
+  <meta name="robots" content="index, follow">
 
   <meta
     name="viewport"
