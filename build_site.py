@@ -1025,33 +1025,64 @@ def build(
             ),
         )
 
-    # הפרשה הנוכחית נשארת
-    # ידנית בשלב זה.
+    # הפרשה/ות הנוכחית/ות נקבעות ידנית ב-site_config.json.
+    # בשלב זה דף הבית הסטטי נבנה לפי הפרשה הראשונה בלבד.
+    # בהמשך site.js ישתמש בכל הרשימה לצורך דף בית דינמי.
 
-current_parashot = config.get(
-    "current_parasha",
-    [],
-)
+    current_parashot = config.get(
+        "current_parasha",
+        [],
+    )
 
-if isinstance(
-    current_parashot,
-    str,
-):
+    if isinstance(
+        current_parashot,
+        str,
+    ):
+        current_parashot = [
+            current_parashot.strip()
+        ]
+
     current_parashot = [
-        current_parashot.strip()
+        str(name).strip()
+        for name in current_parashot
+        if str(name).strip()
     ]
 
-current_parashot = [
-    str(name).strip()
-    for name in current_parashot
-    if str(name).strip()
-]
+    allowed_parashot = [
+        str(name).strip()
+        for name in config.get(
+            "allowed_parashot",
+            [],
+        )
+        if str(name).strip()
+    ]
 
-current = (
-    current_parashot[0]
-    if current_parashot
-    else ""
-)
+    if not current_parashot:
+        raise ValueError(
+            "site_config.json: current_parasha "
+            "must contain one or two parasha names."
+        )
+
+    if len(current_parashot) > 2:
+        raise ValueError(
+            "site_config.json: current_parasha "
+            "may contain at most two parasha names."
+        )
+
+    if allowed_parashot:
+        invalid_names = [
+            name
+            for name in current_parashot
+            if name not in allowed_parashot
+        ]
+
+        if invalid_names:
+            raise ValueError(
+                "site_config.json: unknown parasha name(s): "
+                + ", ".join(invalid_names)
+            )
+
+    current = current_parashot[0]
 
     current_items = [
         item
@@ -1198,6 +1229,7 @@ current = (
         "posts": len(posts),
         "pages": len(pages),
         "current_parasha": current,
+        "current_parashot": current_parashot,
         "parashot": sum(
             len(names)
             for names
@@ -1242,23 +1274,26 @@ def load_config(
     path: Path,
 ) -> dict:
     if not path.exists():
-        path.write_text(
-            json.dumps(
-                {
-                    "current_parasha":
-                    "ראה"
-                },
-                ensure_ascii=False,
-                indent=2,
-            ),
-            encoding="utf-8",
+        raise FileNotFoundError(
+            f"Missing site config: {path}"
         )
 
-    return json.loads(
+    data = json.loads(
         path.read_text(
             encoding="utf-8"
         )
     )
+
+    if not isinstance(
+        data,
+        dict,
+    ):
+        raise ValueError(
+            "site_config.json must contain "
+            "a JSON object."
+        )
+
+    return data
 
 
 def main() -> int:
@@ -1345,15 +1380,27 @@ def main() -> int:
 
         return 1
 
-    config = load_config(
-        config_path
-    )
+    try:
+        config = load_config(
+            config_path
+        )
 
-    build(
-        items,
-        output_root,
-        config,
-    )
+        build(
+            items,
+            output_root,
+            config,
+        )
+
+    except (
+        FileNotFoundError,
+        ValueError,
+        json.JSONDecodeError,
+    ) as error:
+        print(
+            f"ERROR: {error}"
+        )
+
+        return 1
 
     print(
         "\nSite build completed successfully."
