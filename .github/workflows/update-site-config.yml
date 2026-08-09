@@ -1,0 +1,56 @@
+name: עדכון הפרשה באתר
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - site_config.json
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-gh-pages
+  cancel-in-progress: false
+
+jobs:
+  update-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: source
+
+      - name: Get published site
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: published
+
+      - name: Copy site config
+        shell: bash
+        run: |
+          cp source/site_config.json published/site_config.json
+
+      - name: Publish config only
+        shell: bash
+        working-directory: published
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add site_config.json
+
+          if git diff --cached --quiet; then
+            echo "No config changes to publish."
+            exit 0
+          fi
+
+          git commit -m "Update site config"
+          git push origin HEAD:gh-pages
