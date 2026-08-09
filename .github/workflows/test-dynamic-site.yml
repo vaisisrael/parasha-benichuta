@@ -1,0 +1,41 @@
+name: בדיקת האתר הדינמי
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check JavaScript syntax
+        run: node --check assets/js/site.js
+
+      - name: Build site
+        run: python build_site.py
+
+      - name: Build series
+        run: python import_series.py --apply
+
+      - name: Verify site config exists
+        run: test -f site_config.json
+
+      - name: Verify generated home page exists
+        run: test -f index.html
+
+      - name: Verify parasha archives exist
+        run: test -d parashot
+
+      - name: Test completed
+        run: echo "Dynamic site validation completed successfully."
