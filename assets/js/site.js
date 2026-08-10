@@ -449,10 +449,22 @@
     document
       .querySelectorAll(".card")
       .forEach((card) => {
+        const label =
+          getCardLabel(card);
+
         const def =
-          fixedSectionImages[getCardLabel(card)];
+          fixedSectionImages[label];
 
         if (!def) return;
+
+        if (
+          label === "אסיף" &&
+          card.classList.contains(
+            "asif-mabat-card"
+          )
+        ) {
+          return;
+        }
 
         const media = card.querySelector(".card-media");
         if (!media) return;
