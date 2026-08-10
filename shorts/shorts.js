@@ -544,13 +544,9 @@
 
       tabs.append(tab);
       panel.append(card);
-
-      if (index === 0) {
-        window.setTimeout(() => {
-          tab.click();
-        }, 0);
-      }
     });
+
+    tabs.firstElementChild?.click();
   }
 
   function reorganizeRegions(parashaName) {
