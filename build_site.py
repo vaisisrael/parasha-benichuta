@@ -410,6 +410,58 @@ def strip_tags(
     ).strip()
 
 
+def asif_mabat(
+    content: str,
+) -> tuple[
+    str | None,
+    str | None,
+]:
+    marker = re.search(
+        r"מבט\s+חד",
+        content,
+        flags=re.I,
+    )
+
+    if not marker:
+        return None, None
+
+    tail = content[
+        marker.start():
+    ]
+
+    image = first_image(
+        tail
+    )
+
+    if not image:
+        return None, None
+
+    without_image = re.sub(
+        r"<img\b[^>]*>",
+        " ",
+        tail,
+        count=1,
+        flags=re.I,
+    )
+
+    caption = strip_tags(
+        without_image
+    )
+
+    caption = re.sub(
+        r"^.*?מבט\s+חד\s*",
+        "",
+        caption,
+        count=1,
+        flags=re.I,
+    ).strip()
+
+    return (
+        image,
+        caption or None,
+    )
+
+
 def excerpt(
     item: Item,
     length: int = 190,
@@ -691,24 +743,6 @@ def card(
     item: Item,
     prefix: str = "",
 ) -> str:
-    image = first_image(
-        item.content
-    )
-
-    image_html = (
-        (
-            f'<img '
-            f'src="{html.escape(image, quote=True)}" '
-            f'alt="">'
-        )
-        if image
-        else (
-            '<div class="card-placeholder">'
-            '📖'
-            '</div>'
-        )
-    )
-
     section = (
         item.section.removeprefix(
             "🔖"
@@ -717,11 +751,81 @@ def card(
         else "תוכן"
     )
 
+    card_class = "card"
+    media_class = "card-media"
+
+    if section == "אסיף":
+        (
+            image,
+            mabat_caption,
+        ) = asif_mabat(
+            item.content
+        )
+
+        if image:
+            card_class += (
+                " asif-mabat-card"
+            )
+
+            media_class += (
+                " asif-mabat-media"
+            )
+
+            caption_html = (
+                (
+                    '<span '
+                    'class="asif-mabat-caption">'
+                    f'{html.escape(mabat_caption)}'
+                    '</span>'
+                )
+                if mabat_caption
+                else ""
+            )
+
+            image_html = (
+                f'<img '
+                f'src="{html.escape(image, quote=True)}" '
+                f'alt="">'
+                f'{caption_html}'
+            )
+
+        else:
+            fallback_image = (
+                f"{prefix}"
+                "assets/images/"
+                "section-covers/asif.png"
+            )
+
+            image_html = (
+                f'<img '
+                f'src="{html.escape(fallback_image, quote=True)}" '
+                f'alt="מדור אסיף">'
+            )
+
+    else:
+        image = first_image(
+            item.content
+        )
+
+        image_html = (
+            (
+                f'<img '
+                f'src="{html.escape(image, quote=True)}" '
+                f'alt="">'
+            )
+            if image
+            else (
+                '<div class="card-placeholder">'
+                '📖'
+                '</div>'
+            )
+        )
+
     return f"""
-<article class="card">
+<article class="{card_class}">
 
   <a
-    class="card-media"
+    class="{media_class}"
     href="{prefix}{item.output_path}"
   >
     {image_html}
