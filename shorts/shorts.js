@@ -68,23 +68,33 @@
     "וזאת הברכה": "5-11 פרשת וזאת הברכה"
   };
 
-  const regionPlans = [
-    {
-      className: "content-region-knowing",
-      title: "מכירים את הפרשה",
-      order: ["תקציר", "וורט", "עברית", "מושג", "עיון", "מדרש", "הלכה"]
-    },
-    {
-      className: "content-region-stories",
-      title: "ספרות",
-      order: ["קצרים", "משל", "יצירה", "ראיון", "אסיף"]
-    },
-    {
-      className: "content-region-family",
-      title: "לכל המשפחה",
-      order: ["משחקים", "סיפור", "פיצוחים", "המחשה", "ילדים"]
-    }
-  ];
+  // סדר האזורים והכרטיסים מוגדר ב-site.js.
+  // כך אין שתי רשימות נפרדות שעלולות לצאת מסנכרון.
+  const regionPlans = Array.isArray(
+    window.ParashaRegionPlans
+  )
+    ? window.ParashaRegionPlans.map((plan) => ({
+        className: plan.className,
+        title: plan.title,
+        order: [...plan.order]
+      }))
+    : [
+        {
+          className: "content-region-knowing",
+          title: "מכירים את הפרשה",
+          order: ["תקציר", "וורט", "עברית", "מושג", "עיון", "מדרש", "הלכה"]
+        },
+        {
+          className: "content-region-stories",
+          title: "ספרות",
+          order: ["קצרים", "משל", "יצירה", "ראיון", "אסיף"]
+        },
+        {
+          className: "content-region-family",
+          title: "לכל המשפחה",
+          order: ["משחקים", "סיפור", "פיצוחים", "המחשה", "ילדים"]
+        }
+      ];
 
   let jsonpCounter = 0;
 
@@ -561,6 +571,9 @@
       existingShortsCard &&
       existingShortsCard.dataset.parashaName === parashaName
     ) {
+      window.ParashaCardsVisibility
+        ?.reveal?.();
+
       return true;
     }
 
@@ -609,6 +622,12 @@
 
     grid.dataset.shortsOrganized = "true";
     grid.dataset.shortsParasha = parashaName;
+
+    window.ParashaPostNavigation
+      ?.restoreReturnTarget?.();
+
+    window.ParashaCardsVisibility
+      ?.reveal?.();
 
     return true;
   }
