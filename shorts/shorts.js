@@ -76,7 +76,7 @@
     },
     {
       className: "content-region-stories",
-      title: "קצרים",
+      title: "ספרות",
       order: ["קצרים", "משל", "יצירה", "ראיון", "אסיף"]
     },
     {
