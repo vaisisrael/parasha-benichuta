@@ -102,54 +102,119 @@
     }
   };
 
+  // מקור יחיד לסדר האזורים והכרטיסים באתר.
+  // shorts.js משתמש באותה הגדרה, כדי שהניווט
+  // בתוך הפוסטים יהיה תמיד זהה לסדר החזותי.
   const regionDefinitions = [
     {
       id: "knowing",
+      className: "content-region-knowing",
       title: "מכירים את הפרשה",
       order: [
         "תקציר",
-        "מושג",
         "וורט",
-        "מדרש",
         "עברית",
+        "מושג",
         "עיון",
-        "הלכה",
-        "לימוד",
-        "פרשה",
-        "תנ״ך",
-        "תנ\"ך"
+        "מדרש",
+        "הלכה"
       ]
     },
     {
       id: "stories",
-      title: "סיפורים ורעיונות",
+      className: "content-region-stories",
+      title: "ספרות",
       order: [
-        "סיפור",
-        "יצירה",
+        "קצרים",
         "משל",
+        "יצירה",
         "ראיון",
-        "אסיף",
-        "הגות",
-        "מחשבה",
-        "שיר"
+        "אסיף"
       ]
     },
     {
       id: "family",
+      className: "content-region-family",
       title: "לכל המשפחה",
       order: [
         "משחקים",
-        "המשחקיה",
+        "סיפור",
         "פיצוחים",
         "המחשה",
-        "ילדים",
-        "משפחה",
-        "חידה",
-        "חידות",
-        "פעילות"
+        "ילדים"
       ]
     }
   ];
+
+  window.ParashaRegionPlans =
+    regionDefinitions.map((region) => ({
+      id: region.id,
+      className: region.className,
+      title: region.title,
+      order: [...region.order]
+    }));
+
+  const POST_NAV_CONTEXT_KEY =
+    "parashaPostNavigationContext";
+
+  const POST_NAV_RETURN_KEY =
+    "parashaPostNavigationReturn";
+
+  let parashaCardsRevealTimer = null;
+
+  function hasParashaCardsGrid() {
+    return Boolean(
+      document.querySelector(
+        ".site-main > .hero + .cards-grid, " +
+        ".site-main > .archive-header + .cards-grid"
+      )
+    );
+  }
+
+  function revealParashaCards() {
+    if (!hasParashaCardsGrid()) return;
+
+    document.body.classList.add(
+      "parasha-cards-ready"
+    );
+
+    if (parashaCardsRevealTimer !== null) {
+      window.clearTimeout(
+        parashaCardsRevealTimer
+      );
+
+      parashaCardsRevealTimer = null;
+    }
+  }
+
+  function hideParashaCards() {
+    if (!hasParashaCardsGrid()) return;
+
+    document.body.classList.remove(
+      "parasha-cards-ready"
+    );
+
+    if (parashaCardsRevealTimer !== null) {
+      window.clearTimeout(
+        parashaCardsRevealTimer
+      );
+    }
+
+    /*
+      מנגנון ביטחון: גם אם ארגון הכרטיסים
+      נכשל מסיבה כלשהי, התוכן לא יישאר מוסתר.
+    */
+    parashaCardsRevealTimer =
+      window.setTimeout(
+        revealParashaCards,
+        1200
+      );
+  }
+
+  window.ParashaCardsVisibility = {
+    hide: hideParashaCards,
+    reveal: revealParashaCards
+  };
 
   let regionCleanupFunctions = [];
 
@@ -1690,6 +1755,8 @@
     const cards =
       await fetchParashaCards(parashaName);
 
+    hideParashaCards();
+
     closeAllOpenEmbeds();
     clearRegionCleanup();
 
@@ -1781,17 +1848,29 @@
       const firstParasha =
         configuredParashot[0];
 
+      const returnTarget =
+        getStoredReturnTarget();
+
+      const initialParasha =
+        returnTarget?.parashaName &&
+        configuredParashot.includes(
+          returnTarget.parashaName
+        )
+          ? returnTarget.parashaName
+          : firstParasha;
+
       /*
-        טוענים את הפרשה הראשונה לפני שמשנים
-        את כותרת הבית. אם הטעינה נכשלת,
-        ה-fallback הסטטי נשאר.
+        טוענים את הפרשה לפני שמשנים
+        את כותרת הבית. בחזרה מפוסט של
+        אחת משתי פרשות, נשמרת הפרשה
+        שממנה המשתמש הגיע.
       */
       await replaceHomeParasha(
-        firstParasha
+        initialParasha
       );
 
       setHeroForCurrentParasha(
-        firstParasha,
+        initialParasha,
         configuredParashot
       );
 
@@ -1865,6 +1944,670 @@
       }
     }
   }
+
+  function canonicalNavigationUrl(value) {
+    try {
+      const url = new URL(
+        value,
+        window.location.href
+      );
+
+      url.hash = "";
+      url.search = "";
+
+      return url.href.replace(
+        /\/index\.html$/,
+        "/"
+      );
+    } catch {
+      return "";
+    }
+  }
+
+  function readSessionJson(key) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function writeSessionJson(key, value) {
+    try {
+      sessionStorage.setItem(
+        key,
+        JSON.stringify(value)
+      );
+    } catch {
+      // הניווט הרגיל ממשיך לעבוד גם בלי sessionStorage.
+    }
+  }
+
+  function removeSessionValue(key) {
+    try {
+      sessionStorage.removeItem(key);
+    } catch {
+      // אין צורך בפעולה נוספת.
+    }
+  }
+
+  function getPostParashaName() {
+    const meta = normalizeText(
+      document.querySelector(".post-meta")?.textContent
+    );
+
+    const match = meta.match(
+      /פרשת\s+([^·]+)/
+    );
+
+    if (!match) return null;
+
+    const name = match[1].trim();
+    return parashaLabels[name]
+      ? name
+      : null;
+  }
+
+  function getPostNavigationEntry(card) {
+    const label = getCardLabel(card);
+    const title = normalizeText(
+      card.querySelector("h2")?.textContent
+    ) || label;
+
+    if (
+      card.classList.contains("shorts-system-card") ||
+      card.classList.contains("games-system-card")
+    ) {
+      return {
+        type: "card",
+        label,
+        title,
+        url: ""
+      };
+    }
+
+    const url = canonicalNavigationUrl(
+      getCardPostUrl(card)
+    );
+
+    if (!url) return null;
+
+    return {
+      type: "post",
+      label,
+      title,
+      url
+    };
+  }
+
+  function getVisibleNavigationSequence() {
+    return Array.from(
+      document.querySelectorAll(
+        ".cards-grid.organized-regions " +
+        ".content-region .region-panel > .card"
+      )
+    )
+      .map(getPostNavigationEntry)
+      .filter(Boolean);
+  }
+
+  function savePostNavigationContext(card) {
+    const parashaName = getCurrentParasha();
+    const sequence = getVisibleNavigationSequence();
+    const entry = getPostNavigationEntry(card);
+
+    if (
+      !parashaName ||
+      !sequence.length ||
+      !entry ||
+      entry.type !== "post"
+    ) {
+      return;
+    }
+
+    writeSessionJson(
+      POST_NAV_CONTEXT_KEY,
+      {
+        sourceUrl: canonicalNavigationUrl(
+          window.location.href
+        ),
+        sourceIsHome: isHomePage(),
+        parashaName,
+        sequence,
+        savedAt: Date.now()
+      }
+    );
+  }
+
+  function setupCardNavigationCapture() {
+    if (
+      document.documentElement.dataset
+        .postNavigationCaptureReady === "true"
+    ) {
+      return;
+    }
+
+    document.documentElement.dataset
+      .postNavigationCaptureReady = "true";
+
+    document.addEventListener(
+      "click",
+      (event) => {
+        const link = event.target.closest(
+          ".card a[href]"
+        );
+
+        const card = link?.closest(".card");
+
+        if (!link || !card) return;
+
+        if (
+          card.classList.contains("shorts-system-card") ||
+          card.classList.contains("games-system-card")
+        ) {
+          return;
+        }
+
+        const destination = canonicalNavigationUrl(
+          link.href
+        );
+
+        const postUrl = canonicalNavigationUrl(
+          getCardPostUrl(card)
+        );
+
+        if (
+          !destination ||
+          !postUrl ||
+          destination !== postUrl
+        ) {
+          return;
+        }
+
+        savePostNavigationContext(card);
+      },
+      true
+    );
+  }
+
+  function buildArchiveNavigationSequence(
+    doc,
+    archiveUrl
+  ) {
+    const cards = Array.from(
+      doc.querySelectorAll(
+        ".cards-grid > .card"
+      )
+    );
+
+    const byLabel = new Map();
+
+    cards.forEach((card) => {
+      const label = normalizeText(
+        card.querySelector(".eyebrow")?.textContent
+      );
+
+      if (!label || byLabel.has(label)) {
+        return;
+      }
+
+      const link = card.querySelector(
+        "h2 a[href], .card-media[href]"
+      );
+
+      if (!link) return;
+
+      const url = canonicalNavigationUrl(
+        new URL(
+          link.getAttribute("href"),
+          archiveUrl
+        ).href
+      );
+
+      if (!url) return;
+
+      byLabel.set(
+        label,
+        {
+          type: "post",
+          label,
+          title: normalizeText(
+            card.querySelector("h2")?.textContent
+          ) || label,
+          url
+        }
+      );
+    });
+
+    const sequence = [];
+
+    regionDefinitions.forEach((region) => {
+      region.order.forEach((label) => {
+        if (
+          label === "קצרים" ||
+          label === "משחקים"
+        ) {
+          sequence.push({
+            type: "card",
+            label,
+            title:
+              label === "קצרים"
+                ? "קצרים"
+                : "משחקי הפרשה",
+            url: ""
+          });
+          return;
+        }
+
+        const entry = byLabel.get(label);
+
+        if (entry) {
+          sequence.push(entry);
+        }
+      });
+    });
+
+    return sequence;
+  }
+
+  async function createFallbackPostNavigationContext(
+    parashaName
+  ) {
+    const archiveUrl =
+      getParashaArchiveUrl(parashaName);
+
+    if (!archiveUrl) return null;
+
+    try {
+      const response = await fetch(
+        archiveUrl.href,
+        { cache: "no-store" }
+      );
+
+      if (!response.ok) return null;
+
+      const doc = new DOMParser().parseFromString(
+        await response.text(),
+        "text/html"
+      );
+
+      const sequence =
+        buildArchiveNavigationSequence(
+          doc,
+          archiveUrl.href
+        );
+
+      if (!sequence.length) return null;
+
+      return {
+        sourceUrl: canonicalNavigationUrl(
+          archiveUrl.href
+        ),
+        sourceIsHome: false,
+        parashaName,
+        sequence,
+        savedAt: Date.now()
+      };
+    } catch {
+      return null;
+    }
+  }
+
+  function findCurrentNavigationIndex(context) {
+    const currentUrl = canonicalNavigationUrl(
+      window.location.href
+    );
+
+    return Array.isArray(context?.sequence)
+      ? context.sequence.findIndex(
+          (entry) =>
+            entry.type === "post" &&
+            canonicalNavigationUrl(entry.url) ===
+              currentUrl
+        )
+      : -1;
+  }
+
+  function saveReturnTarget(
+    context,
+    entry
+  ) {
+    if (!context?.sourceUrl || !entry) {
+      return;
+    }
+
+    writeSessionJson(
+      POST_NAV_RETURN_KEY,
+      {
+        sourceUrl: canonicalNavigationUrl(
+          context.sourceUrl
+        ),
+        parashaName: context.parashaName,
+        type: entry.type,
+        label: entry.label,
+        url: entry.url || "",
+        savedAt: Date.now()
+      }
+    );
+  }
+
+  function createPostBackNavigation(
+    context,
+    parashaName,
+    currentEntry
+  ) {
+    const post = document.querySelector(".post-page");
+
+    if (
+      !post ||
+      post.querySelector(".post-back-navigation")
+    ) {
+      return;
+    }
+
+    const archiveUrl =
+      getParashaArchiveUrl(parashaName);
+
+    const destination =
+      context?.sourceUrl ||
+      archiveUrl?.href;
+
+    if (!destination) return;
+
+    const wrap = document.createElement("nav");
+    wrap.className = "post-back-navigation";
+    wrap.setAttribute(
+      "aria-label",
+      "חזרה לתכני הפרשה"
+    );
+
+    const link = document.createElement("a");
+    link.className = "post-back-link";
+    link.href = destination;
+    link.textContent = `← חזרה לפרשת ${parashaName}`;
+
+    link.addEventListener("click", () => {
+      if (context && currentEntry) {
+        saveReturnTarget(
+          context,
+          currentEntry
+        );
+      }
+    });
+
+    wrap.append(link);
+    post.prepend(wrap);
+  }
+
+  function createPostNextNavigation(
+    context,
+    parashaName,
+    nextEntry
+  ) {
+    const post = document.querySelector(".post-page");
+
+    if (
+      !post ||
+      post.querySelector(".post-next-navigation")
+    ) {
+      return;
+    }
+
+    const wrap = document.createElement("nav");
+    wrap.className = "post-next-navigation";
+    wrap.setAttribute(
+      "aria-label",
+      "המשך בפרשה"
+    );
+
+    const link = document.createElement("a");
+    link.className = "post-next-link";
+
+    const kicker = document.createElement("span");
+    kicker.className = "post-next-kicker";
+
+    const title = document.createElement("span");
+    title.className = "post-next-title";
+
+    if (nextEntry) {
+      kicker.textContent = "הבא";
+      title.textContent = nextEntry.title;
+
+      if (
+        nextEntry.type === "post" &&
+        nextEntry.url
+      ) {
+        link.href = nextEntry.url;
+      } else {
+        link.href = context.sourceUrl;
+
+        link.addEventListener("click", () => {
+          saveReturnTarget(
+            context,
+            nextEntry
+          );
+        });
+      }
+    } else {
+      kicker.textContent = "סיימנו את רצף הפרשה";
+      title.textContent =
+        `חזרה לכל תוכני פרשת ${parashaName}`;
+      link.href = context.sourceUrl;
+    }
+
+    link.append(kicker, title);
+    wrap.append(link);
+    post.append(wrap);
+  }
+
+  async function setupPostNavigation() {
+    const post = document.querySelector(".post-page");
+    if (!post) return;
+
+    const parashaName = getPostParashaName();
+    if (!parashaName) return;
+
+    let context = readSessionJson(
+      POST_NAV_CONTEXT_KEY
+    );
+
+    const hasMatchingContext =
+      context?.parashaName === parashaName &&
+      findCurrentNavigationIndex(context) !== -1;
+
+    if (!hasMatchingContext) {
+      context =
+        await createFallbackPostNavigationContext(
+          parashaName
+        );
+
+      if (context) {
+        writeSessionJson(
+          POST_NAV_CONTEXT_KEY,
+          context
+        );
+      }
+    }
+
+    if (!context) {
+      createPostBackNavigation(
+        null,
+        parashaName,
+        null
+      );
+      return;
+    }
+
+    const currentIndex =
+      findCurrentNavigationIndex(context);
+
+    if (currentIndex === -1) {
+      createPostBackNavigation(
+        context,
+        parashaName,
+        null
+      );
+      return;
+    }
+
+    const currentEntry =
+      context.sequence[currentIndex];
+
+    const nextEntry =
+      context.sequence[
+        currentIndex + 1
+      ] || null;
+
+    createPostBackNavigation(
+      context,
+      parashaName,
+      currentEntry
+    );
+
+    createPostNextNavigation(
+      context,
+      parashaName,
+      nextEntry
+    );
+  }
+
+  function getStoredReturnTarget() {
+    const target = readSessionJson(
+      POST_NAV_RETURN_KEY
+    );
+
+    if (!target?.sourceUrl) {
+      return null;
+    }
+
+    if (
+      canonicalNavigationUrl(target.sourceUrl) !==
+      canonicalNavigationUrl(window.location.href)
+    ) {
+      return null;
+    }
+
+    return target;
+  }
+
+  function activateNavigationTarget(target) {
+    if (!target) return false;
+
+    const cards = Array.from(
+      document.querySelectorAll(
+        ".cards-grid.organized-regions " +
+        ".content-region .region-panel > .card"
+      )
+    );
+
+    const wantedUrl = canonicalNavigationUrl(
+      target.url
+    );
+
+    const card = cards.find((item) => {
+      if (
+        target.type === "post" &&
+        wantedUrl
+      ) {
+        return canonicalNavigationUrl(
+          getCardPostUrl(item)
+        ) === wantedUrl;
+      }
+
+      return getCardLabel(item) === target.label;
+    });
+
+    if (!card) return false;
+
+    const panel = card.closest(".region-panel");
+    const section = card.closest(".content-region");
+
+    if (!panel || !section) return false;
+
+    const panelCards = Array.from(
+      panel.querySelectorAll(":scope > .card")
+    );
+
+    const index = panelCards.indexOf(card);
+
+    const tabs = Array.from(
+      section.querySelectorAll(
+        ".region-tabs .region-tab"
+      )
+    );
+
+    const tab = tabs[index];
+
+    if (!tab) return false;
+
+    tab.click();
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+
+    const grid = card.closest(
+      ".cards-grid.organized-regions"
+    );
+
+    const finalLayoutReady =
+      grid?.dataset.shortsOrganized === "true";
+
+    if (finalLayoutReady) {
+      removeSessionValue(
+        POST_NAV_RETURN_KEY
+      );
+    }
+
+    return finalLayoutReady;
+  }
+
+  function restorePostNavigationReturnTarget() {
+    const target = getStoredReturnTarget();
+    if (!target) return false;
+
+    const currentParasha = getCurrentParasha();
+
+    if (
+      target.parashaName &&
+      currentParasha !== target.parashaName
+    ) {
+      return false;
+    }
+
+    return activateNavigationTarget(
+      target
+    );
+  }
+
+  function schedulePostNavigationRestore() {
+    let attempts = 0;
+
+    const tryRestore = () => {
+      attempts += 1;
+
+      if (
+        restorePostNavigationReturnTarget() ||
+        attempts >= 40
+      ) {
+        return;
+      }
+
+      window.setTimeout(
+        tryRestore,
+        50
+      );
+    };
+
+    tryRestore();
+  }
+
+  window.ParashaPostNavigation = {
+    restoreReturnTarget:
+      schedulePostNavigationRestore
+  };
 
   const redirectMapUrl =
     new URL(
@@ -1975,12 +2718,19 @@
   document.addEventListener(
     "DOMContentLoaded",
     async () => {
+      hideParashaCards();
+
       removeNavigationItems();
       removeHeroDescription();
       removePostDate();
       applyFixedSectionImageToPost();
       normalizePostMainImage();
       setupNavigation();
+      setupCardNavigationCapture();
+
+      if (document.querySelector(".post-page")) {
+        await setupPostNavigation();
+      }
 
       if (isHomePage()) {
         await initializeDynamicHome();
@@ -2007,6 +2757,10 @@
 
           organizeParashaCards();
         }
+      }
+
+      if (!document.querySelector(".post-page")) {
+        schedulePostNavigationRestore();
       }
 
       repairInternalLinks();
