@@ -3,27 +3,23 @@
 
   const wantedSections = ["תקציר", "וורט", "עברית"];
 
-  const rootUrl = new URL("../", window.location.href);
+  const scriptUrl = document.currentScript?.src || window.location.href;
+  const rootUrl = new URL("../../", scriptUrl);
   const configUrl = new URL("site_config.json", rootUrl);
 
-  const parashaLabels = {
-    "בראשית": ["בראשית", "בראשית"], "נח": ["בראשית", "נח"], "לך לך": ["בראשית", "לך לך"],
-    "וירא": ["בראשית", "וירא"], "חיי שרה": ["בראשית", "חיי שרה"], "תולדות": ["בראשית", "תולדות"],
-    "ויצא": ["בראשית", "ויצא"], "וישלח": ["בראשית", "וישלח"], "וישב": ["בראשית", "וישב"],
-    "מקץ": ["בראשית", "מקץ"], "ויגש": ["בראשית", "ויגש"], "ויחי": ["בראשית", "ויחי"],
-    "שמות": ["שמות", "שמות"], "וארא": ["שמות", "וארא"], "בא": ["שמות", "בא"], "בשלח": ["שמות", "בשלח"],
-    "יתרו": ["שמות", "יתרו"], "משפטים": ["שמות", "משפטים"], "תרומה": ["שמות", "תרומה"],
-    "תצווה": ["שמות", "תצווה"], "כי תשא": ["שמות", "כי תשא"], "ויקהל": ["שמות", "ויקהל"], "פקודי": ["שמות", "פקודי"],
-    "ויקרא": ["ויקרא", "ויקרא"], "צו": ["ויקרא", "צו"], "שמיני": ["ויקרא", "שמיני"],
-    "תזריע": ["ויקרא", "תזריע"], "מצורע": ["ויקרא", "מצורע"], "אחרי מות": ["ויקרא", "אחרי מות"],
-    "קדושים": ["ויקרא", "קדושים"], "אמור": ["ויקרא", "אמור"], "בהר": ["ויקרא", "בהר"], "בחקתי": ["ויקרא", "בחקתי"],
-    "במדבר": ["במדבר", "במדבר"], "נשא": ["במדבר", "נשא"], "בהעלתך": ["במדבר", "בהעלתך"],
-    "שלח": ["במדבר", "שלח"], "קורח": ["במדבר", "קורח"], "חקת": ["במדבר", "חקת"],
-    "בלק": ["במדבר", "בלק"], "פנחס": ["במדבר", "פנחס"], "מטות": ["במדבר", "מטות"], "מסעי": ["במדבר", "מסעי"],
-    "דברים": ["דברים", "דברים"], "ואתחנן": ["דברים", "ואתחנן"], "עקב": ["דברים", "עקב"],
-    "ראה": ["דברים", "ראה"], "שופטים": ["דברים", "שופטים"], "כי תצא": ["דברים", "כי תצא"],
-    "כי תבוא": ["דברים", "כי תבוא"], "נצבים": ["דברים", "נצבים"], "וילך": ["דברים", "וילך"],
-    "האזינו": ["דברים", "האזינו"], "וזאת הברכה": ["דברים", "וזאת הברכה"]
+  const parashaBooks = {
+    "בראשית": "בראשית", "נח": "בראשית", "לך לך": "בראשית", "וירא": "בראשית",
+    "חיי שרה": "בראשית", "תולדות": "בראשית", "ויצא": "בראשית", "וישלח": "בראשית",
+    "וישב": "בראשית", "מקץ": "בראשית", "ויגש": "בראשית", "ויחי": "בראשית",
+    "שמות": "שמות", "וארא": "שמות", "בא": "שמות", "בשלח": "שמות", "יתרו": "שמות",
+    "משפטים": "שמות", "תרומה": "שמות", "תצווה": "שמות", "כי תשא": "שמות", "ויקהל": "שמות", "פקודי": "שמות",
+    "ויקרא": "ויקרא", "צו": "ויקרא", "שמיני": "ויקרא", "תזריע": "ויקרא", "מצורע": "ויקרא",
+    "אחרי מות": "ויקרא", "קדושים": "ויקרא", "אמור": "ויקרא", "בהר": "ויקרא", "בחקתי": "ויקרא",
+    "במדבר": "במדבר", "נשא": "במדבר", "בהעלתך": "במדבר", "שלח": "במדבר", "קורח": "במדבר",
+    "חקת": "במדבר", "בלק": "במדבר", "פנחס": "במדבר", "מטות": "במדבר", "מסעי": "במדבר",
+    "דברים": "דברים", "ואתחנן": "דברים", "עקב": "דברים", "ראה": "דברים", "שופטים": "דברים",
+    "כי תצא": "דברים", "כי תבוא": "דברים", "נצבים": "דברים", "וילך": "דברים",
+    "האזינו": "דברים", "וזאת הברכה": "דברים"
   };
 
   function normalizeText(value) {
@@ -46,23 +42,23 @@
 
   async function getParashaName() {
     const requested = new URL(window.location.href).searchParams.get("parasha");
-    if (requested && parashaLabels[requested]) return requested;
+    if (requested && parashaBooks[requested]) return requested;
 
     const response = await fetch(configUrl.href, { cache: "no-store" });
     if (!response.ok) throw new Error("לא ניתן לקרוא את site_config.json");
 
     const config = await response.json();
-    const current = Array.isArray(config.current_parasha)
+    const values = Array.isArray(config.current_parasha)
       ? config.current_parasha
       : [config.current_parasha];
 
-    const name = String(current[0] || "").trim();
-    if (!parashaLabels[name]) throw new Error("לא הוגדרה פרשה תקינה להדפסה");
+    const name = String(values[0] || "").trim();
+    if (!parashaBooks[name]) throw new Error("לא הוגדרה פרשה תקינה להדפסה");
     return name;
   }
 
   function getArchiveUrl(parashaName) {
-    const [book] = parashaLabels[parashaName];
+    const book = parashaBooks[parashaName];
     return new URL(
       `parashot/${safeSlug(book)}/${safeSlug(parashaName)}/`,
       rootUrl
@@ -115,7 +111,6 @@
 
       const title = normalizeText(card.querySelector("h2")?.textContent) || section;
       const url = new URL(link.getAttribute("href"), archiveUrl.href).href;
-
       result.set(section, { section, title, url });
     }
 
@@ -152,6 +147,19 @@
     return section;
   }
 
+  async function waitForImages() {
+    const pending = Array.from(document.images).filter((img) => !img.complete);
+    if (!pending.length) return;
+
+    await Promise.race([
+      Promise.all(pending.map((img) => new Promise((resolve) => {
+        img.addEventListener("load", resolve, { once: true });
+        img.addEventListener("error", resolve, { once: true });
+      }))),
+      new Promise((resolve) => setTimeout(resolve, 2500))
+    ]);
+  }
+
   async function init() {
     const status = document.getElementById("print-status");
     const content = document.getElementById("print-content");
@@ -174,20 +182,9 @@
 
       status.remove();
 
-      const params = new URL(window.location.href).searchParams;
-      if (params.get("autoprint") === "1") {
-        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-
-        const images = Array.from(document.images).filter((img) => !img.complete);
-        await Promise.race([
-          Promise.all(images.map((img) => new Promise((resolve) => {
-            img.addEventListener("load", resolve, { once: true });
-            img.addEventListener("error", resolve, { once: true });
-          }))),
-          new Promise((resolve) => setTimeout(resolve, 2500))
-        ]);
-
-        window.print();
+      if (new URL(window.location.href).searchParams.get("autoprint") === "1") {
+        await waitForImages();
+        requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
       }
     } catch (error) {
       console.error(error);
