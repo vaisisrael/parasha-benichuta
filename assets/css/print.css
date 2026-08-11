@@ -9,6 +9,16 @@
   --screen-bg: #eceeea;
   --quote-bg: #f3f7f3;
   --print-parasha: "פרשת השבוע";
+  --cover-font-brand: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-parasha: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-subtitle: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-quote: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-quote-ref: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-contents-title: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-section-name: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-section-description: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-page-number: "Noto Sans Hebrew", Arial, sans-serif;
+  --cover-font-footer: "Noto Sans Hebrew", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -198,6 +208,225 @@ a {
   text-decoration: none;
 }
 
+/* שער העלון */
+.legacy-print-cover { display: none; }
+
+.magazine-cover {
+  direction: rtl;
+  position: relative;
+  width: 100%;
+  min-height: 1120px;
+  margin: -44px -54px 38px;
+  width: calc(100% + 108px);
+  overflow: hidden;
+  background: #fffdf8;
+  color: #20342b;
+  break-after: page;
+  page-break-after: always;
+}
+
+.magazine-cover-top {
+  position: relative;
+  z-index: 3;
+  padding: 38px 66px 0;
+  text-align: center;
+}
+
+.magazine-cover-brand {
+  color: #4f6d5a;
+  font-family: var(--cover-font-brand);
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.magazine-cover-badge {
+  position: absolute;
+  top: 22px;
+  left: 36px;
+  display: grid;
+  place-items: center;
+  width: 104px;
+  height: 104px;
+  padding: 16px;
+  border: 5px solid #e5eee6;
+  border-radius: 50%;
+  background: #4f6d5a;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+  color: #fff;
+  font-family: var(--cover-font-brand);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: pre-line;
+}
+
+.magazine-cover-parasha {
+  margin: 9px 0 0;
+  color: #41652f;
+  font-family: var(--cover-font-parasha);
+  font-size: 88px;
+  font-weight: 700;
+  line-height: .98;
+}
+
+.magazine-cover-subtitle {
+  position: relative;
+  z-index: 5;
+  margin: 4px auto -22px;
+  color: #d27b2c;
+  font-family: var(--cover-font-subtitle);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.magazine-cover-quote {
+  position: relative;
+  z-index: 5;
+  margin-top: 28px;
+  color: #233946;
+  font-family: var(--cover-font-quote);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.magazine-cover-quote-ref {
+  position: relative;
+  z-index: 5;
+  color: #52615a;
+  font-family: var(--cover-font-quote-ref);
+  font-size: 14px;
+}
+
+.magazine-cover-image-wrap {
+  position: relative;
+  height: 455px;
+  margin-top: -28px;
+  overflow: hidden;
+  background: linear-gradient(#eaf4f6,#f1e6cf);
+}
+
+.magazine-cover-image-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255,253,248,.78) 0, rgba(255,253,248,.1) 20%, rgba(255,253,248,0) 45%);
+  pointer-events: none;
+}
+
+.magazine-cover-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.cover-image-missing .magazine-cover-image { display: none; }
+
+.magazine-cover-contents {
+  position: relative;
+  z-index: 4;
+  margin: -10px 34px 52px;
+  padding: 18px 25px 22px;
+  border: 1px solid #d5cab2;
+  border-radius: 24px 24px 18px 18px;
+  background: rgba(255,253,248,.98);
+}
+
+.magazine-cover-contents-title {
+  margin: 0 0 12px;
+  color: #4f6d5a;
+  font-family: var(--cover-font-contents-title);
+  font-size: 25px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.magazine-cover-index {
+  display: grid;
+  direction: rtl;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  border-top: 1px solid #d8ddd8;
+}
+
+.magazine-index-item {
+  direction: rtl;
+  display: grid;
+  grid-template-columns: 42px minmax(0,1fr) 36px;
+  grid-template-rows: auto auto;
+  column-gap: 8px;
+  min-height: 62px;
+  padding: 8px 10px;
+  border-bottom: 1px solid #d8ddd8;
+  align-items: center;
+}
+
+.magazine-index-item:nth-child(odd) { border-left: 1px solid #d8ddd8; }
+
+.magazine-index-icon {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  width: 38px;
+  height: 38px;
+  color: #4f6d5a;
+}
+
+.magazine-index-text {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  min-width: 0;
+}
+
+.magazine-index-name {
+  overflow: hidden;
+  color: #22382d;
+  font-family: var(--cover-font-section-name);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.magazine-index-description {
+  display: -webkit-box;
+  margin-top: 3px;
+  overflow: hidden;
+  color: #68736d;
+  font-family: var(--cover-font-section-description);
+  font-size: 11.5px;
+  line-height: 1.2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.magazine-index-page {
+  grid-column: 3;
+  grid-row: 1 / 3;
+  color: #4f6d5a;
+  font-family: var(--cover-font-page-number);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+}
+
+.magazine-cover-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 12px 20px;
+  background: #4f6d5a;
+  color: #fff;
+  font-family: var(--cover-font-footer);
+  font-size: 17px;
+  font-weight: 700;
+  text-align: center;
+}
+
 @page {
   size: A4;
   margin: 28mm 15mm 20mm;
@@ -222,6 +451,14 @@ a {
   }
 }
 
+@page cover {
+  size: A4;
+  margin: 0;
+
+  @top-center { content: none; border: 0; }
+  @bottom-left { content: none; }
+}
+
 @media print {
   body {
     background: #fff;
@@ -235,16 +472,40 @@ a {
     box-shadow: none;
   }
 
-  .print-cover {
-    display: none;
-  }
-
+  .print-cover { display: none; }
   .print-status { display: none !important; }
 
+  .magazine-cover {
+    page: cover;
+    width: 210mm;
+    height: 297mm;
+    min-height: 297mm;
+    margin: 0;
+    break-after: page;
+    page-break-after: always;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .magazine-cover-top { padding: 9mm 16mm 0; }
+  .magazine-cover-badge { top: 6mm; left: 8mm; width: 25mm; height: 25mm; padding: 3mm; font-size: 9pt; }
+  .magazine-cover-brand { font-size: 11pt; }
+  .magazine-cover-parasha { margin-top: 1mm; font-size: 49pt; }
+  .magazine-cover-subtitle { margin-bottom: -5mm; font-size: 19pt; }
+  .magazine-cover-quote { margin-top: 7mm; font-size: 14pt; }
+  .magazine-cover-quote-ref { font-size: 9pt; }
+  .magazine-cover-image-wrap { height: 113mm; margin-top: -7mm; }
+  .magazine-cover-contents { margin: -2mm 8mm 13mm; padding: 4mm 6mm 5mm; }
+  .magazine-cover-contents-title { margin-bottom: 3mm; font-size: 15pt; }
+  .magazine-index-item { grid-template-columns: 9mm minmax(0,1fr) 8mm; min-height: 14mm; padding: 1.6mm 2mm; column-gap: 1.5mm; }
+  .magazine-index-icon { width: 8mm; height: 8mm; }
+  .magazine-index-name { font-size: 9.5pt; }
+  .magazine-index-description { margin-top: .5mm; font-size: 7.5pt; }
+  .magazine-index-page { font-size: 14pt; }
+  .magazine-cover-footer { padding: 3mm 5mm; font-size: 10pt; }
+
   .print-section { margin-bottom: 10mm; }
-
   .print-section + .print-section { padding-top: 8mm; }
-
   .print-section-kicker { font-size: 10.5pt; }
 
   .print-section-icon {
@@ -254,7 +515,6 @@ a {
   }
 
   .print-section h2 { font-size: 18pt; }
-
   .print-post-content { font-size: 11.5pt; }
 
   .print-post-content blockquote {
@@ -273,4 +533,20 @@ a {
 
   .print-cover h1 { font-size: 2rem; }
   .print-section h2 { font-size: 1.55rem; }
+
+  .magazine-cover {
+    width: calc(100% + 36px);
+    min-height: 0;
+    margin: -26px -18px 28px;
+  }
+
+  .magazine-cover-top { padding: 28px 28px 0; }
+  .magazine-cover-badge { position: static; width: auto; height: auto; margin: 0 auto 8px; border: 0; border-radius: 18px; white-space: normal; }
+  .magazine-cover-parasha { font-size: 54px; }
+  .magazine-cover-subtitle { margin-bottom: -10px; font-size: 23px; }
+  .magazine-cover-image-wrap { height: 310px; }
+  .magazine-cover-contents { margin-inline: 12px; }
+  .magazine-cover-index { grid-template-columns: 1fr; }
+  .magazine-index-item:nth-child(odd) { border-left: 0; }
+  .magazine-cover-footer { position: static; }
 }
