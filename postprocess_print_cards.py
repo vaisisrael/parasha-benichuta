@@ -131,7 +131,11 @@ def replace_existing_print_card(text: str, replacement: str) -> tuple[str, bool]
     if not pattern.search(text):
         return text, False
 
-    return pattern.sub("\n" + replacement + "\n", text, count=1), True
+    return pattern.sub(
+        lambda _match: "\n" + replacement + "\n",
+        text,
+        count=1,
+    ), True
 
 
 def insert_after_whatsapp(text: str, replacement: str) -> str:
@@ -143,7 +147,11 @@ def insert_after_whatsapp(text: str, replacement: str) -> str:
     if not pattern.search(text):
         raise ValueError("WhatsApp card not found")
 
-    return pattern.sub(r"\1\n" + replacement, text, count=1)
+    return pattern.sub(
+        lambda match: match.group(1) + "\n" + replacement,
+        text,
+        count=1,
+    )
 
 
 def process_page(path: Path) -> bool:
