@@ -853,17 +853,42 @@ def card(
 """
 
 
-def print_home_button() -> str:
+def print_card() -> str:
     return """
-<div class="parasha-home-print">
-  <a
-    class="parasha-choice"
-    href="print.html?autoprint=1"
-    aria-label="הדפסת תקציר, וורט ועברית"
+<aside class="print-card">
+
+  <div
+    class="print-card-icon"
+    aria-hidden="true"
   >
-    🖨️ הדפסה
+    🖨️
+  </div>
+
+  <div class="print-card-content">
+
+    <div class="eyebrow">
+      לשולחן שבת
+    </div>
+
+    <h2>
+      רוצים לקרוא גם בלי מסך?
+    </h2>
+
+    <p>
+      הדפיסו גרסה נקייה של הפרשה הכוללת
+      תקציר, וורט ומדור עברית.
+    </p>
+
+  </div>
+
+  <a
+    class="print-card-button"
+    href="print.html?autoprint=1"
+  >
+    הדפסת הפרשה
   </a>
-</div>
+
+</aside>
 """
 
 
@@ -1262,7 +1287,7 @@ def build(
 
 {whatsapp_card()}
 
-{print_home_button()}
+{print_card()}
 """
 
     write_file(
