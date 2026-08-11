@@ -1,0 +1,342 @@
+/* שער מגזיני — גרסה 2 */
+.magazine-cover-v2 {
+  direction: rtl;
+  position: relative;
+  width: calc(100% + 108px);
+  min-height: 1120px;
+  margin: -44px -54px 38px;
+  overflow: hidden;
+  background: #fffdf8;
+  color: #20342b;
+  break-after: page;
+  page-break-after: always;
+}
+
+.magazine-cover-v2 .magazine-cover-hero {
+  position: relative;
+  height: 710px;
+  overflow: hidden;
+  background: #eef4ef;
+}
+
+.magazine-cover-v2 .magazine-cover-image {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 48%;
+}
+
+.magazine-cover-v2 .magazine-cover-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(to bottom,
+      rgba(255,253,248,.98) 0%,
+      rgba(255,253,248,.94) 10%,
+      rgba(255,253,248,.78) 20%,
+      rgba(255,253,248,.42) 30%,
+      rgba(255,253,248,.08) 43%,
+      rgba(255,253,248,0) 58%);
+  pointer-events: none;
+}
+
+.magazine-cover-v2 .magazine-cover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  padding: 27px 62px 0;
+  text-align: center;
+}
+
+.magazine-cover-v2 .magazine-cover-brand {
+  position: relative;
+  display: inline-block;
+  letter-spacing: .01em;
+}
+
+.magazine-cover-v2 .magazine-cover-brand::before,
+.magazine-cover-v2 .magazine-cover-brand::after {
+  content: "❧";
+  margin: 0 12px;
+  color: #55735c;
+  font-size: .92em;
+  opacity: .92;
+}
+
+.magazine-cover-v2 .magazine-cover-badge {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 106px;
+  height: 106px;
+  padding: 15px;
+  border: 5px solid rgba(232,240,233,.96);
+  border-radius: 50%;
+  background: #4c6d50;
+  box-shadow: 0 5px 15px rgba(36,64,43,.2);
+  white-space: pre-line;
+  line-height: 1.28;
+}
+
+.magazine-cover-v2 .magazine-cover-parasha {
+  margin-bottom: 0;
+  line-height: .95;
+  letter-spacing: -.035em;
+  text-shadow: 0 1px 0 rgba(255,255,255,.45);
+}
+
+.magazine-cover-v2 .magazine-cover-subtitle {
+  position: relative;
+  z-index: 4;
+  line-height: 1.02;
+  text-shadow: 0 1px 0 rgba(255,255,255,.75);
+}
+
+.magazine-cover-v2 .magazine-cover-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: min(520px, 72%);
+  margin: 7px auto 0;
+  color: #c89b43;
+}
+
+.magazine-cover-v2 .magazine-cover-divider::before,
+.magazine-cover-v2 .magazine-cover-divider::after {
+  content: "";
+  height: 1.5px;
+  flex: 1;
+  background: currentColor;
+  opacity: .92;
+}
+
+.magazine-cover-v2 .magazine-cover-divider span {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.magazine-cover-v2 .magazine-cover-quote {
+  line-height: 1.15;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+
+.magazine-cover-v2 .magazine-cover-quote-ref {
+  line-height: 1.2;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+
+.magazine-cover-v2 .magazine-cover-contents {
+  position: relative;
+  z-index: 5;
+  margin: -14px 36px 54px;
+  padding: 16px 18px 18px;
+  border: 1px solid #d8c9ab;
+  border-radius: 24px 24px 18px 18px;
+  background: rgba(255,253,248,.985);
+  box-shadow: 0 -1px 0 rgba(255,255,255,.85);
+}
+
+.magazine-cover-v2 .magazine-cover-contents-title {
+  margin: 0 0 10px;
+  text-align: center;
+}
+
+.magazine-cover-v2 .magazine-cover-contents-title::before,
+.magazine-cover-v2 .magazine-cover-contents-title::after {
+  content: "❧";
+  margin: 0 9px;
+  font-size: .75em;
+  color: #56745c;
+}
+
+.magazine-cover-v2 .magazine-cover-index {
+  display: grid;
+  direction: rtl;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border-top: 1px solid #d8ddd8;
+}
+
+.magazine-cover-v2 .magazine-index-item {
+  display: flex;
+  direction: rtl;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 64px;
+  padding: 8px 9px;
+  border-bottom: 1px solid #d8ddd8;
+}
+
+.magazine-cover-v2 .magazine-index-item:not(:nth-child(4n)) {
+  border-left: 1px dotted #d6cdbd;
+}
+
+.magazine-cover-v2 .magazine-index-icon {
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 2px;
+  color: #4f6d5a;
+}
+
+.magazine-cover-v2 .magazine-index-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.magazine-cover-v2 .magazine-index-name {
+  overflow: hidden;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.magazine-cover-v2 .magazine-index-description {
+  margin-top: 3px;
+  overflow: hidden;
+  line-height: 1.18;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.magazine-cover-v2 .magazine-index-page {
+  flex: 0 0 28px;
+  margin-right: auto;
+  text-align: left;
+  line-height: 1;
+}
+
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+1) .magazine-index-icon,
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+8) .magazine-index-icon { color:#5b7950; }
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+2) .magazine-index-icon,
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+7) .magazine-index-icon { color:#55737e; }
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+3) .magazine-index-icon,
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+6) .magazine-index-icon { color:#d98677; }
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+4) .magazine-index-icon,
+.magazine-cover-v2 .magazine-index-item:nth-child(8n+5) .magazine-index-icon { color:#d2a248; }
+
+.magazine-cover-v2 .magazine-cover-footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 12px 20px;
+  background: #486b4b;
+  text-align: center;
+}
+
+@media print {
+  .magazine-cover-v2 {
+    page: cover;
+    width: 210mm;
+    height: 297mm;
+    min-height: 297mm;
+    margin: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .magazine-cover-v2 .magazine-cover-hero {
+    height: 184mm;
+  }
+
+  .magazine-cover-v2 .magazine-cover-overlay {
+    padding: 7mm 15mm 0;
+  }
+
+  .magazine-cover-v2 .magazine-cover-badge {
+    width: 25mm;
+    height: 25mm;
+    padding: 3mm;
+    border-width: 1.2mm;
+  }
+
+  .magazine-cover-v2 .magazine-cover-divider {
+    width: 68%;
+    margin-top: 1mm;
+  }
+
+  .magazine-cover-v2 .magazine-cover-contents {
+    margin: -3mm 8mm 13mm;
+    padding: 3mm 4mm 4mm;
+  }
+
+  .magazine-cover-v2 .magazine-cover-index {
+    grid-template-columns: repeat(4, minmax(0,1fr));
+  }
+
+  .magazine-cover-v2 .magazine-index-item {
+    min-height: 13.2mm;
+    gap: 1.4mm;
+    padding: 1.3mm 1.5mm;
+  }
+
+  .magazine-cover-v2 .magazine-index-icon {
+    flex-basis: 8mm;
+    width: 8mm;
+    height: 8mm;
+  }
+
+  .magazine-cover-v2 .magazine-index-page {
+    flex-basis: 6mm;
+  }
+}
+
+@media (max-width: 700px) {
+  .magazine-cover-v2 {
+    width: calc(100% + 36px);
+    min-height: 0;
+    margin: -26px -18px 28px;
+  }
+
+  .magazine-cover-v2 .magazine-cover-hero {
+    height: 570px;
+  }
+
+  .magazine-cover-v2 .magazine-cover-overlay {
+    padding: 22px 22px 0;
+  }
+
+  .magazine-cover-v2 .magazine-cover-badge {
+    width: 78px;
+    height: 78px;
+    padding: 9px;
+    border-width: 3px;
+    font-size: 10px !important;
+  }
+
+  .magazine-cover-v2 .magazine-cover-parasha {
+    font-size: 58px !important;
+  }
+
+  .magazine-cover-v2 .magazine-cover-subtitle {
+    font-size: 29px !important;
+  }
+
+  .magazine-cover-v2 .magazine-cover-quote {
+    font-size: 20px !important;
+  }
+
+  .magazine-cover-v2 .magazine-cover-index {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .magazine-cover-v2 .magazine-index-item:not(:nth-child(4n)) {
+    border-left: 0;
+  }
+
+  .magazine-cover-v2 .magazine-index-item:nth-child(odd) {
+    border-left: 1px dotted #d6cdbd;
+  }
+
+  .magazine-cover-v2 .magazine-cover-footer {
+    position: static;
+  }
+}
