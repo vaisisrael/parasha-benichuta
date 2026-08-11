@@ -7,37 +7,37 @@
     "styles": {
       "brand": {
         "font": "Rubik",
-        "size": "18px",
-        "color": "#55735c",
+        "size": "19px",
+        "color": "#496c4e",
         "weight": "700",
         "margin_top": "0px"
       },
       "parasha": {
         "font": "Rubik",
-        "size": "92px",
-        "color": "#42672f",
+        "size": "104px",
+        "color": "#3f692f",
         "weight": "700",
-        "margin_top": "10px"
+        "margin_top": "8px"
       },
       "subtitle": {
-        "font": "Varela Round",
-        "size": "34px",
-        "color": "#d77f2d",
+        "font": "Gveret Levin",
+        "size": "43px",
+        "color": "#c79a42",
         "weight": "400",
-        "margin_top": "6px",
-        "margin_bottom": "-20px"
+        "margin_top": "5px",
+        "margin_bottom": "0px"
       },
       "quote": {
         "font": "Rubik",
-        "size": "27px",
-        "color": "#233946",
+        "size": "28px",
+        "color": "#416d45",
         "weight": "600",
-        "margin_top": "30px"
+        "margin_top": "12px"
       },
       "quote_ref": {
         "font": "Rubik",
         "size": "14px",
-        "color": "#52615a",
+        "color": "#4f5f56",
         "weight": "400",
         "margin_top": "2px"
       },
@@ -46,31 +46,31 @@
         "size": "14px",
         "color": "#ffffff",
         "weight": "700",
-        "top": "22px",
-        "left": "36px"
+        "top": "25px",
+        "left": "34px"
       },
       "contents_title": {
         "font": "Rubik",
-        "size": "26px",
-        "color": "#55735c",
+        "size": "27px",
+        "color": "#4a6d50",
         "weight": "700"
       },
       "section_name": {
         "font": "Rubik",
-        "size": "15px",
-        "color": "#22382d",
+        "size": "14px",
+        "color": "#24372e",
         "weight": "700"
       },
       "section_description": {
         "font": "Rubik",
-        "size": "11.5px",
-        "color": "#68736d",
+        "size": "10.5px",
+        "color": "#66716b",
         "weight": "400"
       },
       "page_number": {
         "font": "Rubik",
-        "size": "24px",
-        "color": "#4f6d5a",
+        "size": "22px",
+        "color": "#456b49",
         "weight": "500"
       },
       "footer": {
