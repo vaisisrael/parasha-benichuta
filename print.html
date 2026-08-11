@@ -5,9 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>הדפסת פרשת השבוע | פרשת השבוע בניחותא</title>
   <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&family=Varela+Round&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/print.css">
   <style>
-    html.print-preparing body { visibility: hidden; }
+    .print-loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: grid;
+      place-items: center;
+      background: #fffdf8;
+      color: #4f6d5a;
+      font-family: "Rubik", "Noto Sans Hebrew", Arial, sans-serif;
+      transition: opacity .22s ease;
+    }
+
+    .print-loading-box {
+      display: grid;
+      justify-items: center;
+      gap: 18px;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .print-loading-mark {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      border: 5px solid #dce7de;
+      border-top-color: #4f6d5a;
+      border-radius: 50%;
+      animation: print-spin 1s linear infinite;
+    }
+
+    .print-loading-mark::after {
+      content: "";
+      position: absolute;
+      inset: 17px;
+      border-radius: 50%;
+      background: #f1f6f1;
+    }
+
+    .print-loading-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .print-loading-text {
+      color: #75827a;
+      font-size: .95rem;
+    }
+
+    html.print-preparing #print-page {
+      visibility: hidden;
+    }
+
+    html:not(.print-preparing) .print-loading-screen {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes print-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media print {
+      .print-loading-screen { display: none !important; }
+    }
   </style>
   <script>
     (() => {
@@ -19,7 +85,6 @@
         document.title = `פרשת השבוע בניחותא - ${parasha}`;
       }
 
-      // print.js must not open the dialog before the new cover is ready.
       if (window.__printAutoRequested) {
         url.searchParams.delete("autoprint");
         history.replaceState(null, "", url.href);
@@ -30,6 +95,14 @@
   <script defer src="assets/js/print.js"></script>
 </head>
 <body>
+  <div class="print-loading-screen" id="print-loading-screen" aria-live="polite">
+    <div class="print-loading-box">
+      <div class="print-loading-mark" aria-hidden="true"></div>
+      <div class="print-loading-title">מכינים את העלון לשבת</div>
+      <div class="print-loading-text">מסדרים את המדורים, העמודים והשער…</div>
+    </div>
+  </div>
+
   <main class="print-page" id="print-page" aria-live="polite">
     <header class="print-cover">
       <div class="print-brand">פרשת השבוע בניחותא</div>
