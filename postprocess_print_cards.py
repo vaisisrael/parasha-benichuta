@@ -74,7 +74,7 @@ def print_card(prefix: str, parasha_name: str) -> str:
     if (!heading) return card.dataset.printParasha || "";
 
     return normalize(heading.textContent)
-      .replace(/^פרשות?\\s+/, "") || card.dataset.printParasha || "";
+      .replace(/^פרש(?:ת|ות)\\s+/, "") || card.dataset.printParasha || "";
   }}
 
   function updatePrintLink() {{
