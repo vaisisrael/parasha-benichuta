@@ -5,21 +5,18 @@
   #print-content > .print-section + .print-section {
     break-before: page;
     page-break-before: always;
-  }
-
-  /* אין צורך בקו הפרדה בין פוסטים כשהם נפתחים בעמוד חדש. */
-  #print-content > .print-section + .print-section {
     padding-top: 0;
     border-top: 0;
   }
 
-  /* תמונת מדור יצירה עלולה להגיע עם מידות חריגות מהפוסט המקורי. */
-  .print-section[data-section-name="יצירה"] .print-creation-main-image {
-    width: auto !important;
-    max-width: 68% !important;
-    max-height: 108mm !important;
+  /*
+    כל התמונות ממשיכות להשתמש בגודל שהפוסט עצמו נותן להן.
+    זו רק תקרת ביטחון כדי שתמונה חריגה לא תשתלט על עמוד שלם.
+  */
+  .print-post-content img {
+    max-width: 100% !important;
+    max-height: 155mm !important;
     object-fit: contain !important;
-    margin: 5mm auto !important;
   }
 
   /* תשבץ מדרג־אות הוא יחידה אחת ואסור לפצל אותו בין עמודים. */
