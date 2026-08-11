@@ -858,7 +858,7 @@ def print_home_button() -> str:
 <div class="parasha-home-print">
   <a
     class="parasha-choice"
-    href="print/?autoprint=1"
+    href="print.html?autoprint=1"
     aria-label="הדפסת תקציר, וורט ועברית"
   >
     🖨️ הדפסה
@@ -1256,13 +1256,13 @@ def build(
 
 </section>
 
-{print_home_button()}
-
 <section class="cards-grid">
   {home_cards}
 </section>
 
 {whatsapp_card()}
+
+{print_home_button()}
 """
 
     write_file(
