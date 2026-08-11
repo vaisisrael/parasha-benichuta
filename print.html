@@ -1,16 +1,28 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" class="print-preparing">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>הדפסת פרשת השבוע | פרשת השבוע בניחותא</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="assets/css/print.css">
+  <style>
+    html.print-preparing body { visibility: hidden; }
+  </style>
   <script>
     (() => {
-      const parasha = new URL(window.location.href).searchParams.get("parasha");
+      const url = new URL(window.location.href);
+      const parasha = url.searchParams.get("parasha");
+      window.__printAutoRequested = url.searchParams.get("autoprint") === "1";
+
       if (parasha) {
         document.title = `פרשת השבוע בניחותא - ${parasha}`;
+      }
+
+      // print.js must not open the dialog before the new cover is ready.
+      if (window.__printAutoRequested) {
+        url.searchParams.delete("autoprint");
+        history.replaceState(null, "", url.href);
       }
     })();
   </script>
@@ -30,5 +42,48 @@
 
     <div id="print-content"></div>
   </main>
+
+  <script>
+    (() => {
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+      async function waitForReady() {
+        const deadline = Date.now() + 20000;
+
+        while (Date.now() < deadline) {
+          const cover = document.getElementById("magazine-cover");
+          const content = document.getElementById("print-content");
+          const status = document.getElementById("print-status");
+          const sections = content ? content.querySelectorAll(":scope > .print-section") : [];
+          const indexItems = document.querySelectorAll("#magazine-cover-index > .magazine-index-item");
+          const coverImage = cover?.querySelector(".magazine-cover-image");
+          const imageReady = !coverImage || !coverImage.getAttribute("src") || coverImage.complete;
+          const contentReady = sections.length > 0 && !status;
+          const indexReady = !!cover && indexItems.length === sections.length;
+
+          if (cover && imageReady && contentReady && indexReady) {
+            if (document.fonts?.ready) {
+              try { await document.fonts.ready; } catch {}
+            }
+            return true;
+          }
+
+          await sleep(80);
+        }
+
+        return false;
+      }
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        const ready = await waitForReady();
+        document.documentElement.classList.remove("print-preparing");
+
+        if (!ready || !window.__printAutoRequested) return;
+
+        await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        window.print();
+      });
+    })();
+  </script>
 </body>
 </html>
