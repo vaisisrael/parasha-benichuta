@@ -1,0 +1,39 @@
+/* תיקוני עימוד לתוכן העלון */
+
+@media print {
+  /* כל פוסט מתחיל בעמוד חדש. הראשון ממילא מגיע אחרי שער שנשבר לעמוד. */
+  #print-content > .print-section + .print-section {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  /* אין צורך בקו הפרדה בין פוסטים כשהם נפתחים בעמוד חדש. */
+  #print-content > .print-section + .print-section {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* תמונת מדור יצירה עלולה להגיע עם מידות חריגות מהפוסט המקורי. */
+  .print-section[data-section-name="יצירה"] .print-creation-main-image {
+    width: auto !important;
+    max-width: 68% !important;
+    max-height: 108mm !important;
+    object-fit: contain !important;
+    margin: 5mm auto !important;
+  }
+
+  /* תשבץ מדרג־אות הוא יחידה אחת ואסור לפצל אותו בין עמודים. */
+  .print-ladder-crossword {
+    break-inside: avoid-page !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-ladder-crossword table,
+  .print-ladder-crossword ul,
+  .print-ladder-crossword ol,
+  .print-ladder-crossword pre,
+  .print-ladder-crossword img {
+    break-inside: avoid-page !important;
+    page-break-inside: avoid !important;
+  }
+}
