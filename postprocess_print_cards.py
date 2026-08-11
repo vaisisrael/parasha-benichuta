@@ -14,6 +14,7 @@ def print_card(prefix: str, parasha_name: str) -> str:
         {
             "parasha": parasha_name,
             "autoprint": "1",
+            "v": "3",
         }
     )
 
@@ -86,6 +87,7 @@ def print_card(prefix: str, parasha_name: str) -> str:
     const url = new URL("print.html", rootUrl);
     url.searchParams.set("parasha", name);
     url.searchParams.set("autoprint", "1");
+    url.searchParams.set("v", "3");
     link.href = url.href;
   }}
 
