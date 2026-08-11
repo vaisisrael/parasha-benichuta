@@ -29,6 +29,9 @@ jobs:
       - name: Build series
         run: python import_series.py --apply
 
+      - name: Update print cards
+        run: python postprocess_print_cards.py
+
       - name: Prepare publish folder
         shell: bash
         run: |
