@@ -1,0 +1,28 @@
+{
+  "defaults": {
+    "brand": "פרשת השבוע בניחותא",
+    "badge": "לכל המשפחה\nלשולחן שבת",
+    "contents_title": "מה מחכה לכם בפנים",
+    "footer": "שבת שלום ומבורך",
+    "fonts": {
+      "brand": "Noto Sans Hebrew",
+      "parasha": "Noto Sans Hebrew",
+      "subtitle": "Noto Sans Hebrew",
+      "quote": "Noto Sans Hebrew",
+      "quote_ref": "Noto Sans Hebrew",
+      "contents_title": "Noto Sans Hebrew",
+      "section_name": "Noto Sans Hebrew",
+      "section_description": "Noto Sans Hebrew",
+      "page_number": "Noto Sans Hebrew",
+      "footer": "Noto Sans Hebrew"
+    }
+  },
+  "parashot": {
+    "שופטים": {
+      "subtitle": "איך בונים חברה שיש בה צדק?",
+      "quote": "צדק צדק תרדוף",
+      "quote_ref": "דברים טז, כ",
+      "image": "assets/images/print-covers/shoftim.webp"
+    }
+  }
+}
