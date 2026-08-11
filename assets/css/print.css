@@ -1,0 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600&display=swap");
+
+:root {
+  --ink: #222;
+  --muted: #666;
+  --accent: #4f6d5a;
+  --line: #d8ddd8;
+  --paper: #fff;
+  --screen-bg: #eceeea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  margin: 0;
+  background: var(--screen-bg);
+  color: var(--ink);
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  line-height: 1.65;
+}
+
+.print-page {
+  width: min(900px, calc(100% - 32px));
+  margin: 28px auto;
+  padding: 44px 54px;
+  background: var(--paper);
+  box-shadow: 0 10px 32px rgba(0,0,0,.08);
+}
+
+.print-cover {
+  margin-bottom: 34px;
+  padding-bottom: 22px;
+  border-bottom: 2px solid var(--accent);
+  text-align: center;
+}
+
+.print-brand {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.print-cover h1 {
+  margin: 8px 0 4px;
+  font-size: 2.45rem;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.print-subtitle {
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.print-status {
+  padding: 28px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.print-section {
+  margin: 0 0 42px;
+  break-inside: auto;
+}
+
+.print-section + .print-section {
+  padding-top: 34px;
+  border-top: 1px solid var(--line);
+}
+
+.print-section-kicker {
+  margin-bottom: 4px;
+  color: var(--accent);
+  font-size: .95rem;
+  font-weight: 600;
+}
+
+.print-section h2 {
+  margin: 0 0 20px;
+  font-size: 1.9rem;
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.print-post-content {
+  font-size: 1.06rem;
+  overflow-wrap: anywhere;
+}
+
+.print-post-content h1,
+.print-post-content h2,
+.print-post-content h3,
+.print-post-content h4 {
+  break-after: avoid;
+  page-break-after: avoid;
+}
+
+.print-post-content p,
+.print-post-content li,
+.print-post-content blockquote {
+  orphans: 3;
+  widows: 3;
+}
+
+.print-post-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 18px auto;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.print-post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  break-inside: avoid;
+}
+
+.print-post-content th,
+.print-post-content td {
+  padding: 6px 8px;
+  border: 1px solid #bbb;
+}
+
+.print-post-content blockquote {
+  margin: 18px 0;
+  padding: 10px 16px;
+  border-right: 3px solid var(--accent);
+}
+
+button,
+input,
+select,
+textarea,
+iframe,
+video,
+audio,
+nav,
+.post-back-navigation,
+.post-next-navigation,
+.read-link,
+.inline-open-button,
+.inline-back-button,
+.card-action-loading {
+  display: none !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@page {
+  size: A4;
+  margin: 16mm 15mm 18mm;
+}
+
+@media print {
+  body {
+    background: #fff;
+    font-size: 11.5pt;
+  }
+
+  .print-page {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .print-cover {
+    margin-bottom: 8mm;
+    padding-bottom: 5mm;
+  }
+
+  .print-cover h1 {
+    font-size: 24pt;
+  }
+
+  .print-status {
+    display: none !important;
+  }
+
+  .print-section {
+    margin-bottom: 10mm;
+  }
+
+  .print-section + .print-section {
+    padding-top: 8mm;
+  }
+
+  .print-section h2 {
+    font-size: 18pt;
+  }
+
+  .print-post-content {
+    font-size: 11.5pt;
+  }
+
+  button,
+  input,
+  select,
+  textarea,
+  iframe,
+  video,
+  audio,
+  nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .print-page {
+    width: min(100% - 16px, 900px);
+    margin: 8px auto;
+    padding: 26px 18px;
+  }
+
+  .print-cover h1 {
+    font-size: 2rem;
+  }
+
+  .print-section h2 {
+    font-size: 1.55rem;
+  }
+}
