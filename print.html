@@ -5,51 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>הדפסת פרשת השבוע | פרשת השבוע בניחותא</title>
   <meta name="robots" content="noindex, nofollow">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&family=Varela+Round&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/print.css">
+  <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/print.css?v=3">
+  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=3">
+
   <style>
     .print-loading-screen {
       position: fixed;
       inset: 0;
-      z-index: 9999;
+      z-index: 99999;
       display: grid;
       place-items: center;
-      background: #fffdf8;
+      background:
+        radial-gradient(circle at 50% 42%, #f4f8f3 0 90px, transparent 91px),
+        #fffdf8;
       color: #4f6d5a;
       font-family: "Rubik", "Noto Sans Hebrew", Arial, sans-serif;
-      transition: opacity .22s ease;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .28s ease, visibility .28s ease;
     }
 
     .print-loading-box {
       display: grid;
       justify-items: center;
-      gap: 18px;
-      padding: 32px;
+      gap: 17px;
+      min-width: 270px;
+      padding: 34px 38px;
       text-align: center;
     }
 
     .print-loading-mark {
       position: relative;
-      width: 76px;
-      height: 76px;
-      border: 5px solid #dce7de;
-      border-top-color: #4f6d5a;
-      border-radius: 50%;
-      animation: print-spin 1s linear infinite;
+      width: 78px;
+      height: 78px;
     }
 
+    .print-loading-mark::before,
     .print-loading-mark::after {
       content: "";
       position: absolute;
-      inset: 17px;
+      inset: 0;
+      border: 5px solid #dbe7dc;
       border-radius: 50%;
-      background: #f1f6f1;
+    }
+
+    .print-loading-mark::after {
+      border-color: #4f6d5a transparent transparent transparent;
+      animation: print-spin .95s linear infinite;
+    }
+
+    .print-loading-leaf {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 30px;
+      animation: print-pulse 1.25s ease-in-out infinite alternate;
     }
 
     .print-loading-title {
-      font-size: 1.35rem;
+      font-size: 1.38rem;
       font-weight: 700;
     }
 
@@ -59,11 +79,18 @@
     }
 
     html.print-preparing #print-page {
-      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
     }
 
-    html:not(.print-preparing) .print-loading-screen {
+    #print-page {
+      opacity: 1;
+      transition: opacity .22s ease;
+    }
+
+    html.print-ready .print-loading-screen {
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
     }
 
@@ -71,15 +98,22 @@
       to { transform: rotate(360deg); }
     }
 
+    @keyframes print-pulse {
+      from { transform: scale(.92); opacity: .72; }
+      to { transform: scale(1.08); opacity: 1; }
+    }
+
     @media print {
       .print-loading-screen { display: none !important; }
     }
   </style>
+
   <script>
     (() => {
       const url = new URL(window.location.href);
       const parasha = url.searchParams.get("parasha");
       window.__printAutoRequested = url.searchParams.get("autoprint") === "1";
+      window.__printOpenedAt = performance.now();
 
       if (parasha) {
         document.title = `פרשת השבוע בניחותא - ${parasha}`;
@@ -91,13 +125,16 @@
       }
     })();
   </script>
-  <script defer src="assets/js/print-cover.js"></script>
-  <script defer src="assets/js/print.js"></script>
+
+  <script defer src="assets/js/print-cover-v2.js?v=3"></script>
+  <script defer src="assets/js/print.js?v=3"></script>
 </head>
 <body>
   <div class="print-loading-screen" id="print-loading-screen" aria-live="polite">
     <div class="print-loading-box">
-      <div class="print-loading-mark" aria-hidden="true"></div>
+      <div class="print-loading-mark" aria-hidden="true">
+        <div class="print-loading-leaf">❧</div>
+      </div>
       <div class="print-loading-title">מכינים את העלון לשבת</div>
       <div class="print-loading-text">מסדרים את המדורים, העמודים והשער…</div>
     </div>
@@ -121,20 +158,14 @@
       const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
       async function waitForReady() {
-        const deadline = Date.now() + 20000;
+        const deadline = Date.now() + 25000;
 
         while (Date.now() < deadline) {
-          const cover = document.getElementById("magazine-cover");
-          const content = document.getElementById("print-content");
-          const status = document.getElementById("print-status");
-          const sections = content ? content.querySelectorAll(":scope > .print-section") : [];
-          const indexItems = document.querySelectorAll("#magazine-cover-index > .magazine-index-item");
-          const coverImage = cover?.querySelector(".magazine-cover-image");
-          const imageReady = !coverImage || !coverImage.getAttribute("src") || coverImage.complete;
-          const contentReady = sections.length > 0 && !status;
-          const indexReady = !!cover && indexItems.length === sections.length;
+          const contentReady = !document.getElementById("print-status") &&
+            document.querySelectorAll("#print-content > .print-section").length > 0;
+          const coverReady = window.__printCoverReady === true;
 
-          if (cover && imageReady && contentReady && indexReady) {
+          if (contentReady && coverReady) {
             if (document.fonts?.ready) {
               try { await document.fonts.ready; } catch {}
             }
@@ -149,10 +180,15 @@
 
       window.addEventListener("DOMContentLoaded", async () => {
         const ready = await waitForReady();
+        const elapsed = performance.now() - (window.__printOpenedAt || 0);
+        if (elapsed < 750) await sleep(750 - elapsed);
+
         document.documentElement.classList.remove("print-preparing");
+        document.documentElement.classList.add("print-ready");
 
         if (!ready || !window.__printAutoRequested) return;
 
+        await sleep(320);
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         window.print();
       });
