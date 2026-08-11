@@ -44,18 +44,6 @@
     return title.replace(/^פרשת\s+/, "").trim();
   }
 
-  function getFont(fonts, key) {
-    return (fonts && fonts[key]) || "Noto Sans Hebrew";
-  }
-
-  function applyFonts(fonts) {
-    const root = document.documentElement;
-    const names = ["brand","parasha","subtitle","quote","quote_ref","contents_title","section_name","section_description","page_number","footer"];
-    for (const name of names) {
-      root.style.setProperty(`--cover-font-${name.replaceAll("_", "-")}`, `"${getFont(fonts, name)}", Arial, sans-serif`);
-    }
-  }
-
   async function loadConfig() {
     const response = await fetch(coverConfigUrl.href, { cache: "no-store" });
     if (!response.ok) throw new Error("לא ניתן לטעון את הגדרות שער ההדפסה");
@@ -63,10 +51,46 @@
     return coverConfig;
   }
 
+  function applyConfiguredStyle(element, style) {
+    if (!element || !style) return;
+    const map = {
+      font: "fontFamily",
+      size: "fontSize",
+      color: "color",
+      weight: "fontWeight",
+      margin_top: "marginTop",
+      margin_bottom: "marginBottom",
+      top: "top",
+      left: "left"
+    };
+    for (const [key, cssKey] of Object.entries(map)) {
+      if (style[key] !== undefined && style[key] !== null && style[key] !== "") {
+        element.style[cssKey] = key === "font"
+          ? `"${style[key]}", "Noto Sans Hebrew", Arial, sans-serif`
+          : String(style[key]);
+      }
+    }
+  }
+
+  function applyCoverStyles(cover, styles) {
+    const selectors = {
+      brand: ".magazine-cover-brand",
+      parasha: ".magazine-cover-parasha",
+      subtitle: ".magazine-cover-subtitle",
+      quote: ".magazine-cover-quote",
+      quote_ref: ".magazine-cover-quote-ref",
+      badge: ".magazine-cover-badge",
+      contents_title: ".magazine-cover-contents-title",
+      footer: ".magazine-cover-footer"
+    };
+    for (const [key, selector] of Object.entries(selectors)) {
+      applyConfiguredStyle(cover.querySelector(selector), styles?.[key]);
+    }
+  }
+
   function makeCover(parashaName) {
     const defaults = coverConfig?.defaults || {};
     const item = coverConfig?.parashot?.[parashaName] || {};
-    applyFonts(defaults.fonts || {});
 
     const cover = document.createElement("section");
     cover.className = "magazine-cover";
@@ -98,6 +122,8 @@
     cover.querySelector(".magazine-cover-quote-ref").textContent = item.quote_ref || "";
     cover.querySelector(".magazine-cover-contents-title").textContent = defaults.contents_title || "מה מחכה לכם בפנים";
     cover.querySelector(".magazine-cover-footer").textContent = defaults.footer || "שבת שלום ומבורך";
+
+    applyCoverStyles(cover, defaults.styles || {});
 
     const image = cover.querySelector(".magazine-cover-image");
     if (item.image) {
@@ -154,6 +180,11 @@
     return Array.from(document.querySelectorAll("#print-content > .print-section"));
   }
 
+  function sectionNameFrom(sectionEl) {
+    const label = sectionEl.querySelector(".print-section-kicker > span:not(.print-section-icon)");
+    return normalizeText(label?.textContent);
+  }
+
   function cloneIcon(sectionEl) {
     const icon = sectionEl.querySelector(".print-section-icon");
     if (!icon) return document.createElement("span");
@@ -168,12 +199,17 @@
   }
 
   function calculatePageNumber(sectionEl) {
-    const content = document.getElementById("print-content");
-    if (!content) return 2;
     const first = visibleSections()[0];
     if (!first) return 2;
     const relativeTop = sectionEl.getBoundingClientRect().top - first.getBoundingClientRect().top;
     return 2 + Math.max(0, Math.floor(relativeTop / printablePageHeightPx()));
+  }
+
+  function styleIndexItem(row) {
+    const styles = coverConfig?.defaults?.styles || {};
+    applyConfiguredStyle(row.querySelector(".magazine-index-name"), styles.section_name);
+    applyConfiguredStyle(row.querySelector(".magazine-index-description"), styles.section_description);
+    applyConfiguredStyle(row.querySelector(".magazine-index-page"), styles.page_number);
   }
 
   function buildIndex() {
@@ -181,9 +217,8 @@
     if (!index) return;
     index.replaceChildren();
 
-    const sections = visibleSections();
-    for (const sectionEl of sections) {
-      const sectionName = normalizeText(sectionEl.querySelector(".print-section-kicker span")?.textContent);
+    for (const sectionEl of visibleSections()) {
+      const sectionName = sectionNameFrom(sectionEl);
       if (!sectionName || sectionName === "משחקים") continue;
 
       const row = document.createElement("div");
@@ -192,9 +227,11 @@
       const icon = cloneIcon(sectionEl);
       const text = document.createElement("div");
       text.className = "magazine-index-text";
+
       const name = document.createElement("div");
       name.className = "magazine-index-name";
       name.textContent = sectionName;
+
       const description = document.createElement("div");
       description.className = "magazine-index-description";
       description.textContent = descriptionFor(sectionName, sectionEl);
@@ -205,8 +242,11 @@
       page.textContent = calculatePageNumber(sectionEl);
 
       row.append(icon, text, page);
+      styleIndexItem(row);
       index.append(row);
     }
+
+    window.__printCoverIndexReady = true;
   }
 
   function scheduleRecalc() {
@@ -219,6 +259,7 @@
       await loadConfig();
       const parashaName = getParashaName();
       if (!parashaName) return;
+
       const page = document.getElementById("print-page");
       const oldCover = page?.querySelector(".print-cover");
       if (!page || !oldCover) return;
@@ -234,6 +275,7 @@
         const observer = new MutationObserver(scheduleRecalc);
         observer.observe(content, { childList: true, subtree: true });
       }
+
       window.addEventListener("load", scheduleRecalc);
       window.addEventListener("beforeprint", buildIndex);
       scheduleRecalc();
