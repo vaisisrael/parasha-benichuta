@@ -4,17 +4,81 @@
     "badge": "לכל המשפחה\nלשולחן שבת",
     "contents_title": "מה מחכה לכם בפנים",
     "footer": "שבת שלום ומבורך",
-    "fonts": {
-      "brand": "Noto Sans Hebrew",
-      "parasha": "Noto Sans Hebrew",
-      "subtitle": "Noto Sans Hebrew",
-      "quote": "Noto Sans Hebrew",
-      "quote_ref": "Noto Sans Hebrew",
-      "contents_title": "Noto Sans Hebrew",
-      "section_name": "Noto Sans Hebrew",
-      "section_description": "Noto Sans Hebrew",
-      "page_number": "Noto Sans Hebrew",
-      "footer": "Noto Sans Hebrew"
+    "styles": {
+      "brand": {
+        "font": "Rubik",
+        "size": "18px",
+        "color": "#55735c",
+        "weight": "700",
+        "margin_top": "0px"
+      },
+      "parasha": {
+        "font": "Rubik",
+        "size": "92px",
+        "color": "#42672f",
+        "weight": "700",
+        "margin_top": "10px"
+      },
+      "subtitle": {
+        "font": "Varela Round",
+        "size": "34px",
+        "color": "#d77f2d",
+        "weight": "400",
+        "margin_top": "6px",
+        "margin_bottom": "-20px"
+      },
+      "quote": {
+        "font": "Rubik",
+        "size": "27px",
+        "color": "#233946",
+        "weight": "600",
+        "margin_top": "30px"
+      },
+      "quote_ref": {
+        "font": "Rubik",
+        "size": "14px",
+        "color": "#52615a",
+        "weight": "400",
+        "margin_top": "2px"
+      },
+      "badge": {
+        "font": "Rubik",
+        "size": "14px",
+        "color": "#ffffff",
+        "weight": "700",
+        "top": "22px",
+        "left": "36px"
+      },
+      "contents_title": {
+        "font": "Rubik",
+        "size": "26px",
+        "color": "#55735c",
+        "weight": "700"
+      },
+      "section_name": {
+        "font": "Rubik",
+        "size": "15px",
+        "color": "#22382d",
+        "weight": "700"
+      },
+      "section_description": {
+        "font": "Rubik",
+        "size": "11.5px",
+        "color": "#68736d",
+        "weight": "400"
+      },
+      "page_number": {
+        "font": "Rubik",
+        "size": "24px",
+        "color": "#4f6d5a",
+        "weight": "500"
+      },
+      "footer": {
+        "font": "Rubik",
+        "size": "17px",
+        "color": "#ffffff",
+        "weight": "700"
+      }
     }
   },
   "parashot": {
