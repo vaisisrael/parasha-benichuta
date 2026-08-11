@@ -853,6 +853,20 @@ def card(
 """
 
 
+def print_home_button() -> str:
+    return """
+<div class="parasha-home-print">
+  <a
+    class="parasha-choice"
+    href="print/?autoprint=1"
+    aria-label="הדפסת תקציר, וורט ועברית"
+  >
+    🖨️ הדפסה
+  </a>
+</div>
+"""
+
+
 def whatsapp_card() -> str:
     channel_url = (
         "https://whatsapp.com/channel/"
@@ -1241,6 +1255,8 @@ def build(
   </p>
 
 </section>
+
+{print_home_button()}
 
 <section class="cards-grid">
   {home_cards}
