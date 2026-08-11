@@ -37,6 +37,7 @@ jobs:
 
           for item in \
             index.html \
+            print.html \
             404.html \
             CNAME \
             site_config.json \
