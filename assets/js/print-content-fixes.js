@@ -49,20 +49,17 @@
     const image = content?.querySelector("img");
     if (!content || !image || !definition) return;
 
-    image.src = new URL(definition.path, rootUrl).href;
-    image.alt = definition.alt;
-    ["srcset", "sizes", "width", "height"].forEach((attr) => image.removeAttribute(attr));
-    image.removeAttribute("style");
+    const targetSrc = new URL(definition.path, rootUrl).href;
+    if (image.src !== targetSrc) image.src = targetSrc;
+    if (image.alt !== definition.alt) image.alt = definition.alt;
+
+    ["srcset", "sizes", "width", "height"].forEach((attr) => {
+      if (image.hasAttribute(attr)) image.removeAttribute(attr);
+    });
+
+    if (image.hasAttribute("style")) image.removeAttribute("style");
 
     image.closest("picture")?.querySelectorAll("source").forEach((source) => source.remove());
-  }
-
-  function markCreationImage(section) {
-    const image = section.querySelector(".print-post-content img");
-    if (!image) return;
-    image.classList.add("print-creation-main-image");
-    image.removeAttribute("width");
-    image.removeAttribute("height");
   }
 
   function isHeading(element) {
@@ -108,10 +105,9 @@
 
     const name = sectionName(section);
     if (!name) return;
-    section.dataset.sectionName = name;
+    if (section.dataset.sectionName !== name) section.dataset.sectionName = name;
 
     if (fixedSectionImages[name]) replaceFirstImage(section, fixedSectionImages[name]);
-    if (name === "יצירה") markCreationImage(section);
     if (name === "פיצוחים") markLadderCrossword(section);
   }
 
@@ -121,8 +117,9 @@
 
   function cleanCoverIndex() {
     document.querySelectorAll("#magazine-cover-index .magazine-index-description").forEach((el) => {
-      const cleaned = cleanParashaPrefix(el.textContent);
-      if (cleaned) el.textContent = cleaned;
+      const current = normalizeText(el.textContent);
+      const cleaned = cleanParashaPrefix(current);
+      if (cleaned && cleaned !== current) el.textContent = cleaned;
     });
   }
 
@@ -130,26 +127,34 @@
     const index = document.getElementById("magazine-cover-index");
     if (!index || index.dataset.cleanObserver === "1") return;
     index.dataset.cleanObserver = "1";
-    const observer = new MutationObserver(cleanCoverIndex);
-    observer.observe(index, { childList: true, subtree: true, characterData: true });
+
+    let scheduled = false;
+    const observer = new MutationObserver(() => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => {
+        scheduled = false;
+        cleanCoverIndex();
+      });
+    });
+
+    observer.observe(index, { childList: true, subtree: true });
     cleanCoverIndex();
   }
 
   function init() {
     const content = document.getElementById("print-content");
     if (content) {
+      let contentScheduled = false;
       new MutationObserver(() => {
-        applyAllSectionFixes();
-        observeIndex();
+        if (contentScheduled) return;
+        contentScheduled = true;
+        requestAnimationFrame(() => {
+          contentScheduled = false;
+          applyAllSectionFixes();
+          observeIndex();
+        });
       }).observe(content, { childList: true, subtree: true });
-    }
-
-    const page = document.getElementById("print-page");
-    if (page) {
-      new MutationObserver(() => {
-        observeIndex();
-        cleanCoverIndex();
-      }).observe(page, { childList: true, subtree: true });
     }
 
     applyAllSectionFixes();
