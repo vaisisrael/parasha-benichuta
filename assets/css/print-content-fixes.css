@@ -10,13 +10,22 @@
   }
 
   /*
-    כל התמונות ממשיכות להשתמש בגודל שהפוסט עצמו נותן להן.
-    זו רק תקרת ביטחון כדי שתמונה חריגה לא תשתלט על עמוד שלם.
+    גודל אחיד לכל תמונות התוכן.
+    85 מ״מ הוא בקירוב הגודל שבו הודפסה תמונת מדור יצירה בשופטים
+    (תמונת מקור ברוחב 320px), והוא משמש מעתה כמידה האחידה.
+    יחס התמונה נשמר; לתמונות גבוהות במיוחד יש תקרת גובה כדי שלא
+    ישתלטו על עמוד שלם.
   */
   .print-post-content img {
+    display: block !important;
+    width: 85mm !important;
+    height: auto !important;
     max-width: 100% !important;
-    max-height: 155mm !important;
+    max-height: 125mm !important;
+    margin: 5mm auto !important;
     object-fit: contain !important;
+    break-inside: avoid-page !important;
+    page-break-inside: avoid !important;
   }
 
   /* תשבץ מדרג־אות הוא יחידה אחת ואסור לפצל אותו בין עמודים. */
@@ -33,4 +42,46 @@
     break-inside: avoid-page !important;
     page-break-inside: avoid !important;
   }
+}
+
+/*
+  מודד עמודים נסתר.
+  הוא משכפל כל מדור לפריסה רב-עמודתית שגובה כל עמודה בה זהה
+  לשטח ההדפסה בפועל: A4 פחות שוליים עליונים/תחתונים (28+20 מ״מ).
+  כך אפשר לספור כמה עמודים המדור תופס לאחר שבירות העמוד האמיתיות.
+*/
+#print-page-measurer {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 180mm;
+  height: 249mm;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  column-width: 180mm;
+  column-gap: 0;
+  column-fill: auto;
+  background: #fff;
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.65;
+}
+
+#print-page-measurer .print-measure-section {
+  width: 180mm;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#print-page-measurer .print-measure-section img {
+  display: block !important;
+  width: 85mm !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 125mm !important;
+  margin: 5mm auto !important;
+  object-fit: contain !important;
+  break-inside: avoid-column !important;
 }
