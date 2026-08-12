@@ -7,6 +7,7 @@ from urllib.parse import urlencode
 
 
 ROOT = Path(__file__).resolve().parent
+PRINT_VERSION = "7"
 
 
 def print_card(prefix: str, parasha_name: str) -> str:
@@ -14,7 +15,7 @@ def print_card(prefix: str, parasha_name: str) -> str:
         {
             "parasha": parasha_name,
             "autoprint": "1",
-            "v": "5",
+            "v": PRINT_VERSION,
         }
     )
 
@@ -87,7 +88,7 @@ def print_card(prefix: str, parasha_name: str) -> str:
     const url = new URL("print.html", rootUrl);
     url.searchParams.set("parasha", name);
     url.searchParams.set("autoprint", "1");
-    url.searchParams.set("v", "5");
+    url.searchParams.set("v", "{PRINT_VERSION}");
     link.href = url.href;
   }}
 
