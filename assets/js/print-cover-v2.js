@@ -28,7 +28,25 @@
   let recalcTimer = 0;
 
   function normalizeText(value) {
-    return String(value || "").replace(/🔖/g, "").replace(/\s+/g, " ").trim();
+    return String(value || "")
+      .replace(/🔖/g, "")
+      .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\ufeff]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function cleanParashaPrefix(value, parashaName = getParashaName()) {
+    const text = normalizeText(value);
+    const parasha = normalizeText(parashaName);
+    if (!parasha) return text;
+
+    const escaped = parasha.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const cleaned = text.replace(
+      new RegExp(`^(?:פרשת\\s+)?${escaped}\\s*[:\\-–—]\\s*`, "u"),
+      ""
+    ).trim();
+
+    return cleaned || text;
   }
 
   function safeSlug(value) {
@@ -39,7 +57,7 @@
 
   function getParashaName() {
     const requested = new URL(window.location.href).searchParams.get("parasha");
-    if (requested) return requested.trim();
+    if (requested) return normalizeText(requested);
     const title = normalizeText(document.getElementById("print-title")?.textContent);
     return title.replace(/^פרשת\s+/, "").trim();
   }
@@ -187,7 +205,7 @@
             if (!postResponse.ok) return;
             const postDoc = new DOMParser().parseFromString(await postResponse.text(), "text/html");
             const h1 = normalizeText(postDoc.querySelector("article h1, .post-header h1, main h1, h1")?.textContent);
-            if (h1) h1BySection.set(section, h1);
+            if (h1) h1BySection.set(section, cleanParashaPrefix(h1, parashaName));
           } catch {}
         })());
       }
@@ -212,10 +230,12 @@
 
   function descriptionFor(sectionName, sectionEl) {
     if (fixedDescriptions[sectionName]) return fixedDescriptions[sectionName];
-    if (h1DescriptionSections.has(sectionName)) {
-      return h1BySection.get(sectionName) || normalizeText(sectionEl.querySelector("h2")?.textContent) || sectionName;
-    }
-    return normalizeText(sectionEl.querySelector("h2")?.textContent) || sectionName;
+
+    const source = h1DescriptionSections.has(sectionName)
+      ? (h1BySection.get(sectionName) || normalizeText(sectionEl.querySelector("h2")?.textContent) || sectionName)
+      : (normalizeText(sectionEl.querySelector("h2")?.textContent) || sectionName);
+
+    return cleanParashaPrefix(source);
   }
 
   function cloneIcon(sectionEl) {
@@ -323,8 +343,6 @@
       buildIndex();
       window.__printCoverReady = true;
       window.dispatchEvent(new CustomEvent("print-cover-ready"));
-
-      window.addEventListener("beforeprint", buildIndex);
     } catch (error) {
       console.warn("לא ניתן לבנות את שער העלון", error);
       window.__printCoverReady = true;
