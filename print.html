@@ -116,6 +116,17 @@
       window.__printAutoRequested = url.searchParams.get("autoprint") === "1";
       window.__printOpenedAt = performance.now();
 
+      try {
+        const referrer = document.referrer ? new URL(document.referrer) : null;
+        window.__printReturnUrl = referrer &&
+          referrer.origin === window.location.origin &&
+          !/\/print\.html(?:$|[?#])/i.test(referrer.href)
+            ? referrer.href
+            : `${window.location.origin}/`;
+      } catch {
+        window.__printReturnUrl = `${window.location.origin}/`;
+      }
+
       if (parasha) {
         document.title = `פרשת השבוע בניחותא - ${parasha}`;
       }
@@ -159,6 +170,20 @@
   <script>
     (() => {
       const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      let printDialogOpened = false;
+      let returning = false;
+
+      function returnToSite() {
+        if (returning || !printDialogOpened) return;
+        returning = true;
+
+        const target = window.__printReturnUrl || `${window.location.origin}/`;
+        window.setTimeout(() => {
+          window.location.replace(target);
+        }, 120);
+      }
+
+      window.addEventListener("afterprint", returnToSite);
 
       async function waitForReady() {
         const deadline = Date.now() + 25000;
@@ -194,6 +219,7 @@
 
         await sleep(320);
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        printDialogOpened = true;
         window.print();
       });
     })();
