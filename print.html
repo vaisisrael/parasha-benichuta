@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/print.css?v=11">
-  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=11">
-  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=11">
+  <link rel="stylesheet" href="assets/css/print.css?v=12">
+  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=12">
+  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=12">
 
   <style>
     .print-loading-screen {
@@ -100,6 +100,17 @@
 
     @media print {
       .print-loading-screen { display: none !important; }
+
+      /*
+        במסך ההכנה הדף מוסתר כדי שלא יבהב למשתמש.
+        בהדפסה עצמה חייבים לבטל את ההסתרה, אחרת Chrome מדפיס דף ריק.
+      */
+      html.print-preparing #print-page,
+      #print-page {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+      }
     }
   </style>
 
@@ -109,6 +120,10 @@
       const parasha = url.searchParams.get("parasha");
       window.__printAutoRequested = url.searchParams.get("autoprint") === "1";
       window.__printOpenedAt = performance.now();
+      window.__printMobile = Boolean(
+        navigator.userAgentData?.mobile ||
+        /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "")
+      );
 
       try {
         const referrer = document.referrer ? new URL(document.referrer) : null;
@@ -132,10 +147,10 @@
     })();
   </script>
 
-  <script defer src="assets/js/print-content-fixes.js?v=11"></script>
-  <script defer src="assets/js/print-cover-v2.js?v=11"></script>
-  <script defer src="assets/js/print.js?v=11"></script>
-  <script defer src="assets/js/print-finalize.js?v=11"></script>
+  <script defer src="assets/js/print-content-fixes.js?v=12"></script>
+  <script defer src="assets/js/print-cover-v2.js?v=12"></script>
+  <script defer src="assets/js/print.js?v=12"></script>
+  <script defer src="assets/js/print-finalize.js?v=12"></script>
 </head>
 <body>
   <div class="print-loading-screen" id="print-loading-screen" aria-live="polite">
@@ -169,12 +184,19 @@
 
       function returnToSite() {
         if (returning || !printDialogOpened) return;
-        returning = true;
 
+        /*
+          בדפדפנים ניידים afterprint עלול להישלח לפני שממשק ההדפסה
+          סיים ללכוד את הדף. ניווט בשלב הזה גורם לעיתים להדפסת דף הבית.
+          לכן החזרה האוטומטית נשמרת למחשב בלבד; בנייד נשארים בדף ההדפסה.
+        */
+        if (window.__printMobile) return;
+
+        returning = true;
         const target = window.__printReturnUrl || `${window.location.origin}/`;
         window.setTimeout(() => {
           window.location.replace(target);
-        }, 120);
+        }, 180);
       }
 
       window.addEventListener("afterprint", returnToSite);
