@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 
 
 ROOT = Path(__file__).resolve().parent
-PRINT_VERSION = "7"
+PRINT_VERSION = "11"
 
 
 def print_card(prefix: str, parasha_name: str) -> str:
