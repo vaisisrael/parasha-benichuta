@@ -52,6 +52,14 @@ TRACKING_SCRIPT = r'''
 </script>
 '''
 
+PRINT_PAGE_EVENT = '''        if (typeof gtag === "function") {
+          gtag("event", "print_parasha_click", {
+            transport_type: "beacon"
+          });
+        }
+
+'''
+
 
 def version_assets(text: str) -> str:
     replacements = {
@@ -69,6 +77,9 @@ def version_assets(text: str) -> str:
 def process_html(path: Path) -> None:
     text = path.read_text(encoding="utf-8")
     updated = version_assets(text)
+
+    if path.name == "print.html" and path.parent == ROOT:
+        updated = updated.replace(PRINT_PAGE_EVENT, "", 1)
 
     if path.name == "index.html" and path.parent == ROOT:
         if "print_parasha_click" not in updated:
