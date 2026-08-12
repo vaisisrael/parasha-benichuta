@@ -2,9 +2,13 @@
   "use strict";
 
   const FIRST_CONTENT_PAGE = 2;
+  const PAGE_HEIGHT_MM = 249;
 
   function normalizeText(value) {
-    return String(value || "").replace(/\s+/g, " ").trim();
+    return String(value || "")
+      .replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\ufeff]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   function currentParasha() {
@@ -75,6 +79,50 @@
     return measurer;
   }
 
+  function outerHeight(element) {
+    const rect = element.getBoundingClientRect();
+    const style = getComputedStyle(element);
+    return rect.height
+      + (parseFloat(style.marginTop) || 0)
+      + (parseFloat(style.marginBottom) || 0);
+  }
+
+  function pageHeightPx(measurer) {
+    const probe = document.createElement("div");
+    probe.style.height = `${PAGE_HEIGHT_MM}mm`;
+    probe.style.position = "absolute";
+    probe.style.visibility = "hidden";
+    measurer.append(probe);
+    const height = probe.getBoundingClientRect().height || (PAGE_HEIGHT_MM * 96 / 25.4);
+    probe.remove();
+    return height;
+  }
+
+  function isAtomicBlock(element) {
+    if (!(element instanceof Element)) return false;
+    if (element.matches("img, table, pre, blockquote, ul, ol, figure")) return true;
+    if (element.classList.contains("print-ladder-crossword")) return true;
+    if (element.querySelector("img, table, pre, .print-ladder-crossword")) return true;
+    return false;
+  }
+
+  function measurableBlocks(clone) {
+    const result = [];
+    const kicker = clone.querySelector(":scope > .print-section-kicker");
+    const heading = clone.querySelector(":scope > h2");
+    const body = clone.querySelector(":scope > .print-post-content");
+
+    if (kicker) result.push(kicker);
+    if (heading) result.push(heading);
+
+    if (body) {
+      for (const child of Array.from(body.children)) result.push(child);
+      if (!body.children.length && normalizeText(body.textContent)) result.push(body);
+    }
+
+    return result;
+  }
+
   function measureSectionPages(section) {
     const measurer = getMeasurer();
     measurer.replaceChildren();
@@ -84,26 +132,59 @@
     clone.classList.add("print-measure-section");
     measurer.append(clone);
 
-    const pageWidth = measurer.clientWidth;
-    if (!pageWidth) return 1;
+    const pageHeight = pageHeightPx(measurer);
+    const blocks = measurableBlocks(clone);
+    if (!blocks.length) return 1;
 
-    const totalWidth = Math.max(measurer.scrollWidth, pageWidth);
-    return Math.max(1, Math.ceil((totalWidth - 1) / pageWidth));
+    let pages = 1;
+    let used = 0;
+
+    for (const block of blocks) {
+      const height = Math.max(0, outerHeight(block));
+      if (!height) continue;
+
+      if (isAtomicBlock(block) && height <= pageHeight) {
+        if (used > 0 && used + height > pageHeight) {
+          pages += 1;
+          used = 0;
+        }
+        used += height;
+        continue;
+      }
+
+      let remaining = height;
+      while (remaining > 0) {
+        const room = pageHeight - used;
+        if (room <= 1) {
+          pages += 1;
+          used = 0;
+          continue;
+        }
+
+        if (remaining <= room) {
+          used += remaining;
+          remaining = 0;
+        } else {
+          remaining -= room;
+          pages += 1;
+          used = 0;
+        }
+      }
+    }
+
+    return Math.max(1, pages);
   }
 
   function rebuildPageNumbers() {
     const index = document.getElementById("magazine-cover-index");
     if (!index) return;
 
+    const rows = Array.from(index.querySelectorAll(".magazine-index-item"));
     let pageNumber = FIRST_CONTENT_PAGE;
 
     for (const section of visibleSections()) {
       const name = sectionName(section);
-      const row = name
-        ? Array.from(index.querySelectorAll(".magazine-index-item")).find(
-            (item) => normalizeText(item.dataset.section) === name
-          )
-        : null;
+      const row = rows.find((item) => normalizeText(item.dataset.section) === name);
 
       if (row) {
         const page = row.querySelector(".magazine-index-page");
@@ -146,9 +227,6 @@
 
   document.addEventListener("DOMContentLoaded", finalize);
 
-  // print-cover-v2 מוסיף את beforeprint שלו רק לאחר שסיים לבנות את השער.
-  // לכן אנו נרשמים ל-beforeprint רק לאחר print-cover-ready, במיקרו-משימה,
-  // כדי שהטיפול שלנו ירוץ אחרון ויקבע סופית את תיאורי המדורים והמספור.
   window.addEventListener("print-cover-ready", () => {
     Promise.resolve().then(() => {
       window.addEventListener("beforeprint", applyFinalPrintState);
