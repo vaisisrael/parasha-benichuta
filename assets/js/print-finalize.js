@@ -2,7 +2,6 @@
   "use strict";
 
   const FIRST_CONTENT_PAGE = 2;
-  const PAGE_HEIGHT_MM = 249;
 
   function normalizeText(value) {
     return String(value || "")
@@ -48,6 +47,14 @@
     return Array.from(document.querySelectorAll("#print-content > .print-section"));
   }
 
+  function markLeadImages() {
+    for (const section of visibleSections()) {
+      const images = Array.from(section.querySelectorAll(".print-post-content img"));
+      images.forEach((img) => img.classList.remove("print-lead-image"));
+      if (images[0]) images[0].classList.add("print-lead-image");
+    }
+  }
+
   function cleanIndexDescriptions() {
     document.querySelectorAll("#magazine-cover-index .magazine-index-description").forEach((el) => {
       const cleaned = cleanParashaPrefix(el.textContent);
@@ -79,50 +86,6 @@
     return measurer;
   }
 
-  function outerHeight(element) {
-    const rect = element.getBoundingClientRect();
-    const style = getComputedStyle(element);
-    return rect.height
-      + (parseFloat(style.marginTop) || 0)
-      + (parseFloat(style.marginBottom) || 0);
-  }
-
-  function pageHeightPx(measurer) {
-    const probe = document.createElement("div");
-    probe.style.height = `${PAGE_HEIGHT_MM}mm`;
-    probe.style.position = "absolute";
-    probe.style.visibility = "hidden";
-    measurer.append(probe);
-    const height = probe.getBoundingClientRect().height || (PAGE_HEIGHT_MM * 96 / 25.4);
-    probe.remove();
-    return height;
-  }
-
-  function isAtomicBlock(element) {
-    if (!(element instanceof Element)) return false;
-    if (element.matches("img, table, pre, blockquote, ul, ol, figure")) return true;
-    if (element.classList.contains("print-ladder-crossword")) return true;
-    if (element.querySelector("img, table, pre, .print-ladder-crossword")) return true;
-    return false;
-  }
-
-  function measurableBlocks(clone) {
-    const result = [];
-    const kicker = clone.querySelector(":scope > .print-section-kicker");
-    const heading = clone.querySelector(":scope > h2");
-    const body = clone.querySelector(":scope > .print-post-content");
-
-    if (kicker) result.push(kicker);
-    if (heading) result.push(heading);
-
-    if (body) {
-      for (const child of Array.from(body.children)) result.push(child);
-      if (!body.children.length && normalizeText(body.textContent)) result.push(body);
-    }
-
-    return result;
-  }
-
   function measureSectionPages(section) {
     const measurer = getMeasurer();
     measurer.replaceChildren();
@@ -132,47 +95,11 @@
     clone.classList.add("print-measure-section");
     measurer.append(clone);
 
-    const pageHeight = pageHeightPx(measurer);
-    const blocks = measurableBlocks(clone);
-    if (!blocks.length) return 1;
+    const pageWidth = measurer.getBoundingClientRect().width;
+    if (!pageWidth) return 1;
 
-    let pages = 1;
-    let used = 0;
-
-    for (const block of blocks) {
-      const height = Math.max(0, outerHeight(block));
-      if (!height) continue;
-
-      if (isAtomicBlock(block) && height <= pageHeight) {
-        if (used > 0 && used + height > pageHeight) {
-          pages += 1;
-          used = 0;
-        }
-        used += height;
-        continue;
-      }
-
-      let remaining = height;
-      while (remaining > 0) {
-        const room = pageHeight - used;
-        if (room <= 1) {
-          pages += 1;
-          used = 0;
-          continue;
-        }
-
-        if (remaining <= room) {
-          used += remaining;
-          remaining = 0;
-        } else {
-          remaining -= room;
-          pages += 1;
-          used = 0;
-        }
-      }
-    }
-
-    return Math.max(1, pages);
+    const totalWidth = Math.max(measurer.scrollWidth, pageWidth);
+    return Math.max(1, Math.ceil((totalWidth - 1) / pageWidth));
   }
 
   function rebuildPageNumbers() {
@@ -198,6 +125,7 @@
   }
 
   function applyFinalPrintState() {
+    markLeadImages();
     cleanIndexDescriptions();
     rebuildPageNumbers();
   }
@@ -213,6 +141,7 @@
       await new Promise((resolve) => setTimeout(resolve, 80));
     }
 
+    markLeadImages();
     await waitForImages(document.getElementById("print-content") || document);
 
     if (document.fonts?.ready) {
