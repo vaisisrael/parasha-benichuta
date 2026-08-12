@@ -1136,16 +1136,24 @@ button.parasha-choice:hover:not(.is-active) {
   opacity: 0;
   animation:
     parasha-cards-failsafe-reveal
-    0s linear 1.3s forwards;
+    0s linear 5s forwards;
 }
 
 body.parasha-cards-ready
-.site-main > .hero + .cards-grid,
+.site-main > .hero + .cards-grid.organized-regions[data-shorts-organized="true"],
 body.parasha-cards-ready
-.site-main > .archive-header + .cards-grid {
+.site-main > .archive-header + .cards-grid.organized-regions[data-shorts-organized="true"] {
   visibility: visible;
   opacity: 1;
   animation: none;
+}
+
+body.parasha-cards-ready
+.site-main > .hero + .cards-grid:not([data-shorts-organized="true"]),
+body.parasha-cards-ready
+.site-main > .archive-header + .cards-grid:not([data-shorts-organized="true"]) {
+  visibility: hidden;
+  opacity: 0;
 }
 
 @keyframes parasha-cards-failsafe-reveal {
