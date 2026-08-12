@@ -236,3 +236,32 @@
     line-height: 1.8;
   }
 }
+
+/* ===== מניעת הבהוב בין ארגון הכרטיסים לבין הוספת קצרים ===== */
+
+body.parasha-cards-ready
+.site-main > .hero + .cards-grid.organized-regions:not([data-shorts-organized="true"]),
+body.parasha-cards-ready
+.site-main > .archive-header + .cards-grid.organized-regions:not([data-shorts-organized="true"]) {
+  visibility: hidden;
+  opacity: 0;
+  animation:
+    shorts-layout-failsafe-reveal
+    0s linear 5s forwards;
+}
+
+body.parasha-cards-ready
+.site-main > .hero + .cards-grid.organized-regions[data-shorts-organized="true"],
+body.parasha-cards-ready
+.site-main > .archive-header + .cards-grid.organized-regions[data-shorts-organized="true"] {
+  visibility: visible;
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes shorts-layout-failsafe-reveal {
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
