@@ -1,8 +1,6 @@
 (() => {
   "use strict";
 
-  const PAGE_WIDTH_MM = 180;
-  const PAGE_HEIGHT_MM = 249;
   const FIRST_CONTENT_PAGE = 2;
 
   function normalizeText(value) {
@@ -89,9 +87,6 @@
     const pageWidth = measurer.clientWidth;
     if (!pageWidth) return 1;
 
-    // המודד בנוי כעמודות בגודל שטח ההדפסה של A4.
-    // כל עמודה היא עמוד מודפס אחד, ולכן scrollWidth משקף את מספר העמודים
-    // גם כאשר יש break-inside, יתומים/אלמנות ותמונות שלא נשברות.
     const totalWidth = Math.max(measurer.scrollWidth, pageWidth);
     return Math.max(1, Math.ceil((totalWidth - 1) / pageWidth));
   }
@@ -121,6 +116,11 @@
     getMeasurer().replaceChildren();
   }
 
+  function applyFinalPrintState() {
+    cleanIndexDescriptions();
+    rebuildPageNumbers();
+  }
+
   async function finalize() {
     window.__printFinalizeReady = false;
 
@@ -138,8 +138,7 @@
       try { await document.fonts.ready; } catch {}
     }
 
-    cleanIndexDescriptions();
-    rebuildPageNumbers();
+    applyFinalPrintState();
 
     window.__printFinalizeReady = true;
     window.dispatchEvent(new CustomEvent("print-finalize-ready"));
@@ -147,10 +146,12 @@
 
   document.addEventListener("DOMContentLoaded", finalize);
 
-  window.addEventListener("beforeprint", () => {
-    // print-cover-v2 רץ קודם ועלול לבנות שוב את התוכן.
-    // אנחנו רצים אחריו ומקבעים את הטקסט והמספור לפי העימוד הסופי.
-    cleanIndexDescriptions();
-    rebuildPageNumbers();
-  });
+  // print-cover-v2 מוסיף את beforeprint שלו רק לאחר שסיים לבנות את השער.
+  // לכן אנו נרשמים ל-beforeprint רק לאחר print-cover-ready, במיקרו-משימה,
+  // כדי שהטיפול שלנו ירוץ אחרון ויקבע סופית את תיאורי המדורים והמספור.
+  window.addEventListener("print-cover-ready", () => {
+    Promise.resolve().then(() => {
+      window.addEventListener("beforeprint", applyFinalPrintState);
+    });
+  }, { once: true });
 })();
