@@ -12,13 +12,14 @@
   /*
     רק התמונה הראשונה בכל מדור היא תמונת הכותרת,
     ורק היא מקבלת את המידה האחידה של העלון.
+    המידה הופחתה בחצי: מ-150 מ״מ ל-75 מ״מ.
   */
   .print-post-content img.print-lead-image {
     display: block !important;
-    width: 150mm !important;
+    width: 75mm !important;
     height: auto !important;
     max-width: 100% !important;
-    max-height: 150mm !important;
+    max-height: 75mm !important;
     margin: 5mm auto !important;
     object-fit: contain !important;
     break-inside: avoid-page !important;
@@ -148,10 +149,10 @@
 }
 
 #print-page-measurer .print-post-content img.print-lead-image {
-  width: 150mm !important;
+  width: 75mm !important;
   height: auto !important;
   max-width: 100% !important;
-  max-height: 150mm !important;
+  max-height: 75mm !important;
   margin: 5mm auto !important;
   object-fit: contain !important;
 }
