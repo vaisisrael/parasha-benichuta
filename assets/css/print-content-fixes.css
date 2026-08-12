@@ -10,18 +10,17 @@
   }
 
   /*
-    גודל אחיד לכל תמונות התוכן.
-    85 מ״מ הוא בקירוב הגודל שבו הודפסה תמונת מדור יצירה בשופטים
-    (תמונת מקור ברוחב 320px), והוא משמש מעתה כמידה האחידה.
-    יחס התמונה נשמר; לתמונות גבוהות במיוחד יש תקרת גובה כדי שלא
-    ישתלטו על עמוד שלם.
+    גודל אחיד לתמונות התוכן.
+    לפי היחס שנמדד מתוך ה-PDF שסופק, תמונת מדור יצירה הרצויה
+    תופסת בערך 83% מרוחב עמוד A4. בשטח הדפסה של 180 מ״מ
+    זה שקול לכ-150 מ״מ, ולכן זו המידה האחידה.
   */
   .print-post-content img {
     display: block !important;
-    width: 85mm !important;
+    width: 150mm !important;
     height: auto !important;
-    max-width: 100% !important;
-    max-height: 125mm !important;
+    max-width: none !important;
+    max-height: 150mm !important;
     margin: 5mm auto !important;
     object-fit: contain !important;
     break-inside: avoid-page !important;
@@ -48,7 +47,6 @@
   מודד עמודים נסתר.
   הוא משכפל כל מדור לפריסה רב-עמודתית שגובה כל עמודה בה זהה
   לשטח ההדפסה בפועל: A4 פחות שוליים עליונים/תחתונים (28+20 מ״מ).
-  כך אפשר לספור כמה עמודים המדור תופס לאחר שבירות העמוד האמיתיות.
 */
 #print-page-measurer {
   position: fixed;
@@ -77,10 +75,10 @@
 
 #print-page-measurer .print-measure-section img {
   display: block !important;
-  width: 85mm !important;
+  width: 150mm !important;
   height: auto !important;
-  max-width: 100% !important;
-  max-height: 125mm !important;
+  max-width: none !important;
+  max-height: 150mm !important;
   margin: 5mm auto !important;
   object-fit: contain !important;
   break-inside: avoid-column !important;
