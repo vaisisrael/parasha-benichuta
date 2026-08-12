@@ -7,7 +7,8 @@ from urllib.parse import urlencode
 
 
 ROOT = Path(__file__).resolve().parent
-PRINT_VERSION = "12"
+PRINT_VERSION = "13"
+DEEPLINK_VERSION = "1"
 
 
 def print_card(prefix: str, parasha_name: str) -> str:
@@ -157,6 +158,21 @@ def insert_after_whatsapp(text: str, replacement: str) -> str:
     )
 
 
+def ensure_deeplink_script(text: str, prefix: str) -> str:
+    marker = "assets/js/site-deeplink.js"
+    if marker in text:
+        return text
+
+    script = (
+        f'<script defer src="{prefix}{marker}?v={DEEPLINK_VERSION}"></script>'
+    )
+
+    if "</head>" not in text:
+        return text
+
+    return text.replace("</head>", f"  {script}\n</head>", 1)
+
+
 def process_page(path: Path) -> bool:
     text = path.read_text(encoding="utf-8")
     parasha_name = extract_parasha_name(text)
@@ -164,8 +180,9 @@ def process_page(path: Path) -> bool:
     if not parasha_name:
         return False
 
+    prefix = page_prefix(path)
     replacement = print_card(
-        page_prefix(path),
+        prefix,
         parasha_name,
     )
 
@@ -179,6 +196,11 @@ def process_page(path: Path) -> bool:
             updated,
             replacement,
         )
+
+    updated = ensure_deeplink_script(
+        updated,
+        prefix,
+    )
 
     if updated == text:
         return False
