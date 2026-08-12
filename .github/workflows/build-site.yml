@@ -32,6 +32,9 @@ jobs:
       - name: Update print cards
         run: python postprocess_print_cards.py
 
+      - name: Finalize runtime assets
+        run: python postprocess_runtime.py
+
       - name: Prepare publish folder
         shell: bash
         run: |
