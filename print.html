@@ -6,6 +6,15 @@
   <title>הדפסת פרשת השבוע | פרשת השבוע בניחותא</title>
   <meta name="robots" content="noindex, nofollow">
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XB2TT31YM1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XB2TT31YM1', { send_page_view: false });
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -138,6 +147,12 @@
       }
 
       if (window.__printAutoRequested) {
+        if (typeof gtag === "function") {
+          gtag("event", "print_parasha_click", {
+            transport_type: "beacon"
+          });
+        }
+
         url.searchParams.delete("autoprint");
         history.replaceState(null, "", url.href);
       }
