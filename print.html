@@ -10,9 +10,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/print.css?v=9">
-  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=9">
-  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=9">
+  <link rel="stylesheet" href="assets/css/print.css?v=10">
+  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=10">
+  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=10">
 
   <style>
     .print-loading-screen {
@@ -26,9 +26,6 @@
         #fffdf8;
       color: #4f6d5a;
       font-family: "Rubik", "Noto Sans Hebrew", Arial, sans-serif;
-      opacity: 1;
-      visibility: visible;
-      transition: opacity .28s ease, visibility .28s ease;
     }
 
     .print-loading-box {
@@ -86,13 +83,10 @@
 
     #print-page {
       opacity: 1;
-      transition: opacity .22s ease;
     }
 
     html.print-ready .print-loading-screen {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      display: none;
     }
 
     @keyframes print-spin {
@@ -138,10 +132,10 @@
     })();
   </script>
 
-  <script defer src="assets/js/print-content-fixes.js?v=9"></script>
-  <script defer src="assets/js/print-cover-v2.js?v=9"></script>
-  <script defer src="assets/js/print.js?v=9"></script>
-  <script defer src="assets/js/print-finalize.js?v=9"></script>
+  <script defer src="assets/js/print-content-fixes.js?v=10"></script>
+  <script defer src="assets/js/print-cover-v2.js?v=10"></script>
+  <script defer src="assets/js/print.js?v=10"></script>
+  <script defer src="assets/js/print-finalize.js?v=10"></script>
 </head>
 <body>
   <div class="print-loading-screen" id="print-loading-screen" aria-live="polite">
@@ -210,14 +204,14 @@
       window.addEventListener("DOMContentLoaded", async () => {
         const ready = await waitForReady();
         const elapsed = performance.now() - (window.__printOpenedAt || 0);
-        if (elapsed < 750) await sleep(750 - elapsed);
+        if (elapsed < 650) await sleep(650 - elapsed);
 
-        document.documentElement.classList.remove("print-preparing");
-        document.documentElement.classList.add("print-ready");
+        if (!ready || !window.__printAutoRequested) {
+          document.documentElement.classList.remove("print-preparing");
+          document.documentElement.classList.add("print-ready");
+          return;
+        }
 
-        if (!ready || !window.__printAutoRequested) return;
-
-        await sleep(320);
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
         printDialogOpened = true;
         window.print();
