@@ -10,35 +10,19 @@
   }
 
   /*
-    רק התמונה הראשונה בכל מדור היא תמונת הכותרת,
-    ורק היא מקבלת את המידה האחידה של העלון.
-    המידה הופחתה בחצי: מ-150 מ״מ ל-75 מ״מ.
+    כלל אחיד לכל תמונות התוכן:
+    לעולם לא מגדילים תמונה מעבר לגודל המקורי שלה,
+    ובכל מקרה לא עוברים 75 מ״מ ברוחב או בגובה.
+    כלומר: גודל ההדפסה הוא הנמוך מבין הגודל המקורי לבין 75 מ״מ.
   */
-  .print-post-content img.print-lead-image {
+  .print-post-content img {
     display: block !important;
-    width: 75mm !important;
+    width: auto !important;
     height: auto !important;
-    max-width: 100% !important;
+    max-width: 75mm !important;
     max-height: 75mm !important;
     margin: 5mm auto !important;
     object-fit: contain !important;
-    break-inside: avoid-page !important;
-    page-break-inside: avoid !important;
-  }
-
-  /*
-    כל תמונה נוספת במדור נשארת בגודל המקורי שלה מן האתר.
-    רק מונעים ממנה לחרוג מרוחב דף ההדפסה.
-  */
-  .print-post-content img:not(.print-lead-image) {
-    display: block;
-    width: auto !important;
-    height: auto !important;
-    max-width: 100% !important;
-    max-height: none !important;
-    margin-left: auto;
-    margin-right: auto;
-    object-fit: contain;
     break-inside: avoid-page !important;
     page-break-inside: avoid !important;
   }
@@ -140,29 +124,16 @@
   widows: 3;
 }
 
+/* אותו כלל בדיוק גם במודד, כדי שמספור העמודים יתאים לפלט בפועל. */
 #print-page-measurer .print-post-content img {
-  display: block;
-  height: auto;
-  max-width: 100%;
-  margin: 18px auto;
-  break-inside: avoid-column !important;
-}
-
-#print-page-measurer .print-post-content img.print-lead-image {
-  width: 75mm !important;
+  display: block !important;
+  width: auto !important;
   height: auto !important;
-  max-width: 100% !important;
+  max-width: 75mm !important;
   max-height: 75mm !important;
   margin: 5mm auto !important;
   object-fit: contain !important;
-}
-
-#print-page-measurer .print-post-content img:not(.print-lead-image) {
-  width: auto !important;
-  height: auto !important;
-  max-width: 100% !important;
-  max-height: none !important;
-  object-fit: contain;
+  break-inside: avoid-column !important;
 }
 
 #print-page-measurer .print-post-content table {
