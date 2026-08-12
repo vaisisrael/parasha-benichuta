@@ -10,9 +10,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/print.css?v=13">
-  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=13">
-  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=13">
+  <link rel="stylesheet" href="assets/css/print.css?v=14">
+  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=14">
+  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=14">
+  <link rel="stylesheet" href="assets/css/print-back-cover.css?v=14">
 
   <style>
     .print-loading-screen {
@@ -143,10 +144,11 @@
     })();
   </script>
 
-  <script defer src="assets/js/print-content-fixes.js?v=13"></script>
-  <script defer src="assets/js/print-cover-v2.js?v=13"></script>
-  <script defer src="assets/js/print.js?v=13"></script>
-  <script defer src="assets/js/print-finalize.js?v=13"></script>
+  <script defer src="assets/js/print-content-fixes.js?v=14"></script>
+  <script defer src="assets/js/print-cover-v2.js?v=14"></script>
+  <script defer src="assets/js/print.js?v=14"></script>
+  <script defer src="assets/js/print-back-cover.js?v=14"></script>
+  <script defer src="assets/js/print-finalize.js?v=14"></script>
 </head>
 <body>
   <div class="print-loading-screen" id="print-loading-screen" aria-live="polite">
@@ -208,12 +210,6 @@
       }
 
       window.addEventListener("afterprint", returnToSite);
-
-      /*
-        במובייל ממשק השמירה עשוי לא לירות afterprint בצורה עקבית.
-        כשהדפדפן חוזר להיות פעיל/גלוי לאחר השמירה, מסירים את מסך ההכנה
-        ומציגים את העלון המוכן במקום להשאיר אנימציה אינסופית.
-      */
       window.addEventListener("focus", revealAfterMobilePrint);
       window.addEventListener("pageshow", revealAfterMobilePrint);
       document.addEventListener("visibilitychange", () => {
@@ -221,15 +217,16 @@
       });
 
       async function waitForReady() {
-        const deadline = Date.now() + 25000;
+        const deadline = Date.now() + 32000;
 
         while (Date.now() < deadline) {
           const contentReady = !document.getElementById("print-status") &&
             document.querySelectorAll("#print-content > .print-section").length > 0;
           const coverReady = window.__printCoverReady === true;
+          const backCoverReady = window.__printBackCoverReady === true;
           const finalizeReady = window.__printFinalizeReady === true;
 
-          if (contentReady && coverReady && finalizeReady) {
+          if (contentReady && coverReady && backCoverReady && finalizeReady) {
             if (document.fonts?.ready) {
               try { await document.fonts.ready; } catch {}
             }
