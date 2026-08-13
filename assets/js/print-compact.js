@@ -62,21 +62,16 @@
       return;
     }
 
-    /*
-      Chrome אינו מכבד break-before:column באופן אמין כאשר המדורים
-      נשארים בתוך עטיפת #print-content. לכן במצב החסכוני בלבד
-      מעבירים אותם להיות אחים ישירים בתוך זרימת שתי העמודות.
-      ההדפסה הרגילה אינה נוגעת במבנה הזה כלל.
-    */
     wrapAsPageSlot(cover, "compact-cover-slot");
 
     const sections = Array.from(
       printContent.querySelectorAll(":scope > .print-section")
     );
 
-    for (const section of sections) {
+    sections.forEach((section, index) => {
+      section.classList.toggle("compact-first-section", index === 0);
       printPage.insertBefore(section, backCover);
-    }
+    });
 
     printContent.remove();
 
