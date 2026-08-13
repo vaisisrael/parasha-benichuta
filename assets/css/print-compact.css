@@ -22,7 +22,6 @@
     background: #fff;
   }
 
-  /* בפלט החסכוני מדפיסים רק את גיליונות ה-2-up שבנינו מראש. */
   html.print-compact #print-page {
     display: none !important;
   }
@@ -35,13 +34,6 @@
     direction: rtl;
   }
 
-  /*
-    שטח ההדפסה התאורטי עם שוליים של 7 מ״מ הוא 283×196 מ״מ.
-    איננו ממלאים את הגובה עד המילימטר האחרון: Chrome מעגל מידות
-    פיזיות לפיקסלים, ובגובה 196 מ״מ בדיוק הוא יצר דף ריק נוסף
-    אחרי כל גיליון. 194.5 מ״מ משאיר מרווח ביטחון של 1.5 מ״מ,
-    בלי שינוי חזותי מורגש ובלי דפי ביניים ריקים.
-  */
   html.print-compact .compact-sheet {
     page: compact-sheet;
     width: 282mm;
@@ -113,8 +105,10 @@
   }
 
   /*
-    כל פוסט נמדד כזרימה בעמודות של עמוד פנימי אחד.
-    כל viewport מציג עמודה אחת מתוך הזרימה הזו.
+    חשוב: זרימת העמודות עצמה היא LTR כדי שעמוד 1 יהיה ב-x=0,
+    עמוד 2 ב-x=+134.4mm וכן הלאה. התוכן שבתוך כל עמוד נשאר RTL.
+    כך חיתוך העמודים ב-translateX שלילי הוא דטרמיניסטי ואינו יוצר
+    עמודי ביניים ריקים בדפדפנים שמפרשים columns ב-RTL בכיוון ההפוך.
   */
   html.print-compact .compact-section-flow,
   html.print-compact .compact-measure-host {
@@ -123,6 +117,7 @@
     column-width: 134.4mm;
     column-gap: 0;
     column-fill: auto;
+    direction: ltr;
     font-family: "Noto Sans Hebrew", Arial, sans-serif;
     font-size: 8.2pt;
     line-height: 1.55;
@@ -131,7 +126,8 @@
   html.print-compact .compact-section-flow {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
+    right: auto;
     overflow: visible;
   }
 
@@ -140,6 +136,8 @@
     margin: 0;
     padding: 0;
     border: 0;
+    direction: rtl;
+    text-align: right;
   }
 
   html.print-compact .compact-section-clone .print-section-kicker {
@@ -208,6 +206,7 @@ html.print-compact .compact-measure-host {
   column-width: 134.4mm;
   column-gap: 0;
   column-fill: auto;
+  direction: ltr;
   font-family: "Noto Sans Hebrew", Arial, sans-serif;
   font-size: 8.2pt;
   line-height: 1.55;
@@ -219,4 +218,10 @@ html.print-compact .compact-measure-host .compact-section-flow {
   column-width: 134.4mm;
   column-gap: 0;
   column-fill: auto;
+  direction: ltr;
+}
+
+html.print-compact .compact-measure-host .compact-section-clone {
+  direction: rtl;
+  text-align: right;
 }
