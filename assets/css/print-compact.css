@@ -17,6 +17,8 @@
 
 @media print {
   html.print-compact body {
+    margin: 0 !important;
+    padding: 0 !important;
     background: #fff;
   }
 
@@ -27,49 +29,59 @@
 
   html.print-compact #compact-print-root {
     display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
     direction: rtl;
   }
 
+  /*
+    שטח ההדפסה התאורטי עם שוליים של 7 מ״מ הוא 283×196 מ״מ.
+    איננו ממלאים את הגובה עד המילימטר האחרון: Chrome מעגל מידות
+    פיזיות לפיקסלים, ובגובה 196 מ״מ בדיוק הוא יצר דף ריק נוסף
+    אחרי כל גיליון. 194.5 מ״מ משאיר מרווח ביטחון של 1.5 מ״מ,
+    בלי שינוי חזותי מורגש ובלי דפי ביניים ריקים.
+  */
   html.print-compact .compact-sheet {
     page: compact-sheet;
-    width: 283mm;
-    height: 196mm;
+    width: 282mm;
+    height: 194.5mm;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: 138mm 138mm;
+    grid-template-columns: 137.5mm 137.5mm;
     column-gap: 7mm;
-    break-after: page;
-    page-break-after: always;
     overflow: hidden;
+    break-inside: avoid-page;
+    page-break-inside: avoid;
   }
 
-  html.print-compact .compact-sheet-last {
-    break-after: auto;
-    page-break-after: auto;
+  html.print-compact .compact-sheet + .compact-sheet {
+    break-before: page;
+    page-break-before: always;
   }
 
   html.print-compact .compact-sheet-half {
     position: relative;
-    width: 138mm;
-    height: 196mm;
+    width: 137.5mm;
+    height: 194.5mm;
     overflow: hidden;
     background: #fff;
   }
 
   html.print-compact .compact-sheet-right {
     border-left: .3mm solid #d8ddd8;
-    padding-left: 3.35mm;
+    padding-left: 3.1mm;
   }
 
   html.print-compact .compact-sheet-left {
-    padding-right: 3.35mm;
+    padding-right: 3.1mm;
   }
 
   html.print-compact .compact-page-viewport {
     position: relative;
-    width: 134.65mm;
-    height: 196mm;
+    width: 134.4mm;
+    height: 194.5mm;
     overflow: hidden;
     background: #fff;
   }
@@ -84,7 +96,7 @@
     min-height: 297mm !important;
     max-height: 297mm !important;
     margin: 0 !important;
-    transform: scale(.64);
+    transform: scale(.638);
     transform-origin: top right;
     page: compact-sheet !important;
   }
@@ -106,9 +118,9 @@
   */
   html.print-compact .compact-section-flow,
   html.print-compact .compact-measure-host {
-    width: 134.65mm;
-    height: 196mm;
-    column-width: 134.65mm;
+    width: 134.4mm;
+    height: 194.5mm;
+    column-width: 134.4mm;
     column-gap: 0;
     column-fill: auto;
     font-family: "Noto Sans Hebrew", Arial, sans-serif;
@@ -188,12 +200,12 @@ html.print-compact .compact-measure-host {
   position: fixed;
   top: 0;
   left: -10000px;
-  width: 134.65mm;
-  height: 196mm;
+  width: 134.4mm;
+  height: 194.5mm;
   overflow: hidden;
   visibility: hidden;
   pointer-events: none;
-  column-width: 134.65mm;
+  column-width: 134.4mm;
   column-gap: 0;
   column-fill: auto;
   font-family: "Noto Sans Hebrew", Arial, sans-serif;
@@ -202,9 +214,9 @@ html.print-compact .compact-measure-host {
 }
 
 html.print-compact .compact-measure-host .compact-section-flow {
-  width: 134.65mm;
-  height: 196mm;
-  column-width: 134.65mm;
+  width: 134.4mm;
+  height: 194.5mm;
+  column-width: 134.4mm;
   column-gap: 0;
   column-fill: auto;
 }
