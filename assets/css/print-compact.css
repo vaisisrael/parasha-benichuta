@@ -15,11 +15,6 @@
   display: none;
 }
 
-/*
-  כללי העימוד של פוסט חסכוני מוגדרים גם מחוץ ל-@media print,
-  משום שהמדידה מתבצעת לפני פתיחת חלון ההדפסה.
-  כך מספר העמודים המחושב זהה לעימוד שיודפס בפועל.
-*/
 html.print-compact .compact-measure-host {
   position: fixed;
   top: 0;
@@ -171,7 +166,6 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     background: #fff;
   }
 
-  /* שער ועמוד אחורי: A4 מלא מוקטן בשלמותו. */
   html.print-compact .compact-scaled-full-page {
     position: absolute;
     top: 0;
@@ -197,11 +191,24 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     page-break-before: auto !important;
   }
 
-  /* תוכן העניינים בשער חייב להישאר גלוי גם בתוך העותק המוקטן. */
+  /*
+    בשער החסכוני אנחנו לא משאירים את תוכן העניינים תלוי בזרימה
+    של השער המקורי. הוא מוצמד פיזית מיד מתחת לגובה ה-hero של 176 מ״מ.
+    כך אין מצב שבו הוא קיים ב-DOM אבל נדחק/נבלע בשטח הלבן.
+  */
   html.print-compact .compact-cover-page .magazine-cover-contents {
+    position: absolute !important;
+    top: 173mm !important;
+    right: 8mm !important;
+    left: 8mm !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 3mm 4mm 4mm !important;
+    z-index: 20 !important;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    background: rgba(255,253,248,.99) !important;
   }
 
   html.print-compact .compact-cover-page .magazine-cover-index {
@@ -217,7 +224,6 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     opacity: 1 !important;
   }
 
-  /* זרימת העמודים הטכנית היא LTR; התוכן עצמו נשאר RTL. */
   html.print-compact .compact-section-flow {
     position: absolute;
     top: 0;
