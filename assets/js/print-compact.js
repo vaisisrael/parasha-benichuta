@@ -54,33 +54,59 @@
     });
   }
 
-  function createScaledFullPage(source, className) {
-    const viewport = createPageViewport(className);
-    const clone = source.cloneNode(true);
+  /*
+    השער החסכוני נבנה כעת כרכיב עצמאי.
+    איננו משכפלים עוד את כל דף השער A4, ולכן אין תלות ב-page rules,
+    break-after, margins או positioning של ההדפסה האנכית.
+    את אזור ה-hero בלבד משכפלים ומקטינים; את תוכן העניינים בונים מחדש
+    במידות הטבעיות של חצי-העמוד.
+  */
+  function createCompactCoverPage(source) {
+    const viewport = createPageViewport("compact-cover-page");
+    const cover = document.createElement("div");
+    cover.className = "compact-cover-native";
 
-    /*
-      לעותק המוקטן אסור להשאיר IDs של השער המקורי. אחרת לפני ההדפסה
-      getElementById/querySelector עלולים לפנות לעותק במקום למקור ולשנות
-      את תוכן העניינים הלא נכון.
-    */
-    stripIds(clone);
-    clone.classList.add("compact-scaled-full-page");
+    const heroFrame = document.createElement("div");
+    heroFrame.className = "compact-cover-native-hero";
 
-    if (className === "compact-cover-page") {
-      const sourceIndex = source.querySelector(".magazine-cover-index");
-      const cloneIndex = clone.querySelector(".magazine-cover-index");
-
-      /*
-        תוכן העניינים נבנה דינמית. מעתיקים אותו במפורש מן השער שכבר עבר
-        finalize, כדי שהעותק החסכוני יקבל בוודאות את כל השורות והמספרים.
-      */
-      if (sourceIndex && cloneIndex) {
-        cloneIndex.replaceChildren(
-          ...Array.from(sourceIndex.children, (item) => item.cloneNode(true))
-        );
-      }
+    const sourceHero = source.querySelector(".magazine-cover-hero");
+    if (sourceHero) {
+      const heroClone = sourceHero.cloneNode(true);
+      stripIds(heroClone);
+      heroClone.classList.add("compact-cover-hero-source");
+      heroFrame.append(heroClone);
     }
 
+    const contents = document.createElement("section");
+    contents.className = "compact-cover-native-contents";
+
+    const sourceTitle = source.querySelector(".magazine-cover-contents-title");
+    const title = document.createElement("h2");
+    title.className = "compact-cover-native-title";
+    title.textContent = sourceTitle?.textContent?.trim() || "מה מחכה לכם בפנים";
+
+    const index = document.createElement("div");
+    index.className = "compact-cover-native-index";
+
+    const sourceRows = Array.from(source.querySelectorAll(".magazine-index-item"));
+    for (const row of sourceRows) {
+      const clone = row.cloneNode(true);
+      stripIds(clone);
+      clone.classList.add("compact-cover-native-item");
+      index.append(clone);
+    }
+
+    contents.append(title, index);
+    cover.append(heroFrame, contents);
+    viewport.append(cover);
+    return viewport;
+  }
+
+  function createScaledBackPage(source) {
+    const viewport = createPageViewport("compact-back-cover-page");
+    const clone = source.cloneNode(true);
+    stripIds(clone);
+    clone.classList.add("compact-scaled-full-page");
     viewport.append(clone);
     return viewport;
   }
@@ -163,10 +189,7 @@
     }
 
     const logicalPages = [];
-
-    logicalPages.push(
-      createScaledFullPage(cover, "compact-cover-page")
-    );
+    logicalPages.push(createCompactCoverPage(cover));
 
     for (const section of sections) {
       const pageCount = measureSectionPageCount(section);
@@ -175,9 +198,7 @@
       }
     }
 
-    logicalPages.push(
-      createScaledFullPage(backCover, "compact-back-cover-page")
-    );
+    logicalPages.push(createScaledBackPage(backCover));
 
     const compactRoot = document.createElement("div");
     compactRoot.id = "compact-print-root";
@@ -198,17 +219,27 @@
       requestAnimationFrame(() => requestAnimationFrame(resolve))
     );
 
-    /* בקרת איכות פנימית: עותק השער חייב להכיל בדיוק את שורות האינדקס. */
+    /* QA: השער החסכוני חייב להכיל את כל פריטי תוכן העניינים. */
     const sourceRowCount = cover.querySelectorAll(".magazine-index-item").length;
     const compactRowCount = compactRoot.querySelectorAll(
-      ".compact-cover-page .magazine-index-item"
+      ".compact-cover-native-index > .magazine-index-item"
     ).length;
 
-    if (!sourceRowCount || compactRowCount !== sourceRowCount) {
-      console.error(
-        "Compact print cover index mismatch",
-        { sourceRowCount, compactRowCount }
-      );
+    const nativeContents = compactRoot.querySelector(".compact-cover-native-contents");
+    const qaPassed = Boolean(
+      sourceRowCount > 0 &&
+      compactRowCount === sourceRowCount &&
+      nativeContents
+    );
+
+    compactRoot.dataset.coverQa = qaPassed ? "pass" : "fail";
+
+    if (!qaPassed) {
+      console.error("Compact cover QA failed", {
+        sourceRowCount,
+        compactRowCount,
+        hasContents: Boolean(nativeContents)
+      });
     }
 
     window.__printCompactReady = true;
