@@ -50,6 +50,10 @@
     break-after: column;
   }
 
+  html.print-compact .compact-back-cover-slot {
+    break-before: column;
+  }
+
   /*
     את השער והעמוד האחורי איננו מעצבים מחדש.
     הם נשארים בדיוק בגודל A4 המקורי ומוקטנים כמקשה אחת
@@ -95,7 +99,8 @@
     page-break-before: auto !important;
   }
 
-  html.print-compact #print-page > .compact-page-slot + .print-section {
+  /* השער כבר מכריח מעבר לעמוד הפנימי הבא, לכן אין מעבר כפול לפני הפוסט הראשון. */
+  html.print-compact #print-page > .print-section.compact-first-section {
     break-before: auto !important;
   }
 
