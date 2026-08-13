@@ -18,11 +18,15 @@
       const cover = document.querySelector("#print-page > .magazine-cover");
       const backCover = document.querySelector("#print-page > .print-back-cover");
       const sections = document.querySelectorAll("#print-content > .print-section");
+      const indexRows = document.querySelectorAll(
+        "#magazine-cover-index > .magazine-index-item"
+      );
 
       if (
         cover &&
         backCover &&
         sections.length > 0 &&
+        indexRows.length > 0 &&
         window.__printCoverReady === true &&
         window.__printBackCoverReady === true &&
         window.__printFinalizeReady === true
@@ -42,11 +46,41 @@
     return viewport;
   }
 
+  function stripIds(root) {
+    if (!root) return;
+    root.removeAttribute?.("id");
+    root.querySelectorAll?.("[id]").forEach((element) => {
+      element.removeAttribute("id");
+    });
+  }
+
   function createScaledFullPage(source, className) {
     const viewport = createPageViewport(className);
     const clone = source.cloneNode(true);
-    clone.removeAttribute("id");
+
+    /*
+      לעותק המוקטן אסור להשאיר IDs של השער המקורי. אחרת לפני ההדפסה
+      getElementById/querySelector עלולים לפנות לעותק במקום למקור ולשנות
+      את תוכן העניינים הלא נכון.
+    */
+    stripIds(clone);
     clone.classList.add("compact-scaled-full-page");
+
+    if (className === "compact-cover-page") {
+      const sourceIndex = source.querySelector(".magazine-cover-index");
+      const cloneIndex = clone.querySelector(".magazine-cover-index");
+
+      /*
+        תוכן העניינים נבנה דינמית. מעתיקים אותו במפורש מן השער שכבר עבר
+        finalize, כדי שהעותק החסכוני יקבל בוודאות את כל השורות והמספרים.
+      */
+      if (sourceIndex && cloneIndex) {
+        cloneIndex.replaceChildren(
+          ...Array.from(sourceIndex.children, (item) => item.cloneNode(true))
+        );
+      }
+    }
+
     viewport.append(clone);
     return viewport;
   }
@@ -56,7 +90,7 @@
     flow.className = "compact-section-flow";
 
     const clone = section.cloneNode(true);
-    clone.removeAttribute("id");
+    stripIds(clone);
     clone.classList.add("compact-section-clone");
     flow.append(clone);
 
@@ -163,6 +197,19 @@
     await new Promise((resolve) =>
       requestAnimationFrame(() => requestAnimationFrame(resolve))
     );
+
+    /* בקרת איכות פנימית: עותק השער חייב להכיל בדיוק את שורות האינדקס. */
+    const sourceRowCount = cover.querySelectorAll(".magazine-index-item").length;
+    const compactRowCount = compactRoot.querySelectorAll(
+      ".compact-cover-page .magazine-index-item"
+    ).length;
+
+    if (!sourceRowCount || compactRowCount !== sourceRowCount) {
+      console.error(
+        "Compact print cover index mismatch",
+        { sourceRowCount, compactRowCount }
+      );
+    }
 
     window.__printCompactReady = true;
     window.dispatchEvent(new CustomEvent("print-compact-ready"));
