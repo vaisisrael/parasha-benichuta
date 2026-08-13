@@ -19,11 +19,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/print.css?v=15">
-  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=15">
-  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=15">
-  <link rel="stylesheet" href="assets/css/print-back-cover.css?v=15">
-  <link rel="stylesheet" href="assets/css/print-compact.css?v=15">
+  <link rel="stylesheet" href="assets/css/print.css?v=16">
+  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=16">
+  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=16">
+  <link rel="stylesheet" href="assets/css/print-back-cover.css?v=16">
+  <link rel="stylesheet" href="assets/css/print-compact.css?v=16">
 
   <style>
     .print-loading-screen {
@@ -167,11 +167,12 @@
     })();
   </script>
 
-  <script defer src="assets/js/print-content-fixes.js?v=15"></script>
-  <script defer src="assets/js/print-cover-v2.js?v=15"></script>
-  <script defer src="assets/js/print.js?v=15"></script>
-  <script defer src="assets/js/print-back-cover.js?v=15"></script>
-  <script defer src="assets/js/print-finalize.js?v=15"></script>
+  <script defer src="assets/js/print-content-fixes.js?v=16"></script>
+  <script defer src="assets/js/print-cover-v2.js?v=16"></script>
+  <script defer src="assets/js/print.js?v=16"></script>
+  <script defer src="assets/js/print-back-cover.js?v=16"></script>
+  <script defer src="assets/js/print-finalize.js?v=16"></script>
+  <script defer src="assets/js/print-compact.js?v=16"></script>
 </head>
 <body>
   <div class="print-loading-screen" id="print-loading-screen" aria-live="polite">
@@ -243,13 +244,18 @@
         const deadline = Date.now() + 32000;
 
         while (Date.now() < deadline) {
-          const contentReady = !document.getElementById("print-status") &&
-            document.querySelectorAll("#print-content > .print-section").length > 0;
+          const compactMode = window.__printMode === "compact";
+          const contentReady = !document.getElementById("print-status") && (
+            compactMode
+              ? document.querySelectorAll("#print-page > .print-section").length > 0
+              : document.querySelectorAll("#print-content > .print-section").length > 0
+          );
           const coverReady = window.__printCoverReady === true;
           const backCoverReady = window.__printBackCoverReady === true;
           const finalizeReady = window.__printFinalizeReady === true;
+          const compactReady = !compactMode || window.__printCompactReady === true;
 
-          if (contentReady && coverReady && backCoverReady && finalizeReady) {
+          if (contentReady && coverReady && backCoverReady && finalizeReady && compactReady) {
             if (document.fonts?.ready) {
               try { await document.fonts.ready; } catch {}
             }
