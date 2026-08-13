@@ -166,12 +166,27 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     background: #fff;
   }
 
-  /*
-    שער חסכוני עצמאי. אין כאן clone של כל דף השער האנכי.
-    אזור ה-hero המקורי מוקטן בנפרד, ומתחתיו נבנה תוכן עניינים חדש.
-    לכן שום כלל של @page cover / break-after / margin מההדפסה האנכית
-    אינו יכול להשפיע על השער החסכוני.
-  */
+  html.print-compact .compact-logical-page-number {
+    position: absolute;
+    right: 0;
+    bottom: 1.5mm;
+    left: 0;
+    z-index: 80;
+    display: block !important;
+    color: #66716b;
+    font-family: "Rubik", "Noto Sans Hebrew", Arial, sans-serif;
+    font-size: 7.2pt;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  html.print-compact .compact-cover-page .compact-logical-page-number,
+  html.print-compact .compact-back-cover-page .compact-logical-page-number {
+    display: none !important;
+  }
+
   html.print-compact .compact-cover-native {
     width: 134.4mm;
     height: 194.5mm;
@@ -193,16 +208,49 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     background: #eef4ef;
   }
 
-  html.print-compact .compact-cover-hero-source {
+  html.print-compact .compact-cover-hero-shell {
     position: absolute !important;
     top: 0 !important;
     right: 0 !important;
     width: 210mm !important;
     height: 176mm !important;
+    min-height: 176mm !important;
     margin: 0 !important;
+    overflow: hidden !important;
     transform: scale(.64);
     transform-origin: top right;
+    background: transparent !important;
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  html.print-compact .compact-cover-hero-shell .magazine-cover-hero,
+  html.print-compact .compact-cover-hero-source {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    width: 210mm !important;
+    height: 176mm !important;
+    min-height: 176mm !important;
+    margin: 0 !important;
+    transform: none !important;
     overflow: hidden !important;
+  }
+
+  html.print-compact .compact-cover-hero-shell .magazine-cover-overlay {
+    padding: 7mm 15mm 0 !important;
+  }
+
+  html.print-compact .compact-cover-hero-shell .magazine-cover-badge {
+    width: 25mm !important;
+    height: 25mm !important;
+    padding: 3mm !important;
+    border-width: 1.2mm !important;
+  }
+
+  html.print-compact .compact-cover-hero-shell .magazine-cover-divider {
+    width: 68% !important;
+    margin-top: 1mm !important;
   }
 
   html.print-compact .compact-cover-native-contents {
@@ -298,7 +346,6 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     text-align: left;
   }
 
-  /* העמוד האחורי בלבד נשאר מוקטן מהמקור, מבודד ממצב השער. */
   html.print-compact .compact-scaled-full-page {
     position: absolute;
     top: 0;
