@@ -10,10 +10,6 @@
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  function mm(value) {
-    return `${value}mm`;
-  }
-
   async function waitForSourceLayout() {
     const deadline = Date.now() + 32000;
 
@@ -86,7 +82,7 @@
     const viewport = createPageViewport("compact-content-page");
     const flow = createSectionFlow(section);
 
-    flow.style.transform = `translateX(-${pageIndex * 138}mm)`;
+    flow.style.transform = `translateX(-${pageIndex * 134.65}mm)`;
     viewport.append(flow);
     return viewport;
   }
@@ -134,17 +130,10 @@
 
     const logicalPages = [];
 
-    /* עמוד 1: השער המלא, מוקטן בשלמותו לחצי A4 לרוחב. */
     logicalPages.push(
       createScaledFullPage(cover, "compact-cover-page")
     );
 
-    /*
-      כל מדור מתחיל בעמוד פנימי חדש. אם הוא ארוך, הוא נפרס
-      לעמודים פנימיים נוספים. כל עמוד הוא צילום מדויק של slice
-      אחר מאותה זרימת multi-column, ולכן אין תלות בפגינציה של
-      דפדפן ההדפסה עצמו.
-    */
     for (const section of sections) {
       const pageCount = measureSectionPageCount(section);
       for (let index = 0; index < pageCount; index += 1) {
@@ -152,7 +141,6 @@
       }
     }
 
-    /* העמוד האחרון: העמוד האחורי המלא, מוקטן באותה שיטה. */
     logicalPages.push(
       createScaledFullPage(backCover, "compact-back-cover-page")
     );
@@ -172,6 +160,15 @@
     }
 
     document.body.append(compactRoot);
+
+    /*
+      print.html בודק שבמצב החסכוני קיים ילד .print-section ישיר.
+      הסמן הנסתר משמש רק כאות מוכנות; בפלט עצמו #print-page מוסתר לגמרי.
+    */
+    const readySentinel = document.createElement("div");
+    readySentinel.className = "print-section compact-ready-sentinel";
+    readySentinel.hidden = true;
+    printPage.append(readySentinel);
 
     await new Promise((resolve) =>
       requestAnimationFrame(() => requestAnimationFrame(resolve))
