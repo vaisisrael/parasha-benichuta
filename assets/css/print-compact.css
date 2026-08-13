@@ -15,6 +15,99 @@
   display: none;
 }
 
+/*
+  כללי העימוד של פוסט חסכוני מוגדרים גם מחוץ ל-@media print,
+  משום שהמדידה מתבצעת לפני פתיחת חלון ההדפסה.
+  כך מספר העמודים המחושב זהה לעימוד שיודפס בפועל.
+*/
+html.print-compact .compact-measure-host {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 134.4mm;
+  height: 194.5mm;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+}
+
+html.print-compact .compact-measure-host .compact-section-flow {
+  width: 134.4mm;
+  height: 194.5mm;
+  column-width: 134.4mm;
+  column-gap: 0;
+  column-fill: auto;
+  direction: ltr;
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  font-size: 8.2pt;
+  line-height: 1.55;
+}
+
+html.print-compact .compact-measure-host .compact-section-clone {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  direction: rtl;
+  text-align: right;
+}
+
+html.print-compact .compact-measure-host .compact-section-kicker {
+  gap: 1.5mm;
+  margin-bottom: 1mm;
+  font-size: 7.5pt;
+}
+
+html.print-compact .compact-measure-host .print-section-icon {
+  width: 5.5mm;
+  height: 5.5mm;
+  flex-basis: 5.5mm;
+}
+
+html.print-compact .compact-measure-host .compact-section-clone > h2 {
+  margin: 0 0 3.5mm;
+  font-size: 12.5pt;
+  line-height: 1.25;
+}
+
+html.print-compact .compact-measure-host .print-post-content {
+  font-size: 8.2pt;
+  line-height: 1.55;
+}
+
+html.print-compact .compact-measure-host .print-post-content img {
+  display: block !important;
+  height: auto !important;
+  max-width: 53mm !important;
+  max-height: 53mm !important;
+  margin: 3mm auto !important;
+  object-fit: contain !important;
+  break-inside: avoid-column !important;
+}
+
+html.print-compact .compact-measure-host .print-post-content blockquote {
+  margin: 3mm 0;
+  padding: 2mm 2.5mm;
+  border-right-width: 1mm;
+  border-radius: 2mm 0 0 2mm;
+}
+
+html.print-compact .compact-measure-host .print-post-content th,
+html.print-compact .compact-measure-host .print-post-content td {
+  padding: 1mm 1.4mm;
+}
+
+html.print-compact .compact-measure-host .print-shorts-group {
+  margin-top: 3mm;
+  break-inside: avoid-column;
+}
+
+html.print-compact .compact-measure-host .print-shorts-group h3 {
+  margin-bottom: 1mm;
+  font-size: 8.3pt;
+}
+
 @media print {
   html.print-compact body {
     margin: 0 !important;
@@ -104,16 +197,35 @@
     page-break-before: auto !important;
   }
 
-  /*
-    חשוב: זרימת העמודות עצמה היא LTR כדי שעמוד 1 יהיה ב-x=0,
-    עמוד 2 ב-x=+134.4mm וכן הלאה. התוכן שבתוך כל עמוד נשאר RTL.
-    כך חיתוך העמודים ב-translateX שלילי הוא דטרמיניסטי ואינו יוצר
-    עמודי ביניים ריקים בדפדפנים שמפרשים columns ב-RTL בכיוון ההפוך.
-  */
-  html.print-compact .compact-section-flow,
-  html.print-compact .compact-measure-host {
+  /* תוכן העניינים בשער חייב להישאר גלוי גם בתוך העותק המוקטן. */
+  html.print-compact .compact-cover-page .magazine-cover-contents {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  html.print-compact .compact-cover-page .magazine-cover-index {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+
+  html.print-compact .compact-cover-page .magazine-index-item {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* זרימת העמודים הטכנית היא LTR; התוכן עצמו נשאר RTL. */
+  html.print-compact .compact-section-flow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
     width: 134.4mm;
     height: 194.5mm;
+    overflow: visible;
     column-width: 134.4mm;
     column-gap: 0;
     column-fill: auto;
@@ -121,14 +233,6 @@
     font-family: "Noto Sans Hebrew", Arial, sans-serif;
     font-size: 8.2pt;
     line-height: 1.55;
-  }
-
-  html.print-compact .compact-section-flow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: auto;
-    overflow: visible;
   }
 
   html.print-compact .compact-section-clone {
@@ -164,9 +268,12 @@
   }
 
   html.print-compact .compact-section-clone .print-post-content img {
+    display: block !important;
+    height: auto !important;
     max-width: 53mm !important;
     max-height: 53mm !important;
     margin: 3mm auto !important;
+    object-fit: contain !important;
     break-inside: avoid-column !important;
   }
 
@@ -191,37 +298,4 @@
     margin-bottom: 1mm;
     font-size: 8.3pt;
   }
-}
-
-/* מודד נסתר במסך — נדרש לפני פתיחת חלון ההדפסה. */
-html.print-compact .compact-measure-host {
-  position: fixed;
-  top: 0;
-  left: -10000px;
-  width: 134.4mm;
-  height: 194.5mm;
-  overflow: hidden;
-  visibility: hidden;
-  pointer-events: none;
-  column-width: 134.4mm;
-  column-gap: 0;
-  column-fill: auto;
-  direction: ltr;
-  font-family: "Noto Sans Hebrew", Arial, sans-serif;
-  font-size: 8.2pt;
-  line-height: 1.55;
-}
-
-html.print-compact .compact-measure-host .compact-section-flow {
-  width: 134.4mm;
-  height: 194.5mm;
-  column-width: 134.4mm;
-  column-gap: 0;
-  column-fill: auto;
-  direction: ltr;
-}
-
-html.print-compact .compact-measure-host .compact-section-clone {
-  direction: rtl;
-  text-align: right;
 }
