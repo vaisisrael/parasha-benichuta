@@ -7,7 +7,7 @@ from urllib.parse import urlencode
 
 
 ROOT = Path(__file__).resolve().parent
-PRINT_VERSION = "16"
+PRINT_VERSION = "17"
 DEEPLINK_VERSION = "1"
 
 
