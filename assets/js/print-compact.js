@@ -54,14 +54,33 @@
     });
   }
 
+  function sectionNameFrom(section) {
+    if (section?.dataset?.sectionName) {
+      return String(section.dataset.sectionName).replace(/🔖/g, "").trim();
+    }
+    const kicker = section?.querySelector(".print-section-kicker")?.cloneNode(true);
+    kicker?.querySelectorAll?.(".print-section-icon")?.forEach((node) => node.remove());
+    return String(kicker?.textContent || "").replace(/🔖/g, "").replace(/\s+/g, " ").trim();
+  }
+
+  function attachPageNumber(viewport, number) {
+    if (!viewport || !Number.isFinite(number)) return viewport;
+    viewport.dataset.logicalPage = String(number);
+    const marker = document.createElement("div");
+    marker.className = "compact-logical-page-number";
+    marker.textContent = String(number);
+    marker.setAttribute("aria-hidden", "true");
+    viewport.append(marker);
+    return viewport;
+  }
+
   /*
-    השער החסכוני נבנה כעת כרכיב עצמאי.
-    איננו משכפלים עוד את כל דף השער A4, ולכן אין תלות ב-page rules,
-    break-after, margins או positioning של ההדפסה האנכית.
-    את אזור ה-hero בלבד משכפלים ומקטינים; את תוכן העניינים בונים מחדש
-    במידות הטבעיות של חצי-העמוד.
+    השער החסכוני עצמאי, אבל אזור ה-hero נשמר בתוך מעטפת magazine-cover-v2.
+    כך כל הטקסט הדינמי שכבר נטען מ-print-cover.json (כותרת משנה, פסוק,
+    מקור, badge וסגנונות inline) מקבל בדיוק את אותו CSS של השער הרגיל,
+    בלי לשנות כלל את השער האנכי עצמו.
   */
-  function createCompactCoverPage(source) {
+  function createCompactCoverPage(source, compactPageBySection) {
     const viewport = createPageViewport("compact-cover-page");
     const cover = document.createElement("div");
     cover.className = "compact-cover-native";
@@ -69,12 +88,16 @@
     const heroFrame = document.createElement("div");
     heroFrame.className = "compact-cover-native-hero";
 
+    const heroShell = document.createElement("div");
+    heroShell.className = "compact-cover-hero-shell magazine-cover-v2";
+
     const sourceHero = source.querySelector(".magazine-cover-hero");
     if (sourceHero) {
       const heroClone = sourceHero.cloneNode(true);
       stripIds(heroClone);
       heroClone.classList.add("compact-cover-hero-source");
-      heroFrame.append(heroClone);
+      heroShell.append(heroClone);
+      heroFrame.append(heroShell);
     }
 
     const contents = document.createElement("section");
@@ -93,22 +116,30 @@
       const clone = row.cloneNode(true);
       stripIds(clone);
       clone.classList.add("compact-cover-native-item");
+
+      const sectionName = String(row.dataset.section || "").replace(/🔖/g, "").trim();
+      const compactPage = compactPageBySection.get(sectionName);
+      const pageNode = clone.querySelector(".magazine-index-page");
+      if (pageNode && Number.isFinite(compactPage)) {
+        pageNode.textContent = String(compactPage);
+      }
+
       index.append(clone);
     }
 
     contents.append(title, index);
     cover.append(heroFrame, contents);
     viewport.append(cover);
-    return viewport;
+    return attachPageNumber(viewport, 1);
   }
 
-  function createScaledBackPage(source) {
+  function createScaledBackPage(source, pageNumber) {
     const viewport = createPageViewport("compact-back-cover-page");
     const clone = source.cloneNode(true);
     stripIds(clone);
     clone.classList.add("compact-scaled-full-page");
     viewport.append(clone);
-    return viewport;
+    return attachPageNumber(viewport, pageNumber);
   }
 
   function createSectionFlow(section) {
@@ -139,13 +170,13 @@
     return count;
   }
 
-  function createSectionPage(section, pageIndex) {
+  function createSectionPage(section, pageIndex, pageNumber) {
     const viewport = createPageViewport("compact-content-page");
     const flow = createSectionFlow(section);
 
     flow.style.transform = `translateX(-${pageIndex * PAGE_WIDTH_MM}mm)`;
     viewport.append(flow);
-    return viewport;
+    return attachPageNumber(viewport, pageNumber);
   }
 
   function createBlankPage() {
@@ -188,17 +219,37 @@
       return;
     }
 
-    const logicalPages = [];
-    logicalPages.push(createCompactCoverPage(cover));
+    /*
+      קודם מודדים את כל המדורים ומקבעים את מספור ההדפסה החסכונית.
+      המספרים בשער החסכוני מתייחסים מעתה לעמודי החצי האמיתיים שלו,
+      ולא למספרי ההדפסה האנכית.
+    */
+    const sectionPlans = [];
+    const compactPageBySection = new Map();
+    let nextPageNumber = 2;
 
     for (const section of sections) {
       const pageCount = measureSectionPageCount(section);
-      for (let index = 0; index < pageCount; index += 1) {
-        logicalPages.push(createSectionPage(section, index));
+      const sectionName = sectionNameFrom(section);
+      if (sectionName && !compactPageBySection.has(sectionName)) {
+        compactPageBySection.set(sectionName, nextPageNumber);
+      }
+      sectionPlans.push({ section, pageCount, firstPageNumber: nextPageNumber });
+      nextPageNumber += pageCount;
+    }
+
+    const logicalPages = [];
+    logicalPages.push(createCompactCoverPage(cover, compactPageBySection));
+
+    for (const plan of sectionPlans) {
+      for (let index = 0; index < plan.pageCount; index += 1) {
+        logicalPages.push(
+          createSectionPage(plan.section, index, plan.firstPageNumber + index)
+        );
       }
     }
 
-    logicalPages.push(createScaledBackPage(backCover));
+    logicalPages.push(createScaledBackPage(backCover, nextPageNumber));
 
     const compactRoot = document.createElement("div");
     compactRoot.id = "compact-print-root";
@@ -219,26 +270,32 @@
       requestAnimationFrame(() => requestAnimationFrame(resolve))
     );
 
-    /* QA: השער החסכוני חייב להכיל את כל פריטי תוכן העניינים. */
+    /* QA: תוכן עניינים, הטקסט הדינמי ומספור העמודים חייבים להגיע לעותק. */
     const sourceRowCount = cover.querySelectorAll(".magazine-index-item").length;
     const compactRowCount = compactRoot.querySelectorAll(
       ".compact-cover-native-index > .magazine-index-item"
     ).length;
+    const sourceSubtitle = cover.querySelector(".magazine-cover-subtitle")?.textContent?.trim() || "";
+    const compactSubtitle = compactRoot.querySelector(".compact-cover-page .magazine-cover-subtitle")?.textContent?.trim() || "";
+    const numberedPages = compactRoot.querySelectorAll(".compact-logical-page-number").length;
 
-    const nativeContents = compactRoot.querySelector(".compact-cover-native-contents");
     const qaPassed = Boolean(
       sourceRowCount > 0 &&
       compactRowCount === sourceRowCount &&
-      nativeContents
+      sourceSubtitle === compactSubtitle &&
+      numberedPages === logicalPages.length
     );
 
     compactRoot.dataset.coverQa = qaPassed ? "pass" : "fail";
 
     if (!qaPassed) {
-      console.error("Compact cover QA failed", {
+      console.error("Compact print QA failed", {
         sourceRowCount,
         compactRowCount,
-        hasContents: Boolean(nativeContents)
+        sourceSubtitle,
+        compactSubtitle,
+        numberedPages,
+        logicalPages: logicalPages.length
       });
     }
 
