@@ -7,12 +7,12 @@ from urllib.parse import urlencode
 
 
 ROOT = Path(__file__).resolve().parent
-PRINT_VERSION = "13"
+PRINT_VERSION = "15"
 DEEPLINK_VERSION = "1"
 
 
 def print_card(prefix: str, parasha_name: str) -> str:
-    query = urlencode(
+    regular_query = urlencode(
         {
             "parasha": parasha_name,
             "autoprint": "1",
@@ -20,8 +20,61 @@ def print_card(prefix: str, parasha_name: str) -> str:
         }
     )
 
+    compact_query = urlencode(
+        {
+            "parasha": parasha_name,
+            "autoprint": "1",
+            "mode": "compact",
+            "v": PRINT_VERSION,
+        }
+    )
+
     return f"""
 <aside class="print-card" data-print-parasha="{html.escape(parasha_name, quote=True)}">
+
+  <style>
+    .print-card-actions {{
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
+    }}
+
+    .print-card-actions .print-card-button {{
+      min-width: 150px;
+    }}
+
+    .print-card-button-compact {{
+      background: #ffffff;
+      color: var(--accent-dark);
+      border: 1px solid rgba(79, 109, 90, 0.38);
+    }}
+
+    .print-card-button-compact:hover,
+    .print-card-button-compact:focus-visible {{
+      background: var(--surface-soft);
+      color: var(--accent-dark);
+    }}
+
+    @media (max-width: 700px) {{
+      .print-card-actions {{
+        grid-column: 1 / -1;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }}
+
+      .print-card-actions .print-card-button {{
+        grid-column: auto;
+        width: 100%;
+        min-width: 0;
+        padding-inline: 12px;
+        white-space: normal;
+        text-align: center;
+      }}
+    }}
+  </style>
 
   <div
     class="print-card-icon"
@@ -41,24 +94,36 @@ def print_card(prefix: str, parasha_name: str) -> str:
     </h2>
 
     <p>
-      הדפיסו לפני שבת גרסה נקייה של העלון
+      בחרו הדפסה רגילה או חסכונית — שני עמודים על דף A4 לרוחב
     </p>
 
   </div>
 
-  <a
-    class="print-card-button"
-    href="{prefix}print.html?{query}"
-  >
-    הדפסת העלון
-  </a>
+  <div class="print-card-actions">
+    <a
+      class="print-card-button print-card-button-regular"
+      data-print-mode="regular"
+      href="{prefix}print.html?{regular_query}"
+    >
+      להדפסה רגילה
+    </a>
+
+    <a
+      class="print-card-button print-card-button-compact"
+      data-print-mode="compact"
+      href="{prefix}print.html?{compact_query}"
+    >
+      להדפסה חסכונית
+    </a>
+  </div>
 
 </aside>
 <script>
 (() => {{
   const card = document.currentScript.previousElementSibling;
-  const link = card?.querySelector(".print-card-button");
-  if (!card || !link) return;
+  const regularLink = card?.querySelector('[data-print-mode="regular"]');
+  const compactLink = card?.querySelector('[data-print-mode="compact"]');
+  if (!card || !regularLink || !compactLink) return;
 
   const rootUrl = new URL("{prefix}", window.location.href);
 
@@ -80,20 +145,27 @@ def print_card(prefix: str, parasha_name: str) -> str:
       .replace(/^פרש(?:ת|ות)\\s+/, "") || card.dataset.printParasha || "";
   }}
 
-  function updatePrintLink() {{
+  function buildPrintUrl(name, mode) {{
+    const url = new URL("print.html", rootUrl);
+    url.searchParams.set("parasha", name);
+    url.searchParams.set("autoprint", "1");
+    if (mode === "compact") {{
+      url.searchParams.set("mode", "compact");
+    }}
+    url.searchParams.set("v", "{PRINT_VERSION}");
+    return url.href;
+  }}
+
+  function updatePrintLinks() {{
     const name = currentParasha();
     if (!name) return;
 
     card.dataset.printParasha = name;
-
-    const url = new URL("print.html", rootUrl);
-    url.searchParams.set("parasha", name);
-    url.searchParams.set("autoprint", "1");
-    url.searchParams.set("v", "{PRINT_VERSION}");
-    link.href = url.href;
+    regularLink.href = buildPrintUrl(name, "regular");
+    compactLink.href = buildPrintUrl(name, "compact");
   }}
 
-  const observer = new MutationObserver(updatePrintLink);
+  const observer = new MutationObserver(updatePrintLinks);
   observer.observe(document.body, {{
     subtree: true,
     childList: true,
@@ -101,7 +173,7 @@ def print_card(prefix: str, parasha_name: str) -> str:
     attributeFilter: ["class", "aria-pressed"]
   }});
 
-  updatePrintLink();
+  updatePrintLinks();
 }})();
 </script>
 """
