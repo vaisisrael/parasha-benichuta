@@ -11,6 +11,7 @@ TRACKING_SCRIPT = r'''
     if (!link) return;
 
     const destination = link.href;
+    const printMode = link.dataset.printMode || "regular";
     const normalClick =
       event.button === 0 &&
       !event.ctrlKey &&
@@ -21,7 +22,8 @@ TRACKING_SCRIPT = r'''
     if (!normalClick) {
       if (typeof gtag === "function") {
         gtag("event", "print_parasha_click", {
-          transport_type: "beacon"
+          transport_type: "beacon",
+          print_mode: printMode
         });
       }
       return;
@@ -39,6 +41,7 @@ TRACKING_SCRIPT = r'''
     if (typeof gtag === "function") {
       gtag("event", "print_parasha_click", {
         transport_type: "beacon",
+        print_mode: printMode,
         event_callback: proceed,
         event_timeout: 700
       });
@@ -54,7 +57,8 @@ TRACKING_SCRIPT = r'''
 
 PRINT_PAGE_EVENT = '''        if (typeof gtag === "function") {
           gtag("event", "print_parasha_click", {
-            transport_type: "beacon"
+            transport_type: "beacon",
+            print_mode: window.__printMode
           });
         }
 
