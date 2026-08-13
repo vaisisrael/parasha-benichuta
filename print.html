@@ -19,10 +19,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/print.css?v=14">
-  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=14">
-  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=14">
-  <link rel="stylesheet" href="assets/css/print-back-cover.css?v=14">
+  <link rel="stylesheet" href="assets/css/print.css?v=15">
+  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=15">
+  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=15">
+  <link rel="stylesheet" href="assets/css/print-back-cover.css?v=15">
+  <link rel="stylesheet" href="assets/css/print-compact.css?v=15">
 
   <style>
     .print-loading-screen {
@@ -124,12 +125,18 @@
     (() => {
       const url = new URL(window.location.href);
       const parasha = url.searchParams.get("parasha");
+      const requestedMode = url.searchParams.get("mode");
+      window.__printMode = requestedMode === "compact" ? "compact" : "regular";
       window.__printAutoRequested = url.searchParams.get("autoprint") === "1";
       window.__printOpenedAt = performance.now();
       window.__printMobile = Boolean(
         navigator.userAgentData?.mobile ||
         /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || "")
       );
+
+      if (window.__printMode === "compact") {
+        document.documentElement.classList.add("print-compact");
+      }
 
       try {
         const referrer = document.referrer ? new URL(document.referrer) : null;
@@ -149,7 +156,8 @@
       if (window.__printAutoRequested) {
         if (typeof gtag === "function") {
           gtag("event", "print_parasha_click", {
-            transport_type: "beacon"
+            transport_type: "beacon",
+            print_mode: window.__printMode
           });
         }
 
@@ -159,11 +167,11 @@
     })();
   </script>
 
-  <script defer src="assets/js/print-content-fixes.js?v=14"></script>
-  <script defer src="assets/js/print-cover-v2.js?v=14"></script>
-  <script defer src="assets/js/print.js?v=14"></script>
-  <script defer src="assets/js/print-back-cover.js?v=14"></script>
-  <script defer src="assets/js/print-finalize.js?v=14"></script>
+  <script defer src="assets/js/print-content-fixes.js?v=15"></script>
+  <script defer src="assets/js/print-cover-v2.js?v=15"></script>
+  <script defer src="assets/js/print.js?v=15"></script>
+  <script defer src="assets/js/print-back-cover.js?v=15"></script>
+  <script defer src="assets/js/print-finalize.js?v=15"></script>
 </head>
 <body>
   <div class="print-loading-screen" id="print-loading-screen" aria-live="polite">
