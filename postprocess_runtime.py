@@ -1,6 +1,7 @@
 from pathlib import Path
 
 VERSION = "20260812-2"
+PRINT_ASSET_VERSION = "17"
 ROOT = Path(__file__).resolve().parent
 
 TRACKING_SCRIPT = r'''
@@ -11,7 +12,6 @@ TRACKING_SCRIPT = r'''
     if (!link) return;
 
     const destination = link.href;
-    const printMode = link.dataset.printMode || "regular";
     const normalClick =
       event.button === 0 &&
       !event.ctrlKey &&
@@ -22,8 +22,7 @@ TRACKING_SCRIPT = r'''
     if (!normalClick) {
       if (typeof gtag === "function") {
         gtag("event", "print_parasha_click", {
-          transport_type: "beacon",
-          print_mode: printMode
+          transport_type: "beacon"
         });
       }
       return;
@@ -41,7 +40,6 @@ TRACKING_SCRIPT = r'''
     if (typeof gtag === "function") {
       gtag("event", "print_parasha_click", {
         transport_type: "beacon",
-        print_mode: printMode,
         event_callback: proceed,
         event_timeout: 700
       });
@@ -57,8 +55,7 @@ TRACKING_SCRIPT = r'''
 
 PRINT_PAGE_EVENT = '''        if (typeof gtag === "function") {
           gtag("event", "print_parasha_click", {
-            transport_type: "beacon",
-            print_mode: window.__printMode
+            transport_type: "beacon"
           });
         }
 
@@ -78,11 +75,40 @@ def version_assets(text: str) -> str:
     return text
 
 
+def version_print_assets(text: str) -> str:
+    print_assets = [
+        "assets/css/print.css",
+        "assets/css/print-cover-v2.css",
+        "assets/css/print-content-fixes.css",
+        "assets/css/print-back-cover.css",
+        "assets/css/print-compact.css",
+        "assets/js/print-content-fixes.js",
+        "assets/js/print-cover-v2.js",
+        "assets/js/print.js",
+        "assets/js/print-back-cover.js",
+        "assets/js/print-finalize.js",
+        "assets/js/print-compact.js",
+    ]
+
+    for asset in print_assets:
+        text = text.replace(
+            f'{asset}?v=16',
+            f'{asset}?v={PRINT_ASSET_VERSION}',
+        )
+        text = text.replace(
+            f'{asset}?v=15',
+            f'{asset}?v={PRINT_ASSET_VERSION}',
+        )
+
+    return text
+
+
 def process_html(path: Path) -> None:
     text = path.read_text(encoding="utf-8")
     updated = version_assets(text)
 
     if path.name == "print.html" and path.parent == ROOT:
+        updated = version_print_assets(updated)
         updated = updated.replace(PRINT_PAGE_EVENT, "", 1)
 
     if path.name == "index.html" and path.parent == ROOT:
