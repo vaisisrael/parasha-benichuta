@@ -10,14 +10,8 @@
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  function wrapAsPageSlot(element, className) {
-    if (!element || element.closest(".compact-page-slot")) return null;
-
-    const slot = document.createElement("div");
-    slot.className = `compact-page-slot ${className}`;
-    element.before(slot);
-    slot.append(element);
-    return slot;
+  function mm(value) {
+    return `${value}mm`;
   }
 
   async function waitForSourceLayout() {
@@ -45,6 +39,79 @@
     return false;
   }
 
+  function createPageViewport(className = "") {
+    const viewport = document.createElement("div");
+    viewport.className = `compact-page-viewport ${className}`.trim();
+    return viewport;
+  }
+
+  function createScaledFullPage(source, className) {
+    const viewport = createPageViewport(className);
+    const clone = source.cloneNode(true);
+    clone.removeAttribute("id");
+    clone.classList.add("compact-scaled-full-page");
+    viewport.append(clone);
+    return viewport;
+  }
+
+  function createSectionFlow(section) {
+    const flow = document.createElement("div");
+    flow.className = "compact-section-flow";
+
+    const clone = section.cloneNode(true);
+    clone.removeAttribute("id");
+    clone.classList.add("compact-section-clone");
+    flow.append(clone);
+
+    return flow;
+  }
+
+  function measureSectionPageCount(section) {
+    const host = document.createElement("div");
+    host.className = "compact-measure-host";
+
+    const flow = createSectionFlow(section);
+    host.append(flow);
+    document.body.append(host);
+
+    const pageWidth = host.getBoundingClientRect().width || 1;
+    const totalWidth = Math.max(flow.scrollWidth, pageWidth);
+    const count = Math.max(1, Math.ceil((totalWidth - 1) / pageWidth));
+
+    host.remove();
+    return count;
+  }
+
+  function createSectionPage(section, pageIndex) {
+    const viewport = createPageViewport("compact-content-page");
+    const flow = createSectionFlow(section);
+
+    flow.style.transform = `translateX(-${pageIndex * 138}mm)`;
+    viewport.append(flow);
+    return viewport;
+  }
+
+  function createBlankPage() {
+    return createPageViewport("compact-blank-page");
+  }
+
+  function createSheet(rightPage, leftPage, isLast) {
+    const sheet = document.createElement("section");
+    sheet.className = "compact-sheet";
+    if (isLast) sheet.classList.add("compact-sheet-last");
+
+    const right = document.createElement("div");
+    right.className = "compact-sheet-half compact-sheet-right";
+    right.append(rightPage || createBlankPage());
+
+    const left = document.createElement("div");
+    left.className = "compact-sheet-half compact-sheet-left";
+    left.append(leftPage || createBlankPage());
+
+    sheet.append(right, left);
+    return sheet;
+  }
+
   async function buildCompactLayout() {
     const ready = await waitForSourceLayout();
     if (!ready) {
@@ -56,26 +123,55 @@
     const printContent = document.getElementById("print-content");
     const cover = printPage?.querySelector(":scope > .magazine-cover");
     const backCover = printPage?.querySelector(":scope > .print-back-cover");
+    const sections = Array.from(
+      printContent?.querySelectorAll(":scope > .print-section") || []
+    );
 
-    if (!printPage || !printContent || !cover || !backCover) {
+    if (!printPage || !printContent || !cover || !backCover || !sections.length) {
       window.__printCompactReady = true;
       return;
     }
 
-    wrapAsPageSlot(cover, "compact-cover-slot");
+    const logicalPages = [];
 
-    const sections = Array.from(
-      printContent.querySelectorAll(":scope > .print-section")
+    /* עמוד 1: השער המלא, מוקטן בשלמותו לחצי A4 לרוחב. */
+    logicalPages.push(
+      createScaledFullPage(cover, "compact-cover-page")
     );
 
-    sections.forEach((section, index) => {
-      section.classList.toggle("compact-first-section", index === 0);
-      printPage.insertBefore(section, backCover);
-    });
+    /*
+      כל מדור מתחיל בעמוד פנימי חדש. אם הוא ארוך, הוא נפרס
+      לעמודים פנימיים נוספים. כל עמוד הוא צילום מדויק של slice
+      אחר מאותה זרימת multi-column, ולכן אין תלות בפגינציה של
+      דפדפן ההדפסה עצמו.
+    */
+    for (const section of sections) {
+      const pageCount = measureSectionPageCount(section);
+      for (let index = 0; index < pageCount; index += 1) {
+        logicalPages.push(createSectionPage(section, index));
+      }
+    }
 
-    printContent.remove();
+    /* העמוד האחרון: העמוד האחורי המלא, מוקטן באותה שיטה. */
+    logicalPages.push(
+      createScaledFullPage(backCover, "compact-back-cover-page")
+    );
 
-    wrapAsPageSlot(backCover, "compact-back-cover-slot");
+    const compactRoot = document.createElement("div");
+    compactRoot.id = "compact-print-root";
+    compactRoot.setAttribute("aria-hidden", "true");
+
+    for (let index = 0; index < logicalPages.length; index += 2) {
+      compactRoot.append(
+        createSheet(
+          logicalPages[index],
+          logicalPages[index + 1] || createBlankPage(),
+          index + 2 >= logicalPages.length
+        )
+      );
+    }
+
+    document.body.append(compactRoot);
 
     await new Promise((resolve) =>
       requestAnimationFrame(() => requestAnimationFrame(resolve))
