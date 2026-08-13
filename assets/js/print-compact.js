@@ -8,6 +8,7 @@
 
   window.__printCompactReady = false;
 
+  const PAGE_WIDTH_MM = 134.4;
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   async function waitForSourceLayout() {
@@ -82,7 +83,7 @@
     const viewport = createPageViewport("compact-content-page");
     const flow = createSectionFlow(section);
 
-    flow.style.transform = `translateX(-${pageIndex * 134.65}mm)`;
+    flow.style.transform = `translateX(-${pageIndex * PAGE_WIDTH_MM}mm)`;
     viewport.append(flow);
     return viewport;
   }
@@ -91,10 +92,9 @@
     return createPageViewport("compact-blank-page");
   }
 
-  function createSheet(rightPage, leftPage, isLast) {
+  function createSheet(rightPage, leftPage) {
     const sheet = document.createElement("section");
     sheet.className = "compact-sheet";
-    if (isLast) sheet.classList.add("compact-sheet-last");
 
     const right = document.createElement("div");
     right.className = "compact-sheet-half compact-sheet-right";
@@ -153,22 +153,12 @@
       compactRoot.append(
         createSheet(
           logicalPages[index],
-          logicalPages[index + 1] || createBlankPage(),
-          index + 2 >= logicalPages.length
+          logicalPages[index + 1] || createBlankPage()
         )
       );
     }
 
     document.body.append(compactRoot);
-
-    /*
-      print.html בודק שבמצב החסכוני קיים ילד .print-section ישיר.
-      הסמן הנסתר משמש רק כאות מוכנות; בפלט עצמו #print-page מוסתר לגמרי.
-    */
-    const readySentinel = document.createElement("div");
-    readySentinel.className = "print-section compact-ready-sentinel";
-    readySentinel.hidden = true;
-    printPage.append(readySentinel);
 
     await new Promise((resolve) =>
       requestAnimationFrame(() => requestAnimationFrame(resolve))
