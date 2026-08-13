@@ -166,6 +166,139 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     background: #fff;
   }
 
+  /*
+    שער חסכוני עצמאי. אין כאן clone של כל דף השער האנכי.
+    אזור ה-hero המקורי מוקטן בנפרד, ומתחתיו נבנה תוכן עניינים חדש.
+    לכן שום כלל של @page cover / break-after / margin מההדפסה האנכית
+    אינו יכול להשפיע על השער החסכוני.
+  */
+  html.print-compact .compact-cover-native {
+    width: 134.4mm;
+    height: 194.5mm;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #fffdf8;
+    color: #20342b;
+    direction: rtl;
+    font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  }
+
+  html.print-compact .compact-cover-native-hero {
+    position: relative;
+    width: 134.4mm;
+    height: 112.8mm;
+    overflow: hidden;
+    flex: 0 0 112.8mm;
+    background: #eef4ef;
+  }
+
+  html.print-compact .compact-cover-hero-source {
+    position: absolute !important;
+    top: 0 !important;
+    right: 0 !important;
+    width: 210mm !important;
+    height: 176mm !important;
+    margin: 0 !important;
+    transform: scale(.64);
+    transform-origin: top right;
+    overflow: hidden !important;
+  }
+
+  html.print-compact .compact-cover-native-contents {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 2.8mm 4.5mm 0;
+    padding: 2.6mm 3mm 3mm;
+    border: .35mm solid #d8c9ab;
+    border-radius: 3mm;
+    background: rgba(255,253,248,.99);
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+
+  html.print-compact .compact-cover-native-title {
+    margin: 0 0 2mm;
+    color: #4f6d5a;
+    text-align: center;
+    font-family: "Gveret Levin", "Noto Sans Hebrew", Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.15;
+    font-weight: 400;
+  }
+
+  html.print-compact .compact-cover-native-title::before,
+  html.print-compact .compact-cover-native-title::after {
+    content: "❧";
+    margin: 0 2mm;
+    color: #56745c;
+    font-size: .8em;
+  }
+
+  html.print-compact .compact-cover-native-index {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: .25mm solid #d8ddd8;
+    direction: rtl;
+  }
+
+  html.print-compact .compact-cover-native-item {
+    display: flex !important;
+    align-items: center;
+    gap: 1.2mm;
+    min-width: 0;
+    min-height: 8.6mm;
+    padding: 1mm 1.2mm;
+    border-bottom: .25mm solid #d8ddd8;
+    box-sizing: border-box;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  html.print-compact .compact-cover-native-item:nth-child(odd) {
+    border-left: .25mm dotted #d6cdbd;
+  }
+
+  html.print-compact .compact-cover-native-item .magazine-index-icon {
+    flex: 0 0 5.2mm;
+    width: 5.2mm;
+    height: 5.2mm;
+    padding: .2mm;
+  }
+
+  html.print-compact .compact-cover-native-item .magazine-index-text {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  html.print-compact .compact-cover-native-item .magazine-index-name {
+    overflow: hidden;
+    font-size: 6.9pt !important;
+    line-height: 1.05;
+    font-weight: 700 !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  html.print-compact .compact-cover-native-item .magazine-index-description {
+    display: block !important;
+    margin-top: .5mm;
+    overflow: hidden;
+    font-size: 5.4pt !important;
+    line-height: 1.16;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  html.print-compact .compact-cover-native-item .magazine-index-page {
+    flex: 0 0 5mm;
+    margin-right: auto;
+    font-size: 6.3pt !important;
+    line-height: 1;
+    text-align: left;
+  }
+
+  /* העמוד האחורי בלבד נשאר מוקטן מהמקור, מבודד ממצב השער. */
   html.print-compact .compact-scaled-full-page {
     position: absolute;
     top: 0;
@@ -180,48 +313,10 @@ html.print-compact .compact-measure-host .print-shorts-group h3 {
     page: compact-sheet !important;
   }
 
-  html.print-compact .compact-scaled-full-page.magazine-cover {
-    break-after: auto !important;
-    page-break-after: auto !important;
-  }
-
   html.print-compact .compact-scaled-full-page.print-back-cover {
     padding: 22mm 18mm 16mm !important;
     break-before: auto !important;
     page-break-before: auto !important;
-  }
-
-  /*
-    בשער החסכוני אנחנו לא משאירים את תוכן העניינים תלוי בזרימה
-    של השער המקורי. הוא מוצמד פיזית מיד מתחת לגובה ה-hero של 176 מ״מ.
-    כך אין מצב שבו הוא קיים ב-DOM אבל נדחק/נבלע בשטח הלבן.
-  */
-  html.print-compact .compact-cover-page .magazine-cover-contents {
-    position: absolute !important;
-    top: 173mm !important;
-    right: 8mm !important;
-    left: 8mm !important;
-    width: auto !important;
-    margin: 0 !important;
-    padding: 3mm 4mm 4mm !important;
-    z-index: 20 !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    background: rgba(255,253,248,.99) !important;
-  }
-
-  html.print-compact .compact-cover-page .magazine-cover-index {
-    display: grid !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-  }
-
-  html.print-compact .compact-cover-page .magazine-index-item {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
   }
 
   html.print-compact .compact-section-flow {
