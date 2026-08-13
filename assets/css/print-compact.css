@@ -1,0 +1,346 @@
+/*
+  הדפסה חסכונית — שני עמודים רציפים על דף A4 לרוחב.
+  הקובץ נטען תמיד, אך כל הכללים הפעילים מוגבלים במפורש ל-print-compact,
+  ולכן מצב ההדפסה הרגיל נשאר ללא שינוי.
+*/
+
+@page compact {
+  size: A4 landscape;
+  margin: 7mm;
+
+  @top-center { content: none; border: 0; }
+  @bottom-left { content: none; }
+}
+
+@media print {
+  html.print-compact,
+  html.print-compact body {
+    background: #fff;
+  }
+
+  /*
+    כל דף נייר לרוחב הוא fragment אחד ובו שתי עמודות.
+    בגלל direction:rtl העמוד הראשון נמצא מימין והשני משמאל;
+    לאחר מכן הזרימה ממשיכה לדף הנייר הבא באותו סדר.
+  */
+  html.print-compact #print-page {
+    page: compact;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    column-count: 2;
+    column-gap: 7mm;
+    column-rule: .35mm solid #d8ddd8;
+    column-fill: auto;
+  }
+
+  /* מסירים את עטיפת התוכן כדי שהשער והמדורים יהיו חלק מאותה זרימת עמודות. */
+  html.print-compact #print-content {
+    display: contents;
+  }
+
+  /* כל החלקים במצב זה משתמשים באותו דף פיזי לרוחב, לא בדפי A4 נפרדים. */
+  html.print-compact .magazine-cover,
+  html.print-compact .print-section,
+  html.print-compact .print-back-cover {
+    page: compact !important;
+  }
+
+  /* השער תופס עמוד פנימי אחד בלבד. */
+  html.print-compact .magazine-cover {
+    width: auto;
+    height: 196mm;
+    min-height: 196mm;
+    max-height: 196mm;
+    margin: 0;
+    overflow: hidden;
+    break-after: column;
+    page-break-after: auto;
+  }
+
+  html.print-compact .magazine-cover-top {
+    padding: 4mm 8mm 0;
+  }
+
+  html.print-compact .magazine-cover-badge {
+    top: 3mm;
+    left: 4mm;
+    width: 17mm;
+    height: 17mm;
+    padding: 2mm;
+    border-width: 2.5mm;
+    font-size: 5.8pt;
+  }
+
+  html.print-compact .magazine-cover-brand {
+    font-size: 7.5pt;
+  }
+
+  html.print-compact .magazine-cover-parasha {
+    margin-top: .7mm;
+    font-size: 31pt;
+  }
+
+  html.print-compact .magazine-cover-subtitle {
+    margin-bottom: -3mm;
+    font-size: 11.5pt;
+  }
+
+  html.print-compact .magazine-cover-quote {
+    margin-top: 4mm;
+    font-size: 9pt;
+  }
+
+  html.print-compact .magazine-cover-quote-ref {
+    font-size: 6pt;
+  }
+
+  html.print-compact .magazine-cover-image-wrap {
+    height: 70mm;
+    margin-top: -4mm;
+  }
+
+  html.print-compact .magazine-cover-contents {
+    margin: -1mm 4mm 7mm;
+    padding: 2.5mm 3.5mm 3mm;
+    border-radius: 3mm;
+  }
+
+  html.print-compact .magazine-cover-contents-title {
+    margin-bottom: 1.5mm;
+    font-size: 9.5pt;
+  }
+
+  html.print-compact .magazine-cover-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html.print-compact .magazine-index-item {
+    grid-template-columns: 5.5mm minmax(0, 1fr) 5.5mm;
+    min-height: 7.2mm;
+    padding: .7mm 1mm;
+    column-gap: .8mm;
+  }
+
+  html.print-compact .magazine-index-icon {
+    width: 5mm;
+    height: 5mm;
+  }
+
+  html.print-compact .magazine-index-name {
+    font-size: 6.5pt;
+  }
+
+  html.print-compact .magazine-index-description {
+    margin-top: .2mm;
+    font-size: 5.2pt;
+  }
+
+  html.print-compact .magazine-index-page {
+    font-size: 9pt;
+  }
+
+  html.print-compact .magazine-cover-footer {
+    padding: 1.7mm 3mm;
+    font-size: 7pt;
+  }
+
+  /* כל מדור חדש מתחיל בעמוד הפנימי הבא, לא בדף נייר חדש. */
+  html.print-compact #print-content > .print-section + .print-section,
+  html.print-compact .print-section + .print-section {
+    break-before: column !important;
+    page-break-before: auto !important;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  html.print-compact .print-section {
+    margin: 0 0 6mm;
+  }
+
+  html.print-compact .print-section-kicker {
+    gap: 1.5mm;
+    margin-bottom: 1mm;
+    font-size: 7.4pt;
+  }
+
+  html.print-compact .print-section-icon {
+    width: 5.5mm;
+    height: 5.5mm;
+    flex-basis: 5.5mm;
+  }
+
+  html.print-compact .print-section h2 {
+    margin-bottom: 3.5mm;
+    font-size: 12.5pt;
+  }
+
+  html.print-compact .print-post-content {
+    font-size: 8.1pt;
+    line-height: 1.55;
+  }
+
+  html.print-compact .print-post-content img {
+    max-width: 53mm !important;
+    max-height: 53mm !important;
+    margin: 3mm auto !important;
+    break-inside: avoid-column !important;
+  }
+
+  html.print-compact .print-post-content blockquote {
+    margin: 3mm 0;
+    padding: 2mm 2.5mm;
+    border-right-width: 1mm;
+    border-radius: 2mm 0 0 2mm;
+  }
+
+  html.print-compact .print-post-content th,
+  html.print-compact .print-post-content td {
+    padding: 1mm 1.4mm;
+  }
+
+  html.print-compact .print-shorts-group {
+    margin-top: 3mm;
+    break-inside: avoid-column;
+  }
+
+  html.print-compact .print-shorts-group h3 {
+    margin-bottom: 1mm;
+    font-size: 8.3pt;
+  }
+
+  /* העמוד האחורי הוא העמוד הפנימי האחרון. */
+  html.print-compact .print-back-cover {
+    width: auto;
+    min-height: 196mm;
+    height: 196mm;
+    max-height: 196mm;
+    margin: 0;
+    padding: 11mm 8mm 7mm;
+    break-before: column !important;
+    page-break-before: auto !important;
+    overflow: hidden;
+  }
+
+  html.print-compact .print-back-cover-logo {
+    width: 18mm;
+    height: 18mm;
+    margin-bottom: 1.5mm;
+  }
+
+  html.print-compact .print-back-cover-title {
+    font-size: 17pt;
+  }
+
+  html.print-compact .print-back-cover-tagline {
+    margin-top: 1mm;
+    font-size: 7.8pt;
+  }
+
+  html.print-compact .print-back-cover-divider {
+    width: 20mm;
+    margin: 5mm 0;
+  }
+
+  html.print-compact .print-back-cover-actions {
+    gap: 4mm;
+  }
+
+  html.print-compact .print-back-cover-action {
+    min-height: 57mm;
+    padding: 4.5mm 3.5mm 4mm;
+    border-radius: 3mm;
+  }
+
+  html.print-compact .print-back-cover-action-icon {
+    width: 8mm;
+    height: 8mm;
+    margin-bottom: 1.5mm;
+    font-size: 11pt;
+  }
+
+  html.print-compact .print-back-cover-action h2 {
+    font-size: 8.4pt;
+  }
+
+  html.print-compact .print-back-cover-action p,
+  html.print-compact .print-back-cover-highlight {
+    margin-top: 1.5mm;
+    font-size: 6.2pt;
+  }
+
+  html.print-compact .print-back-cover-qr {
+    width: 25mm;
+    height: 25mm;
+    margin-top: 2.5mm;
+    padding: 1mm;
+  }
+
+  html.print-compact .print-back-cover-contact {
+    margin-top: 6mm;
+    padding-top: 4mm;
+    gap: 1.6mm;
+  }
+
+  html.print-compact .print-back-cover-contact-row {
+    gap: 2mm;
+    font-size: 7pt;
+  }
+
+  html.print-compact .print-back-cover-footer {
+    padding-top: 5mm;
+    font-size: 6.3pt;
+  }
+
+  /*
+    אותו גודל עמוד פנימי גם למודד של תוכן העניינים,
+    כדי שמספרי העמודים יתאימו למצב החסכוני ולא למצב A4 הרגיל.
+  */
+  html.print-compact #print-page-measurer {
+    width: 137mm;
+    height: 196mm;
+    column-width: 137mm;
+    column-gap: 0;
+    font-size: 8.1pt;
+    line-height: 1.55;
+  }
+
+  html.print-compact #print-page-measurer .print-section-kicker {
+    gap: 1.5mm;
+    margin-bottom: 1mm;
+    font-size: 7.4pt;
+  }
+
+  html.print-compact #print-page-measurer .print-section-icon {
+    width: 5.5mm;
+    height: 5.5mm;
+    flex-basis: 5.5mm;
+  }
+
+  html.print-compact #print-page-measurer .print-measure-section > h2 {
+    margin-bottom: 3.5mm;
+    font-size: 12.5pt;
+  }
+
+  html.print-compact #print-page-measurer .print-post-content {
+    font-size: 8.1pt;
+    line-height: 1.55;
+  }
+
+  html.print-compact #print-page-measurer .print-post-content img {
+    max-width: 53mm !important;
+    max-height: 53mm !important;
+    margin: 3mm auto !important;
+  }
+
+  html.print-compact #print-page-measurer .print-post-content blockquote {
+    margin: 3mm 0;
+    padding: 2mm 2.5mm;
+  }
+
+  html.print-compact #print-page-measurer .print-post-content th,
+  html.print-compact #print-page-measurer .print-post-content td {
+    padding: 1mm 1.4mm;
+  }
+}
