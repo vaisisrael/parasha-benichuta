@@ -8,7 +8,14 @@ import unicodedata
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import quote
 
+
+SITE_URL = "https://www.parasha-week.co.il"
+HOME_DESCRIPTION = (
+    "פרשת השבוע בניחותא – להכיר את הפרשה, לגלות רעיונות מפתיעים "
+    "וליהנות מסיפורים, משחקים ותכנים לכל המשפחה."
+)
 
 SECTION_LABELS = [
     "🔖תקציר", "🔖אסיף", "🔖וורט", "🔖עברית", "🔖סיפור", "🔖יצירה",
@@ -499,6 +506,20 @@ def rel_prefix(
     return "../" * depth
 
 
+def canonical_url(
+    output_path: str,
+) -> str:
+    normalized = output_path.replace("\\", "/")
+
+    if normalized == "index.html":
+        return f"{SITE_URL}/"
+
+    if normalized.endswith("/index.html"):
+        normalized = normalized[:-len("index.html")]
+
+    return f"{SITE_URL}/{quote(normalized, safe='/')}"
+
+
 def nav_html(
     prefix: str,
     parashot: dict[
@@ -644,6 +665,11 @@ def layout(
         quote=True,
     )
 
+    canonical = html.escape(
+        canonical_url(output_path),
+        quote=True,
+    )
+
     robots_tag = (
         '<meta name="robots" content="index, follow">'
         if output_path == "index.html"
@@ -679,6 +705,11 @@ def layout(
   <meta
     name="description"
     content="{desc}"
+  >
+
+  <link
+    rel="canonical"
+    href="{canonical}"
   >
 
   {robots_tag}
@@ -1298,6 +1329,7 @@ def build(
             home_body,
             "index.html",
             parashot,
+            HOME_DESCRIPTION,
         ),
     )
 
@@ -1548,7 +1580,8 @@ def main() -> int:
         return 1
 
     print(
-        "\nSite build completed successfully."
+        "\
+Site build completed successfully."
     )
 
     print(
