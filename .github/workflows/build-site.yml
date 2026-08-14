@@ -47,6 +47,8 @@ jobs:
             404.html \
             CNAME \
             site_config.json \
+            manifest.webmanifest \
+            service-worker.js \
             assets \
             about \
             games \
