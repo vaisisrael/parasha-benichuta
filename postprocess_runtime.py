@@ -4,6 +4,17 @@ VERSION = "20260812-2"
 PRINT_ASSET_VERSION = "17"
 ROOT = Path(__file__).resolve().parent
 
+PWA_HEAD = '''
+  <meta name="theme-color" content="#4f6d5a">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/assets/images/branding/favicon.png">
+  <link rel="stylesheet" href="/assets/css/pwa-install.css">
+'''
+
+PWA_SCRIPT = '''
+  <script src="/assets/js/pwa-install.js"></script>
+'''
+
 TRACKING_SCRIPT = r'''
 <script>
 (() => {
@@ -103,9 +114,32 @@ def version_print_assets(text: str) -> str:
     return text
 
 
+def add_pwa_assets(text: str) -> str:
+    updated = text
+
+    if 'rel="manifest" href="/manifest.webmanifest"' not in updated:
+        updated = updated.replace(
+            "</head>",
+            PWA_HEAD + "\n</head>",
+            1,
+        )
+
+    if 'src="/assets/js/pwa-install.js"' not in updated:
+        updated = updated.replace(
+            "</body>",
+            PWA_SCRIPT + "\n</body>",
+            1,
+        )
+
+    return updated
+
+
 def process_html(path: Path) -> None:
     text = path.read_text(encoding="utf-8")
     updated = version_assets(text)
+
+    if path.name != "print.html":
+        updated = add_pwa_assets(updated)
 
     if path.name == "print.html" and path.parent == ROOT:
         updated = version_print_assets(updated)
