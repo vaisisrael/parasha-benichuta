@@ -1,6 +1,7 @@
 from pathlib import Path
+import re
 
-VERSION = "20260812-2"
+VERSION = "20260814-1"
 PRINT_ASSET_VERSION = "17"
 ROOT = Path(__file__).resolve().parent
 
@@ -14,6 +15,25 @@ PWA_HEAD = '''
 PWA_SCRIPT = '''
   <script src="/assets/js/pwa-install.js"></script>
 '''
+
+ACCESSIBILITY_HEAD = '''
+  <link rel="stylesheet" href="/assets/css/accessibility.css">
+'''
+
+ACCESSIBILITY_SCRIPT = '''
+  <script src="/assets/js/accessibility.js"></script>
+'''
+
+SKIP_LINK = '''
+<a class="skip-link" href="#main-content">דלגו לתוכן הראשי</a>
+'''
+
+FOOTER_HTML = '''<footer class="site-footer">
+  © פרשת השבוע בניחותא ·
+  <a href="/privacy/">מדיניות פרטיות</a> ·
+  <a href="/accessibility/">הצהרת נגישות</a> ·
+  <a href="/about/">יצירת קשר</a>
+</footer>'''
 
 TRACKING_SCRIPT = r'''
 <script>
@@ -134,12 +154,68 @@ def add_pwa_assets(text: str) -> str:
     return updated
 
 
+def add_accessibility(text: str) -> str:
+    updated = text
+
+    if 'href="/assets/css/accessibility.css"' not in updated:
+        updated = updated.replace(
+            "</head>",
+            ACCESSIBILITY_HEAD + "\n</head>",
+            1,
+        )
+
+    if 'class="skip-link"' not in updated:
+        updated = updated.replace(
+            "<body>",
+            "<body>\n" + SKIP_LINK,
+            1,
+        )
+
+    updated = re.sub(
+        r'<main\s+class="([^"]*)"',
+        r'<main id="main-content" tabindex="-1" class="\1"',
+        updated,
+        count=1,
+    )
+
+    if '<main>' in updated:
+        updated = updated.replace(
+            '<main>',
+            '<main id="main-content" tabindex="-1">',
+            1,
+        )
+
+    if 'src="/assets/js/accessibility.js"' not in updated:
+        updated = updated.replace(
+            "</body>",
+            ACCESSIBILITY_SCRIPT + "\n</body>",
+            1,
+        )
+
+    return updated
+
+
+def replace_footer(text: str) -> str:
+    if '<footer class="site-footer">' not in text:
+        return text
+
+    return re.sub(
+        r'<footer class="site-footer">.*?</footer>',
+        FOOTER_HTML,
+        text,
+        count=1,
+        flags=re.S,
+    )
+
+
 def process_html(path: Path) -> None:
     text = path.read_text(encoding="utf-8")
     updated = version_assets(text)
 
     if path.name != "print.html":
         updated = add_pwa_assets(updated)
+        updated = add_accessibility(updated)
+        updated = replace_footer(updated)
 
     if path.name == "print.html" and path.parent == ROOT:
         updated = version_print_assets(updated)
