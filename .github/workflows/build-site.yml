@@ -51,6 +51,8 @@ jobs:
             service-worker.js \
             assets \
             about \
+            accessibility \
+            privacy \
             games \
             shorts \
             p \
