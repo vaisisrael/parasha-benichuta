@@ -18,6 +18,18 @@ FIXES: dict[str, list[tuple[str, str, str]]] = {
             "medium",
             "אַף אַתֶּם, הַתְקִינוּ לָכֶם מִצְווֹת מִן הָעוֹלָם הַזֶּה לָעוֹלָם הַבָּא.",
         ),
+        ("large", "medium", "&nbsp;"),
+        ("large", "medium", "<span>אַתֶּם"),
+        (
+            "large",
+            "medium",
+            ", שֶׁמִּנִּיתִי לָכֶם שׁוֹפְטִים וְשׁוֹטְרִים, עַל אַחַת כַּמָּה וְכַמָּה שֶׁתִּשְׁמְעוּ לָהֶן.&nbsp;",
+        ),
+        (
+            "large",
+            "medium",
+            "הֱוֵי 'שֹׁפְטִים וְשֹׁטְרִים תִּתֶּן לְךָ בְּכָל שְׁעָרֶיךָ'.",
+        ),
     ],
     "posts/שופטים-מילים-שמחברות-וגם-מפרידות.html": [
         ("large", "medium", "בתנועת "),
@@ -103,7 +115,7 @@ def main() -> None:
         total += file_total
         print(f"{rel_path}: {file_total} verified size changes")
 
-    expected_total = 8
+    expected_total = 12
     if total != expected_total:
         raise RuntimeError(
             f"Expected {expected_total} Shoftim corrections, got {total}"
