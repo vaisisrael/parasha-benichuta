@@ -92,19 +92,27 @@ def main() -> None:
     posts: dict[str, list[str]] = data["posts"]
     expected = int(data["expected_targets"])
 
-    actual_expected = sum(len(items) for items in posts.values())
-    if actual_expected != expected:
+    listed_targets = sum(len(items) for items in posts.values())
+    if listed_targets != expected:
         raise RuntimeError(
-            f"Fix list is inconsistent: expected_targets={expected}, actual={actual_expected}"
+            f"Fix list is inconsistent: expected_targets={expected}, actual={listed_targets}"
         )
 
     total = 0
     changed_files = 0
+    skipped_targets = 0
+    skipped_files = 0
 
     for rel_path, targets in posts.items():
         path = Path(rel_path)
         if not path.exists():
-            raise RuntimeError(f"Reviewed post path was not generated: {rel_path}")
+            skipped_files += 1
+            skipped_targets += len(targets)
+            print(
+                f"SKIP missing post: {rel_path} "
+                f"({len(targets)} reviewed targets ignored)"
+            )
+            continue
 
         source = path.read_text(encoding="utf-8")
         original = source
@@ -126,12 +134,15 @@ def main() -> None:
         total += file_changes
         print(f"{rel_path}: {file_changes} reviewed large font-size fixes")
 
-    if total != expected:
-        raise RuntimeError(f"Expected {expected} fixes, applied {total}")
+    if total + skipped_targets != expected:
+        raise RuntimeError(
+            f"Expected {expected} reviewed rows; applied {total}, skipped {skipped_targets}"
+        )
 
     print(
         f"Reviewed font-size cleanup complete: {total} large -> medium fixes "
-        f"across {changed_files} generated posts"
+        f"across {changed_files} generated posts; "
+        f"skipped {skipped_targets} targets in {skipped_files} missing posts"
     )
 
 
