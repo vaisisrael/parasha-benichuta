@@ -32,7 +32,8 @@ FOOTER_HTML = '''<footer class="site-footer">
   © פרשת השבוע בניחותא ·
   <a href="/privacy/">מדיניות פרטיות</a> ·
   <a href="/accessibility/">הצהרת נגישות</a> ·
-  <a href="/about/">יצירת קשר</a>
+  <a href="/about/">יצירת קשר</a> ·
+  <a href="https://gmara-benichuta.co.il/he/">עוד בניחותא: גמרא למתחילים בניחותא</a>
 </footer>'''
 
 TRACKING_SCRIPT = r'''
