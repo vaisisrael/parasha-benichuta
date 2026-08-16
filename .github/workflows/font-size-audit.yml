@@ -1,0 +1,45 @@
+name: בדיקת גדלי גופן
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/font_size_audit_current.py"
+      - ".github/workflows/font-size-audit.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install audit dependency
+        run: python -m pip install beautifulsoup4
+
+      - name: Build site from current JSON
+        run: python build_site.py
+
+      - name: Build series
+        run: python import_series.py --apply
+
+      - name: Apply already approved font-size fixes
+        run: python postprocess_font_sizes.py
+
+      - name: Audit current generated posts
+        run: python tools/font_size_audit_current.py
+
+      - name: Upload audit CSV
+        uses: actions/upload-artifact@v4
+        with:
+          name: font-size-audit-current
+          path: font-size-audit-current.csv
+          if-no-files-found: error
