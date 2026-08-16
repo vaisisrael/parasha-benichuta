@@ -29,7 +29,7 @@ jobs:
       - name: Build series
         run: python import_series.py --apply
 
-      - name: Normalize Shoftim font sizes
+      - name: Apply reviewed large font-size fixes
         run: python postprocess_font_sizes.py
 
       - name: Update print cards
