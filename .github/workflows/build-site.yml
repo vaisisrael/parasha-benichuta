@@ -29,6 +29,9 @@ jobs:
       - name: Build series
         run: python import_series.py --apply
 
+      - name: Exclude series from search indexing
+        run: python postprocess_series_noindex.py
+
       - name: Apply reviewed large font-size fixes
         run: python postprocess_font_sizes.py
 
