@@ -1,127 +1,138 @@
 from __future__ import annotations
 
+import html
+import json
 import re
 from pathlib import Path
 
 
-# Pilot corrections only. These are intentionally explicit and limited to
-# already-reviewed accidental Blogger font-size changes in Parashat Shoftim.
-FIXES: dict[str, list[tuple[str, str, str]]] = {
-    "posts/שופטים-חוק-מלכי-ישראל.html": [
-        ("large", "medium", "[וכאן, סטה לרגע הפסוק מעצם הציווי,"),
-        ("large", "medium", "וְנִבֵּא באופן עגום את העתיד להיות."),
-    ],
-    "posts/שופטים-מה-אפשר-ללמוד-מהנמלה.html": [
-        ("15px", "medium", "'"),
-        (
-            "large",
-            "medium",
-            "אַף אַתֶּם, הַתְקִינוּ לָכֶם מִצְווֹת מִן הָעוֹלָם הַזֶּה לָעוֹלָם הַבָּא.",
-        ),
-        ("large", "medium", "&nbsp;"),
-        ("large", "medium", "<span>אַתֶּם"),
-        (
-            "large",
-            "medium",
-            ", שֶׁמִּנִּיתִי לָכֶם שׁוֹפְטִים וְשׁוֹטְרִים, עַל אַחַת כַּמָּה וְכַמָּה שֶׁתִּשְׁמְעוּ לָהֶן.&nbsp;",
-        ),
-        (
-            "large",
-            "medium",
-            "הֱוֵי 'שֹׁפְטִים וְשֹׁטְרִים תִּתֶּן לְךָ בְּכָל שְׁעָרֶיךָ'.",
-        ),
-    ],
-    "posts/שופטים-מילים-שמחברות-וגם-מפרידות.html": [
-        ("large", "medium", "בתנועת "),
-        ("large", "medium", "רַעֲפֵי הגגות"),
-        (
-            "large",
-            "medium",
-            "כפי הנראה, מקור המילה הוא בשפה הערבית והיא מבטאת ידיעה ואבחנה.",
-        ),
-    ],
+FIXES_FILE = Path("tools/font_size_large_fixes.json")
+TAG_RE = re.compile(r"<\s*(/?)\s*([A-Za-z][\w:-]*)([^>]*)>", re.DOTALL)
+FONT_LARGE_RE = re.compile(r"(font-size\s*:\s*)large\b", re.IGNORECASE)
+STRIP_TAG_RE = re.compile(r"<[^>]+>")
+SPACE_RE = re.compile(r"\s+")
+VOID_TAGS = {
+    "area", "base", "br", "col", "embed", "hr", "img", "input", "link",
+    "meta", "param", "source", "track", "wbr",
 }
 
-# Match a single opening tag whose own style contains the requested font-size,
-# and whose text begins with the reviewed marker. This deliberately avoids
-# parsing/re-writing the surrounding HTML, so nested Blogger spans remain intact.
-def replace_size_before_marker(
-    source: str,
-    old_size: str,
-    new_size: str,
-    marker: str,
-) -> tuple[str, int]:
-    pattern = re.compile(
-        r'(<(?:span|b)\b[^>]*\bstyle="[^">]*?font-size\s*:\s*)'
-        + re.escape(old_size)
-        + r'([^">]*"[^>]*>\s*)'
-        + re.escape(marker),
-        re.IGNORECASE,
-    )
 
-    def repl(match: re.Match[str]) -> str:
-        return match.group(1) + new_size + match.group(2) + marker
-
-    return pattern.subn(repl, source, count=1)
+def plain_text(value: str) -> str:
+    value = STRIP_TAG_RE.sub(" ", value)
+    value = html.unescape(value).replace("\xa0", " ")
+    return SPACE_RE.sub(" ", value).strip()
 
 
-def normalize_special_space(source: str) -> tuple[str, int]:
-    old = "font-family: Rubik; font-size: 20pt; white-space-collapse: preserve;"
-    new = "font-family: Rubik; font-size: medium; white-space-collapse: preserve;"
-    count = source.count(old)
-    return source.replace(old, new), count
+def matching_close(source: str, opening: re.Match[str]) -> tuple[int, int] | None:
+    tag_name = opening.group(2).lower()
+    if tag_name in VOID_TAGS or opening.group(0).rstrip().endswith("/>"):
+        return None
+
+    depth = 1
+    for token in TAG_RE.finditer(source, opening.end()):
+        if token.group(2).lower() != tag_name:
+            continue
+
+        is_closing = bool(token.group(1))
+        is_self_closing = token.group(0).rstrip().endswith("/>") or tag_name in VOID_TAGS
+
+        if is_closing:
+            depth -= 1
+            if depth == 0:
+                return token.start(), token.end()
+        elif not is_self_closing:
+            depth += 1
+
+    return None
+
+
+def target_matches(candidate: str, target: str) -> bool:
+    candidate = plain_text(candidate)
+    target = plain_text(target)
+    # The audit CSV stores at most 220 characters of the suspect text.
+    if len(target) >= 220:
+        return candidate.startswith(target)
+    return candidate == target
+
+
+def replace_one_reviewed_large(source: str, target: str) -> tuple[str, int]:
+    candidates: list[tuple[int, int, int]] = []
+
+    for opening in TAG_RE.finditer(source):
+        if opening.group(1):
+            continue
+        if not FONT_LARGE_RE.search(opening.group(0)):
+            continue
+
+        close = matching_close(source, opening)
+        if close is None:
+            continue
+
+        close_start, close_end = close
+        body = source[opening.end():close_start]
+        if target_matches(body, target):
+            # Prefer the smallest matching element. Blogger often nests spans;
+            # changing the innermost explicit large is the safest visible fix.
+            candidates.append((close_end - opening.start(), opening.start(), opening.end()))
+
+    if not candidates:
+        return source, 0
+
+    _, start, end = min(candidates)
+    opening_html = source[start:end]
+    new_opening, count = FONT_LARGE_RE.subn(r"\1medium", opening_html, count=1)
+    if count != 1:
+        return source, 0
+
+    return source[:start] + new_opening + source[end:], 1
 
 
 def main() -> None:
-    total = 0
-    print("Shoftim font-size pilot: starting")
+    data = json.loads(FIXES_FILE.read_text(encoding="utf-8"))
+    posts: dict[str, list[str]] = data["posts"]
+    expected = int(data["expected_targets"])
 
-    for rel_path, fixes in FIXES.items():
+    actual_expected = sum(len(items) for items in posts.values())
+    if actual_expected != expected:
+        raise RuntimeError(
+            f"Fix list is inconsistent: expected_targets={expected}, actual={actual_expected}"
+        )
+
+    total = 0
+    changed_files = 0
+
+    for rel_path, targets in posts.items():
         path = Path(rel_path)
         if not path.exists():
-            raise RuntimeError(f"Missing generated post: {rel_path}")
+            raise RuntimeError(f"Reviewed post path was not generated: {rel_path}")
 
         source = path.read_text(encoding="utf-8")
         original = source
-        file_total = 0
+        file_changes = 0
 
-        for old_size, new_size, marker in fixes:
-            source, count = replace_size_before_marker(
-                source,
-                old_size,
-                new_size,
-                marker,
-            )
+        for target in targets:
+            source, count = replace_one_reviewed_large(source, target)
             if count != 1:
                 raise RuntimeError(
-                    "Expected exactly one font-size correction, "
-                    f"found {count}: {rel_path} | {old_size} -> {new_size} | {marker[:80]}"
+                    "Reviewed large font-size target was not found exactly as expected: "
+                    f"{rel_path} | {target[:120]}"
                 )
-            file_total += count
+            file_changes += count
 
-        if rel_path.endswith("שופטים-מילים-שמחברות-וגם-מפרידות.html"):
-            source, count = normalize_special_space(source)
-            if count != 1:
-                raise RuntimeError(
-                    "Expected exactly one 20pt stray-space correction, "
-                    f"found {count}: {rel_path}"
-                )
-            file_total += count
+        if source != original:
+            path.write_text(source, encoding="utf-8")
+            changed_files += 1
 
-        if source == original:
-            raise RuntimeError(f"No changes produced for {rel_path}")
+        total += file_changes
+        print(f"{rel_path}: {file_changes} reviewed large font-size fixes")
 
-        path.write_text(source, encoding="utf-8")
-        total += file_total
-        print(f"{rel_path}: {file_total} verified size changes")
+    if total != expected:
+        raise RuntimeError(f"Expected {expected} fixes, applied {total}")
 
-    expected_total = 12
-    if total != expected_total:
-        raise RuntimeError(
-            f"Expected {expected_total} Shoftim corrections, got {total}"
-        )
-
-    print(f"Shoftim font-size pilot: {total} verified total changes")
+    print(
+        f"Reviewed font-size cleanup complete: {total} large -> medium fixes "
+        f"across {changed_files} generated posts"
+    )
 
 
 if __name__ == "__main__":
