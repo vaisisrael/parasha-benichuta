@@ -89,17 +89,16 @@
       "image": "assets/images/print-covers/shoftim.png"
     },
     "כי תצא": {
-  "subtitle": "איך בונים מחנה שיש בו קדושה?",
-  "quote": "וְהָיָה מַחֲנֶיךָ קָדוֹשׁ",
-  "quote_ref": "דברים כג, טו",
-  "image": "assets/images/print-covers/ki-teze.png"
-}
-  },
-      "כי תבוא": {
-  "subtitle": "לקבל את הטוב ולא לשכוח להודות",
-  "quote": "וְלָקַחְתָּ מֵרֵאשִׁית כָּל פְּרִי הָאֲדָמָה... וְשַׂמְתָּ בַטֶּנֶא"",
-  "quote_ref": "דברים כו, ב",
-  "image": "assets/images/print-covers/ki-teze.png"
-}
-
+      "subtitle": "איך בונים מחנה שיש בו קדושה?",
+      "quote": "וְהָיָה מַחֲנֶיךָ קָדוֹשׁ",
+      "quote_ref": "דברים כג, טו",
+      "image": "assets/images/print-covers/ki-teze.png"
+    },
+    "כי תבוא": {
+      "subtitle": "לקבל את הטוב ולא לשכוח להודות",
+      "quote": "וְלָקַחְתָּ מֵרֵאשִׁית כָּל פְּרִי הָאֲדָמָה... וְשַׂמְתָּ בַטֶּנֶא",
+      "quote_ref": "דברים כו, ב",
+      "image": "assets/images/print-covers/ki-tavo.png"
+    }
+  }
 }
