@@ -1,0 +1,162 @@
+/* תיקוני עימוד לתוכן העלון */
+
+@media print {
+  /* כל פוסט מתחיל בעמוד חדש. הראשון ממילא מגיע אחרי השער. */
+  #print-content > .print-section + .print-section {
+    break-before: page;
+    page-break-before: always;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /*
+    כלל אחיד לכל תמונות התוכן:
+    שומרים את הרוחב המקורי שהוגדר לתמונה בפוסט,
+    ורק מגבילים אותו לתקרה של 75 מ״מ.
+    חשוב: איננו כופים width:auto, משום שכפייה כזו מוחקת בפועל
+    את רוחב התצוגה המקורי של התמונה ועלולה דווקא להגדיל אותה.
+  */
+  .print-post-content img {
+    display: block !important;
+    height: auto !important;
+    max-width: 75mm !important;
+    max-height: 75mm !important;
+    margin: 5mm auto !important;
+    object-fit: contain !important;
+    break-inside: avoid-page !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* תשבץ מדרג־אות הוא יחידה אחת ואסור לפצל אותו בין עמודים. */
+  .print-ladder-crossword {
+    break-inside: avoid-page !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-ladder-crossword table,
+  .print-ladder-crossword ul,
+  .print-ladder-crossword ol,
+  .print-ladder-crossword pre,
+  .print-ladder-crossword img {
+    break-inside: avoid-page !important;
+    page-break-inside: avoid !important;
+  }
+}
+
+/*
+  מודד נסתר למספור תוכן העניינים.
+  הוא מדמה את שטח התוכן האמיתי של עמוד A4:
+  180 מ״מ רוחב × 249 מ״מ גובה.
+  התוכן זורם לעמודות, וכל עמודה שקולה לעמוד מודפס אחד.
+*/
+#print-page-measurer {
+  position: fixed;
+  top: 0;
+  left: -10000px;
+  width: 180mm;
+  height: 249mm;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+  column-width: 180mm;
+  column-gap: 0;
+  column-fill: auto;
+  background: #fff;
+  color: #222;
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  font-size: 11.5pt;
+  line-height: 1.65;
+}
+
+#print-page-measurer,
+#print-page-measurer * {
+  box-sizing: border-box;
+}
+
+#print-page-measurer .print-measure-section {
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+#print-page-measurer .print-section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 5px;
+  color: #4f6d5a;
+  font-size: 10.5pt;
+  font-weight: 700;
+  break-after: avoid-column;
+}
+
+#print-page-measurer .print-section-icon {
+  width: 8mm;
+  height: 8mm;
+  flex: 0 0 8mm;
+}
+
+#print-page-measurer .print-measure-section > h2 {
+  margin: 0 0 20px;
+  font-size: 18pt;
+  line-height: 1.25;
+  font-weight: 600;
+  break-after: avoid-column;
+}
+
+#print-page-measurer .print-post-content {
+  font-size: 11.5pt;
+  overflow-wrap: anywhere;
+}
+
+#print-page-measurer .print-post-content h1,
+#print-page-measurer .print-post-content h2,
+#print-page-measurer .print-post-content h3,
+#print-page-measurer .print-post-content h4 {
+  break-after: avoid-column;
+}
+
+#print-page-measurer .print-post-content p,
+#print-page-measurer .print-post-content li,
+#print-page-measurer .print-post-content blockquote {
+  orphans: 3;
+  widows: 3;
+}
+
+/* אותו כלל בדיוק גם במודד, כדי שמספור העמודים יתאים לפלט בפועל. */
+#print-page-measurer .print-post-content img {
+  display: block !important;
+  height: auto !important;
+  max-width: 75mm !important;
+  max-height: 75mm !important;
+  margin: 5mm auto !important;
+  object-fit: contain !important;
+  break-inside: avoid-column !important;
+}
+
+#print-page-measurer .print-post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  break-inside: avoid-column !important;
+}
+
+#print-page-measurer .print-post-content th,
+#print-page-measurer .print-post-content td {
+  padding: 6px 8px;
+  border: 1px solid #bbb;
+}
+
+#print-page-measurer .print-post-content blockquote {
+  margin: 18px 0;
+  padding: 12px 16px;
+  border-right: 4px solid #4f6d5a;
+  border-radius: 8px 0 0 8px;
+  background: #f3f7f3;
+}
+
+#print-page-measurer .print-post-content pre,
+#print-page-measurer .print-post-content figure,
+#print-page-measurer .print-ladder-crossword {
+  break-inside: avoid-column !important;
+}
