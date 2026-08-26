@@ -123,6 +123,12 @@
       "quote": "אַשְׁרֶיךָ יִשְׂרָאֵל מִי כָמוֹךָ, עַם נוֹשַׁע בַּה'",
       "quote_ref": "דברים לג, כט",
       "image": "assets/images/print-covers/vezot-haberacha.png"
+    },
+    "בראשית": {
+      "subtitle": "איך מאירים עולם שלם?",
+      "quote": "וַיֹּאמֶר אֱלֹהִים יְהִי אוֹר, וַיְהִי אוֹר",
+      "quote_ref": "בראשית א, ג",
+      "image": "assets/images/print-covers/bereshit-light.png"
     }
   }
 }
