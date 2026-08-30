@@ -1,0 +1,185 @@
+
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>משחקי הפרשה | פרשת השבוע בניחותא</title>
+  <meta name="description" content="משחקים אינטראקטיביים לפרשת השבוע">
+  <style>
+    :root {
+      --bg: #f7f3ea;
+      --surface: #ffffff;
+      --text: #263238;
+      --muted: #607d8b;
+      --accent: #4f7f87;
+      --border: rgba(38, 50, 56, .12);
+      --shadow: 0 12px 32px rgba(38, 50, 56, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    .site-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .site-header__inner,
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    .site-header__inner {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--text);
+      text-decoration: none;
+      font-size: clamp(1.1rem, 3vw, 1.45rem);
+      font-weight: 800;
+    }
+
+    .back-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    main {
+      padding-block: 36px 64px;
+    }
+
+    .hero {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      line-height: 1.15;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .games-shell {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: clamp(12px, 3vw, 24px);
+    }
+
+    .notice {
+      padding: 18px;
+      border: 1px dashed var(--border);
+      border-radius: 14px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .parasha-tag-source {
+      display: none !important;
+    }
+  </style>
+
+  <meta name="theme-color" content="#4f6d5a">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/assets/images/branding/favicon.png">
+  <link rel="stylesheet" href="/assets/css/pwa-install.css">
+
+
+  <link rel="stylesheet" href="/assets/css/accessibility.css">
+
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">דלגו לתוכן הראשי</a>
+
+
+  <main id="main-content" tabindex="-1">
+    <section class="hero">
+      <h1 id="page-title">משחקי הפרשה</h1>
+      <p class="subtitle">בחרו משחק והתחילו לשחק</p>
+    </section>
+
+    <section class="games-shell">
+      <div id="missing-parasha" class="notice" hidden>
+        לא נבחרה פרשה. יש לפתוח את הדף באמצעות קישור של פרשה.
+      </div>
+
+      <!-- הקישור הנסתר מאפשר למנגנון המשחקים הקיים לזהות את תווית הפרשה -->
+      <a id="parasha-tag-source"
+         class="parasha-tag-source"
+         rel="tag"
+         href="#"
+         aria-hidden="true"></a>
+
+      <div data-parasha-games></div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const params = new URLSearchParams(window.location.search);
+      const label = (params.get("label") || "").trim();
+
+      const tag = document.getElementById("parasha-tag-source");
+      const missing = document.getElementById("missing-parasha");
+      const root = document.querySelector("[data-parasha-games]");
+      const title = document.getElementById("page-title");
+
+      const validLabel = /^\d+\-\d+\s+פרשת\s+.+$/.test(label);
+
+      if (!validLabel) {
+        tag.remove();
+        root.remove();
+        missing.hidden = false;
+        return;
+      }
+
+      tag.textContent = label;
+      tag.href = "../sections/" + encodeURIComponent(label) + "/";
+
+      const parashaName = label.replace(/^\d+\-\d+\s+פרשת\s+/, "");
+      title.textContent = "משחקי פרשת " + parashaName;
+      document.title = "משחקי פרשת " + parashaName + " | פרשת השבוע בניחותא";
+
+      const loader = document.createElement("script");
+      loader.src = "https://vaisisrael.github.io/games/loader.js";
+      loader.defer = true;
+      loader.onerror = () => {
+        root.innerHTML = '<div class="notice">אירעה שגיאה בטעינת המשחקים.</div>';
+      };
+      document.head.appendChild(loader);
+    })();
+  </script>
+
+  <script src="/assets/js/pwa-install.js"></script>
+
+
+  <script src="/assets/js/accessibility.js"></script>
+
+</body>
+</html>
