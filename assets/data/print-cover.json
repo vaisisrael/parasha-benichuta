@@ -141,6 +141,12 @@
       "quote": "לֶךְ־לְךָ מֵאַרְצְךָ... אֶל־הָאָרֶץ אֲשֶׁר אַרְאֶךָּ",
       "quote_ref": "בראשית יב, א",
       "image": "assets/images/print-covers/lech-lecha-journey.png"
+    },
+    "וירא": {
+      "subtitle": "איפה מוצאים מים ברגע של צמא?",
+      "quote": "וַיִּפְקַח אֱלֹהִים אֶת עֵינֶיהָ וַתֵּרֶא בְּאֵר מָיִם",
+      "quote_ref": "בראשית כא, יט",
+      "image": "assets/images/print-covers/vayera-well.png"
     }
   }
 }
