@@ -1,0 +1,1272 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600&display=swap");
+
+:root {
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface-soft: #f1f4f1;
+  --surface-warm: #f5f0ea;
+  --surface-blue: #eef3f5;
+  --ink: #252825;
+  --muted: #6f746f;
+  --accent: #4f6d5a;
+  --accent-dark: #3f5b49;
+  --line: #dfe4df;
+  --shadow: 0 12px 30px rgba(43, 49, 44, 0.07);
+  --radius-large: 24px;
+  --radius-card: 20px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+a { color: inherit; }
+
+/* כותרת ותפריט */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+}
+
+.header-inner {
+  width: min(1160px, calc(100% - 32px));
+  min-height: 68px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand {
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.main-nav { margin-inline-start: auto; }
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-nav > ul > li { position: relative; }
+
+.main-nav a,
+.main-nav button {
+  display: block;
+  padding: 21px 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 0.94rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.main-nav li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 100;
+  min-width: 200px;
+  overflow: visible;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.main-nav li:hover > ul,
+.main-nav li:focus-within > ul,
+.main-nav li.open > ul {
+  display: flex;
+}
+
+.main-nav li ul a,
+.main-nav li ul button {
+  width: 100%;
+  padding: 11px 15px;
+  text-align: right;
+}
+
+.main-nav li ul a:hover,
+.main-nav li ul button:hover {
+  background: var(--surface-soft);
+}
+
+.main-nav li ul .has-sub { position: relative; }
+
+.main-nav li ul .has-sub > ul {
+  top: -1px;
+  right: 100%;
+  z-index: 110;
+  min-width: 190px;
+}
+
+.menu-toggle {
+  display: none;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 1.4rem;
+}
+
+/* מבנה */
+.site-main {
+  width: min(1080px, calc(100% - 32px));
+  margin: auto;
+  padding: 20px 0 70px;
+}
+
+.hero {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 2px;
+  padding: 8px 2px 18px;
+  background: none;
+  border: 0;
+}
+
+.hero.hero-compact { padding-block: 8px 18px; }
+
+.hero .eyebrow {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.archive-header {
+  margin-bottom: 24px;
+  padding: 30px 32px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+}
+
+.archive-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cards-grid.organized-regions { display: block; }
+
+/* אזורים */
+.content-region {
+  margin-bottom: 28px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+}
+
+.content-region-knowing { background: var(--surface-soft); }
+.content-region-stories { background: var(--surface-warm); }
+.content-region-family { background: var(--surface-blue); }
+
+.content-region-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 16px;
+}
+
+.content-region-title {
+  flex: 0 0 auto;
+  margin: 0;
+  color: var(--accent);
+  font-size: 1.55rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* טאבים */
+.region-tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  padding: 2px 0 6px;
+  overflow: visible;
+}
+
+.region-tab {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.64);
+  color: #59615b;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.region-tab:hover {
+  background: #fff;
+  border-color: var(--line);
+}
+
+.region-tab.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 5px 14px rgba(79, 109, 90, 0.18);
+}
+
+/* כרטיס */
+.region-panel { min-width: 0; }
+.region-panel .card { display: none; }
+
+.region-panel .card.is-active {
+  display: grid;
+}
+
+.region-panel .card {
+  grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.05fr);
+  align-items: start;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid rgba(79, 109, 90, 0.12);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow);
+}
+
+.region-panel .card-media {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+}
+
+.region-panel .card-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.region-panel .card-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at center, #fff, #e8ece8);
+  font-size: 5rem;
+}
+
+.region-panel .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
+  padding: 24px 30px 26px;
+  background: var(--surface);
+}
+
+.eyebrow {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.region-panel .card h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 2.8vw, 2.15rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.region-panel .card h2 a { text-decoration: none; }
+.region-panel .card h2 a:hover { color: var(--accent-dark); }
+
+.region-panel .card p {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.read-link,
+.inline-open-button,
+.inline-back-button {
+  align-self: flex-start;
+  margin-top: 17px;
+  padding: 0 0 2px;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.read-link:hover,
+.inline-open-button:hover,
+.inline-back-button:hover {
+  color: var(--accent-dark);
+  opacity: 0.76;
+}
+
+.card-action-loading {
+  margin-top: 17px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* הטמעה */
+.region-panel .card.inline-embed-card {
+  display: block;
+  grid-template-columns: none;
+}
+
+.inline-embed-shell {
+  width: 100%;
+  background: #fff;
+}
+
+.inline-embed-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.inline-embed-title {
+  color: var(--accent-dark);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.inline-back-button {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.inline-embed-frame {
+  display: block;
+  width: 100%;
+  min-height: 680px;
+  border: 0;
+  background: #fff;
+}
+
+.inline-video-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+}
+
+.inline-video-wrap iframe,
+.inline-video-wrap video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.inline-video-wrap video { object-fit: contain; }
+
+/* ארכיון */
+.cards-grid:not(.organized-regions) .card {
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.cards-grid:not(.organized-regions) .card-media {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #e8ece8;
+}
+
+.cards-grid:not(.organized-regions) .card-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.cards-grid:not(.organized-regions) .card-body { padding: 18px; }
+
+/* פוסט */
+.post-page {
+  max-width: 980px;
+  margin: auto;
+  padding: clamp(24px, 5vw, 58px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.post-header {
+  margin-bottom: 30px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.post-header h1 {
+  margin: 0.2em 0;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.post-meta a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.post-date,
+.post-header time {
+  display: none !important;
+}
+
+.post-content {
+  overflow-wrap: anywhere;
+  font-size: 1.08rem;
+}
+
+.post-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-main-image-wrap {
+  display: block !important;
+  width: 100% !important;
+  max-width: 880px !important;
+  margin: 0 auto 32px !important;
+  padding: 0 !important;
+  float: none !important;
+  text-align: center !important;
+}
+
+.post-main-image {
+  display: block !important;
+  width: 100% !important;
+  max-width: 880px !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  float: none !important;
+  border-radius: 16px;
+  object-fit: contain !important;
+}
+
+/* תחתית */
+.site-footer {
+  margin-top: 40px;
+  padding: 28px 20px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: block;
+    margin-inline-start: auto;
+  }
+
+  .main-nav {
+    display: none;
+    position: absolute;
+    top: 68px;
+    right: 0;
+    left: 0;
+    max-height: calc(100vh - 68px);
+    overflow: auto;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .main-nav.open { display: block; }
+  .main-nav ul { display: block; }
+
+  .main-nav a,
+  .main-nav button {
+    width: 100%;
+    padding: 13px 20px;
+    text-align: right;
+  }
+
+  .main-nav li ul,
+  .main-nav li ul .has-sub > ul {
+    position: static;
+    padding-right: 18px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .main-nav li:hover > ul { display: none; }
+  .main-nav li.open > ul { display: block; }
+
+  .content-region-header { display: block; }
+  .content-region-title { margin-bottom: 12px; }
+
+  .region-panel .card {
+    grid-template-columns: minmax(250px, 0.9fr) minmax(0, 1.1fr);
+  }
+
+  .inline-embed-frame { min-height: 620px; }
+}
+
+@media (max-width: 700px) {
+  body { font-size: 17px; }
+
+  .header-inner,
+  .site-main {
+    width: min(100% - 20px, 1080px);
+  }
+
+  .content-region {
+    margin-bottom: 20px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .content-region-title {
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+  }
+
+  .region-panel .card.is-active {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .region-panel .card.inline-embed-card { display: block; }
+
+  .region-panel .card-body {
+    padding: 21px 20px 24px;
+  }
+
+  .inline-embed-frame { min-height: 600px; }
+
+  .post-page {
+    padding: 22px 18px;
+    border-radius: 14px;
+  }
+
+  .post-main-image-wrap {
+    width: 100% !important;
+    max-width: none !important;
+    margin-bottom: 22px !important;
+  }
+
+  .post-main-image {
+    width: 100% !important;
+    max-width: none !important;
+    border-radius: 12px;
+  }
+}
+
+/* אזור הטאבים */
+.region-tabs-area {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+}
+
+.region-tabs-hint {
+  display: none !important;
+}
+
+.region-tabs-area.has-overflow::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* לוגו האתר בכותרת */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  display: block;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  .brand {
+    gap: 8px;
+    font-size: 1rem;
+  }
+
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    border-radius: 8px;
+  }
+}
+
+/* ===== דפי הסדרות ===== */
+
+.series-hero {
+  display: grid;
+  grid-template-columns:
+    minmax(280px, .9fr)
+    minmax(0, 1.1fr);
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow);
+}
+
+.series-hero-media {
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.series-cover-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.series-hero-copy h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+
+.series-hero-copy p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.series-count {
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.series-chapters-title {
+  margin: 0 0 18px;
+  color: var(--accent);
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.series-grid .card {
+  display: flex;
+  flex-direction: column;
+}
+
+.series-grid .card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.series-grid .read-link {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+@media (max-width: 700px) {
+  .series-hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 18px;
+  }
+
+  .series-hero-copy h1 {
+    font-size: 2.5rem;
+  }
+}
+
+/* ===== כרטיס הצטרפות לערוץ הווטסאפ ===== */
+
+.whatsapp-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  margin-top: 32px;
+  padding: 24px 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(37, 211, 102, 0.13),
+    rgba(255, 255, 255, 0.96)
+  );
+  border: 1px solid rgba(37, 211, 102, 0.35);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.whatsapp-card-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.whatsapp-card-content h2 {
+  margin: 4px 0 8px;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  line-height: 1.25;
+}
+
+.whatsapp-card-content p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.whatsapp-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: #128c4a;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.whatsapp-card-button:hover,
+.whatsapp-card-button:focus-visible {
+  background: #0f7a40;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(18, 140, 74, 0.22);
+}
+
+@media (max-width: 700px) {
+  .whatsapp-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .whatsapp-card-icon {
+    width: 54px;
+    height: 54px;
+    font-size: 1.7rem;
+  }
+
+  .whatsapp-card-button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+/* ===== תמונות פרקי המגדל בדף הסדרה ===== */
+
+.series-hamigdal .cards-grid.series-grid .card-media {
+  aspect-ratio: 4 / 5;
+  background: #f4f1ea;
+}
+
+.series-hamigdal .cards-grid.series-grid .card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* ===== בחירת הפרשה בדף הבית ===== */
+
+.parasha-home-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 2px 0 4px;
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.parasha-home-prefix {
+  color: var(--accent-dark);
+  font-weight: 500;
+}
+
+.parasha-home-choices {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.parasha-choice {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 92px;
+  min-height: 42px;
+  padding: 8px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--accent-dark);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(43, 49, 44, 0.05);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+button.parasha-choice:hover:not(.is-active) {
+  border-color: var(--accent);
+  background: var(--surface-soft);
+  transform: translateY(-1px);
+}
+
+.parasha-choice.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(79, 109, 90, 0.2);
+}
+
+.parasha-choice.is-static {
+  cursor: default;
+}
+
+.parasha-choice:focus-visible {
+  outline: 3px solid rgba(79, 109, 90, 0.22);
+  outline-offset: 2px;
+}
+
+.parasha-choice:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+/* בדף הבית הכותרת נשארת קומפקטית */
+.hero:has(.parasha-home-heading) {
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 18px;
+}
+
+@media (max-width: 700px) {
+  .parasha-home-heading {
+    gap: 9px;
+    font-size: 1.25rem;
+  }
+
+  .parasha-home-choices {
+    gap: 6px;
+  }
+
+  .parasha-choice {
+    min-width: 78px;
+    min-height: 39px;
+    padding: 7px 16px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ===== אסיף: תמונת "מבט חד" בכרטיס ===== */
+
+.region-panel .asif-mabat-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  padding: 22px 26px 20px;
+  background: var(--surface-warm);
+  text-decoration: none;
+}
+
+.region-panel .asif-mabat-media img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 245px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+}
+
+.asif-mabat-caption {
+  display: block;
+  max-width: 95%;
+  margin-top: 12px;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.cards-grid:not(.organized-regions)
+.card-media.asif-mabat-media {
+  aspect-ratio: auto;
+  padding: 16px;
+  background: var(--surface-warm);
+}
+
+.cards-grid:not(.organized-regions)
+.asif-mabat-media img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+}
+
+@media (max-width: 700px) {
+  .region-panel .asif-mabat-media {
+    padding: 20px;
+  }
+
+  .region-panel .asif-mabat-media img {
+    max-height: 260px;
+  }
+
+  .asif-mabat-caption {
+    margin-top: 10px;
+    font-size: 0.96rem;
+  }
+}
+
+/* ===== ניווט בתוך פוסט ===== */
+
+.post-back-navigation {
+  margin: 0 0 18px;
+}
+
+.post-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-size: 0.98rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.post-back-link:hover,
+.post-back-link:focus-visible {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.post-next-navigation {
+  margin-top: 38px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.post-next-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: min(100%, 520px);
+  margin-inline-start: auto;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-soft);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.post-next-link:hover,
+.post-next-link:focus-visible {
+  border-color: rgba(79, 109, 90, 0.45);
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(43, 49, 44, 0.07);
+}
+
+.post-next-kicker {
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.post-next-title {
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+@media (max-width: 700px) {
+  .post-back-navigation {
+    margin-bottom: 14px;
+  }
+
+  .post-next-navigation {
+    margin-top: 30px;
+    padding-top: 20px;
+  }
+
+  .post-next-link {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+}
+
+/* ===== מניעת הבהוב לפני ארגון כרטיסי הפרשה ===== */
+
+.site-main > .hero + .cards-grid,
+.site-main > .archive-header + .cards-grid {
+  visibility: hidden;
+  opacity: 0;
+  animation:
+    parasha-cards-failsafe-reveal
+    0s linear 5s forwards;
+}
+
+body.parasha-cards-ready
+.site-main > .hero + .cards-grid.organized-regions[data-shorts-organized="true"],
+body.parasha-cards-ready
+.site-main > .archive-header + .cards-grid.organized-regions[data-shorts-organized="true"] {
+  visibility: visible;
+  opacity: 1;
+  animation: none;
+}
+
+body.parasha-cards-ready
+.site-main > .hero + .cards-grid:not([data-shorts-organized="true"]),
+body.parasha-cards-ready
+.site-main > .archive-header + .cards-grid:not([data-shorts-organized="true"]) {
+  visibility: hidden;
+  opacity: 0;
+}
+
+@keyframes parasha-cards-failsafe-reveal {
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+
+/* ===== כרטיס הדפסת הפרשה ===== */
+
+.print-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  margin-top: 18px;
+  padding: 24px 28px;
+  background: linear-gradient(
+    135deg,
+    rgba(79, 109, 90, 0.13),
+    rgba(255, 255, 255, 0.96)
+  );
+  border: 1px solid rgba(79, 109, 90, 0.3);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+}
+
+.print-card-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.print-card-content h2 {
+  margin: 4px 0 8px;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  line-height: 1.25;
+}
+
+.print-card-content p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.print-card-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 11px 22px;
+  border-radius: 999px;
+  background: var(--accent-dark);
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.print-card-button:hover,
+.print-card-button:focus-visible {
+  background: var(--accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(79, 109, 90, 0.22);
+}
+
+@media (max-width: 700px) {
+  .print-card {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .print-card-icon {
+    width: 54px;
+    height: 54px;
+    font-size: 1.7rem;
+  }
+
+  .print-card-button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+/* ===== תמונות פרקי המגדל ===== */
+
+.cards-grid:not(.organized-regions)
+.hamigdal-chapter-card
+.card-media {
+  aspect-ratio: 4 / 5 !important;
+  background: #f4f1ea;
+}
+
+.cards-grid:not(.organized-regions)
+.hamigdal-chapter-card
+.card-media img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
