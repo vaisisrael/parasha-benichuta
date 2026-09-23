@@ -846,6 +846,16 @@
       return;
     }
 
+    const gameFrame =
+      card.querySelector("iframe.inline-embed-frame");
+
+    if (gameFrame?._gameShareMessageHandler) {
+      window.removeEventListener(
+        "message",
+        gameFrame._gameShareMessageHandler
+      );
+    }
+
     card.className = card.dataset.originalClass;
     card.innerHTML = card.dataset.originalHtml;
 
@@ -1027,6 +1037,152 @@
       card,
       "משחקי פרשת השבוע",
       iframe
+    );
+
+    const toolbar =
+      card.querySelector(".inline-embed-toolbar");
+
+    const backButton =
+      toolbar?.querySelector(".inline-back-button");
+
+    if (!toolbar || !backButton) return;
+
+    const shareButton =
+      document.createElement("button");
+
+    shareButton.type = "button";
+    shareButton.className = "inline-share-button";
+    shareButton.disabled = true;
+    shareButton.title = "פתחו משחק כדי להעתיק קישור";
+    shareButton.setAttribute(
+      "aria-label",
+      "העתקת קישור למשחק"
+    );
+
+    shareButton.innerHTML = `
+      <svg
+        viewBox="0 0 24 24"
+        width="18"
+        height="18"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <rect
+          x="9"
+          y="3"
+          width="11"
+          height="14"
+          rx="2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        ></rect>
+        <rect
+          x="4"
+          y="8"
+          width="11"
+          height="13"
+          rx="2"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+        ></rect>
+      </svg>
+    `;
+
+    toolbar.insertBefore(
+      shareButton,
+      backButton
+    );
+
+    const allowedGameIds = new Set([
+      "memory",
+      "puzzle",
+      "wordstack",
+      "classify",
+      "studio",
+      "monopol",
+      "detective",
+      "differences"
+    ]);
+
+    const activateShareForGame = (gameId) => {
+      if (!allowedGameIds.has(gameId)) return;
+
+      shareButton.dataset.gameId = gameId;
+      shareButton.disabled = false;
+      shareButton.title = "העתקת קישור למשחק";
+    };
+
+    const handleGameMessage = (event) => {
+      if (event.source !== iframe.contentWindow) {
+        return;
+      }
+
+      if (
+        event.data?.type !== "parasha-game-active"
+      ) {
+        return;
+      }
+
+      activateShareForGame(
+        String(event.data.gameId || "")
+      );
+    };
+
+    iframe._gameShareMessageHandler =
+      handleGameMessage;
+
+    window.addEventListener(
+      "message",
+      handleGameMessage
+    );
+
+    shareButton.addEventListener(
+      "click",
+      async () => {
+        const gameId =
+          shareButton.dataset.gameId || "";
+
+        if (!allowedGameIds.has(gameId)) {
+          return;
+        }
+
+        const shareUrl =
+          new URL(iframe.src);
+
+        shareUrl.searchParams.set(
+          "game",
+          gameId
+        );
+
+        const text = shareUrl.href;
+
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const input =
+            document.createElement("textarea");
+
+          input.value = text;
+          input.setAttribute("readonly", "");
+          input.style.position = "fixed";
+          input.style.opacity = "0";
+          document.body.append(input);
+          input.select();
+          document.execCommand("copy");
+          input.remove();
+        }
+
+        shareButton.classList.add("is-copied");
+        shareButton.title = "הקישור הועתק";
+
+        window.setTimeout(() => {
+          shareButton.classList.remove("is-copied");
+          shareButton.title =
+            "העתקת קישור למשחק";
+        }, 1600);
+      }
     );
   }
 
