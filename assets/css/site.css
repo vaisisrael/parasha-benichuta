@@ -410,6 +410,41 @@ a { color: inherit; }
   margin: 0;
 }
 
+.inline-share-button {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-inline-start: auto;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--accent-dark);
+  cursor: pointer;
+}
+
+.inline-share-button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.inline-share-button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.inline-share-button.is-copied {
+  border-color: var(--accent);
+  background: var(--surface-soft, #f5f8f7);
+}
+
+.inline-share-button svg {
+  display: block;
+}
+
 .inline-embed-frame {
   display: block;
   width: 100%;
