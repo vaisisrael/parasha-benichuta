@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="he" dir="rtl" class="print-preparing">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>הדפסת פרשת השבוע | פרשת השבוע בניחותא</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XB2TT31YM1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XB2TT31YM1', { send_page_view: false });
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gveret+Levin&family=Noto+Sans+Hebrew:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/print.css?v=24">
+  <link rel="stylesheet" href="assets/css/print-cover-v2.css?v=24">
+  <link rel="stylesheet" href="assets/css/print-content-fixes.css?v=24">
+  <link rel="stylesheet" href="assets/css/print-back-cover.css?v=24">
+  <link rel="stylesheet" href="assets/css/print-compact.css?v=24">
+
+  <style>
+    .print-loading-screen { position:fixed; inset:0; z-index:99999; display:grid; place-items:center; background:radial-gradient(circle at 50% 42%, #f4f8f3 0 90px, transparent 91px),#fffdf8; color:#4f6d5a; font-family:"Rubik","Noto Sans Hebrew",Arial,sans-serif; }
+    .print-loading-box { display:grid; justify-items:center; gap:17px; min-width:270px; padding:34px 38px; text-align:center; }
+    .print-loading-mark { position:relative; width:78px; height:78px; }
+    .print-loading-mark::before,.print-loading-mark::after { content:""; position:absolute; inset:0; border:5px solid #dbe7dc; border-radius:50%; }
+    .print-loading-mark::after { border-color:#4f6d5a transparent transparent transparent; animation:print-spin .95s linear infinite; }
+    .print-loading-leaf { position:absolute; inset:0; display:grid; place-items:center; font-size:30px; animation:print-pulse 1.25s ease-in-out infinite alternate; }
+    .print-loading-title { font-size:1.38rem; font-weight:700; }
+    .print-loading-text { color:#75827a; font-size:.95rem; }
+    html.print-preparing #print-page { opacity:0; pointer-events:none; }
+    #print-page { opacity:1; }
+    html.print-ready .print-loading-screen { display:none; }
+    @keyframes print-spin { to { transform:rotate(360deg); } }
+    @keyframes print-pulse { from { transform:scale(.92); opacity:.72; } to { transform:scale(1.08); opacity:1; } }
+    @media print { .print-loading-screen { display:none !important; } html.print-preparing #print-page,#print-page { opacity:1 !important; visibility:visible !important; pointer-events:auto !important; } }
+  </style>
+
+  <script>
+    (() => {
+      const url = new URL(window.location.href);
+      const parasha = url.searchParams.get("parasha");
+      const requestedMode = url.searchParams.get("mode");
+      window.__printMode = requestedMode === "compact" ? "compact" : "regular";
+      window.__printAutoRequested = url.searchParams.get("autoprint") === "1";
+      window.__printOpenedAt = performance.now();
+      window.__printMobile = Boolean(navigator.userAgentData?.mobile || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent || ""));
+      if (window.__printMode === "compact") document.documentElement.classList.add("print-compact");
+      try {
+        const referrer = document.referrer ? new URL(document.referrer) : null;
+        window.__printReturnUrl = referrer && referrer.origin === window.location.origin && !/\/print\.html(?:$|[?#])/i.test(referrer.href) ? referrer.href : `${window.location.origin}/`;
+      } catch { window.__printReturnUrl = `${window.location.origin}/`; }
+      if (parasha) document.title = `פרשת השבוע בניחותא - ${parasha}`;
+      if (window.__printAutoRequested) {
+        if (typeof gtag === "function") gtag("event","print_parasha_click",{transport_type:"beacon",print_mode:window.__printMode});
+        url.searchParams.delete("autoprint");
+        history.replaceState(null,"",url.href);
+      }
+    })();
+  </script>
+
+  <script defer src="assets/js/print-content-fixes.js?v=24"></script>
+  <script defer src="assets/js/print-cover-v2.js?v=24"></script>
+  <script defer src="assets/js/print.js?v=24"></script>
+  <script defer src="assets/js/print-back-cover.js?v=24"></script>
+  <script defer src="assets/js/print-finalize.js?v=24"></script>
+  <script defer src="assets/js/print-compact.js?v=24"></script>
+</head>
+<body>
+  <div class="print-loading-screen" id="print-loading-screen" aria-live="polite"><div class="print-loading-box"><div class="print-loading-mark" aria-hidden="true"><div class="print-loading-leaf">❧</div></div><div class="print-loading-title">מכינים את העלון לשבת</div><div class="print-loading-text">מסדרים את המדורים, העמודים והשער…</div></div></div>
+  <main class="print-page" id="print-page" aria-live="polite"><header class="print-cover"><div class="print-brand">פרשת השבוע בניחותא</div><h1 id="print-title">מכין את דף ההדפסה…</h1></header><div id="print-status" class="print-status">טוען את תוכני הפרשה…</div><div id="print-content"></div></main>
+  <script>
+    (() => {
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+      let printDialogOpened=false, returning=false, mobileRevealScheduled=false;
+      function showPreparedPage(){document.documentElement.classList.remove("print-preparing");document.documentElement.classList.add("print-ready");}
+      function revealAfterMobilePrint(){if(!window.__printMobile||!printDialogOpened||mobileRevealScheduled)return;mobileRevealScheduled=true;window.setTimeout(showPreparedPage,350);}
+      function returnToSite(){if(returning||!printDialogOpened)return;if(window.__printMobile){revealAfterMobilePrint();return;}returning=true;const target=window.__printReturnUrl||`${window.location.origin}/`;window.setTimeout(()=>window.location.replace(target),180);}
+      window.addEventListener("afterprint",returnToSite);window.addEventListener("focus",revealAfterMobilePrint);window.addEventListener("pageshow",revealAfterMobilePrint);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")revealAfterMobilePrint();});
+      async function waitForReady(){const deadline=Date.now()+32000;while(Date.now()<deadline){const compactMode=window.__printMode==="compact";const contentReady=!document.getElementById("print-status")&&(compactMode?document.querySelectorAll("#compact-print-root > .compact-sheet").length>0:document.querySelectorAll("#print-content > .print-section").length>0);const coverReady=window.__printCoverReady===true;const backCoverReady=window.__printBackCoverReady===true;const finalizeReady=window.__printFinalizeReady===true;const compactReady=!compactMode||window.__printCompactReady===true;if(contentReady&&coverReady&&backCoverReady&&finalizeReady&&compactReady){if(document.fonts?.ready){try{await document.fonts.ready;}catch{}}return true;}await sleep(80);}return false;}
+      window.addEventListener("DOMContentLoaded",async()=>{const ready=await waitForReady();const elapsed=performance.now()-(window.__printOpenedAt||0);if(elapsed<650)await sleep(650-elapsed);if(!ready||!window.__printAutoRequested){showPreparedPage();return;}await new Promise((resolve)=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));printDialogOpened=true;window.print();});
+    })();
+  </script>
+</body>
+</html>

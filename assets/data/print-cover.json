@@ -1,0 +1,194 @@
+{
+  "defaults": {
+    "brand": "פרשת השבוע בניחותא",
+    "badge": "לכל המשפחה\nלשולחן שבת",
+    "contents_title": "מה מחכה לכם בפנים",
+    "footer": "שבת שלום ומבורך",
+    "styles": {
+      "brand": {
+        "font": "Rubik",
+        "size": "19px",
+        "color": "#496c4e",
+        "weight": "700",
+        "margin_top": "0px"
+      },
+      "parasha": {
+        "font": "Rubik",
+        "size": "104px",
+        "color": "#3f692f",
+        "weight": "700",
+        "margin_top": "8px"
+      },
+      "subtitle": {
+        "font": "Gveret Levin",
+        "size": "43px",
+        "color": "#c79a42",
+        "weight": "400",
+        "margin_top": "5px",
+        "margin_bottom": "0px"
+      },
+      "quote": {
+        "font": "Rubik",
+        "size": "28px",
+        "color": "#416d45",
+        "weight": "600",
+        "margin_top": "12px"
+      },
+      "quote_ref": {
+        "font": "Rubik",
+        "size": "14px",
+        "color": "#4f5f56",
+        "weight": "400",
+        "margin_top": "2px"
+      },
+      "badge": {
+        "font": "Rubik",
+        "size": "14px",
+        "color": "#ffffff",
+        "weight": "700",
+        "top": "25px",
+        "left": "34px"
+      },
+      "contents_title": {
+        "font": "Rubik",
+        "size": "27px",
+        "color": "#4a6d50",
+        "weight": "700"
+      },
+      "section_name": {
+        "font": "Rubik",
+        "size": "14px",
+        "color": "#24372e",
+        "weight": "700"
+      },
+      "section_description": {
+        "font": "Rubik",
+        "size": "10.5px",
+        "color": "#66716b",
+        "weight": "400"
+      },
+      "page_number": {
+        "font": "Rubik",
+        "size": "22px",
+        "color": "#456b49",
+        "weight": "500"
+      },
+      "footer": {
+        "font": "Rubik",
+        "size": "17px",
+        "color": "#ffffff",
+        "weight": "700"
+      }
+    }
+  },
+  "parashot": {
+    "שופטים": {
+      "subtitle": "איך בונים חברה שיש בה צדק?",
+      "quote": "וקמת ועלית את המקום אל המקום אשר יבחר ה",
+      "quote_ref": "דברים יז, ח",
+      "image": "assets/images/print-covers/shoftim.png"
+    },
+    "כי תצא": {
+      "subtitle": "איך בונים מחנה שיש בו קדושה?",
+      "quote": "וְהָיָה מַחֲנֶיךָ קָדוֹשׁ",
+      "quote_ref": "דברים כג, טו",
+      "image": "assets/images/print-covers/ki-teze.png"
+    },
+    "כי תבוא": {
+      "subtitle": "לקבל את הטוב ולא לשכוח להודות",
+      "quote": "וְלָקַחְתָּ מֵרֵאשִׁית כָּל פְּרִי הָאֲדָמָה... וְשַׂמְתָּ בַטֶּנֶא",
+      "quote_ref": "דברים כו, ב",
+      "image": "assets/images/print-covers/ki-tavo.png"
+    },
+    "נצבים": {
+      "subtitle": "איך הופכים אנשים רבים לעם אחד?",
+      "quote": "אַתֶּם נִצָּבִים הַיּוֹם כֻּלְּכֶם",
+      "quote_ref": "דברים כט, ט",
+      "image": "assets/images/print-covers/nizavim.png"
+    },
+    "וילך": {
+      "subtitle": "איך מעבירים את הדרך לדור הבא?",
+      "quote": "חֲזַק וֶאֱמָץ כִּי אַתָּה תָּבוֹא אֶת הָעָם הַזֶּה",
+      "quote_ref": "דברים לא, ז",
+      "image": "assets/images/print-covers/vayelech.png"
+    },
+    "האזינו": {
+      "subtitle": "איך מילים יכולות להצמיח חיים?",
+      "quote": "יַעֲרֹף כַּמָּטָר לִקְחִי, תִּזַּל כַּטַּל אִמְרָתִי",
+      "quote_ref": "דברים לב, ב",
+      "image": "assets/images/print-covers/haazinu-rain.png"
+    },
+    "וזאת הברכה": {
+      "subtitle": "מה הופך עם למבורך באמת?",
+      "quote": "אַשְׁרֶיךָ יִשְׂרָאֵל מִי כָמוֹךָ, עַם נוֹשַׁע בַּה'",
+      "quote_ref": "דברים לג, כט",
+      "image": "assets/images/print-covers/vezot-haberacha.png"
+    },
+    "בראשית": {
+      "subtitle": "איך מאירים עולם שלם?",
+      "quote": "וַיֹּאמֶר אֱלֹהִים יְהִי אוֹר, וַיְהִי אוֹר",
+      "quote_ref": "בראשית א, ג",
+      "image": "assets/images/print-covers/bereshit-light.png"
+    },
+    "נח": {
+      "subtitle": "איך נשארים ישרים כשכולם הולכים אחרת?",
+      "quote": "נֹחַ אִישׁ צַדִּיק תָּמִים הָיָה בְּדֹרֹתָיו",
+      "quote_ref": "בראשית ו, ט",
+      "image": "assets/images/print-covers/noach-ark.png"
+    },
+    "לך לך": {
+      "subtitle": "איך מתחילים מחדש כשעוד לא יודעים לאן?",
+      "quote": "לֶךְ־לְךָ מֵאַרְצְךָ... אֶל־הָאָרֶץ אֲשֶׁר אַרְאֶךָּ",
+      "quote_ref": "בראשית יב, א",
+      "image": "assets/images/print-covers/lech-lecha-journey.png"
+    },
+    "וירא": {
+      "subtitle": "איפה מוצאים מים ברגע של צמא?",
+      "quote": "וַיִּפְקַח אֱלֹהִים אֶת עֵינֶיהָ וַתֵּרֶא בְּאֵר מָיִם",
+      "quote_ref": "בראשית כא, יט",
+      "image": "assets/images/print-covers/vayera-well.png"
+    },
+    "חיי שרה": {
+      "subtitle": "איך יודעים שהגיע הזמן לומר: אלך?",
+      "quote": "הֲתֵלְכִי עִם הָאִישׁ הַזֶּה וַתֹּאמֶר אֵלֵךְ",
+      "quote_ref": "בראשית כד, נח",
+      "image": "assets/images/print-covers/chayei-sarah-elech.png"
+    },
+    "תולדות": {
+      "subtitle": "איך יודעים שמצאנו סוף־סוף מקום משלנו?",
+      "quote": "כִּי־עַתָּה הִרְחִיב ה' לָנוּ",
+      "quote_ref": "בראשית כו, כב",
+      "image": "assets/images/print-covers/toldot-rechovot.png"
+    },
+    "ויצא": {
+      "subtitle": "כמה רחוק הולכים כדי לא לבייש אדם אחר?",
+      "quote": "וַיְהִי בַבֹּקֶר וְהִנֵּה הִוא לֵאָה",
+      "quote_ref": "בראשית כט, כה",
+      "image": "assets/images/print-covers/vayetze-sisters.png"
+    },
+    "וישלח": {
+      "subtitle": "מתי מאבק משנה את מי שאנחנו?",
+      "quote": "לֹא יַעֲקֹב יֵאָמֵר עוֹד שִׁמְךָ כִּי אִם יִשְׂרָאֵל",
+      "quote_ref": "בראשית לב, כט",
+      "image": "assets/images/print-covers/vayishlach-israel.png"
+    },
+    "וישב": {
+      "subtitle": "מה אפשר לראות דווקא מתחתית הבור?",
+      "quote": "וְהַבּוֹר רֵק אֵין בּוֹ מָיִם",
+      "quote_ref": "בראשית לז, כד",
+      "image": "assets/images/print-covers/vayeshev-pit.png"
+    },
+    "מקץ": {
+      "subtitle": "מה עושים כשהמבחן הישן חוזר שוב?",
+      "quote": "וַיִּמָּצֵא הַגָּבִיעַ בְּאַמְתַּחַת בִּנְיָמִן",
+      "quote_ref": "בראשית מד, יב",
+      "image": "assets/images/print-covers/miketz-goblet.png"
+    },
+    "ויגש": {
+      "subtitle": "כמה רחוק הולכים כשמישהו תלוי בך?",
+      "quote": "כִּי עַבְדְּךָ עָרַב אֶת הַנַּעַר",
+      "quote_ref": "בראשית מד, לב",
+      "image": "assets/images/print-covers/vayigash-yehuda.png"
+    }
+  }
+}
