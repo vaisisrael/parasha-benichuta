@@ -677,25 +677,37 @@ def series_page(
             else ""
         )
 
-        image = first_image(
-            chapter.content
-        )
+        media_html = ""
 
-        image_html = (
-            (
-                f'<img '
-                f'src="{html.escape(image, quote=True)}" '
-                f'alt="" '
-                f'loading="lazy">'
+        if series_name == "המגדל":
+            image = first_image(
+                chapter.content
             )
-            if image
-            else (
-                '<div '
-                'class="card-placeholder">'
-                '📖'
-                '</div>'
+
+            image_html = (
+                (
+                    f'<img '
+                    f'src="{html.escape(image, quote=True)}" '
+                    f'alt="" '
+                    f'loading="lazy">'
+                )
+                if image
+                else (
+                    '<div '
+                    'class="card-placeholder">'
+                    '📖'
+                    '</div>'
+                )
             )
-        )
+
+            media_html = f"""
+  <a
+    class="card-media"
+    href="{html.escape(f"../{chapter.filename}", quote=True)}"
+  >
+    {image_html}
+  </a>
+"""
 
         chapter_url = (
             f"../{chapter.filename}"
@@ -712,13 +724,7 @@ def series_page(
             f"""
 <article class="card series-chapter-card{card_extra_class}">
 
-  <a
-    class="card-media"
-    href="{html.escape(chapter_url, quote=True)}"
-  >
-    {image_html}
-  </a>
-
+{media_html}
   <div class="card-body">
 
     <div class="eyebrow">
@@ -749,6 +755,29 @@ def series_page(
         )
 
     body = f"""
+<style id="series-page-responsive-fix">
+  @media (max-width: 920px) {{
+    .cards-grid.series-grid {{
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }}
+  }}
+
+  @media (max-width: 640px) {{
+    .cards-grid.series-grid {{
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }}
+
+    .series-chapter-card .card-body {{
+      padding: 20px 18px 22px;
+    }}
+
+    .series-chapters-title {{
+      font-size: 1.45rem;
+    }}
+  }}
+</style>
+
 <section class="series-hero">
 
   <div class="series-hero-media">
