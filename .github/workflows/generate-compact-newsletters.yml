@@ -34,15 +34,13 @@ jobs:
           import path from 'node:path';
 
           const parashot = [
-            'בראשית',
-            'נח',
-            'לך לך',
-            'וירא',
-            'חיי שרה',
-            'תולדות',
-            'ויצא',
-            'וישלח',
-            'וישב',
+            'מקץ',
+            'ויגש',
+            'ויחי',
+            'שמות',
+            'וארא',
+            'בא',
+            'בשלח',
           ];
 
           const base = 'https://www.parasha-week.co.il/print.html';
@@ -96,7 +94,7 @@ jobs:
       - name: Upload newsletters artifact
         uses: actions/upload-artifact@v4
         with:
-          name: compact-newsletters-until-hanukkah
+          name: compact-newsletters-hanukkah-to-tu-bishvat
           path: compact-newsletters/*.pdf
           if-no-files-found: error
           retention-days: 30
