@@ -138,6 +138,72 @@
       const root = document.querySelector("[data-parasha-games]");
       const title = document.getElementById("page-title");
 
+      /*
+        כאשר דף המשחקים מוטמע בתוך כרטיס באתר הראשי,
+        התאמת גובה ה-iframe לגובה התוכן מונעת פס גלילה פנימי.
+        בדף עצמאי window.frameElement הוא null ולכן אין שינוי בהתנהגות.
+      */
+      const keepEmbeddedFrameInSync = () => {
+        const frame = window.frameElement;
+
+        if (!(frame instanceof HTMLIFrameElement)) {
+          return;
+        }
+
+        let resizeQueued = false;
+
+        const resizeFrame = () => {
+          resizeQueued = false;
+
+          const body = document.body;
+          if (!body) return;
+
+          const contentHeight = Math.ceil(
+            Math.max(
+              body.getBoundingClientRect().height,
+              body.scrollHeight
+            )
+          );
+
+          if (!Number.isFinite(contentHeight) || contentHeight <= 0) {
+            return;
+          }
+
+          const nextHeight = Math.max(680, contentHeight + 2);
+          const currentHeight = parseFloat(frame.style.height) || 0;
+
+          if (Math.abs(currentHeight - nextHeight) > 1) {
+            frame.style.height = `${nextHeight}px`;
+          }
+        };
+
+        const queueResize = () => {
+          if (resizeQueued) return;
+          resizeQueued = true;
+          window.requestAnimationFrame(resizeFrame);
+        };
+
+        queueResize();
+        window.addEventListener("load", queueResize, { once: true });
+        window.addEventListener("resize", queueResize);
+
+        if ("ResizeObserver" in window) {
+          const resizeObserver = new ResizeObserver(queueResize);
+          resizeObserver.observe(document.body);
+          if (root) resizeObserver.observe(root);
+        }
+
+        const mutationObserver = new MutationObserver(queueResize);
+        mutationObserver.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          characterData: true
+        });
+      };
+
+      keepEmbeddedFrameInSync();
+
       const validLabel = /^\d+\-\d+\s+פרשת\s+.+$/.test(label);
 
       if (!validLabel) {
