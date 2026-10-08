@@ -1,0 +1,47 @@
+name: יצירת תמונות שער לעלונים
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'alonim/**/*.pdf'
+      - 'alonim/*.pdf'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: newsletter-covers
+  cancel-in-progress: false
+
+jobs:
+  generate-covers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install PDF renderer
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+      - name: Render first page for every PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          find alonim -maxdepth 1 -type f -iname '*.pdf' -print0 | while IFS= read -r -d '' pdf; do
+            png="${pdf%.*}.png"
+            if [ ! -f "$png" ] || [ "$pdf" -nt "$png" ]; then
+              echo "Rendering $pdf -> $png"
+              pdftoppm -f 1 -l 1 -singlefile -r 110 -png "$pdf" "${png%.png}"
+            fi
+          done
+      - name: Commit generated covers
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- 'alonim/*.png'
+          if ! git diff --cached --quiet; then
+            git commit -m "Generate newsletter PNG covers"
+            git push
+          fi
