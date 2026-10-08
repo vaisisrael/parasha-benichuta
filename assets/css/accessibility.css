@@ -1,0 +1,32 @@
+.skip-link {
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  z-index: 10000;
+  transform: translateY(-160%);
+  padding: 10px 14px;
+  border: 2px solid #252825;
+  border-radius: 8px;
+  background: #fff;
+  color: #252825;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #1f5f43;
+  outline-offset: 3px;
+}
+
+.site-footer a {
+  text-underline-offset: 0.18em;
+}
