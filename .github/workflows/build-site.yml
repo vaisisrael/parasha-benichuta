@@ -2,6 +2,13 @@ name: פרסום האתר
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'alonim/*.png'
+      - 'alonim/*.pdf'
+      - 'generate_alon_pages.py'
+      - '.github/workflows/build-site.yml'
 
 permissions:
   contents: write
@@ -40,6 +47,9 @@ jobs:
 
       - name: Finalize runtime assets
         run: python postprocess_runtime.py
+
+      - name: Generate newsletter share pages
+        run: python generate_alon_pages.py
 
       - name: Prepare publish folder
         shell: bash
