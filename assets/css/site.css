@@ -1286,3 +1286,8 @@ body.parasha-cards-ready
     width: 100%;
   }
 }
+
+/* Hide the series dropdown from the main navigation without removing series pages. */
+.main-nav > ul > li.has-sub:has(> ul a[href*="/p/אידנקסה.html"]) {
+  display: none !important;
+}
