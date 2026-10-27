@@ -1,0 +1,213 @@
+/* עמוד אחורי לעלון המודפס */
+
+@page print-back-cover {
+  size: A4;
+  margin: 0;
+
+  @top-center {
+    content: none;
+  }
+
+  @bottom-left {
+    content: none;
+  }
+}
+
+@media print {
+  .print-back-cover {
+    page: print-back-cover;
+    break-before: page;
+    page-break-before: always;
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0;
+    padding: 22mm 18mm 16mm;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fffdf8;
+    color: #28322c;
+    font-family: "Noto Sans Hebrew", Arial, sans-serif;
+    text-align: center;
+  }
+}
+
+.print-back-cover {
+  width: min(794px, 100%);
+  min-height: 1123px;
+  margin: 28px auto;
+  padding: 84px 68px 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fffdf8;
+  color: #28322c;
+  font-family: "Noto Sans Hebrew", Arial, sans-serif;
+  text-align: center;
+}
+
+.print-back-cover-brand {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+
+.print-back-cover-logo {
+  width: 30mm;
+  height: 30mm;
+  object-fit: contain;
+  margin: 0 0 3mm;
+}
+
+.print-back-cover-title {
+  margin: 0;
+  color: #4f6d5a;
+  font-family: "Gveret Levin", "Noto Sans Hebrew", Arial, sans-serif;
+  font-size: 26pt;
+  line-height: 1.15;
+  font-weight: 400;
+}
+
+.print-back-cover-tagline {
+  margin: 2mm 0 0;
+  color: #69756d;
+  font-size: 11.5pt;
+}
+
+.print-back-cover-divider {
+  width: 30mm;
+  height: 1px;
+  margin: 9mm 0;
+  background: #cbd7ce;
+}
+
+.print-back-cover-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9mm;
+}
+
+.print-back-cover-action {
+  min-height: 88mm;
+  padding: 8mm 7mm 7mm;
+  border: 1px solid #dbe5dd;
+  border-radius: 5mm;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.print-back-cover-action-icon {
+  width: 12mm;
+  height: 12mm;
+  margin-bottom: 3mm;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #edf4ee;
+  color: #4f6d5a;
+  font-size: 18pt;
+}
+
+.print-back-cover-action h2 {
+  margin: 0;
+  font-size: 14pt;
+  line-height: 1.35;
+  color: #314238;
+}
+
+.print-back-cover-action p {
+  margin: 3mm 0 0;
+  color: #6c776f;
+  font-size: 9.5pt;
+  line-height: 1.45;
+}
+
+.print-back-cover-qr {
+  width: 38mm;
+  height: 38mm;
+  margin-top: 5mm;
+  padding: 2mm;
+  border: 1px solid #e0e7e1;
+  border-radius: 2.5mm;
+  background: #fff;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+}
+
+.print-back-cover-qr img {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+}
+
+.print-back-cover-highlight {
+  margin-top: 3mm;
+  color: #4f6d5a;
+  font-size: 9.5pt;
+  font-weight: 700;
+}
+
+.print-back-cover-contact {
+  width: 100%;
+  margin-top: 11mm;
+  padding-top: 7mm;
+  border-top: 1px solid #dbe5dd;
+  display: grid;
+  gap: 3mm;
+}
+
+.print-back-cover-contact-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 3mm;
+  direction: rtl;
+  font-size: 10.5pt;
+}
+
+.print-back-cover-contact-label {
+  color: #4f6d5a;
+  font-weight: 700;
+}
+
+.print-back-cover-contact-value {
+  direction: ltr;
+  unicode-bidi: isolate;
+  color: #37423b;
+}
+
+.print-back-cover-footer {
+  margin-top: auto;
+  padding-top: 10mm;
+  color: #778079;
+  font-size: 9pt;
+  line-height: 1.7;
+}
+
+.print-back-cover-footer strong {
+  color: #59665d;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 700px) {
+  .print-back-cover {
+    min-height: 0;
+    padding: 44px 20px;
+  }
+
+  .print-back-cover-actions {
+    grid-template-columns: 1fr;
+  }
+}
