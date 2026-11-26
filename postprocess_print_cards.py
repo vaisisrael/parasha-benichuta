@@ -95,11 +95,10 @@ def replace_existing_print_card(text: str, replacement: str) -> tuple[str, bool]
     return pattern.sub(lambda _match: "\n" + replacement + "\n", text, count=1), True
 
 
-def insert_after_whatsapp(text: str, replacement: str) -> str:
-    pattern = re.compile(r"(<aside class=\"whatsapp-card\".*?</aside>)", flags=re.I | re.S)
-    if not pattern.search(text):
-        raise ValueError("WhatsApp card not found")
-    return pattern.sub(lambda match: match.group(1) + "\n" + replacement, text, count=1)
+def append_print_card(text: str, replacement: str) -> str:
+    if "</main>" not in text:
+        raise ValueError("Main content not found")
+    return text.replace("</main>", replacement + "\n</main>", 1)
 
 
 def ensure_deeplink_script(text: str, prefix: str) -> str:
@@ -121,7 +120,7 @@ def process_page(path: Path) -> bool:
     replacement = print_card(prefix, parasha_name)
     updated, replaced = replace_existing_print_card(text, replacement)
     if not replaced:
-        updated = insert_after_whatsapp(updated, replacement)
+        updated = append_print_card(updated, replacement)
     updated = ensure_deeplink_script(updated, prefix)
     if updated == text:
         return False

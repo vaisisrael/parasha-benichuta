@@ -923,52 +923,6 @@ def print_card() -> str:
 """
 
 
-def whatsapp_card() -> str:
-    channel_url = (
-        "https://whatsapp.com/channel/"
-        "0029Vb5xXFK2Jl87sO5f9f28"
-    )
-
-    return f"""
-<aside class="whatsapp-card">
-
-  <div
-    class="whatsapp-card-icon"
-    aria-hidden="true"
-  >
-    💬
-  </div>
-
-  <div class="whatsapp-card-content">
-
-    <div class="eyebrow">
-      נשארים בניחותא
-    </div>
-
-    <h2>
-      רוצים לקבל את הפרשה בכל שבוע?
-    </h2>
-
-    <p>
-      הצטרפו לערוץ הווטסאפ השקט וקבלו קישור
-      לתכנים החדשים של פרשת השבוע.
-    </p>
-
-  </div>
-
-  <a
-    class="whatsapp-card-button"
-    href="{channel_url}"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    הצטרפות לערוץ
-  </a>
-
-</aside>
-"""
-
-
 def write_file(
     root: Path,
     relative: str,
@@ -1316,8 +1270,6 @@ def build(
   {home_cards}
 </section>
 
-{whatsapp_card()}
-
 {print_card()}
 """
 
@@ -1372,7 +1324,6 @@ def build(
                 f'<section class="cards-grid">'
                 f'{"".join(card(item, prefix) for item in group)}'
                 f'</section>'
-                f'{whatsapp_card()}'
             )
 
             write_file(

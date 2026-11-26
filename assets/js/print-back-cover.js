@@ -1,9 +1,6 @@
 (() => {
   "use strict";
 
-  const whatsappUrl =
-    "https://whatsapp.com/channel/0029Vb5xXFK2Jl87sO5f9f28";
-
   const parashaMeta = {
     "בראשית": ["בראשית", "1-01 פרשת בראשית"],
     "נח": ["בראשית", "1-02 פרשת נח"],
@@ -166,12 +163,6 @@
     actions.className = "print-back-cover-actions";
 
     actions.append(
-      createAction(
-        "💬",
-        "רוצים לקבל את תכני הפרשה בכל שבוע?",
-        "סרקו להצטרפות לערוץ הווטסאפ",
-        whatsappUrl
-      ),
       createAction(
         "🎲",
         "רוצים גם לשחק?",
